@@ -1,0 +1,39 @@
+
+#slipstream-content-title-region {
+	float: left;
+	.slipstream-page-title {  
+	    @extend .slipstream-content-title;
+        border: none;
+        margin: 0;
+        word-break: break-word;
+        padding-right: 14px;
+	}
+	.slipstream-page-title:empty {
+	    display: none;
+	}
+}
+
+.slipstream-logo-section .slipstream-title-bar-title {
+	@extend .slipstream-content-title;
+	font: 16px $body-font-family;
+	color: $titlebar-title-color;
+	border: none;
+	padding: 0;
+	font-weight: 200;
+}
+
+#slipstream-content-right-header-region {
+	overflow: auto; // required for converting this element to block formatting context
+	padding-left: 20px;
+	padding-right: 14px;
+	.slipstream-page-right-header {
+		@extend .slipstream-content-title;
+		border: none;
+        margin: 0;
+        float: right;
+	}
+}
+
+#slipstream-content-right-header-region:empty {
+	clear: left;
+};

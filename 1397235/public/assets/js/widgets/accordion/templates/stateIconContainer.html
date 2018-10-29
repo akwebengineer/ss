@@ -1,0 +1,8 @@
+{{#state.icon.icon_url}}
+    <svg class="icon-state {{state.icon.icon_class}}"><use href="{{state.icon.icon_url}}"></use></svg>
+{{/state.icon.icon_url}}
+{{^state.icon.icon_url}}
+    {{#state.icon}}
+        <span class="{{state.icon}} icon-state"></span>
+    {{/state.icon}}
+{{/state.icon.icon_url}}

@@ -1,0 +1,78 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="navigateawayprovider">NavigateAwayProvider</h1>
+<p>A Slipstream Message Provider that traps Navigate Away events.</p>
+<h2 id="how-to-subscribe-to-the-message-provider-start-receiving-navigate-away-events-">How to subscribe to the message provider - Start receiving navigate away events.</h2>
+<p>In your view you can implement code similar to code snippet below:</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> messageResolver =  <span class="keyword">new</span> Slipstream.SDK.MessageResolver();
+<span class="keyword">var</span> pageIsDirty = <span class="literal">true</span>;      <span class="comment">// represent the state of the view.</span>
+<span class="keyword">var</span> subscription = messageResolver.subscribe(<span class="string">'topics://navigateAway/'</span>,<span class="string">'navigateAway'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event_data)</span>{</span>
+                <span class="keyword">if</span>(pageIsDirty) {
+                    <span class="keyword">return</span>  {
+                         <span class="string">'message'</span>   : <span class="string">'The current firewall rules table has unsaved changes.'</span>,
+                         <span class="string">'navAwayQuestion'</span> :  <span class="string">'Are you sure you want to navigate away from this page?'</span>,
+                        <span class="string">' title'</span>     :  <span class="string">'Caution'</span>
+                        }
+                } <span class="keyword">else</span> { 
+                    <span class="keyword">return</span> <span class="literal">false</span>;  <span class="comment">// or null</span>
+                }
+        });</code></pre>
+<p>Regarding the callback, it is important to note that the callback that is provided above must return a string message or false.  It should return false (or null) if the navigation request is allowed.  If the navigation request is not allowed, the return value should be an object that contains 3 attributes.</p>
+<p>{
+ &#39;message&#39;   : &#39;The current firewall rules table has unsaved changes.&#39;,
+ &#39;navAwayQuestion&#39; :  &#39;Are you sure you want to navigate away from this page?&#39;,
+&#39; title&#39;     :  &#39;Caution&#39;
+}</p>
+<p> The attributes will be used to compose a message to the end user that  describes why the navigation request could not be fulfilled.  For example, if a view contains a form that has transitioned into a &#39;dirty&#39; state, then the function should return a string (to be consumed by the end user) that explains that the current page is &#39;dirty&#39;.  The string will be sent to a confirmation dialog which will appear to the user and ask the user if s/he wants to continue with the navigation, given that the page is &#39;dirty&#39;.</p>
+<h2 id="how-to-unsubscribe-to-the-message-provider-stop-receiving-navigate-away-events-">How to unsubscribe to the message provider - Stop receiving navigate away events.</h2>
+<pre><code class="language-javascript"><span class="keyword">if</span> (subscription) {
+    messageResolver.unsubscribe(subscription);
+    subscription = <span class="literal">null</span>;
+}</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

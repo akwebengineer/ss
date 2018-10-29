@@ -1,0 +1,108 @@
+.slider-widget {
+  @import "../../js/vendor/jquery/nouislider/nouislider";
+  @import "../../js/vendor/jquery/nouislider/nouislider.tooltips";
+  @import "../../js/vendor/jquery/nouislider/nouislider.pips";
+
+  $slider-tooltip-font-color: #666;
+  $slider-legend-font-color: #999;
+  $slider-selection-base-color: #dddee0;
+  $slider-selection-primary-color: #05a4ff;
+  $slider-selection-secondary-color: #78bb4c;
+  $slider-selection-tertiary-color: #ff9933;
+  $slider-selection-quaternary-color: #ff3333;
+  $slider-selection-quinary-color: #f7ca18;
+
+  .slider-wrapper{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    .noUi-base{
+      background:  $slider-selection-base-color;
+      .noUi-origin{
+        .noUi-handle{
+          box-shadow: none;
+          cursor: pointer !important;
+          border-radius: 18px;
+          &:before, &:after{
+            background: none;
+          }
+          .noUi-tooltip{
+            color: $slider-tooltip-font-color;
+            font-size: 11px;
+            height: 20px;
+            box-shadow: 0 2px 4px $border-color-secondary;
+            border: solid 1px $border-color;
+            padding: 4px 8px;
+            @include text-ellipsis;
+          }
+        }
+      }
+      .noUi-connect{
+        background: $slider-selection-primary-color;
+        top: -1px;
+        &.oneOfTwo, &.oneOfThree, &.oneOfFour{
+          background: $slider-selection-secondary-color;
+        }
+        &.twoOfTwo, &.twoOfThree, &.twoOfFour{
+          background: $slider-selection-tertiary-color;
+        }
+        &.threeOfThree, &.fourOfFour{
+          background: $slider-selection-quaternary-color;
+        }
+        &.threeOfFour{
+          background: $slider-selection-quinary-color;
+        }
+      }
+    }
+    &.noUi-horizontal{
+      height: 6px;
+      .noUi-handle{
+        width: 18px;
+        height: 18px;
+        left: -9px;
+        top: -7px;
+      }
+      .noUi-pips-horizontal{
+        font-size: 10px;
+        .noUi-marker{
+          height:5px;
+        }
+      }
+    }
+    &.no-scale-density .noUi-pips-horizontal{
+      .noUi-marker-normal, .noUi-marker-large{
+        display: none;
+      }
+    }
+    .noUi-pips-horizontal{
+      height: auto;
+    }
+    &.no-label{
+      margin-top:10px;
+    }
+    &.no-handle{
+      margin-top:0px;
+    }
+    &.no-scale{
+      margin-bottom:0px;
+    }
+  }
+}
+
+.slider-widget-test{
+  .range-type{
+    margin-bottom: 40px;
+    font-size: 14px;
+    font-weight: 300;
+    h4{
+      padding-bottom: 10px;
+    }
+    #slider-value-range-3{
+      color: $form-label-color;
+      font-size: 11px;
+      padding-top: 10px;
+    }
+    .slider-buttons{
+      margin-top: 20px;
+    }
+  }
+}

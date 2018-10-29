@@ -1,0 +1,172 @@
+<div>
+    <h1 id="tabcontainer-widget">TabContainer Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The TabContainer widget is a reusable graphical user interface that allows users to break content into multiple sections that can be swapped to save space. Each section represents a tab and is composed by the title or name of the tab and the content or pane.</p>
+<h2 id="api">API</h2>
+<p>The TabContainer widget follows the widget programming interface standards, therefore it exposes: build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has the following parameters:</p>
+<pre><code>{
+    container:  &lt;DOM object that defines where the widget will be rendered&gt;
+    tabs: &lt;Array of objects that defines the name and the content that will be shown in the tab container&gt;
+    vertical: &lt;Boolean that defines the layout of the tab&gt;
+    toggle: &lt;Boolean that defines the tab container as a set of toggle buttons&gt;
+    height: &lt;String that defines the height of the container that holds the tab content&gt;.
+    rightAlignment: &lt;Boolean that defines if the tab container will be aligned to the right if it set to true. by default is false, and the tab container is aligned to the left&gt;
+    submit: &lt;Object that defines the button that will be used to retrieve the data held by each of the tabs&gt;
+}</code></pre>
+<p>For example, a Tab Container widget could be instantiated with the following configuration:</p>
+<pre><code>    var tabsWidget = new TabContainerWidget({
+        &quot;container&quot;: el,
+        &quot;tabs&quot;: tabsArray,
+        &quot;vertical&quot;: true,
+        &quot;height&quot;: &quot;540px&quot;,
+        &quot;submit&quot;:{
+            &quot;id&quot;: &quot;tabContainer-widget_save&quot;,
+            &quot;name&quot;: &quot;save&quot;,
+            &quot;value&quot;: &quot;Submit&quot;
+        }
+    });</code></pre>
+<p>where the tabsArray variable for the tabs parameter is an array of objects. For example:</p>
+<pre><code> var tabsArray = [{
+            id:&quot;create&quot;,
+            name:&quot;Create&quot;,
+            content: new CreateView()
+        },{
+            id:&quot;application&quot;,
+            name:&quot;Application&quot;,
+            content: new ApplicationView({
+                model: new ZonePoliciesModel.application.collection()
+            })
+        },{
+            id:&quot;destination&quot;,
+            name:&quot;Destination&quot;,
+            isDefault: true,
+            content: new DestinationAddressView({
+                model: new ZonePoliciesModel.address.collection()
+            })
+        },{
+            id:&quot;source&quot;,
+            name:&quot;Source Address&quot;,
+            content: new SourceAddressView({
+                model: new ZonePoliciesModel.address.collection()
+            })
+        }];</code></pre>
+<h3 id="container">container</h3>
+<p>The container parameter represents the DOM element that will contain the Tab Container widget.</p>
+<h3 id="tabs">tabs</h3>
+<p>The tabs parameter represents the parameters required to define a tab. It should be an array with objects that have the following parameters:</p>
+<ul>
+<li>id: id of the tab and represented by a string primitive data type. The id should be unique in the page.</li>
+<li>name: name of the tab and represented by a string primitive data type.</li>
+<li>content: content of the tab and represented by a Slipstream view object data type. The view should implement the getViewData method so the Tab Container widget could retrieve the user input in the view by using the getTabsData method.</li>
+<li>isDefault: tab that will be shown by default when the tab is rendered and represented by a boolean data type. If it is set to true if it will indicate the default. If it is absent or all isDefault parameters are set to false, then the first tab will be the default tab.</li>
+</ul>
+<h3 id="orientation">orientation</h3>
+<p>String that defines the layout of the tab. If it is set to &quot;vertical&quot;, the tabs will be displayed vertically. If it is absent, or if it is set to &quot;horizontal&quot;, the tabs will be displayed horizontally.</p>
+<h3 id="height">height</h3>
+<p> Defines the height of the container that holds the tab content. It could be represented as a string composed by the number of units and the type of unit (for example: 540px) or it could be represented by a number data type in which case, the height is assumed in pixels. If it absent, the height of the tab will be calculated independently and will be long enough to hold the content of each of them.</p>
+<h3 id="navigation">navigation</h3>
+<p>Defines the tab container with a navigation style when the navigation property is set to true. When it is absent or it is set to false, the tab container widget is represented as a standard set of tabs. For example:</p>
+<pre><code class="language-javascript">    <span class="keyword">new</span> TabContainerWidget({
+        <span class="string">"container"</span>: $navigationContainer,
+        <span class="string">"tabs"</span>: [{
+                                id:<span class="string">"createNav"</span>,
+                                name:<span class="string">"FORM"</span>,
+                                content: <span class="keyword">new</span> FormView()
+                            },{
+                                id:<span class="string">"zoneNav"</span>,
+                                name:<span class="string">"TABS"</span>,
+                                isDefault: <span class="literal">true</span>,
+                                content: <span class="keyword">new</span> TabView()
+                            },{
+                                id:<span class="string">"verticalTab"</span>,
+                                name:<span class="string">"VERTICAL"</span>,
+                                content: <span class="keyword">new</span> TabVerticalView()
+                            },{
+                                id:<span class="string">"rightTab"</span>,
+                                name:<span class="string">"RIGHT"</span>,
+                                content: <span class="keyword">new</span> TabRightView()
+                            },{
+                                id:<span class="string">"toggleTab"</span>,
+                                name:<span class="string">"TOGGLE"</span>,
+                                content: <span class="keyword">new</span> ToggleView()
+                            }],
+        <span class="string">"height"</span>: <span class="string">"auto"</span>,
+        <span class="string">"navigation"</span>: <span class="literal">true</span>
+    }).build();</code></pre>
+<h3 id="toggle">toggle</h3>
+<p>Defines the tab container as a set of toggle buttons when the toggle property is set to true. When it is absent or it is set to false, the tab container widget is represented as a standard set of tabs.</p>
+<h3 id="submit">submit</h3>
+<p>Defines the button that will be used to retrieve the data the updates user has on each of the tabs. It includes the parameters:</p>
+<ul>
+<li>id: id of the button</li>
+<li>name: name of the button</li>
+<li>value: label of the button</li>
+</ul>
+<h2 id="build">build</h2>
+<p>Adds the dom elements and events of the TabContainer widget in the specified container. For example:</p>
+<pre><code>tabsWidget.build();</code></pre>
+<h2 id="destroy">destroy</h2>
+<p>Clean up the specified container from the resources created by the TabContainer widget.</p>
+<pre><code>tabsWidget.destroy();</code></pre>
+<h2 id="other-methods">Other Methods</h2>
+<h3 id="gettabsdata">getTabsData</h3>
+<p>Gets the data that each tab has collected from the user input. The data is retrieved by calling the getViewData from each view defined in the tabs parameter. It returns an object with all the data collected for each of the views. The key is the id of the tab and the value is the Object that is returned after invoking the getViewData on the view. Only the tabs that were visited are included. For example:</p>
+<pre><code>tabsWidget.getTabsData();</code></pre>
+<h3 id="getalltabsdata">getAllTabsData</h3>
+<p>Gets the data that each tab has collected from the user input. The data is retrieved by calling the getViewData from each view defined in the tabs parameter. It returns an object with all the data collected for each of the views. The key is the id of the tab and the value is the Object that is returned after invoking the getViewData on the view. All the tabs are included, including the ones the user did not visit. For example:</p>
+<pre><code>tabsWidget.getAllTabsData();</code></pre>
+<h3 id="getactivetab">getActiveTab</h3>
+<p>Provides the id or key of the active tab. For example:</p>
+<pre><code>tabsWidget.getActiveTab();</code></pre>
+<h3 id="getactivetabbyindex">getActiveTabByIndex</h3>
+<p>Provides the index of the active tab as it is defined in the tabs array parameter. For example:</p>
+<pre><code>tabsWidget.getActiveTabByIndex();</code></pre>
+<h3 id="setactivetab">setActiveTab</h3>
+<p>Sets a tab as the active one. The input parameter is the id or key of the tab. For example:</p>
+<pre><code>tabsWidget.setActiveTab(&#39;application&#39;);</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To include the TabContainer widget, define the container, the tabs (name and views) and the submit button parameters. Then, build the widget. For example:</p>
+<pre><code>    new TabContainerWidget({
+        &quot;container&quot;: this.el,
+        &quot;tabs&quot;: this.tabs,
+        &quot;vertical&quot;: true,
+        &quot;height&quot;: &quot;540px&quot;,
+        &quot;submit&quot;:{
+            &quot;id&quot;: &quot;tabContainer-widget_save&quot;,
+            &quot;name&quot;: &quot;save&quot;,
+            &quot;value&quot;: &quot;Submit&quot;
+        }
+    }).build();</code></pre>
+<h3 id="addtab">addTab</h3>
+<p>Add a new tab(s) dynamically. The input parameter is the object of the tab configuration or an array of multiple tabs configuration. For example:</p>
+<pre><code>    var tab = {
+        id:&quot;address&quot;,
+        name:&quot;Address&quot;,
+        content: new AddressView()
+    },
+    tabs = [{
+                id:&quot;create&quot;,
+                name:&quot;Create&quot;,
+                content: new CreateView()
+            },{
+                id:&quot;application&quot;,
+                name:&quot;Application&quot;,
+                content: new ApplicationView()
+            },{
+                id:&quot;zone&quot;,
+                name:&quot;Zone Policy&quot;,
+                isDefault: true,
+                content: new ZonePolicy()
+            }];
+    tabsWidget.addTab(tab);
+    tabsWidget.addTab(tabs);</code></pre>
+<h3 id="removetab">removeTab</h3>
+<p>Remove an existing tab(s) dynamically. The input parameter is the tab id or the array of tab ids. For example:</p>
+<pre><code>    tabsWidget.removeTab(&quot;address&quot;);
+    tabsWidget.removeTab([&quot;create&quot;, &quot;application&quot;, &quot;zone&quot;]);</code></pre>
+
+
+</div>
+ 

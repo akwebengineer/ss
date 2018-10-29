@@ -1,0 +1,10 @@
+<dd class="dropdownMenu {{key}}" {{#disabledStatus}}disabled{{/disabledStatus}}>
+    <span class="label">{{label}}</span>
+    <select {{#disabledStatus}}disabled{{/disabledStatus}}>
+    {{#items}}
+        <option class="dropdownMenuItem" id="{{key}}" value="{{key}}" {{#selected}}selected{{/selected}}>
+        {{label}}
+        </option>
+    {{/items}}
+    </select>
+</dd>

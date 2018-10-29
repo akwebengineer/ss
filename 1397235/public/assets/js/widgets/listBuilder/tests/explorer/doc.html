@@ -1,0 +1,155 @@
+<div>
+    <h1 id="list-builder-widget">List Builder Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The list builder widget is a reusable graphical user interface that allows users to select one or many items from a set of values. It shows a large list of options (box 1: Available) and a large list of selections (box 2: Selected).</p>
+<h2 id="api">API</h2>
+<p>The list builder widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has two variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    list: &lt;define the list of options to be showed in the available list of the list builder and in the selected list (optional)&gt;
+}</code></pre>
+<p>For example:</p>
+<pre><code>{
+    var listBuilder = new ListBuilderWidget({
+        &quot;list&quot;: {
+            &quot;availableElements&quot;: protocolList,
+            &quot;selectedElements&quot;: protocolListSelected
+        },
+        &quot;container&quot;: this.$el
+    });
+}</code></pre>
+<p>where the &quot;list&quot; should be a object that contains the availableElements and the selectedElements properties as an array of value/label pairs. For example:</p>
+<pre><code>{
+    var protocolList = [{
+                            &quot;label&quot;: &quot;BFD&quot;,
+                            &quot;value&quot;: &quot;BFD&quot;,
+                            &quot;moreInfo&quot;: &quot;(50)&quot;,
+                            &quot;tooltip&quot;: &quot;Source port: &lt;b&gt;8080&lt;/b&gt;&lt;br/&gt;Destination port: &lt;b&gt;8080&lt;/b&gt;&quot;,
+                            &quot;valueDetails&quot;: &quot;System&quot;,
+                            &quot;img_src&quot;: &quot;./img/icon4.png&quot;,
+                            &quot;extraData&quot;: &#39;extraData&#39;
+                        },
+                        {
+                            &quot;label&quot;: &quot;BGP&quot;,
+                            &quot;value&quot;: &quot;BGP&quot;
+                       }];
+}</code></pre>
+<p>Each object (list item) in the array of the availableElements or the selectedElements could contain:</p>
+<ul>
+<li>label: text that describes the list item that will be showed next to the list item checkbox</li>
+<li>value: unique id assigned to the list item</li>
+<li>moreInfo: it shows additional information on a link format</li>
+<li>valueDetails: it represents extra information that needs to be presented for the list item</li>
+<li>img_src: path of the image showed for the list item</li>
+<li>extraData: extra data needs to be tracked but not show on UI. This data must be a string. If you need to pass an object, make sure you stringify it before passing.</li>
+</ul>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the list builder in the specified container. For example:</p>
+<pre><code>{
+    listBuilder.build();
+}</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the list builder widget.</p>
+<pre><code>{
+    listBuilder.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a list builder in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the list builder widget and provide the configuration object the list of elements to show (list) and the container where the list builder will be rendered</li>
+<li>Call the build method of the list builder widget</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the list builder widget.</p>
+<pre><code>{
+    var listBuilder = new ListBuilderWidget({
+        &quot;list&quot;: {
+            &quot;availableElements&quot;: protocolList
+        },
+        &quot;container&quot;: this.el
+    });
+
+    listBuilder.build();
+}</code></pre>
+<h2 id="methods">Methods</h2>
+<h3 id="getavailableitems">getAvailableItems</h3>
+<p>Get the available items (available column). For example:</p>
+<pre><code>   var list = listBuilder.getAvailableItems();</code></pre>
+<h3 id="addavailableitems">addAvailableItems</h3>
+<p>Add new items to the available column. For example:</p>
+<pre><code>    var list = [{
+            &quot;label&quot;: &quot;BFD2&quot;,
+            &quot;value&quot;: &quot;BFD2&quot;,
+            &quot;moreInfo&quot;: &quot;(50)&quot;,
+            &quot;tooltip&quot;: &quot;Source port: &lt;b&gt;8080&lt;/b&gt;&lt;br/&gt;Destination port: &lt;b&gt;8080&lt;/b&gt;&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;img_src&quot;: &quot;./img/icon4.png&quot;
+        },
+        {
+            &quot;label&quot;: &quot;IGMP2&quot;,
+            &quot;value&quot;: &quot;IGMP2&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;img_src&quot;: &quot;./img/icon4.png&quot;
+        },
+        {
+            &quot;label&quot;: &quot;LDP2&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;value&quot;: &quot;LDP2&quot;
+        }];
+    listBuilder.addAvailableItems(list);</code></pre>
+<h3 id="setavailableitems">setAvailableItems</h3>
+<p>Set existing items from the selected column to the available column. For example:</p>
+<pre><code>    var list = [&#39;OSPF3&#39;, &#39;RIPNG&#39;];
+    listBuilder.setAvailableItems(list);</code></pre>
+<h3 id="removeavailableitems">removeAvailableItems</h3>
+<p>Remove existing items from the available column. For example:</p>
+<pre><code>    var list = [&#39;PIM&#39;, &#39;RIP&#39;, &#39;ROUTER-DISCOVERY&#39;];
+    listBuilder.removeAvailableItems(list);</code></pre>
+<h3 id="getselecteditems">getSelectedItems</h3>
+<p>Get the selected items (selected column). For example:</p>
+<pre><code>   var list = listBuilder.getSelectedItems();</code></pre>
+<h3 id="addselecteditems">addSelectedItems</h3>
+<p>Add new items to the selected column. For example:</p>
+<pre><code>    var list = [{
+            &quot;label&quot;: &quot;BFD2&quot;,
+            &quot;value&quot;: &quot;BFD2&quot;,
+            &quot;moreInfo&quot;: &quot;(50)&quot;,
+            &quot;tooltip&quot;: &quot;Source port: &lt;b&gt;8080&lt;/b&gt;&lt;br/&gt;Destination port: &lt;b&gt;8080&lt;/b&gt;&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;img_src&quot;: &quot;./img/icon4.png&quot;
+        },
+        {
+            &quot;label&quot;: &quot;IGMP2&quot;,
+            &quot;value&quot;: &quot;IGMP2&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;img_src&quot;: &quot;./img/icon4.png&quot;
+        },
+        {
+            &quot;label&quot;: &quot;LDP2&quot;,
+            &quot;valueDetails&quot;: &quot;System&quot;,
+            &quot;value&quot;: &quot;LDP2&quot;
+        }];
+    listBuilder.addSelectedItems(list);</code></pre>
+<h3 id="setselecteditems">setSelectedItems</h3>
+<p>Set existing items from the available column to the selected column. For example:</p>
+<pre><code>    var list = [&#39;PIM&#39;, &#39;RIP&#39;, &#39;ROUTER-DISCOVERY&#39;];
+    listBuilder.setSelectedItems(list);</code></pre>
+<h3 id="removeselecteditems">removeSelectedItems</h3>
+<p>Remove existing items from the selected column. For example:</p>
+<pre><code>    var list = [&#39;OSPF3&#39;, &#39;RIPNG&#39;];
+    listBuilder.removeSelectedItems(list);</code></pre>
+<h2 id="event">Event</h2>
+<h3 id="selectedchangeevent">selectedChangeEvent</h3>
+<p>Listen the selectedChangeEvent of the selected column. For example:</p>
+<pre><code>    $(&#39;.box2 .list-group&#39;).on(&#39;selectedChangeEvent&#39;, function(event, list){
+        if (list &amp;&amp; list.event &amp;&amp; list.event === &#39;select&#39;){
+            console.log(&#39;move items from the available to selected column&#39;);
+        }else if(list &amp;&amp; list.event &amp;&amp; list.event === &#39;unselect&#39;){
+            console.log(&#39;move items from the selected to available column&#39;);
+        }
+    });</code></pre>
+
+
+</div>
+ 

@@ -1,0 +1,91 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="viewtoolbarelement">ViewToolbarElement</h1>
+<p>The ViewToolbarElement is a plugin&#39;s interface to the Slipstream <a href="utilityToolbar.html">Utility Toolbar</a> for view-based elements.  A reference to a ViewToolbarElement is made available through the <em>context</em> object associated with the element&#39;s <em>activity</em>.</p>
+<h2 id="methods">Methods</h2>
+<ul>
+<li><h4 id="sdk-viewtoolbarelement-prototype-setenabled-state-">SDK.ViewToolbarElement.prototype.setEnabled(state)</h4>
+<p>Set the enabled state of the utility toolbar element.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>state</strong></p>
+<p> A boolean value indicating the enabled state of the view element.  If <em>true</em> the element will be enabled.  If <em>false</em> it will be disabled.</p>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-viewtoolbarelement-prototype-setview-view-">SDK.ViewToolbarElement.prototype.setView(view)</h4>
+<p>Set the view to be used to render the toolbar element.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>view</strong></p>
+<p> A <a href="view.html">view</a> to be used for rendering the toolbar element.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> ToolbarActivity = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+
+           <span class="comment">// Set the view for rendering the toolbar element</span>
+           <span class="keyword">var</span> View = Backbone.View.extend({
+                render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>...}
+           });
+
+           <span class="keyword">this</span>.context.toolbarElement.setView(<span class="keyword">new</span> View());   
+        }
+    };
+
+    ToolbarActivity.prototype = Object.create(Slipstream.SDK.Activity.prototype);
+    ToolbarActivity.prototype.constructor = ToolbarActivity;
+
+    <span class="keyword">return</span> ToolbarActivity;
+});</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

@@ -1,0 +1,162 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-messageprovider">Slipstream.SDK.MessageProvider</h1>
+<p>Defines the interface between a message provider and the Slipstream framework.  A MessageProvider is used to broadcast messages to framework components and plugins that are registered as listeners via the <a href="messageResolver.html">MessageResolver</a>.  They typically do not render views.</p>
+<p>The <em>Slipstream.SDK.MessageProvider</em> function is the constructor for MessageProvider objects.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.MessageProvider()</code></pre>
+<h2 id="description">Description</h2>
+<p>A Slipstream message provider is implemented as a Javascript AMD module in <a href="http://requirejs.org/docs/api.html">requireJS</a> format.  The module must return a no-argument Javascript constructor that extends from <em>Slipstream.SDK.MessageProvider</em>.  The framework will use this constructor to instantiate the provider.</p>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">SomeProvider</span><span class="params">()</span> {</span>
+       ...
+    }
+
+    <span class="comment">// Inherit from the Slipstream MessageProvider class</span>
+    SomeProvider.prototype = <span class="keyword">new</span> Slipstream.SDK.MessageProvider();
+
+    <span class="comment">// Return the constructor as the value of this module</span>
+    <span class="keyword">return</span> SomeProvider;
+});</code></pre>
+<h3 id="provider-lifecycle">Provider Lifecycle</h3>
+<p>A MessageProvider has a well-defined lifecycle that takes it through a series of states including <em>create</em> and <em>start</em>, <em>destroy</em>.</p>
+<pre><code>    ┌─────────────────────┐
+    │   Launch Provider   │
+    └─────────────────────┘
+               ↓ 
+    ┌─────────────────────┐
+    │      onCreate()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │      onStart()      │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │  Provider active    │  
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │     onDestroy()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │ Provider Terminated │
+    └─────────────────────┘</code></pre>
+<p>Each state of a message provider has a corresponding lifecycle method in a MessageProvider object: <em>onCreate()</em>, <em>onStart()</em>, <em>onDestroy()</em>.</p>
+<p>When a message provider is first created its <em>onCreate()</em> method is called.  By default this method is a no-op but providers can override it to perform any operations necessary prior to the provider being started. Once the <em>onCreate()</em> method returns, the provider&#39;s onStart() method is immediately invoked.</p>
+<p>When a provider is either no longer needed (eg. its associated plugin is removed from the system) it may be destroyed. Before a provider is destroyed its <em>onDestroy()</em> method is called. This allows the provider an opportunity to perform any cleanup operations prior to it being destroyed.</p>
+<p><strong>Note</strong>: The destroy state and it&#39;s corresponding <em>onDestroy()</em> method are not currently used by Slipstream but are reserved for future use.</p>
+<h2 id="messageprovider-instances">MessageProvider Instances</h2>
+<p>All MessageProvider instances inherit from MessageProvider.prototype.</p>
+<h3 id="properties">Properties</h3>
+<h4 id="messageprovider-prototype-context">MessageProvider.prototype.context</h4>
+<p>Provides the provider&#39;s <a href="providerContext.html">runtime context</a>.  The context can be used for publishing messages in the provider&#39;s topics.</p>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-activity-prototype-oncreate">SDK.Activity.prototype.onCreate</h4>
+<p>The lifecycle callback that is invoked when a MessageProvider is created.  This occurs after instantiation but before the provider is started.  Anything that an provider needs to do before it is started should be done here.  </p>
+<p>  A plugin can assume that the user has been authenticated prior to this method being called.</p>
+<p>The method in the MessageProvider prototype is a no-op and should be overridden by objects implementing a MessageProvider.</p>
+</li>
+<li><h4 id="sdk-messageprovider-prototype-onstart">SDK.MessageProvider.prototype.onStart</h4>
+<p>The lifecycle callback that is invoked when a MessageProvider is started.  </p>
+<p>  A plugin can assume that the user has been authenticated prior to this method being called.</p>
+<p>The method in the MessageProvider prototype is a no-op and should be overridden by objects implementing a MessageProvider.</p>
+</li>
+<li><h4 id="sdk-messageprovider-prototype-ondestroy">SDK.MessageProvider.prototype.onDestroy</h4>
+<p>The lifecycle callback that is invoked when a provider is destroyed.  </p>
+<p> The method in the MessageProvider prototype is a no-op and should be overridden by objects implementing a MessageProvider.</p>
+<p><strong>Note</strong>: This method is not currently used by Slipstream but is reserved for future use.</p>
+</li>
+</ul>
+<h3 id="declaring-a-messageprovider">Declaring a MessageProvider</h3>
+<p>A plugin must declare the providers it exposes in its plugin.json file.  </p>
+<p>Each message provider must have a unique URI. Plugins use this URI to subscribe to messages via the <a href="messageResolver.html">MessageResolver</a>.</p>
+<p>A sample plugin.json with the relevant MessageProvider settings is shown below.</p>
+<p>plugin.json:</p>
+<pre><code class="language-json">{
+   ...
+
+   providers: [
+      {
+          &quot;uri&quot;: &quot;topics://vnd.juniper.srx&quot;, 
+          &quot;module&quot;: &quot;srx_notifications&quot;
+      }
+
+   ]
+
+   ...
+}</code></pre>
+<p>When a plugin is loaded and the configuration includes <em>providers</em>, the module identified will be instantiated and the <em>onCreate()</em> function called to initialize the provider. The MessageResolver will then map the URI to the instantiated provider.</p>
+<h2 id="example">Example</h2>
+<p>A message provider that listens for the addition of events external to the framework and publishes events for the consumption of plugins.</p>
+<pre><code class="language-javascript">  define([<span class="string">"/socket.io/socket.io.js"</span>], <span class="function"><span class="keyword">function</span><span class="params">(io)</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">MyProvider</span><span class="params">()</span> {</span>
+        <span class="keyword">var</span> socket_server_url = window.location.protocol + <span class="string">"//"</span> + window.location.host,
+            message_channel = io.connect(socket_server_url),
+            publisher;
+
+        <span class="keyword">this</span>.onCreate = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            publisher = <span class="keyword">this</span>.getContext().getPublisher();
+        };
+
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            plugin_channel.on(<span class="string">'external_event'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(event_data)</span> {</span>
+                console.log(<span class="string">"got external event"</span>);
+                publisher.publish(<span class="string">"myProvider:external_event"</span>, event_data);
+            });
+        }
+    }
+
+    MyProvider.prototype = <span class="keyword">new</span> Slipstream.SDK.MessageProvider();
+
+    <span class="keyword">return</span> MyProvider;
+});</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

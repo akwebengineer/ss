@@ -1,0 +1,75 @@
+<div id="queryBuilder-widget-test" class="slipstream-widget-test-page">
+    <div class="slipstream-content-title">Query Builder</div>
+    <!--<ul>-->
+        <div>
+            <h4><u>Search - showing programmatic methods</u></h4>
+            <div id="queryContainer" style="width:1100px;">
+                <div id="queryStatusMessage" style="font-size:12px;"></div>
+                <br>
+            </div>
+            <br><br>
+            <div id="test_buttons">
+                <span id="getQuery" class="slipstream-secondary-button">Get Query</span>
+                <span><b>Result: </b><span id="getQueryResult"></span></span>
+                <br>
+                <span id="validateQuery" class="slipstream-secondary-button">Validate Query</span>
+                <span><b>Result: </b><span id="getValidateResult"></span></span>
+                <br>
+                <input type="text" id="getTermField" class="testFields" placeholder="Term">
+                <span id="getTerm" class="slipstream-secondary-button">Get Data with Term</span>
+                <span><b>Result: </b><span id="getTermResult"></span></span>
+                <br>
+                <input type="text" id="getASTField" class="testFields"  placeholder="Term Id">
+                <span id="getAST" class="slipstream-secondary-button">Get Data with ID</span>
+                <span><b>Result: </b><span id="getASTResult"></span></span>
+                <br>
+                <input type="text" id="addQueryLogicalOperator" class="testFields" placeholder="AND">
+                <input type="text" id="addQueryField" class="testFields" placeholder="Query">
+                <span id="addQuery" class="slipstream-secondary-button">Add Query</span>
+                <span><b>Result: </b><span id="addQueryResult"></span></span>
+                <br>
+                <input type="text" id="updateTermField" class="testFields">
+                <span id="updateTerm" class="slipstream-secondary-button">Update Term</span>
+                <span><b>Result: </b><span id="updateTermResult"></span></span>
+                <br>
+                <span id="clearQuery" class="slipstream-secondary-button">Clear</span>
+                <br><br>
+            </div>
+        </div>
+        <div style="list-style: none;">
+            <h4><u>AutoComplete example with local suggestions </u></h4>
+            <div id="queryBuilderContainer_autoComplete_local">
+
+            </div>
+            </br>
+            </br>
+        </div>
+        <div style="list-style: none;">
+            <h4><u>AutoComplete example which uses Ajax to load suggestions </u></h4>
+            <div id="queryBuilderContainer_autoComplete_ajax">
+
+            </div>
+            </br>
+            </br>
+        </div>
+        <div id="example_dragDrop" style="list-style: none;">
+            <h4><u>DragDrop example with AutoComplete</u> </h4>
+            <div id="queryBuilder_dragDrop_autoComplete">
+
+            </div>
+            <br>
+            <b>Drag</b>
+            <span id="dragOsversion" class="slipstream-secondary-button">OSVersion=19.1, 19.2</span>
+            <span id="dragDeviceFamily" class="slipstream-secondary-button">DeviceFamily=SRX, EX</span>
+            <span id="dragJunosHost" class="slipstream-secondary-button ">JunosHost</span>
+            <br><br><br>
+            <div id="test_buttons_dragDrop">
+                <span id="getQuery_dragDrop" class="slipstream-secondary-button">Get Query</span>
+                <span><b>Result: </b><span id="getQueryResult_dragDrop"></span></span>
+                <br>
+            </div>
+            </br>
+            </br>
+        </div>
+    </ul>
+</div>

@@ -1,0 +1,21 @@
+Let us know what you think about {{product_name}}. Please provide the following information. %0D%0A%0D%0A
+
+Name: %0D%0A%0D%0A
+
+Organization: %0D%0A%0D%0A
+
+Comments: %0D%0A%0D%0A
+
+Severity (if applicable, e.g. Critical, Major, Minor): %0D%0A%0D%0A
+
+If you're having an issue with the product, we encourage you to attach screenshots to help us troubleshoot.  %0D%0A%0D%0A
+
+_ _ _ %0D%0A%0D%0A
+
+{{#product_version}}Release Version: {{product_version}}%0D%0A{{/product_version}} 
+{{#device_model}}Device Model: {{device_model}}%0D%0A{{/device_model}}
+Browser Version: {{browser_version}} %0D%0A
+Platform: {{platform}} %0D%0A
+Screen Resolution: {{screen_resolution}} %0D%0A
+{{#custom_content}}{{custom_content}}%0D%0A{{/custom_content}} 
+Timestamp: {{timestamp}}

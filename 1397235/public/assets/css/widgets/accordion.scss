@@ -1,0 +1,208 @@
+.accordion-widget {
+  $accordion-font-color-level1: #444444;
+  $accordion-font-color-level2: #333333;
+  $accordion-group-box-border-level1: rgba(0, 0, 0, 0.15);
+  $accordion-group-shadow-border-level1: #DDDDDD;
+  $accordion-group-border-level1: #D8D2FC;
+  $accordion-group-border-level2: #A7CEFF;
+  $accordion-group-border-level3: #BEF2F8;
+  $unconfigured-state-icon: #0099FF;
+  $configured-state-icon: #00B16A;
+  $unsaved-state-icon: #F9BF3B;
+  $partially_configured-state-icon: #0099FF;
+  $undeployed-state-icon: #FF9933;
+  $critical_alert-state-icon: #D91E18;
+  @mixin addIcon($defaultClass, $hoverClass) {
+    display: inline-block;
+    @extend .#{$defaultClass}, .#{$defaultClass}-dims;
+    &:hover {
+      @extend .#{$hoverClass}, .#{$hoverClass}-dims;
+    }
+  }
+  .accordion-wrapper {
+    list-style: none;
+    margin: 0px;
+    .accordion-section {
+      list-style: none;
+      border-top: 1px solid $border-color;
+      background-color: $body-bg;
+      //title and section status
+      .title-status {
+        background-color: inherit;
+        padding: 15px 17px 15px 0px;
+        display: block;
+        .arrow {
+          margin: 0px 13px 0px 15px;
+          fill: $collapsed-arrow-icon-color;
+        }
+        .accordion-title {
+          height: 19px;
+          color: $accordion-font-color-level1;
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .accordion-status {
+          margin-top: 4px;
+          fill: $arrow-icon-color;
+          .icon-state {
+            &.unconfigured {
+              fill: $unconfigured-state-icon;
+            }
+            &.configured {
+              fill: $configured-state-icon;
+            }
+            &.unsaved {
+              fill: $unsaved-state-icon;
+            }
+            &.partially_configured {
+              fill: $partially_configured-state-icon;
+            }
+            &.undeployed {
+              fill: $undeployed-state-icon;
+            }
+            &.critical_alert {
+              fill: $critical_alert-state-icon;
+            }
+          }
+        }
+        &:focus {
+          outline: 0 !important;
+        }
+        &.ui-state-active > {
+          .arrow {
+            transform: rotate(90deg);
+            fill: $arrow-icon-color;
+          }
+          .accordion-status {
+            display: none;
+          }
+          .accordion-intro {
+            display: block;
+          }
+        }
+      }
+      .formats-content {
+        font-size: 12px;
+        margin: 0px;
+      }
+      //general description style
+      .accordion-description {
+        @extend .formats-content;
+        padding: 0px 42px 10px;
+      }
+      &[data-section-no-title] > .accordion-description {
+        display: none;
+      }
+      &[data-section-no-description] > .accordion-description {
+        display: none;
+      }
+      //general content style
+      .accordion-content {
+        @extend .formats-content;
+        min-height: 29px;
+        &.ui-accordion-content-active {
+          display: block !important;
+          & + .accordion-description {
+            display: none;
+          }
+          & > div {
+            margin-top: -10px;
+          }
+        }
+      }
+      //nested style adjustments for title and content
+      &.accordion- { //first accordion level only
+        border: solid 1px $accordion-group-box-border-level1;
+        box-shadow: 0 1px 3px 0 $accordion-group-box-border-level1;
+        margin-bottom: 10px;
+        & > .accordion-content {
+          padding: 0px 0px 0px 42px;
+        }
+        &.isNested > .accordion-content {
+          padding-left: 0px;
+        }
+      }
+      &[class^="accordion-group-"] { //all accordion nested levels except the first one
+        border-left: solid 10px transparent;
+        &[data-section-collapsed=true] {
+          border-left: solid 10px transparent !important;
+        }
+        .title-status .accordion-title {
+          color: $accordion-font-color-level2;
+          font-size: 16px;
+        }
+        &[data-section-no-title] {
+          border-left-color: transparent !important;
+          .title-status {
+            display: none;
+          }
+          .accordion-content {
+            display: block !important;
+          }
+        }
+      }
+      &:first-child {
+        &[data-section-no-title] { //first section without a title and inside of a nested section
+          border-top-color: transparent;
+        }
+      }
+      &.active {
+        background-color: $body-bg;
+        &.accordion-group-0 {
+          border-left: solid 10px $accordion-group-border-level1;
+        }
+        &.accordion-group-1 {
+          border-left: solid 10px $accordion-group-border-level2;
+        }
+        &.accordion-group-2 {
+          border-left: solid 10px $accordion-group-border-level3;
+        }
+      }
+      &:hover {
+        &.accordion-group-0 {
+          border-left: solid 10px $accordion-group-border-level1;
+        }
+        &.accordion-group-1 {
+          border-left: solid 10px $accordion-group-border-level2;
+        }
+        &.accordion-group-2 {
+          border-left: solid 10px $accordion-group-border-level3;
+        }
+      }
+    }
+  }
+}
+
+.slipstream-widget-test-page.accordion-widget-test {
+  .accordion-buttons {
+    float: right;
+    margin-bottom: 20px;
+    display: block;
+    .cancel-button, .save-button, .deploy-button {
+      cursor: pointer;
+    }
+    .icon-style {
+      fill: $action-icon-color;
+      margin-right: 10px;
+      vertical-align: middle;
+      cursor: pointer;
+      &:hover {
+        fill: $action-icon-hover;
+      }
+    }
+  }
+  .icon-title {
+    height: 30px;
+    width: 30px;
+    margin-right: 15px;
+    margin-top: -4px;
+  }
+  .link-style {
+    color: $link-button-color;
+    font-size: 12px;
+    margin-right: 15px;
+  }
+  #accordion-demo {
+    clear: both;
+  }
+}

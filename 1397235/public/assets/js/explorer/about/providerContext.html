@@ -1,0 +1,76 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-providercontext">Slipstream.SDK.ProviderContext</h1>
+<p>Provides a runtime context for message providers.  Plugins should never need to directly instantiate this object.  ProviderContext objects are created by the framework and made available to instances of <a href="messageProvider.html">MessageProvider</a>. </p>
+<h2 id="providercontext-instances">ProviderContext Instances</h2>
+<h3 id="properties">Properties</h3>
+<ul>
+<li><h4 id="publisher">publisher</h4>
+<p> An object that defines the following function:</p>
+<ul>
+<li><strong>publish(evt, data)</strong>
+A function that is used to publish the provider&#39;s messages.<ul>
+<li><strong>evt</strong>
+ The name of the event to be published.  This corresponds to the name of a declared topic in the provider&#39;s plugin.json file.</li>
+<li><strong>data</strong>
+ An object containing the data to be published with the event.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-javascript">    ...
+
+    <span class="keyword">var</span> publisher = <span class="keyword">this</span>.context.publisher;
+    <span class="keyword">var</span> event_data = {name: <span class="string">"foobar"</span>};
+
+    publisher.publish(<span class="string">"myProvider:external_event"</span>, event_data);
+
+    ...</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

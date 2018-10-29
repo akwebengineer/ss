@@ -1,0 +1,150 @@
+<div>
+    <h1 id="donut-chart-widget">Donut Chart Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>A donut chart is a graph that displays data as percentages of the whole, with categories represented by individual slices.
+It is functionally similar to a pie chart and each ring represents a data series.</p>
+<p>A donut chart in Slipstream can be implemented using the framework&#39;s donut chart widget.
+In Slipstream, only a single series is supported on a donut chart.</p>
+<h2 id="api">API</h2>
+<p>The donut chart widget exposes 4 functions: a constructor, a build method that creates the chart, an update method that updates the chart and a destroy method that cleans up the resources set by itself.</p>
+<pre><code>function DonutChartWidget(conf) {…}</code></pre>
+<p>Used to create a new donut chart.
+where conf is of the format:</p>
+<pre><code>{
+    container: &lt;reference to the DOM element where the chart needs to be rendered&gt;,
+    options: &lt;object containing donut chart options&gt;
+}</code></pre>
+<p>options is of the format:</p>
+<pre><code>{
+    donut: &lt;donut chart object with following parameters needed to draw the donut chart&gt;
+        name: &lt;name of the chart&gt;
+        data: &lt;array of data points for the chart&gt;
+        showInLegend: &lt;show or hide the legend box, true or false; if not specified, true is assumed and the legend is displayed&gt;
+    colors: &lt;colors array, optional; the widget has a default colors array but this option can be used to override it and specify custom colors&gt;
+}</code></pre>
+<p>data should be specified in following format:</p>
+<pre><code>     An array of arrays with two values. 
+     The first one is the category name and the second one is the count/value for that category.
+     Eg. data:  [
+                    [&#39;Critical&#39;, 4440],
+                    [&#39;Major&#39;   , 3000],
+                    [&#39;Minor&#39;   , 2000],
+                    [&#39;Warning&#39; , 1700],
+                    [&#39;Info&#39;    , 300]
+                ]</code></pre>
+<p>colors are optional and in following format:</p>
+<pre><code>     An array of colors. 
+
+     colors: [&#39;green&#39;, &#39;purple&#39;, &#39;pink&#39;, &#39;orange&#39;, &#39;yellow&#39;]
+     or 
+     colors: [&#39;#ff3333&#39;, &#39;#ff9933&#39;, &#39;#f9d854&#39;, &#39;#aa4ace&#39;, &#39;#05a4ff&#39;]</code></pre>
+<p>When colors are specified, it is the responsibility of the plugin to provided the correct number of colors based on the number of categories on the chart.
+If insufficient number of colors are provided in the array eg. there are 10 entries in the data array, 
+but only 8 colors are specified in the colors array, the widget will repeat the array colors. </p>
+<h5 id="text-string-displayed-in-the-center-of-the-chart">Text string displayed in the center of the chart</h5>
+<p>The total count of all the data values will be displayed in the center of the donut chart.</p>
+<h5 id="legend">Legend</h5>
+<p>Hover-over individual legend items highlights the corresponding slice on the chart.
+Selecting/deselecing an individual item on the legend adds/removes the corresponding slice on the chart and updates the total count displayed at the center.</p>
+<h5 id="tooltip">Tooltip</h5>
+<p>A tooltip is displayed on hover-over each slice on the chart. It displayed both the count and percentage value.</p>
+<h5 id="chart-size">Chart Size</h5>
+<pre><code>&lt;div id=&quot;donutchart-threat-count&quot; style=&quot;width:350px; height:300px;&quot;&gt;&lt;/div&gt;</code></pre>
+<p>As shown in the example above, the chart will inherit the size (width and height) specified in the container&#39;s div.</p>
+<pre><code>function build() {…}</code></pre>
+<p>Used to render the donut chart.</p>
+<pre><code>function update(data[]) {…}</code></pre>
+<p>Used to update the donut chart with new data.</p>
+<pre><code>function destroy() {…}</code></pre>
+<p>Used to destroy the donut and clean up resources.</p>
+<h2 id="usage">Usage</h2>
+<p>Steps to add a donut chart:</p>
+<ol>
+<li>Instantiate the donut chart widget and provide the configuration object</li>
+<li>Call the build method</li>
+</ol>
+<h5 id="example-1-">Example 1:</h5>
+<p>The following configuration object renders a donut chart with</p>
+<ul>
+<li>chart with 5 slices</li>
+<li>a legend</li>
+<li>tooltips for each slice on hover</li>
+<li>total count displayed at the center of the chart</li>
+<li>since color is not specified, default widget colors will be used</li>
+</ul>
+<pre><code>var conf = {
+                container: donutChartElement,
+                options: options
+            }
+
+var options = {
+                donut: {
+                    name: &quot;Threat Count&quot;,
+                    data: [
+                        [&#39;Critical&#39;, 4440],
+                        [&#39;Major&#39;, 3000],
+                        [&#39;Minor&#39;, 2000],
+                        [&#39;Warning&#39;, 1700],
+                        [&#39;Info&#39;, 300]
+                    ]
+                }
+            };</code></pre>
+<h5 id="example-2-">Example 2:</h5>
+<p>The following configuration object renders a donut chart with</p>
+<ul>
+<li>chart with 5 slices</li>
+<li>a legend</li>
+<li>tooltips for each slice on hover</li>
+<li>total count displayed at the center of the chart</li>
+<li>custom colors</li>
+</ul>
+<pre><code>var conf = {
+                container: donutChartElement,
+                options: options
+            }
+
+var options = {
+                donut: {
+                    name: &quot;Threat Count&quot;,
+                    data: [
+                        [&#39;Critical&#39;, 4440],
+                        [&#39;Major&#39;, 3000],
+                        [&#39;Minor&#39;, 2000],
+                        [&#39;Warning&#39;, 1700],
+                        [&#39;Info&#39;, 300]
+                    ],
+                    showInLegend: true
+                },
+                colors: [&#39;green&#39;, &#39;purple&#39;, &#39;pink&#39;, &#39;orange&#39;, &#39;yellow&#39;]
+            };</code></pre>
+<h5 id="example-3-">Example 3:</h5>
+<p>The following configuration object renders a donut chart with</p>
+<ul>
+<li>chart with 5 slices</li>
+<li>no legend</li>
+<li>tooltips for each slice on hover</li>
+<li>total count displayed at the center of the chart</li>
+<li>since color is not specified, default widget colors will be used</li>
+</ul>
+<pre><code>var conf = {
+                container: donutChartElement,
+                options: options
+            }
+
+var options = {
+                donut: {
+                    name: &quot;Threat Count&quot;,
+                    data: [
+                        [&#39;Critical&#39;, 4440],
+                        [&#39;Major&#39;, 3000],
+                        [&#39;Minor&#39;, 2000],
+                        [&#39;Warning&#39;, 1700],
+                        [&#39;Info&#39;, 300]
+                    ],
+                    showInLegend: false
+                }
+            };</code></pre>
+
+
+</div>
+ 

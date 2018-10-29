@@ -1,0 +1,35 @@
+<div class="search-widget{{#readOnly}} readOnly{{/readOnly}}{{#inlineToken}} inlineToken{{/inlineToken}}">
+    <span class="tokensWrapper{{^readOnly}} advanceSearchWrapper{{/readOnly}}"><ul class="tokens"></ul></span>
+    {{#inlineToken}}
+    <span class="inline_advancedSearch">
+        <svg class="search-icon">
+            <use href="#icon_search_sm"/>
+        </svg>
+     </span>
+    {{/inlineToken}}
+
+    {{^inlineToken}}
+    <div class="removeAllTokens">
+        {{^readOnly}}
+        <span class="close_advancedSearch">
+
+        	<!-- <span class="help_icon"></span> -->
+            <svg class="close_icon">
+            <use href="#icon_close_search"/>
+        </svg>
+
+        </span>
+        {{/readOnly}}
+
+        {{#readOnly}}
+         <span class="close_readOnly"> 
+             <svg class="close">
+            <use href="#icon_close_search"/>
+        </svg>
+        	<span class="clear_all">Clear All</span>
+        </span>
+        {{/readOnly}}
+    </div>
+    {{/inlineToken}}
+
+</div>

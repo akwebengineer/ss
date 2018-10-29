@@ -1,0 +1,75 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-rbacresolver">Slipstream.SDK.RBACResolver</h1>
+<p>Defines the interface between an RBAC client and an <a href="RBACProvider.html">RBAC provider</a>.</p>
+<p>The <em>Slipstream.SDK.RBACResolver</em> function is the constructor for RBACResolver objects.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.RBACResolver()</code></pre>
+<h2 id="rbacresolver-instances">RBACResolver Instances</h2>
+<p>All RBACResolver instances inherit from RBACResolver.prototype.</p>
+<h3 id="properties">Properties</h3>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-rbacresolver-prototype-verifyaccess">SDK.RBACResolver.prototype.verifyAccess</h4>
+<p>Verify that the currently authenticated user has a set of capabilities.</p>
+<h4 id="returns">Returns</h4>
+<p>  <em>true</em> if the currently authenticated user has all of the capabilities specified in the <em>capabilities</em> parameter, <em>false</em> otherwise.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><strong>capabilities</strong> - An array of capabilities to be verified.  The array contains strings that represent the names of capabilities as defined by the underlying network management platform.</li>
+</ul>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<pre><code class="language-javascript">
+   <span class="keyword">var</span> resolver = <span class="keyword">new</span> Slipstream.SDK.RBACResolver();
+   <span class="keyword">var</span> capabilities = [<span class="string">"VPN.read"</span>, <span class="string">"VPN.write"</span>];
+
+   <span class="keyword">var</span> can_read_and_write_VPN = resolver.verifyAccess(capabilities);</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

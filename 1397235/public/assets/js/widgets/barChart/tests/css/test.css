@@ -1,0 +1,19 @@
+.barchart-large {
+    width: 600px;
+    height: 400px;
+}
+
+.barchart-medium {
+    width: 500px;
+    height: 280px;
+}
+
+.barchart-small {
+    width: 400px;
+    height: 280px;
+}
+
+.barchart-react {
+    width: 600px;
+    height: 250px;
+}

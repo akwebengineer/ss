@@ -1,0 +1,96 @@
+.toggle-button-widget {
+  $toggle-on-color: #0099FF;
+  $toggle-off-color: #999;
+  $toggle-disabled-color: #CCC;
+  $before-input-bg: #fff;
+  .beforeAfterInput {
+    display: block;
+    position: absolute;
+    content: "";
+  }
+  @mixin updateToggleColor($color) {
+    & + label {
+      &:before {
+        background-color: $color;
+      }
+      &:after {
+        border: 1px solid $color;
+      }
+    }
+  }
+  .toggle-button-wrapper {
+    display: inline-block;
+    margin-left: -4px;
+    input.toggle-button {
+      position: absolute;
+      display: none;
+      & + label {
+        padding: 0px;
+        margin: 0px;
+        width: 40px;
+        height: 22px;
+        border-radius: 11px;
+        transition: background 0.4s;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        &:before {
+          @extend .beforeAfterInput;
+          top: 6px;
+          left: 5px;
+          bottom: 6px;
+          right: 3px;
+          border-radius: 10px;
+          transition: background 0.4s;
+        }
+        &:after {
+          @extend .beforeAfterInput;
+          top: 3px;
+          left: 5px;
+          bottom: 3px;
+          width: 16px;
+          background-color: $before-input-bg;
+          border-radius: 11px;
+          transition: margin 0.4s, background 0.4s;
+        }
+      }
+      @include updateToggleColor($toggle-off-color);
+      &:checked {
+        & + label:after {
+          margin-left: 16px;
+          background-color: $body-bg;
+        }
+        @include updateToggleColor($toggle-on-color);
+      }
+      &:disabled {
+        & + label {
+          cursor: default;
+        }
+        @include updateToggleColor($toggle-disabled-color);
+        &:checked {
+          @include updateToggleColor($toggle-disabled-color);
+        }
+      }
+    }
+  }
+  .toggle-inline-label{
+    font-size: 12px;
+    vertical-align: top;
+    display: inline-block;
+    padding-top: 5px;
+    &[disabled] {
+      color: $toggle-disabled-color;
+    }
+  }
+}
+
+.slipstream-widget-test-page.toggle-button-widget-test {
+  .toggle-buttons {
+    margin: 20px 0px 40px;
+  }
+}

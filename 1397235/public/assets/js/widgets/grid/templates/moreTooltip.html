@@ -1,0 +1,22 @@
+<div class="more-items">
+    <div class="more_filter_input">
+        <span class="filter-wrapper">
+            <input class="filter" type="text">
+            <svg class="filter-icon"><use href="#icon_search_sm"></use></svg>
+            <svg class="clear-icon"><use href="#icon_close"></use></svg>
+        </span>
+    </div>
+    <div class="more-content">
+    {{^items}}<span class="more-loading">Loading...</span>{{/items}}
+    {{#items}}
+        <div class="more-item" data-id="{{key}}">
+            {{^label.formatter}}
+              {{label.unformat}}
+            {{/label.formatter}}
+            {{#label.formatter}}
+             {{{label.formatter}}}
+            {{/label.formatter}}
+        </div>
+    {{/items}}
+    </div>
+</div>

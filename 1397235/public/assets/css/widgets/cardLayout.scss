@@ -1,0 +1,347 @@
+//classes can't be imported in carousel-widget namespace because of charset usage, not an issue since though since all classes start with the "slick" string
+@import "../../js/vendor/jquery/slick/slick";
+@import "../../js/vendor/jquery/slick/slick-theme";
+
+.card-layout-widget {
+  $card-view-wrapper-shadow: #D9D9D9;
+  $card-view-wrapper-selected: #57B9FA;
+  $card-view-background-disabled: #F9F9F9;
+  $card-title-text-color: #444444;
+  $card-title-carousel-text-color: #666666;
+  $card-title-bar-text-color: #333333;
+  $card-carousel-arrow-separator-color: #CCCCCC;
+  $card-bar-separator-color: #EBEBEB;
+  $card-footer-text-color: #999999;
+  $card-footer-link-color: #3366CC;
+  $card-details-view-background: #505E67;
+  $card-details-text-color: #FFFFFF;
+  $card-details-footer-link-color: #BED5FF;
+  $card-view-top-bottom: 35px;
+  $card-view-carousel-top: 30px;
+
+  .subtitle-action {
+    padding-bottom: 15px;
+  }
+  .card-group {
+    .card-group-title {
+      padding-bottom: 10px;
+      font-size: 15px;
+      font-weight: 400;
+      cursor: pointer;
+      .group-carat {
+        @extend .icon_nav_big_arrow_down-bg, .icon_nav_big_arrow_down-bg-dims;
+        vertical-align: middle;
+        margin-right: 6px;
+        &:not(.collapsed) {
+          fill: $arrow-icon-color;
+        }
+        &.collapsed {
+          transform: rotate(270deg);
+          fill: $collapsed-arrow-icon-color;
+        }
+      }
+    }
+    .card-group-content {
+      margin-left: 22px;
+    }
+  }
+  .card-view-wrapper {
+    margin-bottom: 20px;
+    .card-view {
+      box-shadow: 0 1px 2px 0 $card-view-wrapper-shadow;
+      border: solid 1px $border-color;
+      background-color: $body-bg;
+      height: 100%;
+      .card-title-wrapper {
+        padding: 12px 15px 6px 15px;
+        display: flex;
+        justify-content: space-between;
+        .card-title {
+          margin-top: 4px;
+          @include text-ellipsis;
+          font-family: $font-family-helvetica;
+          font-size: 16px;
+          font-weight: 300;
+          color: $card-title-text-color;
+          height: 19px;
+        }
+        .card-help {
+          flex: 1;
+          margin: 4px 4px 0px;
+        }
+        .card-icon {
+          &.icon-content {
+            display: inline-block;
+            margin-left: 13px;
+            span {
+              display: inline-block;
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+      }
+      .card-content-wrapper {
+        overflow-y: auto;
+        position: absolute;
+        bottom: $card-view-top-bottom;
+        top: $card-view-top-bottom;
+        left: 0px;
+        right: 0px;
+        .card-content {
+          padding: 6px 15px 0px;
+        }
+        &.no-footer{
+          bottom: 1px;
+          .card-content {
+            padding-top: 0px;
+          }
+        }
+      }
+      .card-footer {
+        font-size: 10px;
+        color: $card-footer-text-color;
+        padding: 12px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        .card-date {
+          width: calc(100% - 70px);
+          @include text-ellipsis;
+          &.non-details {
+            width: 100%;
+          }
+        }
+        a {
+          color: $card-footer-link-color;
+        }
+      }
+      .hide-container {
+        display: none;
+      }
+      &[disabled] {
+        background-color: $card-view-background-disabled;
+        .disable-link a {
+          color: $negative-font-primary-light-color;
+          cursor: default;
+          outline: none;
+        }
+        .card-title-wrapper {
+          .card-title {
+            color: $negative-font-primary-light-color;
+          }
+        }
+        .card-footer {
+          color: $negative-font-primary-light-color;
+          .card-details-link {
+            @extend .disable-link;
+          }
+        }
+        .card-content {
+          .slipstream_card_widget_disabled {
+            color: $negative-font-primary-light-color;
+            @extend .disable-link;
+          }
+        }
+      }
+    }
+    &.selected .card-view { //.card-view-wrapper.selected for card selection
+      border: solid 2px $card-view-wrapper-selected;
+      &[disabled] {
+        border: solid 1px $border-color;
+      }
+    }
+    &.card-details-view { //.card-view-wrapper.card-details-view for card details view
+      color: $card-details-text-color;
+      .card-view {
+        background-color: $card-details-view-background;
+        .card-title {
+          color: $card-details-text-color;
+          .ua-field-help {
+            display: none;
+          }
+        }
+        .card-footer {
+          .card-date {
+            display: none;
+          }
+          .less-details {
+            color: $card-details-footer-link-color;
+          }
+        }
+      }
+    }
+  }
+  .cards .carousel-layout { //overwrites default carousel library and card layout styles
+    .slick-list {
+      .slick-slide {//same as .card-view-wrapper
+        margin: 5px 5px 5px 4px;
+        position: relative;
+        outline: none;
+        .card-view {
+          .card-title-wrapper {
+            padding: 7px 15px 0px;
+            .card-title {
+              font-size: 14px;
+              color: $card-title-carousel-text-color;
+            }
+          }
+          .card-content-wrapper{
+            top: $card-view-carousel-top;
+          }
+        }
+      }
+    }
+    .slick-prev {
+      @extend .icon_left_hover-bg, .icon_left_hover-bg-dims;
+      &::before {
+        content: "";
+      }
+      &.slick-disabled {
+        @extend .icon_left-bg, .icon_left-bg-dims;
+        cursor: default;
+      }
+    }
+    .slick-next {
+      @extend .icon_right_hover-bg, .icon_right_hover-bg-dims;
+      &::before {
+        content: "";
+      }
+      &.slick-disabled {
+        @extend .icon_right-bg, .icon_right-bg-dims;
+        cursor: default;
+      }
+    }
+    &.carousel-bar { //card layout with bar style
+      //carousel library adjustments
+      .slick-list {
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+      .slick-prev {
+        margin-left: 10px;
+        @extend .icon_arrow_left_8x17-bg, .icon_arrow_left_8x17-bg-dims;
+        &.slick-disabled {
+          @extend .icon_arrow_left_disabled_8x17-bg, .icon_arrow_left_disabled_8x17-bg-dims;
+        }
+        & + .slick-list {//only applied when prev/next is shown
+          border-left: solid 1px $card-carousel-arrow-separator-color;
+          border-right: solid 1px $card-carousel-arrow-separator-color;
+        }
+      }
+      .slick-next {
+        margin-right: 10px;
+        @extend .icon_arrow_right_8x17-bg, .icon_arrow_right_8x17-bg-dims;
+        &.slick-disabled {
+          @extend .icon_arrow_right_disabled_8x17-bg, .icon_arrow_right_disabled_8x17-bg-dims;
+        }
+      }
+      //card adjustments
+      .card-view-wrapper {
+        margin-right: 0px;
+        margin-left: 0px;
+        .card-view {
+          box-shadow: none;
+          border: 0px;
+          clear: both;
+          width: inherit;
+          max-width: inherit;
+          .card-title-wrapper {
+            float: left;
+            width: inherit;
+            max-width: inherit;
+            .card-title {
+              font-size: 12px;
+              color: $card-title-bar-text-color;
+            }
+          }
+          .card-content-wrapper {
+            float: left;
+          }
+          .bar-separator {
+            float: right;
+            border-left: solid 1px $card-bar-separator-color;
+            height: calc(100% - 30px); //30px: 2xmargin
+            margin-top: -15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.card-layout-widget-test {
+  $card-details-bar-text-color: #444444;
+  .card-total {
+    width: 65px;
+    height: 58px;
+    font-family: $font-family-helvetica; // Special Case
+    font-size: 58px;
+    font-weight: 100;
+    color: $table-head-grid-bg;
+  }
+  .card-content {
+    .custom-bar-card{
+      font-size: 28px;
+      color: $card-details-bar-text-color;
+    }
+    .total {
+      @extend .card-total;
+    }
+    .description {
+      margin: 8px 0px 0px 12px;
+      font-size: 11px;
+      line-height: 15px;
+      .subtitle {
+        color: $link-active-color;
+      }
+      .details {
+        color: $table-head-grid-bg;
+      }
+    }
+    .bars {
+      margin-left: 0px;
+      height: 40px;
+      .subtitle {
+        width: 50px;
+      }
+    }
+    .slipstream_card_widget_disabled {
+      .subtitle {
+        color: $negative-font-primary-light-color;
+        cursor: default;
+        outline: none;
+      }
+    }
+  }
+  .custom-card-details {
+    padding: 8px 20px 0px;
+    .more-details-text {
+      font-size: 11px;
+    }
+    .more-details-total {
+      @extend .card-total;
+      color: inherit;
+      font-size: 50px;
+      width: auto;
+    }
+  }
+  .layout-card-wrapper {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 15px;
+    input {
+      outline: none;
+    }
+    a {
+      color: $link-button-color;
+      font-size: 12px;
+    }
+  }
+  .card_icon_card_success {
+    @extend .icon_card_success-bg, .icon_card_success-bg-dims;
+  }
+  .card_icon_card_error {
+    @extend .icon_card_error-bg, .icon_card_error-bg-dims;
+  }
+}

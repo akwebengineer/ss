@@ -1,0 +1,102 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="using-slipstream-ui-widgets-outside-the-framework">Using Slipstream UI Widgets Outside the Framework</h1>
+<p>The Slipstream UI widgets are typically used by Slipstream workflows, but the widgets can be used outside the framework as well.</p>
+<h2 id="installing-the-standalone-widget-library">Installing the Standalone Widget Library</h2>
+<p>Slipstream build images contain a directory called <em>widgetlib</em> in the <em>dist</em> directory.  This directory contains the Slipstream widget library.  To install the library on your web server, follow these steps:</p>
+<ol>
+<li>Copy the <em>widgetlib</em> folder to any directory under the document root directory of your web server.</li>
+<li><p>Copy the <em>widgetlib/assets</em> folder to the document root directory of your web server.  Your document root directory should now look like this:</p>
+<pre><code>/docroot
+  ...
+  /widgetlib
+  /assets
+  ...</code></pre>
+</li>
+</ol>
+<h2 id="using-the-widget-library">Using the Widget Library</h2>
+<p>To use the widget library you&#39;ll need to import it into your application.  </p>
+<p>All of the Slipstream library modules are <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> enabled and must be loaded using <a href="http://requirejs.org/">requireJS</a>.  The require.js library packaged with the widget library must be included prior to inclusion of the widget library:</p>
+<pre><code class="language-javascript">&lt;script src=<span class="string">"/path/to/widgetlib/js/vendor/require/require.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/path/to/widgetlib/js/slipstream.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></code></pre>
+<p>Once the library is imported, it must be initialized:</p>
+<pre><code class="language-javascript">slipstream.initialize({
+    onInit: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+       <span class="comment">// library initialized, start using widgets</span>
+    }
+});</code></pre>
+<p>The <em>initialize()</em> method accepts an options object.  This object must contain an attribute called <em>onInit</em> that is of function type.  The <em>onInit</em> function is called by the library when initialization is complete.  It is unsafe to use the widget library until <em>onInit</em> has been called.</p>
+<p>Once the library is initialized, the widgets can be used:</p>
+<pre><code class="language-javascript">require([<span class="string">'widgets/barChar/barChartWidget'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(BarChartWidget)</span> {</span>
+    <span class="keyword">var</span> options = {
+        title: <span class="string">'Top 10 Source IP Addresses'</span>,
+        xAxisTitle: <span class="string">'Source IP Addresses'</span>,
+        yAxisTitle: <span class="string">'Count'</span>,
+        categories: [<span class="string">'192.168.1.1'</span>, <span class="string">'192.168.1.2'</span>, <span class="string">'192.168.1.3'</span>,
+                     <span class="string">'192.168.1.4'</span>, <span class="string">'192.168.1.5'</span>, <span class="string">'192.168.1.6'</span>, 
+                     <span class="string">'192.168.1.7'</span>, <span class="string">'192.168.1.8'</span>, <span class="string">'192.168.1.9'</span>, 
+                     <span class="string">'192.168.1.10'</span>
+                    ],
+        tooltip: [<span class="string">'hostname-1'</span>, <span class="string">'hostname-2'</span>, <span class="string">'hostname-3'</span>, 
+                  <span class="string">'hostname-4'</span>, <span class="string">'hostname-5'</span>, <span class="string">'hostname-6'</span>, 
+                  <span class="string">'hostname-7'</span>, <span class="string">'hostname-8'</span>, <span class="string">'hostname-9'</span> ,<span class="string">'hostname-10'</span>
+                 ],
+        data: [<span class="number">88</span>, <span class="number">81</span>, <span class="number">75</span>, <span class="number">73</span>, <span class="number">72</span>, <span class="number">63</span>, <span class="number">39</span>, <span class="number">32</span>, <span class="number">21</span>, <span class="number">1</span>]                   
+    };
+
+    <span class="keyword">var</span> conf = {
+        container: <span class="string">'#barChartContainer'</span>,
+        options: options
+    }
+
+    <span class="keyword">var</span> barChart = <span class="keyword">new</span> BarChartWidget(conf);
+    barChart.build();
+}</code></pre>
+<p>See <a href="widgets.html">the Slipstream widget documentation</a> for further details on the use of individual Slipstream widgets.</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

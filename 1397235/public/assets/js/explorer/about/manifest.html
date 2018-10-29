@@ -1,0 +1,203 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="plugin-manifest">Plugin Manifest</h1>
+<p>Each plugin contains a manifest file in JSON format called <em>plugin.json</em>.  This file must exist in the root directory of the plugin&#39;s directory structure.  This file provides metadata describing the plugin as well as a declaration of the plugin&#39;s activities.</p>
+<pre><code class="language-javascript">{
+    <span class="string">"name"</span>: <span class="string">"&lt;plugin name&gt;"</span>,
+    <span class="string">"description"</span>: <span class="string">"&lt;plugin description&gt;"</span>
+    <span class="string">"publisher"</span>: <span class="string">"&lt;publisher name&gt;"</span>,
+    <span class="string">"version"</span>: <span class="string">"MM.mm.rr"</span>,
+    <span class="string">"release_date"</span>: <span class="string">"YYYY-MM-DD"</span>,
+    <span class="string">"min_platform_version"</span>: <span class="string">"MM.mm.rr"</span>,
+    <span class="string">"activities"</span>: [
+       {
+          <span class="string">"auth_required"</span>: <span class="xml"><span class="tag">&lt;<span class="title">true|false</span>&gt;</span>,
+          "module": "<span class="tag">&lt;<span class="title">relative_path_to_module</span>&gt;</span>",
+          "url_path": "<span class="tag">&lt;<span class="title">relative_url_of_activity</span>&gt;</span>",
+          "breadcrumb": <span class="tag">&lt;<span class="title">true|false</span>&gt;</span>,
+          "autostart" : <span class="tag">&lt;<span class="title">true|false</span>&gt;</span>,
+          "filters": [
+             {
+                "id": "<span class="tag">&lt;<span class="title">filter_id</span>&gt;</span>"
+                "action": "<span class="tag">&lt;<span class="title">action</span>&gt;</span>",
+                "data": "<span class="tag">&lt;<span class="title">data</span> <span class="attribute">description</span>&gt;</span>"
+            },
+            "capabilities": [
+                {
+                    "name": <span class="tag">&lt;<span class="title">name</span> <span class="attribute">of</span> <span class="attribute">capability</span>&gt;</span>
+                }
+            ]
+         ]
+      }
+    ],
+    "navigation_paths": [
+       {
+           "path": "path/to/navigational/element",
+           "filter": "<span class="tag">&lt;<span class="title">filter_id</span>&gt;</span>"
+       }
+    ],
+    "dashboard": {
+        ...
+    }
+}</span></code></pre>
+<p>The attributes of the manifest are defined as follows:</p>
+<p><strong>name</strong>
+A string containing the name of the plugin.  This string must not contain any characters that are unsafe in a URL.  If it does, the plugin will not be loaded.  </p>
+<p>Plugin names must be unique within a given instance of Slipstream.  Plugin names that begin with an &#39;_&#39; are reserved and should not be used by application-level plugins.</p>
+<p><strong>description</strong>
+A string containing a description of the plugin&#39;s purpose.</p>
+<p><strong>publisher</strong>
+A string containing information about the plugin&#39;s publisher.
+eg. &quot;Juniper Networks, Inc.&quot;</p>
+<p><strong>version</strong>
+The version number of the plugin in MM.mm.rr format where</p>
+<p>MM = major version
+mm = minor version
+rr = revision</p>
+<p><strong>release_date</strong>
+The date this version of the plugin was released in YYYY-MM-DD format where</p>
+<p>YYYY = year
+MM = month
+DD = day</p>
+<p><strong>min_platform_version</strong>
+The minimum framework version on which this plugin is defined to run, in MM.mm.rr format, where</p>
+<p>MM = major version
+mm = minor version
+rr = revision</p>
+<p><strong>activities</strong>
+A description of this module&#39;s activities.</p>
+<ul>
+<li><p><strong>module</strong>
+The qualified name of the Javascript module implementing the entry point of this activity.  Qualifiers are relative to the plugin&#39;s /js directory.    eg. &quot;foo/bar/Module&quot;.</p>
+</li>
+<li><p><strong>url_path</strong>
+The URL path associated with the activity.  This path is pushed to the browser&#39;s history when the activity is started and can be used for bookmarking and history navigation.  The URL path is formed by appending the <em>url_path</em> to the plugin name.  For example, if the plugin name is &quot;dashboard&quot; and the <em>url_path</em> is &quot;configuration&quot;, the URL /dashboard/configuration is pushed to the browser&#39;s history when the activity is started.</p>
+</li>
+<li><p><strong>breadcrumb</strong>
+Set this to <em>true</em> if launching the activity should result in the navigation breadcrumb being updated, <em>false</em> otherwise.  If not specified the default is <em>true</em>.  Suppressing breadcrumb updates can be useful for activities that do not render content to the main content pane.</p>
+</li>
+<li><p><strong>autostart</strong>
+Set this to <em>true</em> if the activity should be started automatically after the UI is fully rendered.  The default value is <em>false</em>.</p>
+</li>
+<li><p><strong>auth_required</strong>
+If <em>true</em> the user will be required to authenticate prior to the activity being launched.  If <em>false</em> no authentication will be required.  Default is <em>true</em>.</p>
+</li>
+<li><p><strong>filters</strong>
+An array of filters defining the set of intents to which this plugin responds.  Each filter definition has the following attributes:</p>
+<ul>
+<li><p><strong>id</strong>
+The filter&#39;s id.  If specified, must be unique amongst all of the filters defined in the plugin.json file.</p>
+</li>
+<li><p><strong>action</strong>
+The action that starts this activity.  eg. Slipstream.Intent.action.VIEW.</p>
+</li>
+<li><p><strong>data</strong>
+An object that can contain any of the following attributes:</p>
+<ul>
+<li><p>mime_type
+The MIME type of the data on which the activity can perform the defined action.</p>
+</li>
+<li><p>scheme
+The URI scheme for which the activity can perform the defined action.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>capabilities</strong>
+An array of objects, each defining a capability that a user must have in order to access this activity.   If more than one capability is specified, then the user must have all of them in order to access the activity.  Each object has the following attributes:</p>
+<ul>
+<li><strong>name</strong>
+The name of the capability.  These names are defined by the underlying network management platform.</li>
+</ul>
+</li>
+</ul>
+<p>This activity will be launched via an intent if and only if the <em>action</em> and <em>data</em> specified in the intent match the filter&#39;s action and data attributes.</p>
+<p><strong>navigation_paths</strong>
+A description of the navigation paths to be added to the framework&#39;s navigational elements.  Each navigation path contains the following attributes:</p>
+<ul>
+<li><p><strong>path</strong>
+The fully-qualified navigation path to the navigational element being defined.  Only two levels of navigation are currently supported.  eg. Devices/Security Devices</p>
+</li>
+<li><p><strong>filter</strong>
+The id of the activity filter associated with this navigational element.  When a user selects the navigational element in the UI, an intent matching the referenced filter will be created in order to start the associated activity.</p>
+</li>
+</ul>
+<p><strong>dashboard</strong>
+A description of the dashboard widgets this plugin implements. See the <a href="">dashboard documentation</a> for details.</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-json">{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"firewall-policy"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"Juniper Firewall Policy Plugin"</span></span>,
+  "<span class="attribute">publisher</span>": <span class="value"><span class="string">"Juniper Networks, Inc."</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"00.00.01"</span></span>,
+  "<span class="attribute">release_date</span>": <span class="value"><span class="string">"2014-02-07"</span></span>,
+  "<span class="attribute">min_platform_version</span>": <span class="value"><span class="string">"00.00.01"</span></span>,
+  "<span class="attribute">activities</span>": <span class="value">[
+    {
+      "<span class="attribute">module</span>": <span class="value"><span class="string">"firewallPolicyActivity"</span></span>,
+      "<span class="attribute">filters</span>": <span class="value">[
+        {
+          "<span class="attribute">id</span>": <span class="value"><span class="string">"firewall.policy"</span></span>,
+          "<span class="attribute">action</span>": <span class="value">Slipstream.Intent.action.VIEW</span>,
+          "<span class="attribute">data</span>": <span class="value">{
+            "<span class="attribute">mime_type</span>": <span class="value"><span class="string">"vnd.juniper.security.fw-policy"</span>
+          </span>}
+        </span>}
+      ]
+    </span>}
+  ]</span>,
+  "<span class="attribute">navigation_paths</span>": <span class="value">[
+    {
+      "<span class="attribute">path</span>": <span class="value"><span class="string">"Policies/Firewall"</span></span>,
+      "<span class="attribute">filter</span>": <span class="value"><span class="string">"firewall.policy"</span>
+    </span>}
+  ]
+</span>}</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

@@ -1,0 +1,110 @@
+<dl class="sub-nav actions right">
+    {{^actionButtons}}
+        <dd id='moreMenu' class="actionMenu more">More<svg><use href="#icon_arrow_down_centered"></use></dd>
+        <dd class="actionSeparator"><span></span></dd>
+        <dd class="create tooltip defaultActionIcon" title="Create">
+            <svg class="icon_create-dims"><use href="#icon_create"></use></svg>
+        </dd>
+        <dd class="edit disabled tooltip defaultActionIcon" title="Edit">
+            <svg class="icon_edit-dims"><use href="#icon_edit"></use></svg>
+        </dd>
+        <dd class="delete disabled tooltip defaultActionIcon" title="Delete">
+            <svg class="icon_delete_grid-dims"><use href="#icon_delete_grid"></use></svg>
+        </dd>
+    {{/actionButtons}}
+    {{#actionButtons}}
+        {{#customButtons}}
+            {{#button_type}}
+                {{>partialActionContainerButton}}
+            {{/button_type}}
+            {{#menu_type}}
+                {{>partialActionContainerMenu}}
+            {{/menu_type}}
+            {{#checkbox_type}}
+                    {{>partialActionContainerCheckbox}}
+            {{/checkbox_type}}
+            {{#dropdown_type}}
+                {{>partialActionContainerDropdown}}
+            {{/dropdown_type}}
+            {{#custom_type}}
+                <dd id="{{key}}" class="customAction"><span></span></dd>
+            {{/custom_type}}
+        {{/customButtons}}
+
+        <dd id='moreMenu' class="actionMenu more">
+            More<svg><use href="#icon_arrow_down_centered"></use></svg>
+        </dd>
+        <dd class="actionSeparator"><span></span></dd>
+
+        {{^defaultButtons}}
+            <dd class="create tooltip defaultActionIcon" title="Create">
+                <svg class="icon_create-dims"><use href="#icon_create"></use></svg>
+            </dd>
+            <dd class="edit disabled tooltip defaultActionIcon" title="Edit">
+                <svg class="icon_edit-dims"><use href="#icon_edit"></use></svg>
+            </dd>
+            <dd class="delete disabled tooltip defaultActionIcon" title="Delete">
+                <svg class="icon_delete_grid-dims"><use href="#icon_delete_grid"></use></svg>
+            </dd>
+            <dd class="actionSeparator"><span></span></dd>
+        {{/defaultButtons}}
+        {{#defaultButtons}}
+            {{^create}}
+                <dd class="create tooltip defaultActionIcon" title="Create">
+                    <svg class="icon_create-dims"><use href="#icon_create"></use></svg>
+                </dd>
+            {{/create}}
+            {{#create}}
+                {{#icon_type}}
+                    {{>partialActionContainerIcon}}
+                {{/icon_type}}
+                {{#button_type}}
+                    {{>partialActionContainerButton}}
+                {{/button_type}}
+                {{#menu_type}}
+                    {{>partialActionContainerMenu}}
+                {{/menu_type}}
+            {{/create}}
+            {{^edit}}
+                <dd class="edit disabled tooltip defaultActionIcon" title="Edit">
+                    <svg class="icon_edit-dims"><use href="#icon_edit"></use></svg>
+                </dd>
+            {{/edit}}
+            {{#edit}}
+                {{#icon_type}}
+                    {{>partialActionContainerIcon}}
+                {{/icon_type}}
+                {{#button_type}}
+                    {{>partialActionContainerButton}}
+                {{/button_type}}
+                {{#menu_type}}
+                    {{>partialActionContainerMenu}}
+                {{/menu_type}}
+            {{/edit}}
+            {{^delete}}
+                <dd class="delete disabled tooltip defaultActionIcon" title="Delete">
+                    <svg class="icon_delete_grid-dims"><use href="#icon_delete_grid"></use></svg>
+                </dd>
+            {{/delete}}
+            {{#delete}}
+                {{#icon_type}}
+                    {{>partialActionContainerIcon}}
+                {{/icon_type}}
+                {{#button_type}}
+                    {{>partialActionContainerButton}}
+                {{/button_type}}
+                {{#menu_type}}
+                    {{>partialActionContainerMenu}}
+                {{/menu_type}}
+            {{/delete}}
+            <dd class="actionSeparator"><span></span></dd>
+        {{/defaultButtons}}
+
+        {{#customButtons}}
+            {{#icon_type}}
+                {{>partialActionContainerIcon}}
+            {{/icon_type}}
+        {{/customButtons}}
+
+    {{/actionButtons}}
+</dl>

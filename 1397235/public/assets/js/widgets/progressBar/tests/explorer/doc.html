@@ -1,0 +1,68 @@
+<div>
+    <h1 id="progress-bar-widget">Progress Bar Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The progress bar widget is a reusable graphical interface that allows users to show the progress bar while loading a page or file. </p>
+<h2 id="api">API</h2>
+<p>The progress bar widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has three variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    hasPercentRate: &lt;define if the progress bar has to show the percentage progress, then the value is true. Default: false.(optional)&gt;
+  statusText: &lt;define the status text. If not defined, there is default label in widget.&gt;
+}</code></pre>
+<p>For example:</p>
+<pre><code>{
+    var progressBar = new ProgressBarWidget({
+                    &quot;container&quot;: this.el,
+                    &quot;hasPercentRate&quot;: true,
+                    &quot;statusText&quot;: &#39;Loading&#39;
+                });
+}</code></pre>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the progress bar in the specified container. For example:</p>
+<pre><code>{
+    progressBar.build();
+}</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the progress bar widget.</p>
+<pre><code>{
+    progressBar.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a progress bar in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the progress bar widget and provide the container where the progress bar will be rendered and the hasPercentRate value. If the progress bar contains percentage rate, the value of hasPercentRate should be true. Otherwise, the default is false.</li>
+<li>Call the build method of the progress bar widget</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the progress bar widget.</p>
+<pre><code>{
+    var progressBar = new ProgressBarWidget({
+                                &quot;container&quot;: this.el,
+                                &quot;hasPercentRate&quot;: true,
+                                &quot;statusText&quot;: &#39;Current stage of operation...&#39;
+                            }).build();
+}</code></pre>
+<h2 id="methods">Methods</h2>
+<h3 id="setprogressbar">setProgressBar</h3>
+<p>Sets progress instantly without animation. For example:
+@param Number: how much percent the progress bar should display.
+Note: Only apply while you use the percentage progress bar.</p>
+<pre><code>   progressBar.setProgressBar(1.0); // range from 0.0-1.0</code></pre>
+<h3 id="hidetimeremaining">hideTimeRemaining</h3>
+<p>Hides time remaining. For example:
+Note: Only apply while you use the percentage progress bar.</p>
+<pre><code>   progressBar.hideTimeRemaining();</code></pre>
+<h3 id="settimeremaining">setTimeRemaining</h3>
+<p>Sets time remaining. For example:
+@param Millionseconds: how long the file will be loaded completely.
+Note: Only apply while you use the percentage progress bar.</p>
+<pre><code>   progressBar.setTimeRemaining(millionseconds);</code></pre>
+<h3 id="setstatustext">setStatusText</h3>
+<p>Sets progress bar status text. For example:
+@param String: the text</p>
+<pre><code>   progressBar.setStatusText(&quot;Complete&quot;);</code></pre>
+
+
+</div>
+ 

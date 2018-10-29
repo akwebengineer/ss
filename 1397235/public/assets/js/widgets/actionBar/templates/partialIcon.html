@@ -1,0 +1,21 @@
+{{#icon.default.icon_url}}
+    {{^disabledStatus}}
+        <svg class="iconImg{{#label}} tooltip{{/label}} {{icon.default.icon_class}}{{#icon.default.icon_color}} {{icon.default.icon_color}}{{/icon.default.icon_color}}{{^icon.default.icon_color}} defaultIcon{{/icon.default.icon_color}}" title="{{label}}"><use href="{{icon.default.icon_url}}"></use></svg>
+    {{/disabledStatus}}
+    {{#disabledStatus}}
+        <svg class="iconImg{{#label}} tooltip{{/label}} {{icon.default.icon_class}}{{#icon.disabled}} {{icon.disabled}}{{/icon.disabled}}{{^icon.disabled}} disabledIcon{{/icon.disabled}}" disabled title="{{label}}"><use href="{{icon.default.icon_url}}"></use></svg>
+    {{/disabledStatus}}
+{{/icon.default.icon_url}}
+{{^icon.default.icon_url}}
+    {{#icon.default}}
+        {{^disabledStatus}}
+        <span class="iconImg backgroundIcon{{#label}} tooltip{{/label}}{{#icon}} {{icon.default}}{{/icon}}" title="{{label}}"></span>
+        {{/disabledStatus}}
+        {{#disabledStatus}}
+        <span class="iconImg backgroundIcon{{#label}} tooltip{{/label}} {{#icon.disabled}}{{icon.disabled}}{{/icon.disabled}}{{^icon.disabled}} disabledIcon{{/icon.disabled}}" title="{{label}}" disabled></span>
+        {{/disabledStatus}}
+    {{/icon.default}}
+    {{^icon.default}}
+        <span class="iconImg backgroundIcon{{#label}} tooltip{{/label}} {{icon}}{{#disabledStatus}} disabledIcon{{/disabledStatus}}" title="{{label}}" {{#disabledStatus}}disabled{{/disabledStatus}}></span>
+    {{/icon.default}}
+{{/icon.default.icon_url}}

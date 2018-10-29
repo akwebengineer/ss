@@ -1,0 +1,1970 @@
+<div>
+    <h1 id="grid-widget">Grid Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Grid widget is a reusable graphical user interface that allows users to get a grid or table from a configuration object that includes the url where the data will be extracted.</p>
+<h2 id="api">API</h2>
+<p>The Grid widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object can include six variables:</p>
+<pre><code>{
+  container: &lt;define the container where the widget will be rendered, required field&gt;,
+  elements: &lt;define the parameters required to build the widget, required field&gt;
+  actionEvents: &lt;define the custom events that will be triggered when one of the defined action is completed&gt;
+  cellOverlayViews: &lt;define the views that will be attached to an overlay when a cell is edited&gt;
+  cellTooltip: &lt;define the tooltip that will be rendered when an element (cell or item on a cell) includes a data-tooltip attribute&gt;
+  onConfigUpdate: &lt;define the callback that the grid widget will invoke any time an update on the user preferences happen like a resize of a column, show or hide of a column, sort of a column, or adding a filter to the grid&gt;
+}</code></pre>
+<p>For example:</p>
+<pre><code>{
+    var grid = new gridWidget({
+        &quot;container&quot;: this.el,
+        &quot;elements&quot;: configurationSample,
+        &quot;actionEvents&quot;: this.actionEvents,
+        &quot;cellOverlayViews&quot;: this.cellOverlayViews,
+        &quot;cellTooltip&quot;: this.cellTooltip,
+        &quot;onConfigUpdate&quot;: this.onConfigUpdate
+    });
+}</code></pre>
+<h3 id="container">container</h3>
+<p>Represents the HTML node where the Grid widget will be appended.</p>
+<h3 id="elements">elements</h3>
+<p>Represents the group of parameters required to define the grid data, columns, validation, customSortCallback and context menu. It should be defined in a JSON object and might have the following parameters:</p>
+<p><strong>title</strong>
+Adds a title to the grid.</p>
+<p><strong>title-help</strong>
+Adds a tooltip text next to the title of the grid. It has two parameters: content and ua-help-identifier</p>
+<ul>
+<li><p><strong><em>content</em></strong>
+Defines the content of the tooltip.</p>
+</li>
+<li><p><strong><em>ua-help</em></strong>
+Adds an alias for user assistance event binding.</p>
+</li>
+</ul>
+<p><strong>tableId</strong>
+Adds and id to the grid.</p>
+<p><strong>height</strong>
+Defines the height of the grid. It could be a fixed or an auto height. For a fixed height, the number of pixels should be provided. For an auto height, the string &quot;auto&quot; should be used, and it will allow auto adjust the height of the grid to the available height in the page. It is recommended for grids on a page, while grids on a overlay should use a fixed height.
+In the case of auto height, if the grid container is resized, then the grid height will be automatically adjusted to fit the new area. For example, if a container like the following:</p>
+<pre><code>&lt;div class=&quot;responsive-height&quot;&gt;
+    &lt;div class=&quot;slipstream-content-title&quot;&gt;Grid Sample Page&lt;/div&gt;
+    &lt;div class=&quot;showHide&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>is used to build a grid (container parameter of the grid configuration will be the DOM with responsive-height class), then the grid is appended at the end of the container (after the container with showHide class). The grid configuration would look like:</p>
+<pre><code> new GridWidget({
+     container: this.el.find(&#39;.responsive-height&#39;)[0],
+     elements: configurationSample.simpleGridAdvancedFilter,
+     actionEvents:this.actionEvents
+ });</code></pre>
+<p> Therefore, if showHide container has a toggle state where the container height increases or decreases, then the grid height will be responsive to the new container height and will expand or decrease its height accordingly.</p>
+<p><strong>footer</strong>
+Shows the footer on the grid.  It is a boolean value - true or false; Defaults to true.</p>
+<p>The footer can also be specified as an object that defines a callback method named getTotalRows.  This would be the only case when the footer should be defined as an object rather than a boolean value - to define the getTotalRows callback function.</p>
+<p><strong><em>getTotalRows</em></strong>
+An optional callback method that will be used to set the total number of rows in the grid footer.  This should be specified when the &#39;url&#39; property is not specified to populate the grid.  Instead the client uses the addPageRows method on the grid to populate.  The getTotalRows should be specified within the footer object.</p>
+<p><strong>hideRowCount</strong>
+Defines whether or not the total row count is displayed in the footer. Accepts boolean - true / false. When no configuration is provided, this defaults to false.</p>
+<p><strong>hideSelectionAndRowCount</strong>
+Defines whether or not the selected and total row count is displayed in the footer. Accepts boolean - true / false. When no configuration is provided, this defaults to false.</p>
+<pre><code>&quot;footer&quot; : {
+    &quot;getTotalRows&quot; : function() {
+        if(self.policyCollection.models.length &gt; 0) {
+            var model = self.policyCollection.models[0];
+            return model.get(&#39;policy&#39;).length;
+        }
+        return 0;
+    },
+    hideRowCount: false,
+    hideSelectionAndRowCount: false
+}</code></pre>
+<pre><code>&quot;footer&quot; : {
+    hideRowCount: true,
+    hideSelectionAndRowCount: false
+}</code></pre>
+<p><strong>refresh</strong>
+Defines whether or not manual refresh capabilities are added to the grid.  This is either a boolean or an object.  If an object then the following optional attributes can be specified:</p>
+<ul>
+<li><p><strong><em>onRefresh</em></strong>
+A no-argument callback function that is invoked whenever a manual refresh operation is performed.  If this is omitted, the grid&#39;s default refresh method will be invoked.  </p>
+</li>
+<li><p><strong><em>tooltipText</em></strong>
+Customized tooltip text that will be associated with the manual refresh control.  A default tooltip will be provided if this is omitted.</p>
+</li>
+</ul>
+<p>If a boolean with the value <em>true</em>,  the grid&#39;s default refresh method will be invoked to refresh the grid.</p>
+<p><strong>url</strong>
+Indicates where to get the data for the grid. This parameter represents the API that will be called to get the data to be shown in the grid. If it is absent, the grid will attempt to get data from the getData callback method defined in the getData parameter. If both of the parameters are absent, an empty grid will be rendered.</p>
+<p><strong>urlMethod</strong>
+Defines the HTTP method to use for the request (for example: &quot;POST&quot;, &quot;GET&quot;, &quot;PUT&quot;). If the parameter is absent, then the default value is &quot;GET&quot;.</p>
+<p><strong>beforeSendRequest</strong>
+Callback that gets invoked before requesting any data. It provides the current URL string as a parameter. The expected output is the original URL or an updated URL. The new url will be used during all the grid operations like sorting or new page request (virtual scrolling). It is recommended to use this method instead the before the beforeSend method of ajaxOption since selection and sorting would not work properly due to conflicts with the grid library.</p>
+<p><strong>reformatUrl</strong>
+Defines a callback that will be called to overwrite the final URL request sent to the server for GET method. The input parameter is the originalUrl object with all the parameters that will be sent in the URL request. If filter parameter is enabled, searchUrl provides a similar access to the original URL, but it only targets the tokens to be filtered before they are formatted in the grid URL standard. reformatUrl provides the parameters that will be sent to the server including the ones that have been formatter during the grid filtering. For example, the reformatUrl callback could be the following:</p>
+<pre><code> var reformatUrl = function (originalUrl) {
+        if (originalUrl.sord){
+            var sord = originalUrl.sord;
+            delete originalUrl.sord;
+            originalUrl.sOrd = sord;
+        }
+        originalUrl.test = &quot;123&quot;;
+        return originalUrl;
+    };</code></pre>
+<p><strong>postData</strong>
+Allows to add data in the body of the URL POST request. The data will be available together with the grid internal data like paging, sorting, searching, etc. For example, an extract of the grid configuration (elements parameter) could be:</p>
+<pre><code>    &quot;urlMethod&quot;: &quot;POST&quot;,
+    &quot;postData&quot;: {
+        &quot;value1&quot;: &quot;valuePostData1&quot;,
+        &quot;value2&quot;: &quot;valuePostData2&quot;
+    },</code></pre>
+<p>If postData is defined as a function, then postData will be used as a callback that will allow to overwrite the default post data provided by the grid in cases like loading, sorting or searching data.</p>
+<p><strong>reformatData</strong>
+Reformat the response data after the grid invokes the URL provided in the configuration. This callback method will be useful when the response data is expected to have some attributes (like in the tree grid) but it is not available in the original response. In this case, the data could be updated and the callback should return the updated data . For example:</p>
+<pre><code>    var reformatData = function (data) {
+        var originalData = data.ruleCollection.rules;
+        originalData[0].name = &quot;Zone&quot;;
+       originalData[0].ruleLevel = 0;
+        return data;
+    };</code></pre>
+<p><strong>numberOfRows</strong>
+Defines the number of rows that will be requested from the API to show the next set of rows for virtual scrolling (pagination). The height needs to be set in pixels and the scroll has to be set to true.</p>
+<p><strong>multiselect</strong>
+Defines a grid with multiple selection of the rows when it is set to true.</p>
+<p><strong>singleselect</strong>
+Defines a grid with single selection of the rows when it is set to true.</p>
+<p><strong>jsonRoot</strong>
+Defines where the data begins in the JSON response. For example:</p>
+<pre><code>var conf = {
+ ...
+ &quot;jsonRoot&quot;: &quot;jobs.job&quot;,
+ ...
+}</code></pre>
+<p><strong>jsonRecords</strong>
+Defines a function that returns the number of records that an API response could have.  For example:</p>
+<pre><code>var conf = {
+ ...
+ &quot;jsonRecords&quot;: function(data) {
+     return data.jobs[&#39;@total&#39;];
+ },
+ ...
+}</code></pre>
+<p><strong>jsonId</strong>
+Defines the unique id of the row.</p>
+<p><strong>noResultMessage</strong>
+Defines a custom message that will be shown in the grid, if no records are available. This accepts a string value and callback function that should return string value.</p>
+<pre><code>var conf = {
+ ...
+ //noResultMessage:&quot;No data available&quot;,
+ &quot;noResultMessage&quot;: function() {
+     return &quot;No data available&quot;;
+ },
+ ...
+}</code></pre>
+<p><strong>orderable</strong>
+Defines if the columns can be reordered by drag-and-drop column header. Default: true
+Note: tree grid, group grid and nested grid can&#39;t use this feature</p>
+<p><strong>onSelectAll</strong>
+Defines a callback that will be invoked when a user click on the select all checkbox of the grid. The parameters that are passed are setIdsSuccess and setIdsErrors, tokens, parameters. setIdsSuccess is a callback that needs to be invoked with an array of all the row ids available in the grid (row ids for all pages). setIdsError is the error message that should be passed in case the row ids request results on an error.tokens parameter is an array with all the tokens or filters applied to the grid. parameters is an object with all the parameters applied to the current API request. Once the user enables the selects all checkbox, all row ids will be returned in the selectedRows parameter of the event handler as an array. If the user deselects some rows, then the unselected rows will be removed from the original row id array. If the user deselect the select all checkbox, then the selected rows will be zero. For example:</p>
+<pre><code>     var getRowIds = function (setIdsSuccess, setIdsError, tokens, parameters) {
+         $.ajax({
+             type: &#39;GET&#39;,
+             url: &#39;/assets/js/widgets/grid/tests/dataSample/allSDServicesIds.json&#39;,
+             success: function(data) {
+                 setIdsSuccess(data);
+             },
+             error: function() {
+                 setIdsError(&quot;Getting all row ids in the grid FAILED.&quot;);
+             }
+         });
+     };</code></pre>
+<p> Additionally, the gridOnSelectAll event is available. When the selectAll of the grid is selected, then the event status is set to true; when the select all checkbox is clicked again, so the deselect all rows happen, then the status is set to false. The user of the grid widget could listen for the gridOnSelectAll event and expect the status parameter in the handler updated properly:</p>
+<pre><code> this.$el.bind(&quot;gridOnSelectAll&quot;, function(e, status){
+    console.log(&quot;gridOnSelectAll status: &quot; + status);
+ });</code></pre>
+<p><strong>sorting</strong>
+Defines the sorting of the grid. The sorting parameter (sortby) will be appended to the grid url and it will be requested to the server. If virual scrolling is enabled, each url request will include the sortby parameter. The value of sorting parameter should be an array and each element is an object with two parameters:</p>
+<ul>
+<li><p><strong><em>column</em></strong>
+Defines the id of the column that will be used to sort the table by default.</p>
+</li>
+<li><p><strong><em>order</em></strong>
+Defines the type of sort that the table will have for its column parameter. It can be: asc (ascendant) or desc (descendant). If the parameter is not defined, it will be set to asc.</p>
+</li>
+</ul>
+<p>For example:</p>
+<pre><code>&quot;sorting&quot;: [{
+        &quot;column&quot;:&quot;id&quot;,
+        &quot;order&quot;: &quot;asc&quot; //asc,desc
+    },{
+        &quot;column&quot;:&quot;percent-complete&quot;,
+        &quot;order&quot;:&quot;desc&quot;
+}],</code></pre>
+<p>In case the sorting feature of the grid needs to be disabled for all the columns, then the sorting parameter should be set to false. For example:</p>
+<pre><code>&quot;sorting&quot; false</code></pre>
+<p>By default, sorting in all columns of the grid is enabled.</p>
+<p>If only individual columns needs to have the sorting option disabled, then in the column configuration, for the columns parameter, add to the column configuration the parameter sortable and set it to false. The default value is true. For example:</p>
+<pre><code>{
+    var configurationSample = {
+          &quot;title&quot;: &quot;Recent Logs&quot;,
+          ...
+          &quot;sorting&quot;: [{
+                      &quot;column&quot;:&quot;name&quot;,
+                      &quot;order&quot;: &quot;asc&quot;
+                  }],
+          &quot;columns&quot;: [
+                       {
+                            &quot;name&quot;: &quot;name&quot;,
+                            ...
+                        },{
+                            &quot;name&quot;: &quot;invdate&quot;,
+                            &quot;label&quot;: &quot;Date&quot;,
+                            &quot;sortable&quot;: false
+                        }, {
+                       ...
+              }]
+      };
+}</code></pre>
+<p><strong>customSortCallback</strong>
+Defines the callback that will be called when a sortable column is clicked. The callback will provided with 3 parameters - index, name and sortorder. To be used with datatype = local ONLY.</p>
+<p>  Raised immediately after sortable column is clicked and before sorting the data. 
+  index is the index from colModel, 
+  name is the name from colModel, 
+  sortorder is the new sorting order - can be &#39;asc&#39; or &#39;desc&#39;. </p>
+<pre><code>{
+    var configurationSample = {
+          &quot;title&quot;: &quot;Recent Logs&quot;,
+          ...
+          &quot;sorting&quot;: [{
+                      &quot;column&quot;:&quot;name&quot;,
+                      &quot;order&quot;: &quot;asc&quot;
+                  }],
+          customSortCallback: function(columnIndex, columnName, sortOrder){
+                    console.log(&#39;Sorting grid in &#39; + sortOrder + &#39; order on &#39; + columnName);
+                    //perform custom sort
+                    ......
+                    //call gridWidget.reloadGridData
+                    ......
+                  }
+      };
+}</code></pre>
+<p><strong>grouping</strong>
+Defines the parameters required to group data in the grid. The data can be grouped by one column or multiple columns. It has the following parameters:</p>
+<ul>
+<li><p><strong><em>column</em></strong>
+Defines the id of the column that will be used to group the table.</p>
+</li>
+<li><p><strong><em>order</em></strong>
+Defines the type of sort that the table will have for the column parameter. It can be: asc (ascendant) or desc (descendant). If the parameter is not defined, it will be set to asc.</p>
+</li>
+<li><p><strong><em>show</em></strong>
+Allows to hide the column used to group the data. True will keep the column and false will hide it. If it&#39;s not available, it will default to true (show).</p>
+</li>
+<li><p><strong><em>text</em></strong>
+Defines text that will be showed for the row that has the data is grouped. If it&#39;s not available, it will default to the value of the column. For example for the parameter:</p>
+</li>
+</ul>
+<pre><code>&quot;grouping&quot;:{
+            &quot;columns&quot;:[{
+                &quot;column&quot;:&quot;id&quot;,
+                &quot;order&quot;: &quot;desc&quot;, //asc,desc
+                &quot;show&quot;: true
+                &quot;text&quot;: &quot;Id: &lt;b&gt;{0}&lt;/b&gt;&quot;
+            },{
+                &quot;column&quot;:&quot;job-status&quot;,
+                &quot;order&quot;: &quot;desc&quot;,
+                &quot;show&quot;: false,
+                &quot;text&quot;: &quot;Status: &lt;b&gt;{0}&lt;/b&gt;&quot;
+            }],
+            &quot;collapse&quot;:false
+        },</code></pre>
+<p>the grouping of the job-status will be shown as:  &quot;Status: SUCCESS&quot;.</p>
+<ul>
+<li><p><strong><em>collapse</em></strong>
+Allows to collapse all grouping of the data if it is set to true or expand it all if it is set to false.</p>
+</li>
+<li><p><strong><em>order</em></strong>
+Defines the type of sort that the table will have for the column parameter. It can be: asc (ascendant) or desc (descendant).</p>
+</li>
+</ul>
+<p><strong>tree</strong>
+Defines the parameters required to show data as a tree. The data is arranged in a hierarchical grid view and can be composed by parent or groups and leafs. It uses the adjacency model in which each item in the table contains a pointer to its parent. It has the following parameters:</p>
+<ul>
+<li><p><strong><em>column</em></strong>
+Represents the name of the attribute in the data that will be used to group the rows in the grid.</p>
+</li>
+<li><p><strong><em>level</em></strong>
+Represents the name of the attribute in the data that defines the depth of the row in the tree hierarchy. For example, a level with value 0 can represent the root of the tree, while a level with value 1 represents a children of the root. If the level parameter is not defined, the default column name for this parameter will be &quot;level&quot;.</p>
+</li>
+<li><p><strong><em>parent</em></strong>
+Represents the name of the attribute in the data that defines the id of the parent of the row. The id of the row is defined by the jsonId parameter; if jsonId is absent, it will default to id. If the parent parameter is not defined, the default column name for this parameter will be &quot;parent&quot;.</p>
+</li>
+<li><p><strong><em>leaf</em></strong>
+Represents the name of the attribute in the data that defines if the row is the final node (leaf) or if the row is a group (parent). The value of the data will be true for a leaf or false for a non leaf (a row with children). If the leaf parameter is not defined, the default column name for this parameter will be &quot;leaf&quot;.</p>
+</li>
+<li><p><strong><em>initialLevelExpanded</em></strong>
+Defines how far the tree view will be expanded. The value is an integer, and if it is zero, then all the groups at level zero (or root) will be expanded. If the value is one, then the root and its children will be expanded but the children of the children will be collapsed and so on. If it the parameter is absent, all children will be collapsed.</p>
+</li>
+</ul>
+<p>When the grid is rendered for the first time, the grid sends a request to the url parameter with the expanded parameter appended. The API response is expected to contain the data related to the root row(s) and the data related to all the children that should be showed expanded.</p>
+<p>Next, when a group is expanded, the grid sends a request to the original grid url and adds the following parameters:</p>
+<ul>
+<li>nodeid: id of the node</li>
+<li>parentid: id of the parent. Note: if it is the first level, the parent id should be null.</li>
+<li>n_level: level of depth of the node
+The response is expected to have only the data related to the children of the requested node.</li>
+</ul>
+<p>For example, the tree configuration could be:</p>
+<pre><code>    &quot;tree&quot;: {
+        &quot;column&quot;: &quot;name&quot;,
+        &quot;level&quot;: &quot;ruleLevel&quot;,
+        &quot;parent&quot;: &quot;parent&quot;,
+        &quot;leaf&quot;: &quot;leaf&quot;
+    },</code></pre>
+<ul>
+<li><p><strong><em>parentSelect</em></strong>
+Defines if the parent will be selectable (true). If the parameter is absent or is set to false, then all rows (children and node) will be selectable.</p>
+</li>
+<li><p><strong><em>getChildren</em></strong>
+Defines a callback that allows adding children to a node. If the callback is defined, the data for tree grid is requested using the API provided in the URL parameter, and it only happens when the grid is rendered for the first time. After that, the original mechanism of requesting deeper level of children by automatically sending a request to the API defined in the url parameter (plus the additional tree parameters) is suspended. New children can only be added using the getChildren callback. It has the node and addChildren parameters. node provides the expanded, nodeId and parentId as described in previous sections. addChildren is a callback function that should be used to add the children. It accepts the parameter nodeId (node that will have the children added) and data (an array with all the children that will be added. For example, the getChildren callback could be defined like:</p>
+</li>
+</ul>
+<pre><code>    var getChildren = function (node, addChildren) {
+        var data = &#39;expanded=&#39; + node.expanded + &#39;&amp;nodeid=&#39; + node.nodeId + &#39;&amp;parentid=&#39; + node.parentId + &#39;&amp;n_level=&#39; + node.n_level;
+        console.log(data);
+        $.ajax({
+            type: &#39;GET&#39;,
+            url: &quot;/api/get-tree&quot;,
+            data: data,
+            success: function(data) {
+                addChildren(node.nodeId, data.ruleCollection.rules);
+            }
+        });
+    };</code></pre>
+<ul>
+<li><strong><em>preselection</em></strong>
+Defines if the selection of a row in a tree grid will follow a preselection model when it is set to true. In this model, if a child is selected, the parent gets selected by default. If a child gets unselected and all its siblings are unselected, then the parent gets unselected. If a parent gets selected, then all its children get selected.</li>
+</ul>
+<p><strong>createRow</strong>
+Defines how the creation of a row will be showed in the grid: either inline or using an overlay with a form or wizard (defined by the user of the widget). It has two attributes: showInline and addLast. showInline will show the new row in an inline edition mode. If this attribute is not set to true, the grid widget will assume the new row will be added using a form showed in an overlay or other type of view. addLast will indicate that the row to be added (for inline editing) will be added at the end of the table. If the parameter is not set to true, the grid widget will assume the row needs to be added at the beginning of the row. For example:</p>
+<pre><code>    &quot;createRow&quot;: {
+        &quot;addLast&quot;:true,
+        &quot;showInline&quot;: true
+    },</code></pre>
+<p><strong>editRow</strong>
+Defines the edition of a row: either inline or using an overlay. If showInline parameter (in the editRow parameter) is set to true, then the edition will happen inline to the row. If the editRow parameter is not set, then edition of the row will happen according to the user defined configuration: on an overlay or on a short wizard.
+Additionally, in case of inline editing, the isRowEditable parameter could be added. It is a callback function that allows to define if a row should be editable or not. The input parameter are the id of the row as defined by the jsonId parameter, the original data (raw data) and the row data. The expected output is a boolean. True if the row is editable and false otherwise. For example:</p>
+<pre><code>    &quot;editRow&quot;: {
+        &quot;showInline&quot;: true,
+        &quot;isRowEditable&quot;: isRowEditable
+    },</code></pre>
+<p>Once the row is enabled for inline editing, some condition might need to be tested just before the row enters edit mode. In this case, onBeforeEdit callback is available. The input parameter is the id of the row as defined by the jsonId parameter, the original data (raw data) and the row data. The expected output is a boolean. True if the row is editable and false otherwise. For example:</p>
+<pre><code>    &quot;editRow&quot;: {
+        &quot;showInline&quot;: true,
+        &quot;isRowEditable&quot;: isRowEditable,
+        &quot;onBeforeEdit&quot;: onBeforeEdit
+    },</code></pre>
+<p><strong>deleteRow</strong>
+Defines the options available on row deletion like the message that will be showed when a row is deleted, if the grid should be automatically refreshed when the user confirms row deletion and the callback that should be invoked before the row is deleted from the grid. deleteRow property has three optional properties: message, onDelete and autoRefresh. message is a callback that should return a string with the message that will replace the default delete warning message provided by the grid widget. The input parameter is selectedRows object which represents an object with all selected rows and other parameters including the numberOfSelectedRows. onDelete represents the callback that should be invoked by the grid before the rows are deleted. onDelete property has the selectedRows, success and error parameters. selectedRows is an Object will all selected rows, success is the callback that should be invoked to confirm that the rows can be deleted on the grid (for example, on success for the delete row API) and error if the row deletion shouldn&#39;t be performed on the grid. Finally, the autoRefresh parameter is a boolean that when it is set to true indicates that the grid should be refreshed at the end of the delete operation. For example:</p>
+<pre><code>    var deleteRowMessage = function (selectedRows){
+        return &quot;Are you sure you want to delete &quot; + selectedRows.numberOfSelectedRows + &quot; rule(s) for the Firewall Policies grid?&quot;;
+    };
+    var gridConf = {
+        elements: {
+            ...
+            &quot;deleteRow&quot;: {
+                    &quot;autoRefresh&quot;: true,
+                    &quot;message&quot;: deleteRowMessage
+                },
+            ...
+        }
+        ...
+    }</code></pre>
+<p><strong>rowMaxElement</strong>
+Defines the number of elements in a cell that will be seen for a cell that has a column with collapseContent property enabled or for grid that have inline editing and provide a text area with an editor on overlay. The rowMaxElement property is an object with the following properties:</p>
+<ol>
+<li>collapse: Defines the number of entries in a cell that will be seen when a row is collapse (collapseContent property is enabled). Additional elements can been seen by using the more tooltip next to the cell with additional entries. Default value is 1.</li>
+<li>expand: Defines the number of entries in a cell that will be seen when a row is expanded (collapseContent property is enabled). Additional elements can been seen by scrolling vertically on the cell. Default value is 5.</li>
+<li>edit: Defines the number of entries that will be showed when a cell goes to edit mode for inline editing for cells that uses an editor on overlay and shows the value in a text area. Default value is 5.
+For example:</li>
+</ol>
+<pre><code>    var gridConf = {
+        elements: {
+            ...
+            &quot;rowMaxElement&quot;: {
+                &quot;collapse&quot;: 2,
+                &quot;expand&quot;: 4,
+                &quot;edit&quot;: 3 //applies only for inline editing
+            }
+            ...
+        }
+        ...
+    }</code></pre>
+<p><strong>filter</strong>
+Enables the filtering section of the grid. It is showed on the right side of the action area, above the grid table. It is composed by the following sections:</p>
+<ol>
+<li>Search field, defined by the searchUrl parameter</li>
+<li>Filter menu, defined by the showFilter parameter</li>
+<li>Option menu, defined by the optionMenu parameter
+Additionally, a toolbar search could be added below the title of the grid by using the columnFilter parameter.</li>
+</ol>
+<p>For example:</p>
+<pre><code>    &quot;filter&quot;: {
+        searchUrl: function (value, url){
+            return url + &quot;?searchKey=&quot; + value + &quot;&amp;searchAll=true&quot;;
+        },
+        columnFilter: true,
+        showFilter: true,
+        optionMenu: {
+            &quot;showHideColumnsItem&quot;:{
+                &quot;setColumnSelection&quot;: setShowHideColumnSelection,
+                &quot;updateColumnSelection&quot;: updateShowHideColumnSelection
+            },
+            &quot;customItems&quot;: [{
+                    &quot;label&quot;:&quot;Export Grid&quot;,
+                    &quot;key&quot;:&quot;exportGrid&quot;,
+                    &quot;items&quot;: [{
+                        &quot;label&quot;:&quot;Export to PDF&quot;,
+                        &quot;key&quot;:&quot;subMenu1&quot;
+                    },{
+                        &quot;label&quot;:&quot;Export to CSV&quot;,
+                        &quot;key&quot;:&quot;subMenu2&quot;
+                    },{
+                        &quot;separator&quot;: &quot;true&quot;
+                    },{
+                        &quot;label&quot;:&quot;Export to XML&quot;,
+                        &quot;key&quot;:&quot;subMenu3&quot;
+                    }]
+                },{
+                    &quot;label&quot;:&quot;Share Grid&quot;,
+                    &quot;key&quot;:&quot;shareGrid&quot;
+                },{
+                    &quot;label&quot;:&quot;Print Grid&quot;,
+                    &quot;key&quot;:&quot;printGrid&quot;
+            }],
+            &quot;statusCallback&quot;: setCustomMenuStatusSplit
+        }
+    },</code></pre>
+<p>The following parameters could be include in the filter parameter of the grid configuration.</p>
+<ul>
+<li><strong><em>searchUrl</em></strong>
+The search field allows searching data in the searchable columns of the grid by sending a request to the server with the value of the search value. By default, the _search parameter is appended to the url. If the grid requires a specific search API, the searchUrl parameter is available. searchUrl is a function callback that has the input parameters: value (all applied filters or tokens) and url (original url of the grid), the expected output is a url string.</li>
+</ul>
+<p>For example, to enable the default filter in the grid:</p>
+<pre><code>gridConf = {
+    ...
+    &quot;filter&quot;: true
+    ...
+}</code></pre>
+<p>For example, to provide a specific url for data search:</p>
+<pre><code>gridConf = {
+    ...
+    &quot;filter&quot;: {
+        searchUrl: function (value, url){
+                       return url + &quot;?searchKey=&quot; + value + &quot;&amp;caseSensitive=true&quot;;
+                   }
+    },
+    ...
+}</code></pre>
+<ul>
+<li><strong><em>onClearAllTokens</em></strong>
+Represents a callback when all the tokens are cleared in the filter. This callback is called when the filter is enabled and when:</li>
+</ul>
+<ol>
+<li>User clicks on the Clear All link</li>
+<li>User successfully removes an individual token, and no more tokens are further available to be removed.</li>
+</ol>
+<p>For example, to enable the onClearAllTokens callback in the grid:</p>
+<pre><code>gridConf = {
+    ...
+    &quot;filter&quot;: {
+        onClearAllTokens: function (){
+                            console.log(&quot;All tokens in the filter are cleared&quot;);
+                          }
+    },
+    ...
+}</code></pre>
+<ul>
+<li><strong><em>onBeforeSearch</em></strong>
+It allows to reformat the tokens available in the grid search so that some of the tokens can be replaced with a string that would fit better the API search request. The replaced token should include one of the following operators:  and: &quot; and &quot;, &quot; or &quot;, &quot; contains &quot;, &quot; eq &quot;, &quot; ne &quot;, &quot; lt &quot;, &quot; le &quot;, &quot; gt &quot;, &quot; ge &quot;. If some of the updated tokens need to include the &quot; or &quot; operator, then it should be enclosed by parenthesis.</li>
+</ul>
+<p>For example, to enable the onBeforeSearch callback in the grid:</p>
+<pre><code>gridConf = {
+    ...
+    &quot;filter&quot;: {
+        onBeforeSearch: function (tokens){
+            var newTokens = [];
+            quickFilterParam = &quot;quickFilter = &quot;,
+            quickFilerParamLength = quickFilterParam.length;
+            tokens.forEach(function(token){
+               if (~token.indexOf(quickFilterParam)) {
+                   var value = token.substring(quickFilerParamLength);
+                   switch (value) {
+                       case &#39;juniper&#39;:
+                           token = &quot;jun eq &#39;2&#39;&quot;;
+                           break;
+                       case &quot;nonJuniper&quot;:
+                           token = &quot;(jun eq 3 or jun eq 5)&quot;;
+                           break;
+                       default:
+                           token = &quot;jun eq &#39;all&#39;&quot;
+                   }
+               }
+               newTokens.push(token);
+            });
+            return newTokens;
+    },
+    ...
+}</code></pre>
+<ul>
+<li><strong><em>searchResult</em></strong>
+In case the data is loaded directly in the grid (by using the addRow method); therefore, url or getData parameter is not available, then the searchResult function callback needs to defined. It has the input parameter: tokens and renderGridData. tokens is an array with all the search values users has entered, and renderGridData is a callback that should be used to add the results of the search back into the grid.</li>
+</ul>
+<p>For example, to provide a a function callback that will return the result of the data search:</p>
+<pre><code>gridConf = {
+    ...
+    &quot;filter&quot;: {
+        searchResult: function (tokens, renderGridData) {
+            self.filteredPolicyCollection.fetch({
+                success: function(collection) {
+                    var policies = collection.models[0].get(&quot;policy&quot;);
+                    renderGridData(policies);
+                },
+                failure: function(){
+                    console.log(&quot;The grid data couldn&#39;t be loaded.&quot;);
+                }
+            });
+        }
+    },
+    ...
+}</code></pre>
+<p>where self.filteredPolicyCollection is an example of a Backbone collection that is fetched and the results are passed to the renderGridData callback.</p>
+<ul>
+<li><strong><em>noSearchResultMessage</em></strong>
+Defines a custom message that will be shown in the grid, if no records are available with search. This accepts a string value and callback function that should return string value.</li>
+</ul>
+<pre><code>var conf = {
+ ...
+ &quot;filter&quot;: {
+    ...
+    //noSearchResultMessage:&quot;No data available&quot;,
+    &quot;noSearchResultMessage&quot;: function() {
+         return &quot;There are no search results found&quot;;
+    },
+  }
+ ...
+}</code></pre>
+<ul>
+<li><strong><em>columnFilter</em></strong>
+It adds a toolbar below the title of the grid. It allows to search data for each of the columns. It is used together with the searchCell defined for each column. The toolbar search is enabled when its value is set to true. Depending on the type of searchCell of a column, the search area for a column could be a dropdown, a date, an integer or a simple input. If dataInit callback is defined, then a user defined input control could be defined. When the columnFilter is enabled but searchCell is not defined for a cell, then the search control will be a simple input. The token is composed by the index of a column (if available) or the name of the column followed by the value to be filtered.
+The search is triggered when user types a string and press enter. The original grid url gets updated to include the search string by adding the filter parameter. This parameter follows Space API. For example, the original url will get the following parameters appended:</li>
+</ul>
+<pre><code>... &amp;filter=(name+contains+%22PSP%22+and+(source-address+contains+%22IP_SEC_204.17.79.60%22+or+source-address+contains+%22IP_TRE_204.17.79.60%22))</code></pre>
+<ul>
+<li><strong><em>showFilter</em></strong>
+Defines the menu that will be showed when the user clicks on the Filters button. It has two parameters: customItems and quickFilters. customItems is an array of key/label pairs that represents the menu options that the user of widget could define that are related to the search of a token (for example, view filter or load load filters). The quick filters parameter is an array of key/label pairs and represents the filters that could be applied to the grid. For example:</li>
+</ul>
+<pre><code>showFilter: {
+    &quot;customItems&quot;: [{
+            &quot;label&quot;:&quot;View saved filters&quot;,
+            &quot;key&quot;:&quot;viewFilters&quot;
+        },{
+            &quot;label&quot;:&quot;Load saved filters&quot;,
+            &quot;key&quot;:&quot;loadFilters&quot;
+        }],
+    quickFilters: [{
+            &quot;label&quot;:&quot;Only Juniper devices&quot;,
+            &quot;key&quot;:&quot;juniper&quot;
+        },{
+            &quot;label&quot;:&quot;Only non-Juniper devices&quot;,
+            &quot;key&quot;:&quot;nonJuniper&quot;
+        }]
+},</code></pre>
+<p>The input search, the column filtering and the show filter menu contributes on the filtering of the grid. When a value is entered or selected, the token area is showed, and each value is represented with a token. After the token is added, a new search in the grid is requested to apply the filters.</p>
+<p>The quick filter has a reserved key: &quot;quickFilter&quot; that shouldn&#39;t be used as an index or name of a column.</p>
+<p>The token area is by default read only; i.e. new tokens can be added only by the selections mentioned earlier. Nevertheless, adding the advancedSearch parameter transforms the read only token area into an input area with context menu that allows to create tokens by menu selection.</p>
+<ul>
+<li><strong><em>advancedSearch</em></strong>
+Defines the token area as an editable input which allows to add tokens from the the filter menu and modified the default AND operator between tokens with one of the operators selected from the logic menu. It has the filterMenu and logicMenu parameters. Both of them defines a set of key/label pairs used to build the corresponding filter context menu and logic context menu. For example:</li>
+</ul>
+<pre><code>    advancedSearch: {
+        &quot;filterMenu&quot;: searchConfiguration.filterMenu,
+        &quot;logicMenu&quot;: searchConfiguration.logicMenu
+    },</code></pre>
+<p>Additionally, the search string could be saved. In this case, the save property is available and allows to include the related menu items. The value is an array of key/label pairs. For example:</p>
+<pre><code>    advancedSearch: {
+        &quot;filterMenu&quot;: searchConfiguration.filterMenu,
+        &quot;logicMenu&quot;: searchConfiguration.logicMenu,
+        &quot;save&quot;: [{
+                &quot;label&quot;: &quot;Save Filter&quot;,
+                &quot;key&quot;:&quot;saveFilter&quot;
+            },{
+                &quot;label&quot;: &quot;Create Monitor&quot;,
+                &quot;key&quot;:&quot;createMonitor&quot;
+            },{
+                &quot;label&quot;: &quot;Create Alert&quot;,
+                &quot;key&quot;:&quot;createAlert&quot;
+            }]
+    },</code></pre>
+<ul>
+<li><strong><em>optionMenu</em></strong>
+Defines the menu that will be showed when the user clicks on the option icon. For example:</li>
+</ul>
+<pre><code>optionMenu: {
+    &quot;showHideColumnsItem&quot;:{
+        &quot;setColumnSelection&quot;: setShowHideColumnSelection,
+        &quot;updateColumnSelection&quot;: updateShowHideColumnSelection
+    },
+    &quot;customItems&quot;: [{
+            &quot;label&quot;:&quot;Export Grid&quot;,
+            &quot;key&quot;:&quot;exportGrid&quot;,
+            &quot;items&quot;: [{
+                    &quot;label&quot;:&quot;Export to PDF&quot;,
+                    &quot;key&quot;:&quot;subMenu1&quot;
+                },{
+                    &quot;label&quot;:&quot;Export to CSV&quot;,
+                    &quot;key&quot;:&quot;subMenu2&quot;
+                },{
+                    &quot;separator&quot;: &quot;true&quot;
+                },{
+                    &quot;label&quot;:&quot;Export to XML&quot;,
+                    &quot;key&quot;:&quot;subMenu3&quot;
+                }]
+            },{
+                &quot;label&quot;:&quot;Share Grid&quot;,
+                &quot;key&quot;:&quot;shareGrid&quot;
+            },{
+                &quot;label&quot;:&quot;Print Grid&quot;,
+                &quot;key&quot;:&quot;printGrid&quot;
+        }],
+    &quot;statusCallback&quot;: setCustomMenuStatusSplit
+}</code></pre>
+<p>It has the following parameters:</p>
+<ul>
+<li>showHideColumnsItem
+Allows to show or hide columns in the grid. When the &quot;Show Hide Columns&quot; menu item is selected, a sub menu with all the available columns is showed. By default all columns are enabled. If the setColumnSelection parameter has a function callback, then the initial selection is set according to the values defined in the callback. If the updateColumnSelection defines a function callback, then the selection in the menu could be saved by the usage of this callback.</li>
+<li>customItems
+Defines the menu item that will be showed after the &quot;Show Hide Columns&quot; menu item. It could be a simple item or an item that opens a submenu. It follows the same format as per the context menu elements configuration. Refer to the documentation of the Context Menu widget configuration for more details.
+An event is triggered when a user selects an option menu item and the name of the event should be defined in the management parameter of the grid. An event listener with the same should be added. The function handler will include the event and the selected rows as parameters</li>
+<li>statusCallback
+Defines the status (active or inactive) for each item of the menu. The value should be a function callback that will be invoked before the menu is rendered. The input parameters are: key (the key of the item menu), isItemDisabled (default status provided by the grid depending on the row selection), and selectedRows (current selected rows). The output of the function should be the status of the item menu: true if the item should be disabled and false if the item should be enabled.</li>
+</ul>
+<p><strong>dragNDrop</strong>
+Defines the drag and drop interaction. It has the following parameters:</p>
+<ul>
+<li><strong><em>connectWith</em></strong>
+Define this object when the grid needs to interact with other containers, such as another grid.
+a. (String) selector: Define the selector that this grid needs to interact with. For example, we can use the tableId of the other grid to define the selector.
+b. (String) groupId: A named drag-n-drop group to which this grid belongs. If a group is specified, then this grid only interact with other drag-n-drop objects in the same group.
+c. (Boolean) isDraggingRow: true or false. Define if this grid is row-to-cell drag-n-drop. Default: true.</li>
+</ul>
+<pre><code>&quot;dragNDrop&quot;:{
+    connectWith: {
+        selector: &#39;#test1&#39;,
+        groupId: &#39;zone&#39;
+    },
+    moveRow: {
+        beforeDrag: rowBeforeDrag,
+        hoverDrop: rowHoverDropCallback,
+        afterDrop: rowafterDropCallback
+    }
+}</code></pre>
+<ul>
+<li><strong><em>moveRow</em></strong>
+Defines if the row can be dragged. If the drag source is not defined, then the whole row can be draggable for reordering. If the drag source is defined, then user can only drag the collapse/expand column, which has row_draggable class, for reordering. The value can be: true, false or a callback object. Default: false<ul>
+<li>true: The row can be sorted by dragging the row.</li>
+<li>false: The row can NOT be sorted by dragging the row. </li>
+<li>an callback object: The row can be sorted by dragging the row and the callback will be triggered when event happens. </li>
+</ul>
+</li>
+</ul>
+<p>The object contains the following callback:</p>
+<p>  a. <strong><em>beforeDrag</em></strong>
+  This callback is defined the beforeDrag callback for the draggable rows. The callback is triggered when the draggable row(s) start dragging. The callback needs to return either true, false or an object with the error message. Default: true</p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li>If the validation is false or want to bypass the default workflow in order to create a custom behavior when start dragging, then return false. </li>
+<li><p>If the validation is false and also need to show default error message, then return an error object. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable row(s)</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  b. <strong><em>hoverDrop</em></strong>
+  The callback is triggered when the draggable element hovers the droppable element. The callback needs to return either true or false. Default: true</p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li><p>If the validation is false, grid reverts to the original order. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable row(s)</li>
+<li><strong><em>(Object) hoveredRow</em></strong>: The row data of the hovered column</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  c. <strong><em>afterChange</em></strong>
+  The callback is trggered when the DOM element changes. The callback needs to return either true, or false. Default: true</p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li><p>If the validation is false, grid reverts to the original order. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable row(s)</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+<li><strong><em>(Object) siblingRows</em></strong>: The row data of the previous row and the next row</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  d. <strong><em>afterDrop</em></strong>
+  The callback is trggered after dropped. The callback needs to return either true, false or an object with the error message. Default: true</p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li>If the validation is false, grid reverts to the original order. </li>
+<li><p>If the validation is false and also need to show default error message, then return an error object. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable row(s)</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+<li><strong><em>(Object) siblingRows</em></strong>: The row data of the previous row and the next row</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p><strong><em>moveCell</em></strong>
+A set of default callbacks are defined for all columns.</p>
+<p>a. <strong><em>beforeDrag</em></strong>
+This callback is defined the default beforeDrag callback for all draggable columns. The callback is triggered when the draggable element start dragging. The callback needs to return either true, false or an object with the error message. Default: true</p>
+<p>Note: The column level beforeDrag callback will overwrite the beforeDrag callback in the grid level. </p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li>If the validation is false or want to bypass the default workflow in order to create a custom behavior when start dragging, then return false. </li>
+<li>If the validation is false and also need to show default error message, then return an error object. </li>
+</ul>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableItems</em></strong>: The draggable elements. </li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable column</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  b. <strong><em>hoverDrop</em></strong>
+  This callback is defined the default hoverDrop callback for all droppable columns. The callback is triggered when the draggable element hovers the droppable element. The callback needs to return either true or false. Default: true</p>
+<p>  Note: The column level hoverDrop callback will overwrite the hoverDrop callback in the grid level. </p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li><p>If the validation is false, grid will return to original position. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableItems</em></strong>: The draggable elements. If the source is a row, then it is undefined.</li>
+<li><strong><em>(jQuery Object) hoveredColumn</em></strong>: The droppable column is hovered</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable column or the draggable row(s)</li>
+<li><strong><em>(Object) hoveredRow</em></strong>: The row data of the droppable column</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  c. <strong><em>afterDrop</em></strong>
+  This callback is defined the default afterDrop callback for all droppable columns. The callback is triggered after the draggable element drops in the droppable element. The callback needs to return either true, false or an object with the error message. Default: true</p>
+<p>  Note: The column level afterDrop callback will overwrite the afterDrop callback in the grid level. </p>
+<ul>
+<li>If the validation is passed and grid should show the default workflow, then return true. </li>
+<li>If the validation is false or want to bypass the default workflow in order to create a custom behavior after drops, then return false. </li>
+<li><p>If the validation is false and also need to show default error message, then return an error object. </p>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableItems</em></strong>: The draggable elements. If the source is a row, then it is undefined.</li>
+<li><strong><em>(jQuery Object) dropColumn</em></strong>: The droppable column that user drops the element</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable column or the draggable row(s)</li>
+<li><strong><em>(Object) droppableRow</em></strong>: The row data of the droppable column</li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<pre><code>&quot;dragNDrop&quot;:{
+    moveCell:{
+        beforeDrag: defaultBeforeDrag,
+        hoverDrop: defaultHoverDrop,
+        afterDrop: defaultAfterDrop
+    },
+    moveRow: {
+        beforeDrag: rowBeforeDrag,
+        hoverDrop: rowHoverDropCallback,
+        afterChange: rowAfterChangeCallback,
+        afterDrop: rowafterDropCallback
+    }
+}
+
+var rowafterDropCallback = function(data){
+    console.log(data); 
+
+    return true;
+    //return false;
+    //return {isValid: false, errorMessage: &#39;The row can not be reordered.&#39;};
+};
+
+var rowHoverDropCallback = function(data){
+    console.log(data); 
+
+    return true;
+    //return false;
+};
+
+var rowAfterChangeCallback = function(data){
+    console.log(data); 
+
+    return true;
+    //return false;
+};
+
+var rowBeforeDrag = function(data){
+    console.log(data);
+
+    return true;
+    //return false;
+    //return {isValid: false, errorMessage: &#39;The row can not be reordered.&#39;};
+};
+
+var defaultBeforeDrag = function(data){
+    console.log(data);
+
+    data.helper.attr(&quot;data-grid-demo&quot;, &quot;this is payload data.&quot;);
+
+    // return false;
+    // return true;
+    return {isValid: false, errorMessage: &#39;The item is not draggable.&#39;};
+};
+
+var defaultHoverDrop = function(data){
+    console.log(data);
+
+    // return false;
+    return true;
+};
+
+var defaultAfterDrop = function(data){
+    console.log(data);
+
+    //return true with the default workflow if the validation is passed
+    return true;
+
+    //return false without showing any behavior if the validation is NOT passed or in order to create the custom behavior after drops.
+    //return false;
+
+    //return the following object if the validation is NOT passed in order to show the error message by default
+    //return {isValid: false, errorMessage: &#39;This is testing error message.&#39;};
+};</code></pre>
+<p><strong>subGrid</strong>
+Defines a nested grid for a table that is available when user clicks on the parent row. The parameters are:</p>
+<ul>
+<li><strong><em>url</em></strong>
+  Defines the API that will be called to get the data for the table. When it is not defined, it takes the parent row as a base url.</li>
+<li><strong><em>numberOfRows</em></strong>
+  Defines the number of rows that will be requested from the API to show the next set of rows for virtual scrolling (pagination). The height needs to be set in pixels and the scroll has to be set to true.</li>
+<li><strong><em>height</em></strong>
+  Defines the height of the grid; i.e. the view port that is available to show the rows in a table. If it is set to auto, the height will be the same as the number of rows. For virtual scrolling, the height should be provided in number of pixels.</li>
+<li><strong><em>jsonRoot</em></strong>
+  Defines where the data begins in the JSON response.</li>
+<li><strong><em>jsonId</em></strong>
+  Defines the unique id of the row.</li>
+<li><strong><em>scroll</em></strong>
+  Defines the grid capability to provide virtual scrolling when it is set to true. Virtual scrolling is available only when the grid can retrieve data for each page of the grid. This is available when the url parameter is added in the configuration of the grid. This url gets appended the required parameters to request from the server the next pages.</li>
+</ul>
+<p>For example:</p>
+<pre><code>&quot;subGrid&quot;: {
+    &quot;url&quot;: &quot;/assets/js/widgets/grid/tests/dataSample/zonePoliciesOnePage.json&quot;,
+    &quot;numberOfRows&quot;:10,
+    &quot;height&quot;: &quot;360&quot;,
+    &quot;jsonRoot&quot;: &quot;policy&quot;,
+    &quot;jsonId&quot;: &quot;name&quot;,
+    &quot;scroll&quot;:&quot;true&quot;
+},</code></pre>
+<p>Virtual scrolling is also available when neither the url or getData has been defined and the row data is added by page using the addPageRows method.</p>
+<p><strong>showWidthAsPercentage</strong>:
+Defines how the width of a column will be calculated when it is rendered. If it is set to true (the default value), it means the width will be interpreted as a percentage of the total width of the grid (the sum of the with of all columns). If it is set to false then it takes the width provided as-is. The parameter will be deprecated when the grid provide additional support for minimum and maximum width of a column. If the width of a column should be adjusted automatically using percentages, then the preferred unit for the width should be percentage. In this case, this parameter is ignored.</p>
+<p><strong>columns</strong>
+Contains the data required to render the header of the table and column features like editing, validation, etc. It&#39;s a required parameter and should contain an array with objects that represent each of the columns of the grid. The parameters per column are:</p>
+<ul>
+<li><p><strong><em>index</em></strong>
+ Represents the id of the row and it is used for sorting purposes.</p>
+</li>
+<li><p><strong><em>name</em></strong>
+ Represents the name of the row and it should match the one in the JSON response.</p>
+</li>
+<li><p><strong>label</strong>
+Specify a string value on a column that will be used to render the column display name on the column title and on the show / hide menu (if applicable).  If set to false then the item will not be rendered in 
+the show / hide menu.</p>
+</li>
+<li><p><strong>hidden</strong>
+A boolean value used to determine if the column should be visible or not on the grid.  This can be set to false which will render the column not visible.</p>
+</li>
+<li><p><strong><em>width</em></strong>
+ Assigns a width to the column. It can be defined as a number or as a percentage. Number represents the number of pixels that a column should have. The number of pixels on a column is a fixed number; therefore, the column of the grid will not be increased or decreased if the browser width changes. Percentage represents the percentage assigned to a column in relation to the grid width. When the browser is resized, then each columns width increases or descreases according to the new available with. The new width is calculated on percentage and with relation to the total grid width. In this case, the total width is 100% and all the individual columns should sum up  100%. Different units can not be combined; i.e. either the column is defined on pixels (number) or a percentage.</p>
+</li>
+<li><p><strong><em>editCell</em></strong>
+ Indicates if a column is editable. It has the following parameters:</p>
+<ul>
+<li><strong>type</strong>
+Enables a cell to be edited as an input field in the type is input and as dropwdown if the type is a dropdown. The user could define a custom control for editing a cell by using the type custom. The custom type edit cell requires the element and value properties. Element property represents a callback function that the grid will use to get the html element that should be inserted on the edit cell. The value property is a callback function that should return the value that should be saved when the inline edition of the row is completed.</li>
+</ul>
+<p>For example, to include a custom cell on edition, then a column for the columns property of the grid configuration (elements property) should include an editCell property like the following:</p>
+</li>
+</ul>
+<pre><code> ...
+ &quot;columns&quot;: [{
+ ...
+  }, {
+        &quot;index&quot;: &quot;action&quot;,
+        &quot;name&quot;: &quot;action&quot;,
+        &quot;label&quot;: &quot;Action&quot;,
+        &quot;width&quot;: 200,
+        &quot;editCell&quot;:{
+            &quot;type&quot;: &quot;custom&quot;,
+            &quot;element&quot;:getCustomDropdownElement,
+            &quot;value&quot;:getCustomDropdownValue
+        }
+     }, {
+  ...
+  }],
+ ...</code></pre>
+<p>where:</p>
+<ul>
+<li>element property is a callback function with the cellvalue (original value in the cell) and the options (id of the row) input parameters.</li>
+<li>value property is a callback function with the element (html of the edit cell) and the operation (get or set) input parameters.</li>
+</ul>
+<p>For example, the following callback functions allows the integration of the dropdown widget in the grid widget:</p>
+<pre><code>    var getCustomDropdownElement = function(cellvalue, options){
+        var $span =  $(&#39;&lt;div&gt;&lt;select class=&quot;celldropdown&quot;&gt;&lt;/select&gt;&lt;/div&gt;&#39;);
+        actionCustomDropdown = new DropDownWidget({
+            &quot;container&quot;: $span.find(&#39;.celldropdown&#39;),
+            &quot;data&quot;: actionDropDownData,
+            &quot;placeholder&quot;: &quot;Select an option&quot;,
+            &quot;enableSearch&quot;: true
+        }).build();
+        actionCustomDropdown.setValue(cellvalue);
+        return $span[0];
+    };
+
+    var getCustomDropdownValue = function(element, operation){
+        return actionCustomDropdown.getValue();
+    };</code></pre>
+<ul>
+<li><p><strong>pattern</strong>
+Defines the pattern that should be used to validate an input. Pattern can be regex string or predefined pattern. The list of predefined patterns are mentioned in the formValidator document.</p>
+</li>
+<li><p><strong>error</strong>
+Defines the message that will be showed on the error area when the input validation fails on the client side.</p>
+</li>
+<li><p><strong>remote</strong>
+Defines remote validation in addition to the client side validation defined in the pattern parameter. It should include the following parameters:</p>
+</li>
+<li><p><strong><em>url</em></strong>
+Represents the REST API that will be used to validate the input. A callback function can be used instead of a string to adjust the url according to the value of the input.</p>
+</li>
+</ul>
+<ul>
+<li><strong><em>getData</em></strong>
+Represents a callback function that is used to retrieve data instead of providing a url (url parameter). For example, the following function could be added instead of the url parameter.</li>
+</ul>
+<pre><code>var getData = function (postdata){
+        var self = this;
+        $.ajax({
+            url: &#39;/api/get-data&#39;,
+            data: postdata,
+            dataType:&quot;json&quot;,
+            complete: function(data,status){
+                $(self).addRowData(&#39;&#39;,data.responseJSON[&#39;policy-Level1&#39;][&#39;policy-Level2&#39;][&#39;policy-Level3&#39;]);
+            }
+        });
+    };</code></pre>
+<p>In this case, the function is taking care of retrieving the data from an API instead of delegating that job to the grid. In this case, the grid configuration should be:</p>
+<pre><code>  configurationSample.simpleGrid = {
+         &quot;title&quot;: &quot;Firewall Policies&quot;,
+         &quot;getData&quot;: getData,
+         &quot;height&quot;: &#39;auto&#39;,
+         ...
+  }</code></pre>
+<ul>
+<li><p><strong><em>type</em></strong>
+Represents the type of URL request that will be performed: GET or POST</p>
+</li>
+<li><p><strong>response</strong>
+Represents a callback used to used to reformat the response obtained after the REST API has been called. Since the expected value of the response is true or false, the callback is required to read the response text and return true or false.</p>
+</li>
+<li><p><strong>error</strong>
+Defines the message that will be showed on the error area when the input validation fails on the remote side.</p>
+</li>
+<li><p><strong>post_validation</strong>
+It represents the name of the custom event that will be triggered when an input validation has been completed.
+For example:</p>
+</li>
+</ul>
+<pre><code>&quot;columns&quot;: [
+   ...
+        &quot;name&quot;: &quot;name&quot;,
+        &quot;label&quot;: &quot;Name&quot;,
+        &quot;width&quot;: &quot;400&quot;,
+        &quot;formatter&quot;:createLink,
+        &quot;unformat&quot;:undoLink,
+        &quot;copiedDefaultValue&quot;:getDefaultCopiedValue,
+        &quot;editCell&quot;:{
+            &quot;type&quot;: &quot;input&quot;,
+            &quot;post_validation&quot;: &quot;postValidation&quot;,
+            &quot;pattern&quot;: &quot;^[a-zA-Z0-9_\-]+$&quot;,
+            &quot;error&quot;: &quot;Enter alphanumeric characters, dashes or underscores&quot;
+        },
+   ...
+],</code></pre>
+<p>Listeners of the custom event should implement a binding event handler. For example: this.$el.bind(&quot;postValidation&quot;,function(e, isValid){...});</p>
+<ul>
+<li><p><strong><em>hideHeader</em></strong>
+ Hides the column label from the header.</p>
+</li>
+<li><p><strong><em>hidden</em></strong>
+ Hides the column from the table.</p>
+</li>
+<li><p><strong><em>collapseContent</em></strong>
+Shows the content of the column with break lines when more than one value is available. The data for this type of column could be a string, an array of strings, an array of objects.  For strings or an array of strings, the collapseContent value could be a boolean: true, and for an array of objects, the collapseContent property provides additional parameters, so the value should be an object with at least the parameter: keyValueCell set to true. When the configuration of one of the columns in a grid has the collapseContent parameter, an icon is added at the beginning of each row that allows collapse all data and show a summary of the data or expand all the row and show all the data. The available parameters are:</p>
+<p>a. <strong><strong>name</strong></strong> Available for a column that has data like an array of object, but the value that is required is of its parameters. For example, for the data:</p>
+<pre><code>&quot;applications&quot;: [{
+                      &quot;domainId&quot;: 1,
+                      &quot;domainName&quot;: &quot;SYSTEM&quot;,
+                      &quot;id&quot;: 131153,
+                      &quot;MOID&quot;: &quot;net.juniper.jnap.sm.om.jpa.ApplicationEntity:131153&quot;,
+                      &quot;appName&quot;: &quot;aol&quot;
+                  }, {
+                      &quot;domainId&quot;: 1,
+                      &quot;domainName&quot;: &quot;SYSTEM&quot;,
+                      &quot;id&quot;: 131442,
+                      &quot;MOID&quot;: &quot;net.juniper.jnap.sm.om.jpa.ApplicationEntity:131442&quot;,
+                      &quot;appName&quot;: &quot;apple-ichat&quot;
+                  }, {
+                      &quot;domainId&quot;: 1,
+                      &quot;domainName&quot;: &quot;SYSTEM&quot;,
+                      &quot;id&quot;: 131449,
+                      &quot;MOID&quot;: &quot;net.juniper.jnap.sm.om.jpa.ApplicationEntity:131442&quot;,
+                      &quot;appName&quot;: &quot;apple-ichat1&quot;
+                  }, {
+                      &quot;domainId&quot;: 1,
+                      &quot;domainName&quot;: &quot;SYSTEM&quot;,
+                      &quot;id&quot;: 131386,
+                      &quot;MOID&quot;: &quot;net.juniper.jnap.sm.om.jpa.ApplicationEntity:131386&quot;,
+                      &quot;appName&quot;: &quot;apple-ichat-snatmap&quot;
+                  }],</code></pre>
+</li>
+</ul>
+<p>if the data that needs to be showed on the grid is: the name property inside the applications, then the configuration of the column should look like this:</p>
+<pre><code>    {
+        &quot;index&quot;: &quot;services&quot;,
+        &quot;name&quot;: &quot;applications&quot;,
+        &quot;label&quot;: &quot;Services&quot;,
+        &quot;collapseContent&quot;:{
+            &quot;name&quot;: &quot;appName&quot;
+        },
+        &quot;width&quot;: 150
+    },</code></pre>
+<p>where the name property in the column configuration refers to the name of the property in the data, in this case appName.</p>
+<p>  b. <strong><strong>keyValueCell</strong></strong> It should be set to true for cases where the data in the cell should be presented as a key value pair instead of a sequence of strings. The data is expected to be a simple object with key value pairs.</p>
+<p>  c. <strong><strong>lookupKeyLabelTable</strong></strong> It works with keyValueCell property and defines an object that works like a lookup table. It is intended to replace the original key provided in the data object for a more friendly user label.</p>
+<p>  d. <strong><strong>formatData</strong></strong> It is a callback function that formats the data that would be used by the collapseContent property. In general the data could have one of the following formats: an array of strings (default expected data), an array of objects (with name property to choose the right property) or a simple object (with keyValueCell set to true). If the data for the column comes in a different format, then the data needs to be massaged before the grid can use it under the cellContent property. The function input parameters are cellvalue (value of the cell), options (object with column name and row id data) and rowObject (an object with the row data).</p>
+<p>  e. <strong><strong>formatCell</strong></strong> It is a callback function that allows to reformat the content of a cell that has an input data of the Array type. The input parameters are $cell (jQuery object), cellvalue (value of the cell), options (object with column name and row id data) and rowObject (an object with the row data). The return value should be the updated $cell (jQuery object). $cell is composed by three nodes: the compact version of the cell ($cell[0]), the expanded version of the cell ($cell[1]), and the raw cell value ($cell[2]). Updates to the content of $cell, should be done by finding the cellContentValue for $cell[0] or the cellContentWrapper class for $cell[1]. cellContentWrapper groups the individual cell values. Each cell value is an inline block with the cellContentValue class. For example formatCell callback could be defined like:</p>
+<pre><code>    var formatCollapseCell = function ($cell, cellvalue, options, rowObject){
+      $($cell[1]).find(&#39;.cellContentWrapper .cellContentValue&#39;).attr(&#39;title&#39;,rowObject.name).addClass(&#39;tooltip&#39;);
+      return $cell;
+    };</code></pre>
+<p>  f. <strong><strong>unformatCell</strong></strong> It is a callback function that defines the value that will be available when the cell goes on edit mode, and later when the cell is saved, this callback is used to provide formatCell with the cell value that will be used to format the cell when it is rendered.</p>
+<p>  g. <strong><strong>formatObjectCell</strong></strong> It is a callback function that allows to reformat the content of a cell that has an input data of the Object type. The input parameters are $cell (jQuery object), cellvalue (value of the cell), options (object with column name and row id data) and rowObject (an object with the row data). The return value should be the updated $cell (jQuery object). $cell is composed by three nodes: the compact version of the cell ($cell[0]), the expanded version of the cell ($cell[1]), and the raw cell value ($cell[2]). Updates to the content of $cell, should be done by finding the cellContentValue for $cell[0] or the cellContentWrapper class for $cell[1]. cellContentWrapper groups the individual cell values. Each cell value is an inline block with the cellContentBlock class that groups the label (cellContentValue class) and value (cellContentKeyValue class). For example formatObjectCell callback could be defined like:</p>
+<pre><code>    var formatObjectCell = function ($cell, cellvalue, options, rowObject){
+        $($cell[1]).find(&#39;.cellContentWrapper .cellContentBlock&#39;).attr(&#39;title&#39;,rowObject.name).addClass(&#39;tooltip&#39;);
+        return $cell;
+    };</code></pre>
+<p>  h. <strong><strong>unformatObjectCell</strong></strong> It is a callback function that defines the value that will be available when the cell goes on edit mode, and later when the cell is saved, this callback is used to provide formatObjectCell with the cell value that will be used to format the cell when it is rendered.</p>
+<p>  i. <strong><strong>overlaySize</strong></strong> It defines the size of the overlay for a cell view: medium, large, x-large. The default value is medium.</p>
+<p>  j. <strong><strong>moreTooltip</strong></strong> It is a callback function that defines the content of the more tooltip, when it is not available, the content of the tooltip is the same as the cell value. The callback has the rowData, rawData and the setTooltipDataCallback parameters. rowData and rawData are object with the data available in the grid and the one available from API response respectively. setTooltipDataCallback is a callback that should be used when the data is ready for adding it in the more tooltip content. It should be invoked with the array of data that should be rendered in the tooltip and the object composed by the mapping of the key and label parameters to the original tooltip data, and the clickHandler handler that should be attached when the the user clicks on an item in the more tooltip. The input parameter for the clickHandler is item which is composed by the key and label of the item selected. For example:</p>
+<pre><code>  var setTooltipData = function (rowData, rawData, setTooltipDataCallback){
+      $.ajax({
+          type: &#39;GET&#39;,
+          url: &#39;/assets/js/widgets/grid/tests/dataSample/addressBookGlobal.json&#39;,
+          success: function(data) {
+              setTooltipDataCallback(data.address, {
+                  &quot;key&quot;: &quot;ip-prefix&quot;,
+                  &quot;label&quot;: &quot;name&quot;,
+                  &quot;clickHandler&quot;: function(item){
+                      console.log(item);
+                  }
+              });
+          }
+      });
+  };
+
+  var gridConf = {
+    ...
+    &quot;columns&quot; :
+        [{
+            ...
+        }, {
+            &quot;index&quot;: &quot;DestinationAddress&quot;,
+            &quot;name&quot;: &quot;destination-address&quot;,
+            &quot;label&quot;: &quot;Destination Address&quot;,
+            &quot;collapseContent&quot;:{
+               &quot;moreTooltip&quot;: setTooltipData
+            },
+            &quot;width&quot;: 260,
+            &quot;createdDefaultValue&quot;:&quot;any&quot;,
+            &quot;searchCell&quot;:{
+               &quot;type&quot;: &quot;number&quot;
+            }
+        }, {
+        ...
+        ]
+    };</code></pre>
+<p>k. <strong><strong>singleValue</strong></strong> It is used to display the string containing line breaks as a single line along with a plus icon. It is false by default.</p>
+<p>  var gridConf = {
+    ...
+    &quot;columns&quot; :
+        [{
+            ...
+        }, {
+            &quot;index&quot;: &quot;Description&quot;,
+            &quot;name&quot;: &quot;description&quot;,
+            &quot;label&quot;: &quot;Description&quot;,
+            &quot;collapseContent&quot;:{
+               &quot;singleValue&quot;: true
+            },
+            &quot;width&quot;: 260,
+        }, {
+        ...
+        }]
+    };</p>
+<ul>
+<li><p><strong><em>formatter</em></strong>
+ Defines the callback function to be used to define a custom format for the value of the cell. It should have a return value with a string data type that could represent a html string. For example:</p>
+<pre><code>   var createLink = function (cellvalue, options, rowObject){
+       return &#39;&lt;a class=&quot;cellLink&quot; data-cell=&quot;&#39;+cellvalue+&#39;&quot;&gt;&#39;+cellvalue+&#39;&lt;/a&gt;&#39;;
+   };
+   configurationSample =  {
+       ...
+       &quot;columns&quot;: [
+                     {
+                         &quot;name&quot;: &quot;name&quot;,
+                         &quot;label&quot;: &quot;Name&quot;,
+                         &quot;formatter&quot;:createLink,
+                         ...
+                     },
+                    ...
+                   ]
+       ...
+   };</code></pre>
+<p>This property could be used to have a cell with a link and then a event handler could be added to listen for a click on the cell. Clicking on the cell could open a new grid in the existing container. When the grid is used in the framework context, a new intent could be created to replace existing grid with a new one. For example:</p>
+<pre><code>new Slipstream.SDK.Intent(action, data)</code></pre>
+<p>where data could contain the data collected in the data-cell property of the cell defined in the formatter function of the column.</p>
+</li>
+<li><p><strong><em>unformat</em></strong>
+ It is used when formatter parameter has modified the original cell value. Formatter could introduce some html in the formatter cell; in this case, unformat parameter restore the cellvalue so it can be saved properly later.</p>
+</li>
+<li><p><strong><em>showInactive</em></strong>
+ Defines the column that should be used as an input for enabling or disabling a row.</p>
+</li>
+<li><p><strong><em>createdDefaultValue</em></strong>
+ Defines the default value for the column when a user creates a new row. The value can be a string or a callback function.</p>
+</li>
+<li><p><strong><em>copiedDefaultValue</em></strong>
+ Defines the default value for the column when a user copy and row and then paste it. The value can be a string or a callback function.</p>
+<p>For example:</p>
+<pre><code>&quot;columns&quot;: [
+  {
+      &quot;index&quot;: &quot;context&quot;,
+      &quot;name&quot;: &quot;context&quot;,
+      &quot;label&quot;: &quot;Name&quot;,
+      &quot;width&quot;: 200,
+      &quot;formatter&quot;:showSubtitle,
+      &quot;groupBy&quot;:&quot;true&quot;
+  }, {
+      &quot;index&quot;: &quot;inactive&quot;,
+      &quot;name&quot;: &quot;inactive&quot;,
+      &quot;label&quot;: &quot;Inactive&quot;,
+      &quot;hidden&quot;: true,
+      &quot;showInactive&quot;:&quot;true&quot;
+  }, {
+      &quot;name&quot;: &quot;name&quot;,
+      &quot;label&quot;: &quot;Name&quot;,
+      &quot;width&quot;: 200,
+      &quot;hideHeader&quot;: &quot;true&quot;,
+      &quot;copiedDefaultValue&quot;:getDefaultCopiedValue,
+      &quot;editCell&quot;:{
+          &quot;type&quot;: &quot;input&quot;,
+          &quot;remote&quot;: {
+              &quot;url&quot;: buildUrl, //should return url string
+              &quot;type&quot;: &quot;GET&quot;,
+              &quot;response&quot;: processResponse, //should return boolean: true: isValid
+              &quot;error&quot;:&quot;Name already in use&quot;
+          },
+          &quot;pattern&quot;: &quot;hasnotspace&quot;,
+          &quot;error&quot;:&quot;Spaces are not allowed&quot;
+      }
+  }, {
+      &quot;index&quot;: &quot;sourceZone&quot;,
+      &quot;name&quot;: &quot;from-zone-name&quot;,
+      &quot;label&quot;: &quot;Source Zone&quot;,
+      &quot;createdDefaultValue&quot;:getDefaultAddedValue,
+      &quot;width&quot;: 20,
+      &quot;editCell&quot;:{
+          &quot;type&quot;: &quot;input&quot;,
+          &quot;pattern&quot;: &quot;^[a-zA-Z0-9_\-]+$&quot;,
+          &quot;error&quot;:&quot;Enter alphanumeric characters, dashes or underscores&quot;
+      }
+  }, {
+      &quot;index&quot;: &quot;sourceAddress&quot;,
+      &quot;name&quot;: &quot;source-address&quot;,
+      &quot;label&quot;: &quot;Source Address&quot;,
+      &quot;width&quot;: 60,
+      &quot;collapseContent&quot;:&quot;true&quot;,
+      &quot;createdDefaultValue&quot;:&quot;any&quot;
+  }, {
+      &quot;index&quot;: &quot;destinationZone&quot;,
+      &quot;name&quot;: &quot;to-zone-name&quot;,
+      &quot;label&quot;: &quot;Destination Zone&quot;,
+      &quot;createdDefaultValue&quot;:getDefaultAddedValue,
+      &quot;width&quot;: 20
+  }, {
+      &quot;index&quot;: &quot;DestinationAddress&quot;,
+      &quot;name&quot;: &quot;destination-address&quot;,
+      &quot;label&quot;: &quot;Destination Address&quot;,
+      &quot;width&quot;: 60,
+      &quot;collapseContent&quot;:&quot;true&quot;,
+      &quot;createdDefaultValue&quot;:&quot;any&quot;
+  }, {
+      &quot;index&quot;: &quot;action&quot;,
+      &quot;name&quot;: &quot;action&quot;,
+      &quot;label&quot;: &quot;Action&quot;,
+      &quot;width&quot;: 20,
+      &quot;editCell&quot;:{
+          &quot;type&quot;: &quot;dropdown&quot;,
+          &quot;values&quot;:[{
+              &quot;label&quot;: &quot;Permit&quot;,
+              &quot;value&quot;: &quot;permit&quot;
+          },{
+              &quot;label&quot;: &quot;Deny&quot;,
+              &quot;value&quot;: &quot;deny&quot;
+          }]
+      }
+  }]</code></pre>
+</li>
+<li><p><strong><em>searchCell</em></strong>
+ Indicates the type of search control that will be added when the columnFilter parameter of the filter section is set to true. If the searchCell is set to true, then a input element will be added on the filter toolbar. If it is absent or set to fall, the search cell will not be available.
+The search cell can have a predefined search element (dropdown, number or date) or a custom search element. It has the following parameters:</p>
+<ul>
+<li><strong>type</strong>
+Defines the type of search control. If it is absent, the default search control will be a regular input. Slipstream provides three types of search control: &quot;dropdown&quot;, &quot;number&quot; and &quot;date&quot;.</li>
+</ul>
+<p>Dropdown represents a drodpdown element with the options defined from the values parameter using the label/value pairs. For example:</p>
+</li>
+</ul>
+<pre><code>&quot;columns&quot;: [
+  ...
+  {
+     &quot;index&quot;: &quot;sourceAddress&quot;,
+     &quot;name&quot;: &quot;source-address&quot;,
+     &quot;label&quot;: &quot;Source Address&quot;,
+     &quot;width&quot;: 260,
+     &quot;collapseContent&quot;:true,
+     &quot;createdDefaultValue&quot;:&quot;any&quot;,
+     &quot;searchCell&quot;: {
+         &quot;type&quot;: &#39;dropdown&#39;,
+         &quot;values&quot;:[{
+             &quot;label&quot;: &quot;IP_CONV_204.17.79.60&quot;,
+             &quot;value&quot;: &quot;IP_CONV_204.17.79.60&quot;
+         },{
+             &quot;label&quot;: &quot;IP_SEC_204.17.79.60&quot;,
+             &quot;value&quot;: &quot;IP_SEC_204.17.79.60&quot;
+         },{
+             &quot;label&quot;: &quot;IP_TRE_204.17.79.60&quot;,
+             &quot;value&quot;: &quot;IP_TRE_204.17.79.60&quot;
+         },{
+             &quot;label&quot;: &quot;IP_TRE_96.254.162.106&quot;,
+             &quot;value&quot;: &quot;IP_TRE_96.254.162.106&quot;
+         }]
+     }
+  }
+  ...
+],</code></pre>
+<p>Date is a search cell that when it is clicked, it shows an overlay with the option to chose from a Specific Date, Range, Before or After toggle button. For example:</p>
+<pre><code>&quot;columns&quot;: [
+   ...
+   {
+       &quot;index&quot;: &quot;date&quot;,
+        &quot;name&quot;: &quot;date&quot;,
+        &quot;label&quot;: &quot;Date&quot;,
+        &quot;width&quot;: 200,
+        &quot;searchCell&quot;:{
+            &quot;type&quot;: &quot;date&quot;
+        }
+   }
+   ...
+],</code></pre>
+<p>Number is a search cell that when it is clicked, it shows an overlay with the option to exactly the same as a number, between two numbers, greater than or lesser than a number. For example:</p>
+<pre><code>&quot;columns&quot;: [
+   ...
+        &quot;index&quot;: &quot;DestinationAddress&quot;,
+        &quot;name&quot;: &quot;destination-address&quot;,
+        &quot;label&quot;: &quot;Destination Address&quot;,
+        &quot;collapseContent&quot;:{
+            &quot;formatData&quot;: formatData
+        },
+        &quot;width&quot;: 260,
+        &quot;createdDefaultValue&quot;:&quot;any&quot;,
+        &quot;searchCell&quot;:{
+            &quot;type&quot;: &quot;number&quot;
+        }
+   ...
+],</code></pre>
+<p>Additionally, user could define its custom controls defining the searchoptions parameter. It allows to customize the toolbar with another widget or a third party control. For example:</p>
+<pre><code>&quot;columns&quot;: [
+   ...
+   {
+       &quot;index&quot;: &quot;application-services&quot;,
+       &quot;name&quot;: &quot;application-services&quot;,
+       &quot;label&quot;: &quot;Advanced Security&quot;,
+       &quot;width&quot;: 300,
+       &quot;searchCell&quot;: {
+           &quot;searchoptions&quot;: {
+               dataInit: function (element) {
+                   new DropDownWidget({
+                       &quot;container&quot;: element,
+                       &quot;data&quot;: applicationDropDownData,
+                       &quot;enableSearch&quot;: true,
+                       &quot;multipleSelection&quot;: {
+                           allowClearSelection: true
+                       }
+                   }).build();
+               }
+           }
+       }
+   }
+   ...
+],</code></pre>
+<p>The token created by using custom search cell needs to be added in the token area. To add a token, the search container should trigger an &quot;slipstream-remove-token&quot; custom event. To delete a token, the search container should trigger an &quot;slipstream-remove-column-token&quot; event. For example:</p>
+<pre><code>    $searchContainer.trigger(&quot;slipstream-remove-token&quot;,{
+        &quot;columnName&quot;: column.name,
+        &quot;searchValue&quot;: value
+    });
+    $searchContainer.trigger(&quot;slipstream-remove-column-token&quot;,{
+        &quot;columnName&quot;: column.name
+    });</code></pre>
+<ul>
+<li><p><strong><em>dragNDrop</em></strong>
+Defines the column that needs to add drag and drop feature. It has the following parameters:</p>
+<ul>
+<li><p><strong>isDraggable</strong>
+Defines the column is draggable. Default: false. Note: this parameter will be ignored while the source is row.</p>
+</li>
+<li><p><strong>isDroppable</strong>
+Defines the column is droppable. Default: false.</p>
+</li>
+<li><p><strong>isDraggableHelperData</strong>
+Defines the column to be the draggable helper if the dragNDrop source is row. Default: the column content defined for jsonId. Note: need this parameter only when the grid dragNDrop source is row. </p>
+</li>
+<li><p><strong>groupId</strong>
+A named drag drop group to which this column belongs. If a group is specified, then this column only interact with other drag-n-drop objects in the same group. If a group is not specified, then this column can interact with all droppable columns, which isDroppable is true.</p>
+</li>
+<li><p><strong>callbacks</strong>
+A set of callbacks are defined for the specific column.</p>
+<p>a. <strong><em>beforeDrag</em></strong>
+This callback is defined for the specific column only. The callback is triggered when the draggable element start dragging. The callback needs to return either true, false or an object with the error message. Default: true</p>
+<p>Note: This column level beforeDrag callback will overwrite the beforeDrag in the grid level. </p>
+<ul>
+<li>If the validation is passed and grid should update the cell content, then return true. </li>
+<li>If the validation is false or want to bypass the default workflow in order to create a custom behavior when start dragging, then return false. </li>
+<li>If the validation is false and also need to show default error message, then return an error object. </li>
+</ul>
+<blockquote>
+<p>The callback passes an object which contains some data.</p>
+<ul>
+<li><strong><em>(Array) data</em></strong>: The data of the draggable element</li>
+<li><strong><em>(Array) draggableItems</em></strong>: The draggable elements.</li>
+<li><strong><em>(Array) draggableRows</em></strong>: The row data of the draggable column </li>
+<li><strong><em>(jQuery Object) helper</em></strong>: The helper element </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>b. ***hoverDrop***
+This callback is defined the default hoverDrop callback for all droppable columns. The callback is triggered when the draggable element hovers the droppable element. The callback needs to return either true or false. Default: true
+
+Note: The column level hoverDrop callback will overwrite the hoverDrop callback in the grid level. 
+
+- If the validation is passed and grid should show the default workflow, then return true. 
+- If the validation is false, grid will return to original position. 
+
+&gt; The callback passes an object which contains some data.
+&gt; - ***(Array) data***: The data of the draggable element
+&gt; - ***(Array) draggableItems***: The draggable elements. If the source is a row, then it is undefined.
+&gt; - ***(jQuery Object) hoveredColumn***: The droppable column is hovered
+&gt; - ***(Array) draggableRows***: The row data of the draggable column or the draggable row(s)
+&gt; - ***(Object) droppableRow***: The row data of the droppable column
+&gt; - ***(jQuery Object) helper***: The helper element 
+
+
+c. ***afterDrop***
+This callback is defined for the specific column only. The callback is triggered after the draggable element drops in the droppable element. The callback needs to return either true, false or an object with the error message. Default: true
+
+Note: This column level afterDrop callback will overwrite the afterDrop in the grid level. 
+
+- If the validation is passed and grid should update the cell content, then return true. 
+- If the validation is false or want to bypass the default workflow in order to create a custom behavior after drops, then return false. 
+- If the validation is false and also need to show default error message, then return an error object. 
+
+&gt; The callback passes an object which contains some data.
+&gt; - **(Array) data**: The data of the draggable element
+&gt; - **(Array) draggableItems**: The draggable elements. If the source is a row, then it is undefined.
+&gt; - **(jQuery Object) dropColumn**: The droppable column that user drops the element
+&gt; - **(Array) draggableRows**: The row data of the draggable column or the draggable row(s)
+&gt; - **(Object) droppableRow**: The row data of the droppable column
+&gt; - **(jQuery Object) helper**: The helper element </code></pre>
+<pre><code>&quot;columns&quot;: [
+  ...
+  {
+    &quot;index&quot;: &quot;sourceAddress&quot;,
+    &quot;name&quot;: &quot;source-address&quot;,
+    &quot;label&quot;: &quot;Source Address&quot;,
+    &quot;width&quot;: 260,
+    &quot;collapseContent&quot;:true, // we must make sure the column is collapseContent: true, while using drag and drop
+    &quot;createdDefaultValue&quot;:&quot;any&quot;,
+    &quot;dragNDrop&quot;:{
+      &quot;isDraggable&quot;: true,
+      &quot;isDroppable&quot;: true,
+      &quot;groupId&quot;: &quot;address&quot;,
+      &quot;callbacks&quot;: {
+        beforeDrag: sourceAddressBeforeDrag,
+        hoverDrop: sourceAddressHoverDrop,
+        afterDrop: sourceAddressDropCallback
+      }
+    }
+  }
+  ...
+]
+
+var sourceAddressBeforeDrag = function(data){
+    console.log(data);
+
+    data.helper.attr(&quot;data-grid-demo&quot;, &quot;this is payload data again.&quot;);
+    return true;
+};
+
+var sourceAddressHoverDrop = function(data){
+    console.log(data);
+
+    //return true;
+    return false;
+};
+
+var sourceAddressDropCallback = function(data){
+    console.log(data);
+
+    //return true with the default workflow if the validation is passed
+    //return true;
+
+    //return false without showing any behavior if the validation is NOT passed or in order to create the custom behavior after drops.
+    //return false;
+
+    //return the following object if the validation is NOT passed in order to show the error message by default
+    return {isValid: false, errorMessage: &#39;This is testing error message.&#39;};
+};</code></pre>
+<ul>
+<li><strong><em>contextMenu</em></strong>
+Defines the context menu items that a column could have. The items are added at the end of the current row context menu. It is defined in the same way as the context menu for a row. It is defined as an object with the reserved keys: copyCell (copies a cell value), pasteCell (pastes a cell value), and searchCell (adds the cell value on a token and triggers the search). Each key has a corresponding string that represents the text that will be showed for the context menu item. Additionally, it has the custom parameter which is an array with key/label pairs. It allows to define custom items for the cell context menu. The key parameter should be unique across the grid the configuration and the label parameter defines the text that will be showed in the context menu that represents the cell context menu item. For example, one of the columns across the grid configuration (columns parameter) might include:</li>
+</ul>
+<pre><code>  ...
+  &quot;columns&quot;: [
+        {
+            &quot;name&quot;: &quot;name&quot;,
+            ...
+            &quot;contextMenu&quot;: {
+                &quot;copyCell&quot;: &quot;Copy Cell&quot;,
+                &quot;pasteCell&quot;: &quot;Paste Cell&quot;,
+                &quot;searchCell&quot;: &quot;Search Cell&quot;,
+                &quot;custom&quot;:[{ //user should bind custom key events
+                    &quot;label&quot;:&quot;Cell Menu 11&quot;,
+                    &quot;key&quot;:&quot;cellMenu11&quot;
+                },{
+                    &quot;label&quot;:&quot;Cell Menu 12&quot;,
+                    &quot;key&quot;:&quot;cellMenu12&quot;
+                },{
+                    &quot;label&quot;:&quot;Cell Sub Menu&quot;,
+                    &quot;key&quot;:&quot;cellSubMenu1&quot;,
+                    &quot;items&quot;: [{
+                        &quot;label&quot;:&quot;Cell Sub Menu 11&quot;,
+                        &quot;key&quot;:&quot;cellSubMenu11&quot;
+                    },{
+                        &quot;label&quot;:&quot;Cell Sub Menu 12&quot;,
+                        &quot;key&quot;:&quot;cellSubMenu12&quot;
+                    }]
+                }]
+            }
+        },
+        ...
+   ]
+   ...</code></pre>
+<p><strong>validationTime</strong>
+Defines the wait time before the input field validation is triggered. Used in conjunction with the editCell, input type parameter.</p>
+<p><strong>contextMenu</strong>
+Defines a context menu available when user does a right click on a column. The available options are:</p>
+<ul>
+<li><strong><em>edit</em></strong>
+ Provides edit capabilities to a row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>enable</em></strong>
+ Allows to enable a row. It is showed with the default row style. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>disable</em></strong>
+ Allows to disable a row. It is showed with the disabled row style. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>createBefore</em></strong>
+ Allows the creation of a row before a selected row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>createAfter</em></strong>
+ Allows the creation of a row after a selected row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>copy</em></strong>
+ Allows the creation of a row before a selected row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>pasteBefore</em></strong>
+ Allows a row to be pasted  after a selected row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>pasteAfter</em></strong>
+ Allows a row to be pasted after a selected row. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>delete</em></strong>
+Allows to delete one or more rows. The value represents the label to be showed in the context menu.</li>
+<li><strong><em>quickView</em></strong>
+Adds the quick view action for a row. It is available from the context menu or the action column. From the action column, the quick view button is available on the left side of the grid (next to the selection column) and showed on hover of the row. The value represents the label that will be showed in the context menu.</li>
+<li><strong><em>clearAll</em></strong>
+Clears the current row selection.</li>
+<li><strong><em>custom</em></strong>
+ Allows to define a set of custom actions. It is defined as a label/key/isDisabled set where label - is the value that will be showed in the context menu, key - the custom event that will be triggered when the user select this option on the context menu and isDisabled - function to enable/disable a menu item. return true for disable.  </li>
+</ul>
+<p>For example:</p>
+<pre><code>&quot;contextMenu&quot;: {
+    &quot;edit&quot;: &quot;Edit Rule&quot;,
+    &quot;enable&quot;:&quot;Enable Rule&quot;,
+    &quot;disable&quot;:&quot;Disable Rule&quot;,
+    &quot;createBefore&quot;: &quot;Create Rule Before&quot;,
+    &quot;createAfter&quot;: &quot;Create Rule After&quot;,
+    &quot;copy&quot;: &quot;Copy Rule&quot;,
+    &quot;pasteBefore&quot;: &quot;Paste Rule Before&quot;,
+    &quot;pasteAfter&quot;: &quot;Paste Rule After&quot;,
+    &quot;delete&quot;: &quot;Delete Rule&quot;,
+    &quot;custom&quot;:[{ //user should bind custom key events
+            &quot;label&quot;:&quot;Reset Hit Count&quot;,
+            &quot;key&quot;:&quot;resetHit&quot;
+            &quot;isDisabled&quot;: function(eventName, selectedItems) {
+              return true;
+            }
+        },{
+            &quot;label&quot;:&quot;Disable Hit Count&quot;,
+            &quot;key&quot;:&quot;disableHit&quot;
+        }]
+},</code></pre>
+<p>For example:</p>
+<pre><code>{
+    var configurationSample = {
+          &quot;title&quot;: &quot;Recent Logs&quot;,
+          &quot;url&quot;: &quot;/assets/js/widgets/grid/conf/dataSample.json&quot;,
+          &quot;height&quot;: 192,
+          &quot;tooltip&quot;: &quot;Tooltip text&quot;,
+          &quot;sortorder&quot;: &quot;desc&quot;,
+          &quot;sortname&quot;: &quot;id&quot;,
+          &quot;multiselect&quot;:true,
+          &quot;tableId&quot;:&quot;test&quot;,
+          &quot;columns&quot;: [
+                       {
+                            &quot;index&quot;: &quot;id&quot;,
+                            &quot;name&quot;: &quot;id&quot;,
+                            &quot;label&quot;: &quot;Inv&quot;,
+                            &quot;width&quot;: 60
+                        },{
+                            &quot;index&quot;: &quot;invdate&quot;,
+                            &quot;name&quot;: &quot;invdate&quot;,
+                            &quot;label&quot;: &quot;Date&quot;,
+                            &quot;width&quot;: 120
+                        }, {
+                            &quot;index&quot;: &quot;name&quot;,
+                            &quot;name&quot;: &quot;name&quot;,
+                            &quot;label&quot;: &quot;Client&quot;,
+                            &quot;width&quot;: 100
+                        }, {
+                            &quot;index&quot;: &quot;note&quot;,
+                            &quot;name&quot;: &quot;note&quot;,
+                            &quot;label&quot;: &quot;Note&quot;,
+                            &quot;sortable&quot;: false,
+                            &quot;width&quot;: 150
+              }]
+      };
+}</code></pre>
+<p><strong>contextMenuItemStatus</strong>
+Defines a callback function that allows to enable or disable an item menu from the more menu of the action area or the context menu of a row. The input parameters are: key (the key of the item menu), isItemDisabled (default status provided by the grid depending on the row selection), and selectedRows (current selected rows). The output of the function should be the status of the item menu: true if the item should be disabled and false if the item should be enabled. For example:</p>
+<pre><code> &quot;contextMenuItemStatus&quot;: function (key, isItemDisabled, selectedRows){
+    if (key==&#39;resetHitEvent&#39;)
+        isItemDisabled = true;
+    else if (key==&#39;disableHitEvent&#39; &amp;&amp; selectedRows.length&gt;0
+        isItemDisabled = false;
+    return isItemDisabled;
+},</code></pre>
+<p><strong>contextMenuStatusCallback</strong>
+Defines a callback function that allows to define an asynchronous call to an API that could provide the status of each item in a context menu. The input parameters are: selectedRows, updateStatus and  updateStatusError. selectedRows is and object with the current selected row. updateStatus is callback that should be invoked when an asynchronous request is completed on success. The callback should be called by passing as parameter the status of each item in the context menu. Each item in the object is a pair with the key of the context menu and the status: true for enabled and false for disabled. updateStatusError is a callback that should be invoked when the request was completed on error. It should be invoked by passing an error message. For example:</p>
+<pre><code> var setContextMenuStatus = function (selectedRows, updateStatusSuccess, updateStatusError) {
+        var isRowEditable = !(~selectedRows.selectedRowIds.indexOf(&#39;183002-PSP_to_Cogent_-_BP___Internet_-_11-30-2009_PSP_to_Cogent&#39;));
+        $.ajax({
+            type: &#39;GET&#39;,
+            url: &#39;/assets/js/widgets/grid/tests/dataSample/addressBookGlobal.json&#39;,
+            success: function(data) {
+                    updateStatusSuccess({
+                    &quot;edit&quot;: selectedRows.numberOfSelectedRows == 1 &amp;&amp; selectedRows.isRowEnabled &amp;&amp; isRowEditable ? true : false,
+                    &quot;copy&quot;: selectedRows.numberOfSelectedRows &gt; 2 ? true : false,
+                    &quot;disableHitEvent&quot;: selectedRows.numberOfSelectedRows &gt; 1 ? true : false,
+                    &quot;subMenus&quot;: selectedRows.numberOfSelectedRows &gt; 0 ? true : false,
+                    &quot;subMenu3&quot;: selectedRows.numberOfSelectedRows &gt; 3 ? true : false
+                });
+            },
+            error: function() {
+                updateStatusError(&quot;Update in the status of the context menu items FAILED. Selected rows: &quot; + selectedRows.numberOfSelectedRows);
+            }
+        });
+    };</code></pre>
+<p><strong>actionButtons</strong>
+Defines the custom buttons, menus and icons that can be added to action area of the grid widget. It has the statusCallback property that allows to disable or enable an action icon or button depending on the row selected. For example:</p>
+<pre><code>      &quot;actionButtons&quot;:{
+            &quot;actionStatusCallback&quot;: setCustomActionStatus,
+            &quot;defaultButtons&quot;:{ //overwrite default CRUD grid buttons
+                &quot;create&quot;: {
+                    &quot;label&quot;: &quot;Create Menu&quot;,
+                    &quot;key&quot;: &quot;createMenu&quot;,
+                    &quot;items&quot;: [{
+                        &quot;label&quot;:&quot;Create Menu1&quot;,
+                        &quot;key&quot;:&quot;createMenu1&quot;
+                    },{
+                        &quot;label&quot;:&quot;Create Menu2&quot;,
+                        &quot;key&quot;:&quot;createMenu2&quot;
+                    }]
+                }
+            },
+           &quot;customButtons&quot;:
+                [{
+                    &quot;button_type&quot;: true,
+                    &quot;label&quot;: &quot;Publish&quot;,
+                    &quot;key&quot;: &quot;publish&quot;
+                },{
+                    &quot;button_type&quot;: true,
+                    &quot;label&quot;: &quot;Save&quot;,
+                    &quot;key&quot;: &quot;save&quot;,
+                    &quot;secondary&quot;: true
+                },{
+                    &quot;icon_type&quot;: true,
+                    &quot;label&quot;: &quot;Close&quot;,
+                    &quot;icon&quot;: &quot;icon_exit_filters_hover&quot;,
+                    &quot;key&quot;: &quot;close&quot;
+                },{
+                    &quot;icon_type&quot;: true,
+                    &quot;label&quot;: &quot;Close&quot;,
+                    &quot;icon&quot;: {
+                        default: &quot;icon_exit_filters_hover&quot;,
+                        hover: &quot;icon_exit_filters&quot;,
+                        disabled: &quot;icon_exit_filters_disable&quot;
+                    },
+                    &quot;key&quot;: &quot;close2&quot;
+                },{
+                    &quot;menu_type&quot;: true,
+                    &quot;label&quot;:&quot;Split Action&quot;,
+                    &quot;key&quot;:&quot;subMenu&quot;,
+                    &quot;items&quot;: [{
+                        &quot;label&quot;:&quot;SubMenu1 Menu1&quot;,
+                        &quot;key&quot;:&quot;subMenu1&quot;
+                    },{
+                        &quot;label&quot;:&quot;SubMenu1 Menu2&quot;,
+                        &quot;key&quot;:&quot;subMenu2&quot;
+                    },{
+                        &quot;separator&quot;: &quot;true&quot;
+                    },{
+                        &quot;label&quot;:&quot;SubMenu1 Menu3&quot;,
+                        &quot;key&quot;:&quot;subMenu3&quot;
+                    }]
+                }],
+            &quot;statusCallback&quot;: setItemStatus
+        },</code></pre>
+<p>It has the following parameters:</p>
+<ul>
+<li>actionStatusCallback
+Defines a callback that will be invoked when a user selects on a row. Depending on the row value, the action icons or action menus could be enabled or disabled. The callback has the selectedRows, updateStatusSuccess and updateStatusError parameters. selectedRows is the object with data collected for the selected row or rows. updateStatusSuccess is a callback that should be invoked with one parameter: an object that contains a pair of key/value composed by the key of the icon/button and the status that the icon/button should have: true (enabled), disabled (false).  updateStatusError will allow to set an error message in case the API request to get the status of the icons and/or buttons fail. For example, the actionStatusCallback could be defined as:</li>
+</ul>
+<pre><code>    var setCustomActionStatus = function (selectedRows, updateStatusSuccess, updateStatusError) {
+        $.ajax({
+            type: &#39;GET&#39;,
+            url: &#39;/assets/js/widgets/grid/tests/dataSample/addressBookGlobal.json&#39;,
+            success: function(data) {
+                updateStatusSuccess({
+                    &quot;edit&quot;: selectedRows.isRowEnabled ? true : false,
+                    &quot;testCloseGrid&quot;: selectedRows.numberOfSelectedRows &gt; 1 ? true : false,
+                    &quot;testPublishGrid&quot;: selectedRows.numberOfSelectedRows == 1 ? true : false,
+                    &quot;testSaveGrid&quot;: selectedRows.numberOfSelectedRows &gt; 0 ? true : false
+                });
+            },
+            error: function() {
+                updateStatusError(&quot;Update in the action status FAILED. Selected rows: &quot; + selectedRows.numberOfSelectedRows);
+            }
+        });
+    };</code></pre>
+<ul>
+<li><p>defaultButtons
+Overwrites the default custom buttons for create, edit and delete. It is defined as an array of objects where the key of the object is the name of the action that should be overwritten (create, edit or delete), and the value is an object composed by: label, key and items (array with the items of the menu as per the context menu widget interface of the items).</p>
+</li>
+<li><p>customButtons
+Defines new buttons, icons and menus to be showed in the action area. It is defined as an array of objects. Each object represents the new button. It has the following parameters:</p>
+</li>
+</ul>
+<p>button_type: the action will be added as a button. Optionally,the secondary parameter can be added to state that the button should show as a secondary button.</p>
+<p>icon_type: the action will be added as an icon and a text. Requires the class that has the path of the icon. The parameter can be a string which is the default icon class. Or the parameter can be an object which take default, hover, and disabled parameters.</p>
+<p>menu_type: the action will be added as a menu. Requires the items parameter to indicate the items that will be showed in the 
+menu. Each item is composed by label and key parameters.
+label: label of the action
+key: id of the action</p>
+<ul>
+<li>statusCallback
+Defines the function callback that will be called to set the status of the items in the menu.</li>
+</ul>
+<h3 id="actionevents">actionEvents</h3>
+<p>Defines the name and the RBAC capabilities of the custom events that Grid Widget will trigger when an action performed. If there is no capabilities defined, the default is to enable the event. The available events are:</p>
+<p><strong>createEvent</strong>
+Triggers when a user creates a row.</p>
+<p><strong>updateEvent</strong>
+Triggers when a user updates a row.</p>
+<p><strong>deleteEvent</strong>
+Triggers when a user deletes one or more rows. It provides an object with the rows that were deleted (only for the pages that were visited by the user). It also includes the the selectedRows and isSelectAll properties. isSelectAll property will be false for all cases except if select all checkbox was selected. It will also be true even if after that select all was checked, some rows were unselected. Only when select all was clicked again to clear all the selections, then it will return false again. The selectedRows property is an object that contains the id of all selected rows (if it was provided by the onSelectAll callback); otherwise, it will include the id of the rows for the pages the user has visited.</p>
+<p><strong>copyEvent</strong>
+Triggers when a user copies a row.</p>
+<p><strong>pasteEvent</strong>
+Triggers when a user paste a row that was copied from the event above.</p>
+<p><strong>clearAllEvent</strong>
+Triggers when the clearAll item from the context menu or the more button is clicked. It returns the previous selected rows since the the final current selection is set to zero.</p>
+<p><strong>statusEvent</strong>
+Trigger when a user enable or disable a row.</p>
+<p><strong><em>Event property</em></strong>
+The event property can be either a string with the name of the event or the object with the following properties.</p>
+<ol>
+<li>capabilities: define the capability name</li>
+<li>name: the name of the event</li>
+</ol>
+<p>For example:</p>
+<pre><code>var actionEvents = {
+        createEvent:&quot;AddFirewallPolicies&quot;,
+        updateEvent:{
+            capabilities : [&#39;ModifyPolicy&#39;],
+            name: &quot;UpdateFirewallPolicies&quot;
+        },
+        deleteEvent:&quot;DeleteFirewallPolicies&quot;,
+        copyEvent:&quot;CopyFirewallPolicies&quot;,
+        pasteEvent:&quot;PasteFirewallPolicies&quot;,
+        statusEvent:&quot;UpdateStatusFirewallPolicies&quot;
+    };</code></pre>
+<h3 id="celloverlayview">cellOverlayView</h3>
+<p>Defines the view that the grid widget will show when a cell is edited. The key of the object represents the name assigned to the column (elements section, column/name parameter) and the value is the instance of the view to be rendered when that column is selected.
+For example:</p>
+<pre><code>var cellViews = {
+        &#39;source-address&#39; : sourceAddressView,
+        &#39;destination-address&#39; : destinationAddressView,
+        &#39;application&#39; : applicationView
+    }</code></pre>
+<p>The view should comply with Slipstream definition of a view. For example:</p>
+<pre><code>var sourceAddressView = new SourceAddressView({
+        &#39;model&#39;: new ZonePoliciesModel.address.collection(),
+        &#39;save&#39;: _.bind(self.save, self),
+        &#39;close&#39;: _.bind(self.close, self),
+        &#39;columnName&#39;: &#39;source-address&#39;
+    });</code></pre>
+<p>Finally, the view is rendered on an overlay and grid widget custom events should be triggered to allow the grid widget to update data accordingly.</p>
+<ol>
+<li>Save
+To save the data, the &quot;updateCellOverlayView&quot; event should be triggered and should include an array with the updated values for the cell. For example:</li>
+</ol>
+<pre><code>this.$el.trigger(&#39;updateCellOverlayView&#39;,{&#39;columnName&#39;:columnName,&#39;data&#39;:data});</code></pre>
+<ol>
+<li>Cancel
+To close the overlay, the &quot;closeCellOverlayView&quot; event should be triggered. For example:</li>
+</ol>
+<pre><code> this.$el.trigger(&#39;closeCellOverlayView&#39;, columnName);</code></pre>
+<h3 id="celltooltip">cellTooltip</h3>
+<p>Defines a callback that will be executed for those HTML elements that have the data-tooltip attribute. It results on a tooltip with a view provided in this callback. It provides the cellData and renderTooltip parameters. cellData is an object that includes: columnName (name of the column where cell is located), rowId (id of the row), cellId (value of the data-tooltip attribute), $cell (jQuery object for the cell or item with the data-tooltip attribute), rowData (data of the row). renderTooltip is a callback that should be invoked to provide the view to be showed in the cell tooltip. It expects the view (content of the tooltip) and position (location of the tooltip, by default it&#39;s bottom). For example for the following grid configuration:</p>
+<pre><code>    new GridWidget({
+        container: this.el,
+        elements: simpleGrid,
+        actionEvents:this.actionEvents,
+        cellTooltip:this.cellTooltip
+    });</code></pre>
+<p>The cellTooltip callback could be the following:</p>
+<pre><code>    cellTooltip: function (cellData, renderTooltip){
+        $.ajax({
+            type: &#39;GET&#39;,
+            url: &#39;/assets/js/widgets/grid/tests/dataSample/addressBookGlobal.json&#39;,
+            success: function(data) {
+                renderTooltip(cellData.cellId + &quot;&lt;br/&gt;&quot;
+                              + cellData.columnName + &quot;&lt;br/&gt;&quot;
+                              + data.address[0].name);
+            }
+        });
+    },</code></pre>
+<h3 id="search">search</h3>
+<p>Defines the tokens/filters that will be applied before the grid is rendered for the first time. It is an array of string where each element represents the token to be applied. For example:</p>
+<pre><code>    this.gridWidget = new GridWidget({
+        container: this.el,
+        elements: configurationSample.simpleGrid,
+        search: this.search,
+        actionEvents:this.actionEvents,
+        cellTooltip:this.cellTooltip
+    });</code></pre>
+<p>where:</p>
+<pre><code>    this.search = [
+        &quot;sourceAddress = IP_CONV_204.17.79.60, IP_SEC_204.17.79.60&quot;,
+        &quot;Destination Address &gt;= 3&quot;,
+        &quot;PSP&quot;,
+        &quot;name = test&quot;
+    ];</code></pre>
+<h3 id="onconfigupdate">onConfigUpdate</h3>
+<p>Represents a callback that is invoked by the grid when a user has modified the current grid configuration. The callback is called when:</p>
+<ol>
+<li>The width of a column has been expanded or collapsed (event: slipstreamGrid.updateConf:columns is triggered)</li>
+<li>The order of the columns has been modified (event: slipstreamGrid.updateConf:columns is triggered)</li>
+<li>A column has been hidden or showed (event: slipstreamGrid.updateConf:columns is triggered)</li>
+<li>A column has been sort (event: slipstreamGrid.updateConf:sort is triggered)</li>
+<li>A token that filters the grid has been added or deleted (event: slipstreamGrid.updateConf:search is triggered)
+The implementation of the onConfigUpdate callback could save the user preferences or new configuration passed as a parameter of the callback.</li>
+</ol>
+<p>For example, if the grid configuration is the following:</p>
+<pre><code class="language-javascript">    <span class="keyword">new</span> GridWidget({
+        container: <span class="keyword">this</span>.el,
+        elements: configurationSample.simpleGrid,
+        onConfigUpdate: onConfigUpdate
+    });</code></pre>
+<p>Then, the onConfigUpdate callback could be the following:</p>
+<pre><code class="language-javascript">    <span class="keyword">var</span> onConfigUpdate = <span class="function"><span class="keyword">function</span><span class="params">(updatedConf)</span> {</span>
+        Slipstream.SDK.Preferences.save(preferencesPath, updatedConf); <span class="comment">//API that saves user preferences</span>
+    };</code></pre>
+<h2 id="build">Build</h2>
+<p>Adds the dom elements and events of the Grid widget in the specified container. For example:</p>
+<pre><code>{
+    gridBuilder.build();
+}</code></pre>
+<h2 id="destroy">Destroy</h2>
+<p>Clean up the specified container from the resources created by the Grid widget.</p>
+<pre><code>{
+    gridBuilder.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a Grid widget in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the Grid widget widget and provide the configuration object the list of elements to show (list) and the container where the Grid widget will be rendered</li>
+<li>Call the build method of the Grid widget widget</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the Grid widget widget.</p>
+<pre><code>{
+    var gridBuilder = new gridWidget({
+            &quot;container&quot;: this.$el,
+            &quot;elements&quot;: configurationSample,
+            &quot;actionEvents&quot;:this.actionEvents,
+            &quot;cellOverlayViews&quot;:this.cellOverlayViews
+        });
+    gridBuilder.build();
+}</code></pre>
+<p>The Grid widget can be used in the context of Slipstream or outside of it. If the Grid widget is used without Slipstream, the container (html markup) that will include the Grid page needs to include a div with id=&quot;overlay_content&quot; under a location that spans 100% of height and width of the container. This is required by the Overlay widget to render itself with the proper size and at the proper location.</p>
+<h2 id="utility-methods">Utility Methods</h2>
+<p>The Grid widget provides some utility methods like addRow, getSelectedRows, getFilterContainer, filterGrid and reloadGrid</p>
+<h3 id="addrow">addRow</h3>
+<p>Adds a row or rows to the grid. It requires the data parameter (data of the new row). The location of the row in the grid might be provided by using the location parameter; if it&#39;s not available, it will take the configuration parameter (saveRow.addLast). If it&#39;s absent, it will assume that the location of the new row is the first one. The location parameter and addLast attribute will be ignored when the data is reload from the API and a sorting mechanism is provided. For example:</p>
+<pre><code>this.grid.addRow(data);</code></pre>
+<h3 id="addeditmodeonrow">addEditModeOnRow</h3>
+<p>Get a row from view mode to edit mode so the values can be updated. The method requires the rowId parameter which is the row id assigned to the row. For example:</p>
+<pre><code>this.grid.addEditModeOnRow(rowId);</code></pre>
+<h3 id="getnumberofrows">getNumberOfRows</h3>
+<p>Provides the number of records available in the grid. For example:</p>
+<pre><code>this.grid.getNumberOfRows();</code></pre>
+<h3 id="getselectedrows">getSelectedRows</h3>
+<p>Provides all the selected rows. For example:</p>
+<pre><code>this.grid.getSelectedRows();</code></pre>
+<p>Additionally, the grid triggers a &quot;gridOnRowSelection&quot; event. An event handler could be added to listen for this event. For example:</p>
+<pre><code>gridContainer.bind(&quot;gridOnRowSelection&quot;, function(e, selectedRows){
+    console.log(selectedRows);
+});</code></pre>
+<p>The selectedRows object has the parameters: currentRow, selectedRowIds and selectedRows. The currentRow represents the row that trigger the events with rowId and selected parameter. Selected parameter is set to true if the row was selected and false if it was unselected.</p>
+<h3 id="search">search</h3>
+<p>Allows search of data in the grid. It requires the value to be searched (value parameter). The search is performed on server side, by a request to the API provided in the filter section of the grid configuration. The results are showed in the grid. For example:</p>
+<pre><code>this.grid.search(&#39;policy123&#39;);</code></pre>
+<h3 id="getscrollposition">getScrollPosition</h3>
+<p>Returns The grid&#39;s vertical scroll position.  This is the number of pixels that are hidden from view above the grid&#39;s scrollable area.</p>
+<pre><code>this.grid.getScrollPosition();</code></pre>
+<h3 id="setscrollposition">setScrollPosition</h3>
+<p>Set the grid&#39;s vertical scroll position.  This is the number of pixels that are hidden from view above the grid&#39;s scrollable area.</p>
+<pre><code>var scrollPosition = 150;
+this.grid.setScrollPosition(scrollPosition);</code></pre>
+<h3 id="reloadgrid">reloadGrid</h3>
+<p>Reloads the content of the grid using the url or the getData method defined in the grid configuration. It removes the reference to any selected elements if the resetSelection parameter is set to true. It takes an optional object parameter that defines a set of options controlling the reload operation.  The supported options are as follows:</p>
+<ul>
+<li><p><em>resetSelection</em> - A boolean indicating if the row selection needs to removed. By default the row selection is kept after reloadGrid method is called, unless this property is set to true.</p>
+</li>
+<li><p><em>rowIndex</em> - The index of the row to which the grid should be positioned after reload.  Valid row indexes are &gt; 0.  If no rowIndex is provided the grid will be reloaded at its current viewport position.</p>
+</li>
+<li><p><em>highlightRow</em> - A boolean indicating if the row given by rowIndex should be highlighted when it is displayed after reload.</p>
+</li>
+<li><p><em>afterReload</em> -  A callback function that is invoked after the reload operation is complete.  The function will be passed the following arguments:</p>
+<ul>
+<li>rowIndex - the rowIndex provided in the call to reloadGrid.  If no rowIndex was provided this will be undefined.</li>
+<li>row - The DOM object for the row at index rowIndex. If no row index was provided, this will be undefined.</li>
+</ul>
+</li>
+</ul>
+<p>If no options object is provided the grid will be reloaded at its current viewport position.</p>
+<p>For example:</p>
+<pre><code>this.grid.reloadGrid();</code></pre>
+<pre><code>this.grid.reloadGrid({
+    rowIndex: 10,
+    highlightRow: true,
+    afterReload: function(rowIndex, row) {
+       ...
+    }
+});</code></pre>
+<h3 id="reloadgriddata">reloadGridData</h3>
+<p>Reloads the content of the grid using the data provided in the data parameter. Any row already existing in the grid and any reference to selected elements is kept unless the resetSelection parameter is set to true. The data will be removed unless keepData is set to true. An optional parameter page could be set to include the parameters of the page which is an object with the numberOfPage, totalPages, and totalRecords. For example:</p>
+<pre><code>this.grid.reloadGridData(data, page, resetSelection, keepData);</code></pre>
+<h3 id="togglerowselection">toggleRowSelection</h3>
+<p>Toggles the status of rows; if the rows are selected, then they will be unselected and vice versa. The input parameter is the an array with the ids of the rows that need to be selected or unselected. For example:</p>
+<pre><code>this.grid.toggleRowSelection(rowIds);</code></pre>
+<h3 id="toggleselectallrows">toggleSelectAllRows</h3>
+<p>Toggles the &quot;select all&quot; checkbox for the grid. If it is unchecked, toggleSelectAllRows method will check it and therefore all rows will be shown as selected. If it is already checked, then when toggleSelectAllRows method is invoked, the select all checkbox will be unchecked, and all rows will be unselected. For example:</p>
+<pre><code>this.grid.toggleSelectAllRows();</code></pre>
+<h3 id="updateactionstatus">updateActionStatus</h3>
+<p>Updates programmatically the status of the action buttons of the grid widget. It also resets the current row selection. The input parameter is an object with a combination of key/status for each  action icon, button and split buttons. If the status of an icon is not provided as an input parameter, then it will default to false. For example:</p>
+<pre><code>    this.gridWidget.updateActionStatus({
+        &quot;testCloseGrid&quot;: true
+    });</code></pre>
+<h2 id="errors">Errors</h2>
+<p>The Grid widget provides an error handling mechanism and it is used when the grid is built, or one of its exposed methods is invoked.
+Once the required configuration parameters are provided, the Grid widget relies on the jqGrid library for more specific errors.</p>
+<h2 id="recommendations">Recommendations</h2>
+<p>When a large number of rows needs to be fetched, virtual scrolling is a preferred method. It will allow to load the row  in smaller batches without impacting user interaction. In fact, trying to insert a large number of rows in the grid in one load can take a significant time and it could cause that the browser show warnings that the operation is taking too long.</p>
+
+
+</div>
+ 

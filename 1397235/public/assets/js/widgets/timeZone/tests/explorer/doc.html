@@ -1,0 +1,142 @@
+<div>
+    <h1 id="timezone-widget">TimeZone Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Slipstream&#39;s TimeZone widget provides an input UI widget for any workflow which want to show and interact various timezones. It contains a single HTML select box input, which displays following options (displayable timezones):</p>
+<ul>
+<li>UTC -11:00 Samoa Standard Time (America/Pago Pago) SST,</li>
+<li>UTC -10:00 Hawaii–Aleutian Time (America/Honolulu) HAST,</li>
+<li>UTC -9:00 Alaska Standard Time (America/Anchorage) AKST,</li>
+<li>UTC -8:00 Pacific Standard Time (America/Los Angeles) PST,</li>
+<li>UTC -7:00 Phoenix Time (America/Phoenix) PNT,</li>
+<li>UTC -7:00 Mountain Standard Time (America/Denver) MST,</li>
+<li>UTC -6:00 Central Standard Time (America/Chicago) CST,</li>
+<li>UTC -5:00 Eastern Standard Time (America/New York) EST,</li>
+<li>UTC -4:30 Venezuelan Standard Time (America/Caracas) VET,</li>
+<li>UTC -4:00 Atlantic Standard Time (America/La Paz) AST,</li>
+<li>UTC -3:30 Newfoundland Standard Time (America/St. John&#39;s) NST,</li>
+<li>UTC -3:00 Brasília Time (America/São Paulo) BRT,</li>
+<li>UTC -2:00 Fernando de Noronha Time (America/Recife) FNT,</li>
+<li>UTC -1:00 Cape Verde Time (Africa/Praia) CVT,</li>
+<li>UTC +/-0:00 Western European Time (Europe/London) WET,</li>
+<li>UTC +1:00 Central European Time (Europe/Berlin) CET,</li>
+<li>UTC +2:00 Central Africa Time (Africa/Cairo) CAT,</li>
+<li>UTC +3:00 East Africa Time (Africa/Nairobi) EAT,</li>
+<li>UTC +3:30 Iran Standard Time (Asia/Teheran) IRST,</li>
+<li>UTC +4:00 Moscow Standard Time (Europe/Moscow) MSK,</li>
+<li>UTC +4:30 AfghanistanTime (Asia/Kabul) AFT,</li>
+<li>UTC +5:00 Pakistan Standard Time (Asia/Islamabad) PKT,</li>
+<li>UTC +5:30 Indian Standard Time (Asia/Mumbai) IST,</li>
+<li>UTC +5:45 Nepal Time (Asia/Katmandu) NPT,</li>
+<li>UTC +6:00 Bangladesh Standard Time (Asia/Dhaka) BST,</li>
+<li>UTC +7:00 Indochina Time (Asia/Bangkok) ICT,</li>
+<li>UTC +8:00 China Standard Time (Asia/Hong Kong) HKT,</li>
+<li>UTC +9:00 Japan Standard Time (Asia/Tokyo) JST,</li>
+<li>UTC +9:30 Australian Central Standard Time (Australia/Adelaide) ACST,</li>
+<li>UTC +10:00 Australian Eastern Time (Australia/Canberra) AEST,</li>
+<li>UTC +11:00 Solomon Islands Time (Oceania/Honiara) SBT,</li>
+<li>UTC +12:00 New Zealand Standard Time (Oceania/Auckland) NZST</li>
+</ul>
+<p>Above displayable text values for a timezone has 4 parts in it:</p>
+<ul>
+<li>a text value (timezone-offset-format), like <strong>UTC -8:00</strong></li>
+<li>a text value (timezone-full-name), like <strong>Pacific Standard Time</strong></li>
+<li>a text value (timezone-olson-format, in parenthesis), like <strong>(America/Los Angeles)</strong></li>
+<li>a text value (timezone-abbreviation), like <strong>PST</strong></li>
+</ul>
+<p>This widget works with Olson timezone format (like: <strong>America/Los_Angeles</strong>, which uses known names of cities or regions with spaces in names replaced with underscores). </p>
+<h2 id="api">API</h2>
+<h3 id="constructor">Constructor</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="keyword">var</span> TimeZoneWidget = <span class="function"><span class="keyword">function</span><span class="params">(conf)</span> {</span>
+  .....
+}
+
+<span class="comment">// use</span>
+<span class="keyword">var</span> timezoneWidget = <span class="keyword">new</span> TimeZoneWidget({
+  container: $(<span class="string">"#time-zone-widget"</span>)[<span class="number">0</span>],     <span class="comment">// required</span>
+  selectedTimezone: <span class="string">'America/Los_Angeles'</span>   <span class="comment">// optional value in Olson format</span>
+})</code></pre>
+<p>Creates a timezone widget object instance with specified <strong>conf</strong> object specifying the required <strong>container</strong> (DOM element) where the widget will render itself and an optional <strong>selectedTimezone</strong> value (in Olson format) for default selected timezone. Note: when a selectedTimezone value is not specified, the widget auto-selects the timezone of the client machine.</p>
+<h3 id="build">build</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">build</span><span class="params">()</span> {</span>
+  .....
+  <span class="keyword">return</span> <span class="keyword">this</span>;
+}
+
+<span class="comment">// use</span>
+timeWidget.build();</code></pre>
+<p>Renders the time widget&#39;s UI elements in the specified container (DOM element).</p>
+<h3 id="destroy">destroy</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">destroy</span><span class="params">()</span> {</span>
+  .....
+  <span class="keyword">return</span> <span class="keyword">this</span>;
+}
+
+<span class="comment">// use</span>
+timeWidget.destroy();</code></pre>
+<p>Removes the rendered view from the specified container and unbinds events.</p>
+<h3 id="getselectedtimezonetext">getSelectedTimezoneText</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">getSelectedTimezoneText</span><span class="params">()</span> {</span>
+  .....
+  <span class="keyword">return</span> selectedText;
+}
+
+<span class="comment">// use</span>
+<span class="comment">// for getting selected timezone displayable value string</span>
+<span class="keyword">var</span> timezoneTextStr = timezoneWidget.getSelectedTimezoneText();</code></pre>
+<p>Returns the selected timezone displayable text value.</p>
+<h3 id="getselectedtimezone">getSelectedTimezone</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">getSelectedTimezone</span><span class="params">()</span> {</span>
+  .....
+  <span class="keyword">return</span> selectedOlson;
+}
+
+<span class="comment">// use</span>
+<span class="comment">// for getting selected timezone Olson value string</span>
+<span class="keyword">var</span> timezoneOlsonStr = timezoneWidget.getSelectedTimezone();</code></pre>
+<p>Returns the selected timezone Olson text value.</p>
+<h3 id="setselectedtimezone">setSelectedTimezone</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">setSelectedTimezone</span><span class="params">(olsonIn)</span> {</span>
+  .....
+}
+
+<span class="comment">// use</span>
+<span class="comment">// for setting the timezone selection from specified Olson format timezone value</span>
+timezoneWidget.setSelectedTimezone(<span class="string">'America/Los_Angeles'</span>);</code></pre>
+<p>Sets the timezone selection from the olson format timezone value.</p>
+<h3 id="destroy">destroy</h3>
+<pre><code class="language-javascript"><span class="comment">// definition</span>
+<span class="function"><span class="keyword">function</span> <span class="title">destroy</span><span class="params">()</span> {</span>
+  .....
+  <span class="keyword">return</span> <span class="keyword">this</span>;
+}
+
+<span class="comment">// use</span>
+timezoneWidget.destroy();</code></pre>
+<p>Cleans up resources created by the timezone widget.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="programmatic-form-form-widget-">Programmatic Form (Form Widget)</h3>
+<p>The timeZone widget is integrated to the form widget. To include it, the configuration object of the Form Widget (elements parameter) should include an element_timeZoneWidget parameter like the following:</p>
+<pre><code>{
+    &quot;element_timeZoneWidget&quot;: true,
+    &quot;id&quot;: &quot;timezone_widget&quot;,
+    &quot;label&quot;: &quot;Timezone&quot;
+}</code></pre>
+<p>When the form widget is build, it will include the timeZone widget. The JS object for above timeZone widget is obtained using:</p>
+<pre><code>var timezoneWidget = formWidget.getInstantiatedWidgets()[&#39;timeZone_timezone_widget&#39;];</code></pre>
+<h3 id="declarative-form">Declarative Form</h3>
+<p>To add a timezone widget in a container, do following:</p>
+<pre><code>var timezoneWidget = new TimeZoneWidget({
+    container: $(&quot;#time-zone-widget&quot;)[0],     // required
+    selectedTimezone: &#39;America/Los_Angeles&#39;   // optional value in Olson
+});
+timezoneWidget.build();</code></pre>
+
+
+</div>
+ 

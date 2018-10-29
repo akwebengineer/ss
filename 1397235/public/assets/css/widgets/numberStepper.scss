@@ -1,0 +1,112 @@
+.numberStepper-widget {
+  @import "../../js/vendor/jquery/jqSpinner/jquery-ui";
+  $number-stepper-border-color: #dddddd;
+  $number-stepper-bg: #eeeeee;
+  $number-stepper-disabled-bg: #f9f9f9;
+  $number-stepper-disabled-text-color: #c2bfbf;
+  .ui-spinner {
+    width: 100%;
+    margin: 0px;
+    border-radius: 0px;
+    border:none !important;
+    font-size: 12px;
+    overflow: hidden !important;
+    .ui-spinner-up, .ui-spinner-down {
+      background: $number-stepper-bg !important;
+      border-radius: 0px;
+      .ui-icon, &:hover .ui-icon {
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+    }
+    .ui-spinner-up {
+      border-top: 1px solid $number-stepper-border-color !important;
+      &:active {
+        border-bottom: none !important;
+      }
+      &:hover {
+        border-bottom: none !important;
+      }
+      .ui-icon, &:hover .ui-icon{
+        @extend .icon_spinner_arrow_up-bg, .icon_spinner_arrow_up-bg-dims;
+      }
+    }
+
+    .ui-spinner-down {
+      border-bottom: 1px solid $number-stepper-border-color !important;
+      &:active {
+        border-top: none !important;
+      }
+      &:hover {
+        border-top: none !important;
+      }
+      .ui-icon, &:hover .ui-icon {
+        @extend .icon_spinner_arrow_down-bg, .icon_spinner_arrow_down-bg-dims;
+      }
+    }
+
+    &.ui-spinner-disabled {
+      .ui-spinner-input {
+        background-color: $number-stepper-disabled-bg;
+        color: $number-stepper-disabled-text-color ;
+      }
+    }
+    &.number-stepper-focus {
+      border: 1px solid $input-active-border !important;
+      input.ui-spinner-input {
+        border: 1px solid transparent;
+      }
+    }
+  }
+  input.ui-spinner-input {
+    height: 30px;
+    margin: 0px !important;
+    padding: 6px !important;
+    font-size: 12px !important;
+    border: 1px solid $number-stepper-border-color ;
+  }
+
+  .ui-spinner-button {
+    border-left: 1px solid $number-stepper-border-color !important;
+    border-right: 1px solid $number-stepper-border-color !important;
+    border-radius: 0px;
+    width: 27px !important;
+    &:hover {
+      background: $number-stepper-bg !important;
+      border-radius: 0px;
+    }
+    &:focus{
+      outline: none !important;
+    }
+    span:active {
+      border: 0px !important;
+    }
+    span:focus {
+      outline: none !important;
+    }
+  }
+}
+
+.number-stepper-widget-test {
+  .left-col {
+    width: 45%;
+    display: inline-block;
+    height: 150px;
+    vertical-align: top;
+  }
+  .right-col {
+    width: 45%;
+    display: inline-block;
+    margin-left: 50px;
+  }
+  #number-stepper-react {
+    width: 25%;
+  }
+  .number-stepper-component {
+    margin-top: 10px;
+  }
+}

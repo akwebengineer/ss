@@ -1,0 +1,40 @@
+<div class='row commitStatusMessage'>
+    {{^committing}}
+        {{#success}}
+            <svg class= "commit_success_icon"><use href="#icon_success"/></svg>
+            <span class= "commit_heading">{{successHeading}}</span>
+        {{/success}}
+    
+        {{^success}}
+            <svg class= "commit_error_icon"><use href="#icon_error"/></svg>
+            <span class= "commit_heading">{{errorHeading}}</span>
+            <span>{{response}}</span>
+        {{/success}}
+    {{/committing}}
+    <div>
+	{{{message}}}
+    </div>
+</div>
+
+<div class='row'>
+	<ul class='commitStatusErrors'></ul>
+</div>
+
+{{^committing}}
+{{^success}}
+<div class="start-over">{{startOverMessage}}</div>
+{{/success}}
+{{/committing}}
+
+{{#footer}}
+<div class='row commitFooter'>
+    <div class='commitFooterMessage'>
+        {{commitFooterMessage}}
+    </div>
+	<ul>
+	{{#footer.link}}
+		<li><a class='relatedLinks' href='#' data={{data}} data-type={{dataType}} >{{label}}</a></li>
+	{{/footer.link}}
+	</ul>
+</div>
+{{/footer}}

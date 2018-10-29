@@ -1,0 +1,83 @@
+<div>
+    <h1 id="carousel-widget">Carousel Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Carousel widget is a reusable graphical user interface that allows users to show multiple views in a carousel format. Each view represents a slide in the carousel.</p>
+<h2 id="api">API</h2>
+<p>The Carousel widget follows the widget programming interface standards, therefore it exposes: build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has the following parameters:</p>
+<pre><code>{
+    container:  &lt;DOM object that defines where the widget will be rendered&gt;
+    items: &lt;Array of objects that defines the content that will be rendered (slide of the carousel). It should have the id and content parameters. id represents the id of the slide and it&#39;s represented by a string primitive data type. The id should be unique in the page. The content parameter represents the content of the slide and is represented by a Slipstream view object data type.&gt;
+    height: &lt;String, optional. Defines a unique height for each slide. It could be represented as a string composed by the number of units and the type of unit (for example: 540px) or it could be represented by a number data type in which case, the height is assumed in pixels. If it is absent, the height of the slides will be 100px.&gt;
+    numberOfSlides: &lt;Number, optional. Defines the number of slides that will be showed by default when the carousel is rendered while there is enough width in the container to show all the slides.&gt;
+    responsive: &lt;Object that defines the values required to make the carousel responsive. It allows to define the breakpoints that needs to be reached so the carousel starts showing less or more items. It has two parameters: breakpoint and settings. breakpoint is the maximum number of pixels that the container could have to keep its property settings. settings is an Object composed by the slidesToShow and slidesToScroll properties. Each of them represents the slides to show.&gt;
+}</code></pre>
+<p>For example, a carousel widget could be instantiated with the following configuration:</p>
+<pre><code>    var carouselWidget = new CarouselWidget({
+                                     &quot;container&quot;:  this.$el,
+                                     &quot;items&quot;: itemsArray
+                                 });</code></pre>
+<p>where the itemsArray variable for the items parameter is an array of objects. For example:</p>
+<pre><code> var itemsArray = [{
+            id:&quot;card1&quot;,
+            content: new CardView1()
+        },{
+            id:&quot;card2&quot;,
+            content: new CardView2()
+        },{
+            id:&quot;card3&quot;,
+            content: new CardView3()
+        }];</code></pre>
+<h3 id="container">container</h3>
+<p>The container parameter represents the DOM element that will contain the carousel widget.</p>
+<h3 id="items">items</h3>
+<p>The items parameter represents the parameters required to define a slide in the carousel. It should be an array with objects that have the following parameters:</p>
+<ul>
+<li>id: id of the slide and represented by a string primitive data type. The id should be unique in the page.</li>
+<li>content: content of the slide and represented by a Slipstream view <a href="docs/Views.md">Slipstream view</a> object data type.</li>
+</ul>
+<h3 id="height">height</h3>
+<p>Defines a unique height for each slide. It could be represented as a string composed by the number of units and the type of unit (for example: 540px) or it could be represented by a number data type in which case, the height is assumed in pixels. If it is absent, the height of the slides will be 100px.</p>
+<h3 id="numberofslides">numberOfSlides</h3>
+<p>Optional parameter that defaults to 4. Defines the number of slides that will be showed by default when the carousel is rendered while there is enough width in the container to show all the slides.</p>
+<h3 id="responsive">responsive</h3>
+<p>Optional parameter that defaults to a set of breakpoints that keep slides width in a range of 280px and 450px. It defines the values required to make the carousel responsive. It allows to define the breakpoints that needs to be reached so the carousel starts showing less or more items. It has the following parameters:</p>
+<ul>
+<li>breakpoint: maximum number of pixels that the container could have to use the settings defined in the settings property of this Object. When the browser is resized, the size of the container changes, and the carousel widget will listen for this change and compare the available width versus the breakpoint(number of pixels) defined in this property.</li>
+<li>settings: Object composed by the slidesToShow and slidesToScroll properties. Each of them represents the slides to show. For example:</li>
+</ul>
+<pre><code class="language-javascript">    <span class="keyword">new</span> CarouselWidget({
+         <span class="string">"container"</span>:  <span class="keyword">this</span>.$el,
+         <span class="string">"items"</span>: itemsArray,
+         <span class="string">"height"</span>: <span class="string">"100px"</span>,
+         <span class="string">"responsive"</span>: [{
+               breakpoint: <span class="number">1230</span>,
+               settings: {
+                   slidesToShow: <span class="number">3</span>,
+                   slidesToScroll: <span class="number">3</span>
+               }
+           },{
+               breakpoint: <span class="number">900</span>,
+               settings: {
+                   slidesToShow: <span class="number">2</span>,
+                   slidesToScroll: <span class="number">2</span>
+               }
+           },{
+               breakpoint: <span class="number">680</span>,
+               settings: {
+                   slidesToShow: <span class="number">1</span>,
+                   slidesToScroll: <span class="number">1</span>
+               }
+           }];
+     }).build();</code></pre>
+<h2 id="build">build</h2>
+<p>Adds the dom elements and events of the Carousel widget in the specified container. For example:</p>
+<pre><code>    carouselWidget.build();</code></pre>
+<h2 id="destroy">destroy</h2>
+<p>Clean up the specified container from the resources created by the Carousel widget.</p>
+<pre><code>    carouselWidget.destroy();</code></pre>
+
+
+</div>
+ 

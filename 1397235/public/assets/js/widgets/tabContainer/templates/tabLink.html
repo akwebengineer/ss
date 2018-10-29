@@ -1,0 +1,10 @@
+<li {{#description}} class="tab-with-description" {{/description}} data-id='{{id}}'>
+	<a href="#tabContainer-widget_tabLink_{{id}}" data-tabid='{{id}}' data-switchtabs="true"> <span data-switchtabs="true" class="tab-link-text">{{{name}}}
+		 {{#description}}
+		<div data-switchtabs="true" class="tab-description">
+			{{{description}}}
+		</div>
+		{{/description}}</span>
+	</a>
+	{{>badgeContainer}}
+</li>

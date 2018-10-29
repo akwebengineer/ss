@@ -1,0 +1,37 @@
+<div class="action-bar-widget" id="{{action_bar_id}}">
+    <dl class="sub-nav{{#grid_layout}} grid-layout{{/grid_layout}}">
+        {{#sub_title}}
+            {{>subTitle}}
+        {{/sub_title}}
+        {{#actions}}
+            {{#search_type}}
+                <dd class="search_container {{key}}"></dd>
+            {{/search_type}}
+            {{#button_type}}
+                {{>partialButtonAction}}
+            {{/button_type}}
+            {{^grid_layout}}
+                {{#menu_type}}
+                    {{>partialMenuAction}}
+                {{/menu_type}}
+            {{/grid_layout}}
+            {{#grid_layout}}
+                {{#menu_type}}
+                    {{>partialGridMenuAction}}
+                {{/menu_type}}
+            {{/grid_layout}}
+            {{#icon_type}}
+                {{>partialIconAction}}
+            {{/icon_type}}
+            {{#dropdown_type}}
+                <!--{{>partialDropdownAction}}-->
+            {{/dropdown_type}}
+            {{#custom_type}}
+                <!--<dd id="{{key}}" class="customAction"><span></span></dd>-->
+            {{/custom_type}}
+            {{#separator_type}}
+                <dd class="actionSeparator"></dd>
+            {{/separator_type}}
+        {{/actions}}
+    </dl>
+</div>

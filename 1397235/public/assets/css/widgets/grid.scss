@@ -1,0 +1,2130 @@
+.grid-widget {
+
+  @import "../../js/vendor/jquery/jqGrid/ui.jqgrid";
+  $table-title-color: #666;
+  $table-title-background-color: #e3e7e8;
+  $table-title-height: 34px;
+  $table-title-top-margin: 8px;
+  $action-font-color: #444444;
+  $action-disabled-font-color: #C8C8CC;
+  $table-head-grid-group-bg: #cad2d5;
+  $table-head-grid-group-control-bg: #7f898c;
+  $table-head-grid-group-control-hover-bg: #556063;
+  $table-head-grid-group-resize-bg: #eee;
+  $more-tooltip-border-color: #c0c9cc;
+  $more-tooltip-font-color: #3366CC;
+  $cell-group-key-font-color: #718d97;
+  $cell-group-key-border-color: #96a5aa;
+  $cell-group-key-operator-color: #2398a4;
+  $row-disabled-background-color: #eee;
+  $hover-row-background-color: #ebf1fd;
+  $hover-row-list-border-color: #e9e9e9;
+  $grid-content-title-color: #444444;
+  $grid-content-description-color: #666666;
+  $grid-content-description-link-color: #3366cc;
+  $grid-content-description-font-size: 12px;
+  $grid-content-title-font-size: 24px;
+  $more-group-border-color: #96A5AA;
+  $more-group-font-color: #2398a4;
+  $table-save-overlay-bg: rgba(255, 255, 255, 0.75);
+  $table-save-container-shadow: rgba(204, 204, 204, 0.8);
+  $dropdown-disable-border-color: #E6E6E6;
+
+  .slipstream-content-title {
+    margin-bottom: 13px;
+  }
+  .cbox, .cbox_tree {
+    transform: scale(1.15, 1.15);
+    padding: 0;
+    height: auto;
+  }
+  a {
+    color: $link-active-color;
+    font-size: 12px;
+  }
+  .commonIcon {
+    cursor: pointer;
+    fill: $action-icon-color;
+    &:hover {
+      fill: $action-icon-hover;
+    }
+  }
+  .commonIconNegative {
+    cursor: pointer;
+    fill: $action-icon-hover;
+    &:hover {
+      fill: $action-icon-color;
+    }
+  }
+  @mixin setIcon($url) {
+    @extend .icon_#{$url}, .icon_#{$url}-dims;
+    @extend .commonIcon;
+  }
+  @mixin actionMenu() {
+    &.actionMenu {
+      border: 1px solid $secondary-button-border-color;
+      border-radius: 2px;
+      cursor: pointer;
+      background-color: $secondary-button-color;
+      padding: 0px 5px 0px 10px;
+      color: $secondary-button-font-color !important;
+      font-size: 11px !important;
+      line-height: 20px !important;
+      & svg {
+        @extend .icon_arrow_down_centered, .icon_arrow_down_centered-dims;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+      &:hover{
+        background-color: $secondary-button-hover-color;
+        border: 1px solid $secondary-button-hover-border-color;
+        box-shadow: 0 1px 2px 0 $secondary-button-hover-box-shadow;
+      }
+      &:active,&:focus{
+        border: 1px solid $secondary-button-border-color;
+        background-color: $secondary-button-color;
+      }
+      &.disabled {
+        color: $button-disabled-font-color !important;
+        background: $primary-button-disabled-background;
+        border-color: $primary-button-disabled-border-color;
+        box-shadow: none;
+        & svg {
+          fill: $action-icon-disabled;
+        }
+      }
+    }
+  }
+  .hidden {
+    display: none;
+  }
+
+  &.slipstream_tree_grid .ui-jqgrid {
+    .ui-jqgrid-hdiv .ui-jqgrid-labels th[id$="slipstreamgrid_select"] {
+      div {
+        padding-left: 20px;
+      }
+    }
+    .ui-jqgrid-bdiv {
+      overflow-y: scroll;
+      &.defaultHeight {
+        overflow-y: hidden;
+      }
+      .slipstreamgrid_switch_row_selection.tree_custom_checkbox {
+        padding-left: 28px;
+        transform: inherit;
+      }
+    }
+  }
+
+  &.slipstream_nested_grid {
+    .ui-jqgrid-view {
+      border-left: 0px;
+      border-right: 0px;
+      .ui-jqgrid-hdiv {
+        background-color: $table-title-background-color;
+      }
+      .ui-jqgrid-hbox {
+        background-color: inherit !important;
+      }
+      .nestedTable {
+        //nestedTable fix
+        border-top: none !important;
+        background-color: inherit !important;
+        & > tbody > tr {
+          &:hover, &[aria-selected=true], &[aria-selected=true].context-menu-hover {
+            background-color: $table-row-selected-color;
+          }
+        }
+        .jqgrow {
+          //title of nested table
+          background-color: inherit;
+          border-top: solid $table-row-border-color 1px !important;
+          &:nth-child(2) {
+            border-top: none !important;
+          }
+          height: 40px;
+          td {
+            font-weight: bold;
+            vertical-align: middle;
+            .ui-icon-minus {
+              top: 18px;
+            }
+          }
+          .ui-sgcollapsed {
+            padding: 5px 0 0 10px;
+          }
+        }
+        .ui-subgrid {
+          //nested table
+          border-bottom: 0px;
+          border-top: 0px;
+          &:hover {
+            border: 0px;
+            background-color: inherit !important;
+          }
+          td.subgrid-cell {
+            display: none;
+          }
+          td.subgrid-data {
+            padding: 0px;
+            .ui-jqgrid-view {
+              border-left: 0px;
+              .ui-jqgrid-hdiv {
+                display: none;
+              }
+              .ui-jqgrid-bdiv {
+                background-color: inherit; //was $body-bg
+                top: 0px !important;
+                height: auto;
+                position: relative !important;
+                .ui-jqgrid-btable {
+                  background-color: inherit;
+                  width: 100% !important; //fixes row width to take 100%
+                  tr {
+                    vertical-align: top !important;
+                    border-top: 0px !important;
+                    .slipstreamgrid_switch_row_selection {
+                      padding-left: 28px;
+                    }
+                  }
+                }
+                & > div {
+                  overflow-x: hidden;
+                }
+                .editFix {
+                  height: 100% !important;
+                }
+                .jqgfirstrow {
+                  border: none; //fix for removing double border
+                  td {
+                    min-width: 31px;
+                  }
+                }
+                .jqgrow {
+                  height: 30px;
+                  td {
+                    font-weight: normal;
+                    &.jqgrid-rownum {
+                      text-align: right !important;
+                      padding-left: 4px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .filter-wrapper {
+    .filter {
+      color: $form-value-color;
+      height: 22px;
+      margin: 0px;
+      padding: 0px 24px 0px 0px !important;
+      border: 0px;
+      box-shadow: none;
+      border-bottom: 1px solid $secondary-body-bg-color;
+      float: left;
+      &:focus {
+        border-bottom: 1px solid $input-active-border;
+      }
+    }
+    .common-filter-clear {
+      cursor: pointer;
+      float: right;
+      margin-right: 5px;
+      margin-top: -20px;
+    }
+    .filter-icon {
+      @include setIcon('search_sm');
+      @extend .common-filter-clear;
+    }
+    .clear-icon {
+      @include setIcon('close');
+      @extend .common-filter-clear;
+      fill: $secondary-action-icon-color;
+      display: none;
+    }
+  }
+
+  .sub-header {
+    margin-left: inherit;
+    font-size: 12px;
+    padding-top: 5px;
+    .gridLeftHeaderWrapper {
+      display: inline-block;
+      margin-right: 40px;
+      .grid-sub-title {
+        float: left;
+        font: 18px $body-font-family;
+        color: $form-value-color;
+        margin-right: 10px;
+        .content {
+          font-weight: 600;
+          float: left;
+          vertical-align: top;
+          line-height: 24px;
+          width: 100%;
+          @include text-ellipsis;
+          display: block;
+        }
+        .grid-title-help {
+          position: absolute;
+          margin-top: 2px;
+        }
+      }
+      .grid-sub-title-with-help {
+        margin-right: 30px;
+      }
+      .selection-count {
+        float: left;
+        display: none;
+        min-width: 80px;
+        height: 22px;
+        background-color: $selection-button-bgcolor;
+        color: $selection-button-text-color;
+        border-radius: 2px;
+        font-family: $body-font-family;
+        line-height: 23px;
+        text-align: center;
+        padding: 0px 4px 0px;
+      }
+      .selection-count-disabled {
+        background-color: $selection-button-disabled-bgcolor;
+        color: $selection-button-disabled-text-color;
+      }
+    }
+    .action-filter-wrapper {
+      display: inline-block;
+      float: right;
+    }
+    .sub-nav {
+      margin-left: 0px;
+      padding-bottom: 10px;
+    }
+    dd {
+      font-size: 12px;
+      margin-right: 12px;
+      .slipstream-small-primary-button {
+        margin-right: 0px !important;
+        height: 22px;
+      }
+      &.defaultActionIcon {
+        svg {
+          margin-right: 5px;
+          @extend .commonIcon;
+        }
+        &.disabled svg {
+          cursor: default;
+          fill: $action-icon-disabled;
+        }
+      }
+      .actionIcon {
+        cursor: pointer;
+        &.defaultIcon {
+          fill: $action-icon-color;
+        }
+        &.hoverIcon {
+          fill: $action-icon-hover;
+        }
+        &.disabledIcon {
+          fill: $action-icon-disabled;
+        }
+        &.backgroundIcon {//icon used as background for backward compatibility
+          width: 16px;
+          height: 16px;
+          display: inline-block;
+        }
+      }
+      .disabled:hover, .disabled svg {
+        cursor: default;
+      }
+      &.hideAction {
+        display: none;
+      }
+      @include actionMenu();
+
+      .baseAction {
+        color: $action-font-color;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 22px;
+      }
+      &.dropdownMenu {
+        .label{
+          margin: 0px 6px 0px 3px;
+          padding: 0px;
+          float: left;
+        }
+        .select2 {
+          float: left;
+          text-align: left;
+        }
+        .dropdown-widget{
+          border: 1px solid $secondary-button-border-color !important;
+          background-color: $secondary-button-color;
+          border-radius: 2px !important;
+          &:hover{
+            border: 1px solid $secondary-button-hover-border-color !important;
+            box-shadow: 0 1px 2px 0 $secondary-button-hover-box-shadow;
+            background-color: $secondary-button-hover-color;
+          }
+          &:active,&:focus{
+            border: 1px solid $secondary-button-border-color;
+            background-color: $secondary-button-color;
+          }
+          span{
+            color: $secondary-button-font-color;
+          }
+        }
+        .select2-container--disabled {
+          .dropdown-widget {
+            border: 1px solid $dropdown-disable-border-color !important;
+            box-shadow: none;
+          }
+        }
+        &, .label{
+          @extend .baseAction;
+        }
+      }
+      &.customAction {
+        input{
+          margin: 0px;
+        }
+        label {
+          margin: 0px 0px 0px 4px;
+        }
+        &, label, a {
+          @extend .baseAction;
+        }
+        a {
+          color: $link-active-color;
+        }
+        &.disabled label{
+          color: $action-disabled-font-color;
+        }
+      }
+    }
+
+    .filter-container {
+      dd {
+        margin-right: 0px !important;
+        &.hide {
+          display: none;
+        }
+        &.grid_filter_input {
+          @extend .filter_input;
+          input {
+            background-color: inherit;
+          }
+          &.collapse-search {
+            input {
+              display: none;
+            }
+            .filter-icon {
+              float: inherit;
+              margin-top: 0px;
+            }
+          }
+        }
+        &.grid_show_filters {
+          margin-left: 10px !important;
+          .columnFilter {
+            @include setIcon('filter');
+          }
+          .menuFilters {
+            @include setIcon('filter_with_drop_down');
+          }
+        }
+        &.grid_filter_options {
+          height: 20px;
+          .filter-options-icon {
+            @include setIcon('filter_menu');
+            margin: 0px 0px 0px 8px;
+          }
+        }
+      }
+    }
+
+    .actionSeparator > span {
+      border-right: 1px solid $secondary-body-bg-color;
+    }
+  }
+
+  .search-save-container.saveSearch {
+    overflow: hidden;
+    .search-container {
+      float: left;
+      width: calc(100% - 75px);
+      .advanceSearchWrapper {
+        width: calc(100% - 45px);
+      }
+    }
+    background-color: $table-filter-bg;
+    .save-container {
+      margin-top: 7px;
+      margin-right: 8px;
+      display: inline-block;
+      float: right;
+      @include actionMenu();
+    }
+  }
+
+  & > .ui-jqgrid, .ui-jqgrid-view, .ui-jqgrid-hdiv, .ui-jqgrid-bdiv {
+    &:not(.grid-header-nodata){
+      width: inherit !important;
+    }
+  }
+
+  .ui-jqgrid-view {
+    border-right: 1px solid $table-border-color; /* border at the right of the table */
+    border-left: 1px solid $table-border-color; /* border at the left of the table */
+    &.grid-nodata{
+      overflow-x: auto;
+      border-right: 0px;
+      border-left: 0px;
+      background-color: $body-bg;
+      border-bottom: 1px $secondary-body-bg-color solid;
+      .ui-jqgrid-bdiv {
+        min-height: 0px;
+      }
+    }
+    .ui-jqgrid-hdiv .ui-jqgrid-hbox {
+      background: $table-head-grid-bg; //removes title background
+      .groupColumn {
+        background: $table-head-grid-group-bg;
+        > div { //div added by jqGrid
+          margin-top: 0px;
+          height: $table-title-height;
+          .group-label {
+            padding-top: 8px;
+            display: block;
+            .group-count {
+              font-weight: bold;
+              padding-left: 6px;
+              cursor: pointer;
+            }
+          }
+          .group-control {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            background-color: $table-head-grid-group-control-bg;
+            width: 18px;
+            padding: 8px 5px 8px 7px;
+            cursor: pointer;
+            .group-icon {
+              display: inline-block;
+              @extend .icon_arrow_right_column, .icon_arrow_right_column-dims;
+              fill: $arrow-icon-secondary-color;
+              &.collapsed {
+                transform: rotate(180deg);
+              }
+            }
+            &:hover {
+              background-color: $table-head-grid-group-control-hover-bg;
+            }
+          }
+          .s-ico {
+            top: 8px !important;
+          }
+        }
+        .ui-jqgrid-resize{
+          border-right: 1px dotted $table-head-grid-group-resize-bg;
+        }
+      }
+      .customColumn{
+        input {
+          margin: 4px 3px 0px 0px !important;
+        }
+        label {
+          overflow: hidden;
+          width: calc(100% - 30px);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin: 0px;
+          font-weight: normal;
+        }
+      }
+    }
+    .slipstream-indicator-background {
+      opacity: 0.5;
+    }
+  }
+  .ui-jqgrid {
+    font-family: $body-font-family;
+    .loading {
+      vertical-align: middle;
+      color: transparent;
+      z-index: 15;
+    }
+    .jqgfirstrow {
+      padding: 0px;
+      margin: 0px;
+      border: none !important;
+      background-color: $table-head-grid-bg;
+      td {
+        padding: 0px !important;
+      }
+    }
+    .jqgrow {
+      height: 30px;
+      background: $body-bg;
+      &.no-bottom-border {
+        border-bottom: 0px !important;
+      }
+      &.hoverMenu {
+        position: relative;
+        background-color: $table-row-selected-color;
+        .hoverMenu-wrapper {
+          position: absolute;
+          left: 0px;
+          background-image: linear-gradient(to left, $table-row-selected-color, rgba(235, 241, 253, 0));
+          padding: 0px 20px 0px 0px;
+          .action-bar-widget {
+            @include vertical-align;
+            padding-left: 100px;
+            width: inherit;
+          }
+        }
+        .icon_row_menu-default {
+          fill: $tertiary-action-icon-color;
+        }
+        .icon_row_menu-hover {
+          fill: $arrow-icon-color;
+        }
+      }
+    }
+
+    .ui-jqgrid-htable {
+      /* table header */
+      border: 0px;
+      th.ui-th-column {
+        float: none;
+        &.slipstreamgrid_switch_row_selection {
+          text-align: left;
+          padding-left: 11px;
+          .cbox{
+            margin-left: 6px;
+          }
+        }
+      }
+      .ui-jqgrid-labels {
+        height: $table-title-height;
+        background: $table-head-grid-bg;
+        th {
+          border-top: 1px solid $border-color-secondary;
+          padding: 0px;
+          position: relative;
+          div {
+            font-weight: 400;
+            color: $body-font-color;
+            text-overflow: ellipsis;
+            margin-top: $table-title-top-margin;
+            height: $table-title-height - $table-title-top-margin;
+            &[id$="_cb"][id^="jqgh"] {
+              margin-top: 2px;
+            }
+            &.cell_mask {
+              margin-top: 0;
+            }
+          }
+          .ui-jqgrid-resize {
+            border-right: 1px dotted $table-title-resize;
+            margin: 0px;
+            height: $table-title-height !important;
+          }
+          .ui-jqgrid-sortable {
+            text-align: left;
+            padding-left: 15px;
+            position: relative;
+            .s-ico {
+              position: absolute;
+              left: 3px;
+              top: 0px;
+              .ui-icon {
+                width: 6px;
+                height: 8px;
+                margin-top: 5px;
+                &.ui-icon-asc {
+                  @extend .icon_arrow_up_grid-bg, .icon_arrow_up_grid-bg-dims;
+                }
+                &.ui-icon-asc:hover {
+                  @extend .icon_arrow_up_grid_hover-bg, .icon_arrow_up_grid_hover-bg-dims;
+                }
+                &.ui-icon-desc {
+                  @extend .icon_arrow_down_grid-bg, .icon_arrow_down_grid-bg-dims;
+                }
+                &.ui-icon-desc:hover {
+                  @extend .icon_arrow_down_grid_hover-bg, .icon_arrow_down_grid_hover-bg-dims;
+                }
+                &.ui-state-disabled {
+                  display: none;
+                }
+              }
+            }
+            &.not-sortable {
+              cursor: auto;
+            }
+            &.orderable {
+              cursor: move;
+            }
+          }
+          &.slipstreamgrid_frozen_col .ui-jqgrid-sortable.orderable {
+            cursor: inherit;
+          }
+          input[type="checkbox"] {
+            height: 12px !important;
+            vertical-align: top;
+            margin: 6px 0px 0px 2px;
+          }
+          &.ui-th-column {
+            border-right: none;
+          }
+          &[aria-selected~="true"] {
+            color: $input-active-border;
+            font-weight: bold;
+          }
+          &[aria-selected~="false"] {
+            color: $title-font-color;
+            font-weight: normal;
+          }
+          &:last-child {
+            span {
+              border-right: none;
+            }
+          }
+          &[id$="slipstreamgrid_more"] {
+            //title that ends with - more icon
+            border-right: 1px solid $table-title-border-secondary-color;
+            width: 33px !important;
+            div {
+              cursor: default;
+            }
+          }
+          .tree-select-all {
+            margin-left: -10px;
+          }
+          &.leftNestedHeader {
+            text-align: left;
+            .leftHeader {
+              margin: 0px 0px 0px 10px;
+            }
+          }
+          &.draggable_column_header {
+            padding-left: 20px;
+          }
+        }
+      }
+      .ui-search-toolbar {
+        background-color: $table-filter-bg;
+        height: 34px;
+        border-top: 1px solid $border-color-secondary;
+        th {
+          position: relative;
+          .ui-search-table {
+            margin: 0px;
+            padding: 0px 10px;
+            background-color: $table-filter-bg;
+            .ui-search-input {
+              background-color: $body-bg;
+              padding: 0px 6px;
+              input {
+                height: 20px;
+                color: $body-font-color;
+                font-size: 12px;
+                border: 0px;
+                box-shadow: none;
+                &.hasDatepicker {
+                  width: 100px !important;
+                  float: left;
+                }
+                &.hasDropdown {
+                  background: url('/assets/images/background/arrow_down_centered.png') no-repeat right;
+                  cursor: pointer;
+                }
+                &.detailView {
+                  background: url('/assets/images/background/icon_input_field.png') no-repeat right;
+                  cursor: pointer;
+                }
+              }
+              &.dropdown-widget {
+                .select2-container {
+                  height: 19px;
+                  .select2-selection {
+                    border: 0px;
+                    height: inherit;
+                  }
+                }
+              }
+              img.ui-datepicker-trigger {
+                left: 10px;
+              }
+              & > select {
+                line-height: 15px;
+                padding: 2px 5px;
+              }
+            }
+            .ui-search-clear {
+              padding: 0px;
+            }
+          }
+        }
+        &.hide-toolbar {
+          display: none !important;
+        }
+      }
+    }
+    .ui-jqgrid-bdiv {
+      /* content container */
+      min-height: 30px; //shows at least 1 row
+      background: $body-bg;
+      & > div {
+        border-bottom: none !important;
+      }
+      &.defaultHeight {
+        max-height: inherit !important;
+        > div {
+          height: auto !important;
+        }
+        &.oneInlineRow {//applicable to a grid with a single row that requires inline editing and needs to overlap the save-cancel row container on top of the grid.
+          position: static;
+          > div {
+            position: static !important;
+          }
+        }
+      }
+      .ui-jqgrid-btable {
+        border-collapse: collapse;
+        border-color: transparent !important;
+        background-color: $table-head-grid-bg;
+        // border-top: 0px; // Note: IMPORTANT - Do not set value for 'border-top', issue in FF: jqGrid reloadGrid method not triggered after scroll on page (PR-1165741)
+        border-left: 0px;
+        border-right: 0px;
+        tbody {
+          tr {
+            border-bottom: solid $table-row-border-color 1px;
+            border-right: 0px;
+            vertical-align: top;
+            height: 34px;
+            &:hover {
+              border-left: 0px;
+              border-top: 0px;
+              background-color: $table-row-selected-color;
+              .left_action_column .quickView { //quick view column
+                display: block;
+              }
+            }
+            &.selectedRow {
+              background-color: $table-row-selected-color;
+            }
+            &.scroll_highlight {
+              animation: scrollRowColorPulse 5s;
+              -webkit-animation: scrollRowColorPulse 5s;
+              -moz-animation: scrollRowColorPulse 5s;
+            }
+            &.ui-widget-content {
+              select, option {
+                font-size: 12px !important;
+                font-family: $body-font-family;
+                padding: 2px;
+                background-color: $body-bg;
+                margin: 0px 0px 3px;
+                line-height: 17px;
+              }
+            }
+            td {
+              border: 0px;
+              padding: 5px 0px 0px 15px;
+              color: inherit;
+              font-size: 12px;
+              line-height: 21px;
+              text-overflow: ellipsis;
+              position: relative;
+              background-clip: padding-box;
+              input[type="text"] {
+                font-size: inherit;
+                padding: 2px;
+                height: auto;
+                line-height: 17px;
+                &:focus {
+                  border: 1px solid $input-active-border;
+                }
+              }
+              input[type="checkbox"] {
+                margin-left: -12px !important;
+                height: auto;
+              }
+              .ui-icon-carat-1-sw {
+                background-image: none !important;
+              }
+              .ui-sgcollapsed {
+                vertical-align: bottom;
+                padding-bottom: 12px;
+                & ~ td {
+                  font-weight: bold;
+                  vertical-align: bottom;
+                  padding-bottom: 8px;
+                }
+              }
+              &.scroll_highlight {
+                animation: scrollRowColorPulse 5s;
+                -webkit-animation: scrollRowColorPulse 5s;
+                -moz-animation: scrollRowColorPulse 5s;
+                .moreTooltip {
+                  background-color: #ff9933 !important;
+                  border: 1px solid #ff9933 !important;
+                  color: #ffffff !important;
+                }
+                &:hover {
+                  color: inherit !important;
+                }
+              }
+              &[aria-describedby$="slipstreamgrid_more"] {
+                border-right: 1px solid $table-row-border-color;
+              }
+              &.slipstreamgrid_switch_row_selection {
+                padding-left: 30px;
+                text-align: left !important;
+              }
+              .ui-icon-circlesmall-minus {
+                margin: 6px 4px;
+              }
+              .ui-icon-circlesmall-plus {
+                margin: 2px 6px;
+              }
+              &.tree_custom_checkbox {
+                text-align: center;
+              }
+              &.jqgrid-rownum {
+                padding-left: 0px;
+                text-align: right !important;
+              }
+              &[editable='1'] td {
+                .cell-wrapper, .cell-wrapperleaf {
+                  float: left;
+                }
+              }
+              &[editable='0'] td {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+              .editable {
+                &[type="text"] {
+                  line-height: 17px;
+                }
+                &[role="select"] {
+                  margin: 0px;
+                  padding: 3px;
+                  line-height: 16px;
+                  color: $form-label-color;
+                }
+                textarea {
+                  width: 100%;
+                  font-size: 12px;
+                  padding: 2px;
+                  min-height: 100%;
+                  resize: none;
+                  line-height: 17px;
+                  &:focus {
+                    border: 1px solid $input-active-border;
+                  }
+                }
+              }
+              .slipstream-input-spinner {
+                height: 15px;
+                width: 15px;
+                position: absolute;
+                top: calc(50% - 5px);
+                right: 7px;
+                .indeterminateSpinnerContainer {
+                  height: 15px;
+                  .icon_spinner{
+                    background-size: 15px 15px;
+                    width: 15px;
+                    height: 15px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                  }
+                }
+              }
+              &.multiselect_cell {
+                .cellContent {
+                  .cellCollapseWrapper {
+                    .cellItem {
+                      padding-left: 22px;
+                    }
+                  }
+                  .cellExpandWrapper {
+                    .cellItem {
+                      padding-left: 15px;
+                      input[type="checkbox"] {
+                        margin: 0 5px 0 -10px !important;
+                        visibility: hidden;
+                      }
+                    }
+                  }
+                }
+                .emptyCell {
+                  padding-left: 20px;
+                }
+              }
+              &.cellClickable {
+                cursor: pointer;
+              }
+              &.collapsed-group-column {
+                box-shadow: inset -4px 0 5px -2px rgba(0, 0, 0, 0.1);
+              }
+              .emptyCell{
+                color: $font-disabled-color;
+              }
+            }
+            &.jqgroup {
+              background-color: $body-bg;
+              td {
+                background-color: $body-bg;
+              }
+              span.tree-wrap-ltr {
+                top: 6px;
+                & + span {
+                  margin-left: 30px;
+                  font-weight: bold;
+                }
+              }
+            }
+            &[editable='1'] {
+              .tree-wrap {
+                display: none;
+              }
+            }
+            &:not(.rowNoSelectable) {
+              td {
+                &.multiselect_cell {
+                  &:hover {
+                    background-color: $row-cell-hover;
+                    color: $row-cell-hover-text-color;
+                    .moreTooltip {
+                      color: $row-cell-hover-text-color;
+                      border: $row-cell-hover-text-color 1px solid;
+                      background-color: inherit;
+                    }
+                  }
+                  .cellContent {
+                    .cellExpandWrapper {
+                      .cellItem {
+                        input[type="checkbox"] {
+                          &.showCheckbox {
+                            visibility: visible;
+                          }
+                        }
+                        &.multiselect-item {
+                          background-color: $row-cell-hover;
+                          color: $row-cell-hover-text-color;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              &[editable='1'] td {
+                padding-bottom: 2px;
+                &.multiselect_cell:hover {
+                  background-color: inherit;
+                  color: inherit;
+                }
+                .customelement.edit_more_cell {
+                  .edit_more_input {
+                    margin-bottom: 3px;
+                    display: block;
+                    width: 100%;
+                  }
+                }
+                .dropdown-widget-integration{
+                  padding-bottom: 3px;
+                }
+              }
+            }
+          }
+          .override-hover {
+            background-color: transparent !important;
+            color: $font-primary-color !important;
+            &.droppable-hover {
+              background-color: $drag-n-drop-background-color !important;
+            }
+          }
+          .override-row-hover {
+            background: none !important;
+          }
+        }
+        &.slipstreamGrid_dnd {
+          .ui-droppable {
+            &:hover, &.selectedRow {
+              td:first-child {
+                cursor: move;
+                background: url("/assets/images/background/icon_row_drag.svg") no-repeat;
+                background-size: 2px 120px;
+                background-position: 4px -43px;
+              }
+            }
+          }
+          .ui-sortable-placeholder {
+            visibility: visible !important;
+            border: dashed 1px $row-cell-hover-border;
+            td {
+              padding: 0;
+              line-height: 0;
+              height: 0;
+              &:first-child {
+                background: none !important;
+              }
+            }
+          }
+          .sortable-source, .row-draggable-source {
+            background-color: $drag-n-drop-background-color;
+            td {
+              opacity: 0.5;
+            }
+          }
+          .sortable-success {
+            background-color: $drag-n-drop-background-color;
+            border: $input-active-border solid;
+            border-width: 1px 2px 1px 1px;
+          }
+          .sortable-helper-container {
+            display: inline-block;
+            margin-top: 3px;
+            .helper-access {
+              @extend .icon_access_small, .icon_access_small-dims;
+            }
+            .helper-reject {
+              display: none;
+              @extend .icon_reject, .icon_reject-dims;
+            }
+          }
+          .row_draggable {
+            cursor: default;
+          }
+          .slipstreamgrid_more.row_draggable {
+            cursor: move;
+          }
+          .draggable-source {
+            background-color: $drag-n-drop-background-color;
+            .cellCollapseWrapper .cellItem span {
+              opacity: 0.5;
+            }
+          }
+          .override-helper-style {
+            background-color: $body-bg;
+            border: solid 1px $row-cell-hover-border !important;
+          }
+          .override-border-top {
+            border-top: none !important;
+          }
+          .override-border-bottom {
+            border-bottom: none;
+          }
+          &.table_draggable_cell {
+            td:not(.slipstreamgrid_more) {
+              /*only for drag and drop when it is cell draggable/droppable*/
+              cursor: default;
+              &.droppable-hover {
+                background-color: $drag-n-drop-background-color;
+                color: inherit;
+                border: 1px $input-active-border solid;
+                .moreTooltip {
+                  background-color: $drag-n-drop-tooltip-hover-bgcolor;
+                  border: 1px $drag-n-drop-tooltip-hover-bgcolor solid !important;
+                  color: $row-cell-hover-text-color;
+                }
+              }
+              &.cell_draggable:hover {
+                &.droppable-hover {
+                  background-color: $drag-n-drop-background-color;
+                  border: 1px $input-active-border solid;
+                }
+              }
+            }
+            tr.rowNoSelectable {
+              td.cell_draggable {
+                /*overwrites drag and drop style and restores original style*/
+                &:hover {
+                  &.droppable-hover, .draggable-item {
+                    background-color: inherit;
+                  }
+                }
+              }
+            }
+          }
+          &.table_draggable_row td {
+            cursor: move;
+          }
+        }
+      }
+
+      &.hideHorizontalScroll {
+        overflow-x: hidden;
+      }
+    }
+
+    &.lastColumnResizing {
+      .ui-jqgrid-view {
+        border-right: none;
+        box-shadow: none;
+        .ui-jqgrid-hbox {
+          background: inherit;
+        }
+        .ui-jqgrid-bdiv {
+          overflow-y: hidden;
+        }
+      }
+    }
+    @mixin moreLessIcon($url, $width, $height) {
+      @extend .icon_#{$url}, .icon_#{$url}-dims;
+      background-repeat: no-repeat;
+    }
+    .moreIcon svg, .lessIcon svg{
+      @include setIcon('arrow_right_dark');
+      fill: $arrow-icon-tertiary-color;
+      & + span {
+        display: none !important;
+      }
+    }
+    .lessIcon svg {
+      transform: rotate(90deg);
+    }
+    .ui-icon.ui-icon-plus, .ui-icon.ui-icon-circlesmall-plus {
+      @include moreLessIcon('arrow_rightFW-bg', 8px, 12px);
+    }
+    .ui-icon.ui-icon-minus, .ui-icon.ui-icon-circlesmall-minus {
+      @include moreLessIcon('arrow_downFW-bg', 14px, 7px);
+    }
+    .ui-icon.tree-plus {
+      @include moreLessIcon('arrow_rightFW-bg', 8px, 12px);
+    }
+    .ui-icon.tree-minus {
+      @include moreLessIcon('arrow_downFW-bg', 16px, 7px);
+      top: 5px;
+    }
+    .moreContent, .originalCellValue {
+      display: none !important;
+    }
+    .cell_mask {
+      position: absolute !important;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100% !important;
+      z-index: 100;
+      background: $drag-n-drop-mask-background-color;
+      opacity: 0.3;
+    }
+    .cellContent, .groupContentWrapper {
+      clear: both;
+      .cellContentValue {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        clear: both;
+        &.cellItem {
+          float: left;
+          &.draggable-source {
+            background-color: $drag-n-drop-background-color;
+            span {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+      .moreTooltip {
+        float: right;
+      }
+      .cellContentWrapper {
+        overflow: auto;
+        display: block;
+      }
+      &.moreIcon {
+        padding-top: 5px;
+        margin: 6px 0px 0px;
+        line-height: 1px;
+      }
+      .cellCollapseWrapper {
+        max-height: 21px; //default to 1 column with a height of 21 per row (adjusted in gridFormatter - rowHeight, setCollapseRowConfiguration)
+        &.hasTooltip .cellContentValue {
+          width: calc(100% - 35px);
+        }
+      }
+      .cellExpandWrapper {
+        max-height: 90px; //default to 5 columns with a height of 21 per row (adjusted in gridFormatter - rowHeight, setCollapseRowConfiguration)
+        height: auto; //auto for 5 columns
+        margin-bottom: 4px;
+        .dragabble-cell-checkbox {
+          margin: 0 2px 0 0px !important;
+          visibility: visible;
+        }
+      }
+      .groupContent {
+        position: relative;
+        float: left;
+        width: 170px;
+        height: 26px;
+        border-radius: 2px;
+        background-color: $table-filter-bg;
+        padding: 3px 6px 0px;
+        margin: 2px 5px 8px 0px;
+        .cellContentValue {
+          &.cellItem {
+            float: left;
+            &.draggable-source {
+              background-color: $drag-n-drop-background-color;
+              span {
+                opacity: 0.5;
+              }
+            }
+          }
+          .cellContentKey {
+            font-family: $body-font-family;
+            width: 42px !important;
+            font-weight: bold;
+            color: $cell-group-key-font-color;
+            border-radius: 4px;
+            background-color: $body-bg;
+            border: solid 1px $cell-group-key-border-color;
+            text-align: center;
+          }
+          .cellContentKeyValue {
+            font-family: $body-font-family;
+            width: calc(100% - 35px);
+            font-weight: normal;
+            color: $body-font-color;
+            padding: 0px 5px 0px;
+          }
+          &.hasTooltip {
+            .cellContentKeyValue {
+              width: calc(100% - 70px);
+            }
+            .moreTooltip {
+              bottom: 6px;
+            }
+          }
+        }
+        .groupColumnContent > .cellContentBlock {
+          margin-bottom: 11px;
+          &:last-child {
+            margin-bottom: 11px;
+          }
+        }
+      }
+      .groupOperator {
+        width: 30px;
+        margin-right: 9px;
+        float: left;
+        font-size: 12px;
+        font-weight: bold;
+        color: $cell-group-key-operator-color;
+        text-align: center;
+        display: table;
+        > span {
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+    }
+    .groupContentWrapper {
+      display: inline-block;
+      margin-bottom: -5px;
+    }
+    .moreGroups{
+      display: inline-block;
+      height: 22px;
+      border-radius: 2px;
+      background-color: $body-bg;
+      border: solid 1px $more-group-border-color;
+      font-family: $body-font-family;
+      font-size: 14px;
+      font-weight: bold;
+      color: $more-group-font-color;
+      vertical-align: top;
+      margin-top: 2px;
+      padding: 0px 4px;
+      cursor: pointer;
+    }
+    .cellContentInput {
+      background-color: $body-bg;
+    }
+    @mixin cellContentKeyDropdown() {
+      display: inline-block;
+      @include text-ellipsis;
+    }
+    .cellContentKey {
+      @include cellContentKeyDropdown();
+      width: 30% !important;
+      float: left;
+
+    }
+    .cellContentKeyValue {
+      @include cellContentKeyDropdown();
+      font-weight: bold;
+    }
+    .cellContentBlock {
+      display: block;
+      line-height: 18px;
+      height: 18px;
+      margin-bottom: 5px;
+    }
+    .rowDisabled {
+      color: $font-disabled-color;
+      background-color: $row-disabled-background-color !important;
+    }
+    .error {
+      margin: 8px 0px 0px;
+      padding: 0px;
+      font-style: normal;
+      font-size: 11px;
+      background: inherit;
+      color: $form-error-color;
+      width: 98%;
+      word-wrap: break-word;
+      white-space: normal;
+      clear: both;
+      display: block;
+      &.hidden {
+        display: none;
+      }
+      &.errorimage {
+        svg {
+          @extend .icon_error, .icon_error-dims;
+          fill: $icon-error-color;
+          float: left;
+        }
+        span {
+          float: left;
+          width: calc(100% - 25px);
+          margin-left: 5px;
+          line-height: 14px;
+        }
+      }
+    }
+    .left_action_column {
+      padding-left: 8px !important;
+      .quickView {
+        @extend .icon_quick_view_hover, .icon_quick_view_hover-dims;
+        cursor: pointer;
+        vertical-align: middle;
+        display: none;
+        &[data-preview-triggered] {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .lineThrough {
+    text-decoration: line-through;
+  }
+
+  #number_filter_overlay {
+    //overlay for the number column filter
+    .form_section {
+      width: 200px;
+      float: left;
+      padding-left: 1px;
+      .elementinput {
+        .optionselection {
+          height: 40px;
+        }
+      }
+      &.number_column_filter_section {
+        .elementinput {
+          width: auto;
+          input[type="text"] {
+            width: 80px;
+          }
+        }
+        .between_number {
+          float: left !important;
+          .elementlabel {
+            width: 20px;
+            min-width: auto;
+            margin-left: 10px;
+            label {
+              font-weight: normal;
+              color: $form-value-color;
+            }
+          }
+        }
+        .after_between_number {
+          clear: both;
+        }
+      }
+    }
+  }
+
+  //cell tooltip for expand/collapse rows
+  .moreTooltipWrapper {
+    height: 100%;
+    .moreTooltip {
+      border: 1px solid $more-tooltip-border-color;
+      padding: 0px 4px;
+      border-radius: 4px;
+      color: $more-tooltip-font-color;
+      line-height: 12px;
+      position: absolute;
+      bottom: 12px;
+      right: 8px;
+      background-color: $body-bg;
+      cursor: pointer;
+      i {
+        font-size: 10px;
+        font-style: normal;
+      }
+      em {
+        font-size: 11px;
+        font-style: normal;
+      }
+    }
+    &.expandContent .moreTooltip {
+      bottom: 3px;
+    }
+  }
+
+  .more-items {
+    .more_filter_input {
+      @extend .filter_input;
+      clear: both;
+    }
+    .more-content {
+      max-height: 300px;
+      width: 100%;
+      overflow: auto;
+      margin-top: 6px;
+      float: left;
+      .more-item {
+        line-height: 14px;
+        padding: 3px 4px;
+      }
+    }
+  }
+
+  .more-group-columns { //group column tooltip content
+    clear: both;
+    padding: 8px;
+    .first-column, .last-columns {
+      width: 100%;
+      float: left;
+      height: 20px;
+    }
+    .first-column {
+      font-weight: bold;
+    }
+  }
+
+  div.noResultContainer {
+    display: none;
+    border-top: 1px $secondary-body-bg-color solid;
+    padding: 5px 15px;
+    font-size: 12px;
+    line-height: 18px;
+    background-color: $body-bg;
+    position: absolute;
+    top: 34px;
+    left: 0px;
+    right: 0px;
+
+    &.autoTool {
+      margin-bottom: 200px;
+    }
+    & .no-content-wrapper {
+      text-align: center;
+      line-height: 1.75;
+      margin: 20px auto 48px auto;
+      & .grid-no-content-title {
+        font-size: $grid-content-title-font-size;
+        color: $grid-content-title-color;
+        font-family: $body-font-family;
+        font-weight: 300;
+      }
+      & .grid-no-content-description {
+        color: $grid-content-description-color;
+        font-size: $grid-content-description-font-size;
+        margin-top: 7px;
+        font-family: $body-font-family;
+        & a {
+          color: $grid-content-description-link-color;
+        }
+      }
+      & .grid-no-content-button {
+        margin-top: 23px;
+      }
+    }
+  }
+
+  .gridTableFooter {
+    box-shadow: 0 3px 3px 0 $table-border-color;
+    background-color: $table-footer-background-color;
+    font: 12px $body-font-family;
+    border: 1px solid $table-border-color;
+    border-bottom: none;
+    padding: 10px 15px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 35px;
+    margin: 0 0 5px 0;
+    .selectionText {
+      font-weight: bold;
+    }
+
+    .refresh {
+      @extend .icon_refresh, .icon_refresh-dims;
+      @extend .commonIconNegative;
+      vertical-align: middle;
+      margin-left: 12px;
+      margin-bottom: 12px;
+    }
+
+    .rowTotal {
+      display: inline-block;
+      font: 12px $body-font-family;
+      margin: 0;
+      vertical-align: middle;
+      height: 26px;
+      .totalRowsContainer {
+        display: inline-block;
+      }
+    }
+
+    .paginationContainer {
+      display: inline-block;
+      position: absolute;
+      right: 8px;
+      top: 5px;
+      .pagination {
+        display: inline-block;
+        margin-right: 30px;
+        div {
+          float: left;
+          display: inline-block;
+        }
+        .pageCountContainer {
+          span {
+            font-size: 12px;
+            padding: 0 8px;
+          }
+          .pageContent, .pageCount {
+            display: inline-block;
+          }
+          .pageCount {
+            color: $link-active-color;
+            cursor: pointer;
+          }
+          input {
+            width: 50px;
+            height: 26px;
+            display: inline-block;
+            text-align: center;
+            margin: 0 8px;
+          }
+        }
+        .iconContainer {
+          display: inline-block;
+          margin: 0 16px;
+          padding-top: 3px;
+          svg {
+            @extend .icon_nav_big_arrow_down, .icon_nav_big_arrow_down-dims;
+            transform: rotate(270deg);
+            fill: $action-icon-hover;
+            cursor: pointer;
+          }
+          &.prev svg {
+            transform: rotate(90deg);
+            fill: $action-icon-hover;
+          }
+          svg.disabled {
+            cursor: default;
+            fill: $action-icon-disabled;
+          }
+        }
+      }
+      .displayRowsContainer {
+        display: inline-block;
+        padding-right: 5px;
+        position: relative;
+        width: 166px;
+        height: 26px;
+        .page-size-label {
+          position: absolute;
+          top: 7px;
+          width: 25px;
+        }
+        .displayRows {
+          width: 100px;
+          height: 26px;
+          display: inline-block;
+          margin-left: 56px;
+          .select2-container {
+            position: absolute;
+          }
+          .select2-container--default .select2-selection--single {
+            border-color: $border-color;
+            height: 26px;
+            .select2-selection__rendered {
+              line-height: 26px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .multiselectCellFooter {
+    @extend .gridTableFooter;
+    padding-top: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $button-active-border;
+    .selectSection {
+      display: inline-block;
+      font: 12px $body-font-family;
+      margin-top: 10px;
+      vertical-align: middle;
+      height: 26px;
+      margin-left: 18px;
+      .selectAll .deselectAll {
+        font-color: $link-active-color;
+      }
+    }
+    .rowTotal {
+      margin-top: 10px;
+    }
+    .multiselectCellFooter_info{
+      float: right;
+      margin-top: 8px !important;
+      cursor: pointer;
+      svg {
+        @extend .icon_info_search, .icon_info_search-dims;
+      }
+    }
+  }
+  &.no-footer {
+    .ui-jqgrid-view {
+      box-shadow: 0 3px 3px 0 $table-border-color;
+    }
+  }
+
+  &[data-grid-on-edit-mode] {
+    .save-overlay {
+      width: 100%;
+      overflow-y: hidden;
+      position: absolute;
+      z-index: 1;
+      background-color: $table-save-overlay-bg;
+      &.bottom {
+        bottom: 10px;
+      }
+    }
+    .ui-jqgrid-view {
+      border-left: 0px;
+      border-right: 0px;
+      .ui-jqgrid-bdiv {
+        overflow-y: hidden;
+        tr[editable="1"] { //row on edit mode
+          border-top: 1px solid $table-border-color;
+          border-bottom: 1px solid $table-border-color;
+          .save-cancel-inline-row {
+            position: absolute;
+            width: 82px;
+            height: 30px;
+            border-radius: 0px 0px 2px 2px;
+            box-shadow: -1px 2px 3px 0 $table-save-container-shadow;
+            background-color: $body-bg;
+            border: solid 1px $border-color;
+            border-top: 0px;
+            text-align: center;
+            z-index: 1;
+            > svg {
+              @include vertical-align;
+              cursor: pointer;
+              &.save-inline-row {
+                @include setIcon('inline_ok');
+                margin-right: 16px;
+              }
+              &.cancel-inline-row {
+                @include setIcon('inline_cancel');
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.slipstream-grid-widget-card-view {
+    .ui-jqgrid-view, .cloned-grid-header {
+      border: 0px;
+      .ui-jqgrid-hdiv {
+        width: inherit !important;
+        .ui-jqgrid-hbox {
+          background-color: inherit;
+          .ui-jqgrid-htable {
+            background-color: inherit;
+            thead {
+              background-color: inherit;
+              .ui-jqgrid-labels {
+                background-color: inherit;
+                th {
+                  border: none;
+                  div {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: $table-title-color;
+                    &[id$="_cb"] input[type="checkbox"]  {//selectAll checkbox
+                      vertical-align: middle;
+                      margin: 2px 0px 0px 5px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .ui-jqgrid-bdiv .ui-jqgrid-btable {
+        border-spacing: 0px 5px !important;
+        background-color: inherit !important;
+        tr {
+          &.selectedRow {
+            background-color: $body-bg !important;
+            > td[aria-describedby$="_cb"] {
+              border-left: 3px solid $hover-row-background-color;
+            }
+          }
+          td {
+            border-bottom: 1px solid $table-row-border-color;
+            height: inherit;
+            vertical-align: middle;
+            padding-top: 0px;
+            &[aria-describedby$="slipstreamgrid_more"] {
+              border-right: 0px;
+              .moreIcon svg, .lessIcon svg{
+                @include setIcon('nav_big_arrow_right_grid');
+                fill: $arrow-icon-tertiary-color;
+                & + span {
+                  display: none !important;
+                }
+              }
+              .lessIcon svg {
+                transform: rotate(90deg);
+              }
+            }
+          }
+          &.jqgfirstrow {
+            background-color: inherit;
+            td {
+              border-bottom: 0px;
+            }
+          }
+          &.ui-droppable {
+            //for drag and drop slipstreamGrid_dnd table class
+            &:hover, &.selectedRow {
+              td:first-child {
+                background-position-x: 5px !important;
+                background: url('/assets/images/background/icon_row_drag_single.svg');
+                background-repeat: repeat-y;
+                background-size: 2px 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.slipstream-grid-widget-list-view {
+    &:not(.slipstream_nested_grid) {
+      .ui-jqgrid {
+        background-color: transparent;
+        .ui-jqgrid-view {
+          background-color: transparent;
+          border-right: 0px;
+          border-left: 0px;
+          .ui-jqgrid-hdiv {
+            border-left: solid 1px $table-border-color !important;
+            border-right: solid 1px $table-border-color !important;
+          }
+          .ui-jqgrid-bdiv {
+            .ui-jqgrid-btable {
+              background-color: transparent;
+              .jqgrow {
+                background-color: transparent;
+                border-left: 0px;
+                &:hover {
+                  background-color: $table-row-selected-color;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.slipstream_nested_grid {
+      border-left: solid 1px $table-border-color !important;
+      border-right: solid 1px $table-border-color !important;
+      .search-save-container {
+        margin-left: -1px;
+        margin-right: -1px;
+      }
+      .ui-jqgrid-btable {
+        border-top: 0px;
+        border-bottom: 0px !important;
+      }
+      .ui-jqgrid-bdiv {
+        .nestedTable {
+          .jqgrow {
+            border-bottom: 0px !important;
+            td {
+              padding-left: 20px !important;
+              .ui-icon-minus {
+                display: none;
+              }
+            }
+          }
+          .ui-jqgrid-view {
+            padding-bottom: 10px;
+          }
+          > tbody > tr:not(.ui-subgrid) {
+            padding: 0px;
+            background-color: inherit;
+            td {
+              font-family: $body-font-family;
+              font-size: 13px;
+              font-weight: bold;
+              color: $table-title-color;
+              padding-top: 5px;
+              padding-left: 20px !important;
+              &:first-child {
+                width: 0px !important;
+              }
+            }
+            &:hover {
+              border-top: 1px solid $hover-row-list-border-color;
+            }
+          }
+        }
+      }
+      &.no-footer .ui-jqgrid-view {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.dragNdrop-container {
+  font: 12px $body-font-family;
+  color: $form-label-color;
+  border: 1px $input-active-border solid;
+  height: 34px !important;
+  padding: 8px 15px;
+  background-color: $body-bg;
+  min-width: 155px;
+  span {
+    display: inline-block;
+    padding-left: 10px;
+    vertical-align: middle;
+    .helper-access {
+      @extend .icon_access_small, .icon_access_small-dims;
+    }
+    .helper-reject {
+      display: none;
+      @extend .icon_reject, .icon_reject-dims;
+    }
+  }
+}
+
+ul.context-menu-list.grid-widget-show-hide-columns-menu {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.slipstream-widget-test-page {
+  padding-bottom: 0px;
+
+  .getSelection {
+    margin-top: 20px;
+  }
+}
+
+/*
+//grids on overlay configuration example
+#physical_interface_id {
+  max-height:350px;
+  height:350px;
+}
+.saved_filters_grid_list {
+  max-height:300px;
+  height:300px;
+}
+*/
+
+.test_grid_widget_wrapper {
+  height: inherit;
+  $border-section-list-top-color: #fafafa;
+  $border-section-list-bottom-color: #d3d3d3;
+  $more-info-list-font-color: #1e7be2;
+  $grid-content-description-font-size: 12px;
+  .test-page-notes{
+    font-size: 13px;
+  }
+  #address_grid_container {
+    display: inline-block;
+    padding-right: 20px;
+    width: 600px;
+  }
+  #zone_grid_container {
+    display: inline-block;
+    width: 600px;
+  }
+  .carousel-wrapper {
+    margin: auto;
+    & a {
+      font-size: $grid-content-description-font-size;
+      font-family: $body-font-family;
+    }
+    .show-hide-carousel {
+      float: right;
+      text-decoration: underline;
+    }
+    .clear {
+      clear: both;
+    }
+    .carousel-test {
+      &.hideCarousel {
+        display: none;
+      }
+    }
+  }
+  .grid-section-separator {
+    border-top: 30px solid $border-section-list-top-color;
+    border-bottom: 1px solid $border-section-list-bottom-color;
+  }
+  .update-row-wrapper {
+    display: none;
+    background-color: white;
+    border-bottom: 1px solid $table-row-border-color;
+    form .buttons.row {
+      padding: 0px 10px 10px 0px;
+    }
+    .update-row-form {
+      margin-top: 10px;
+      .form_section {
+        margin-bottom: 0px;
+      }
+      .list_grid_view {
+        .list_grid {
+          max-height: 500px;
+          width: 300px;
+        }
+        .more_info {
+          margin-top: -7px;
+          color: $more-info-list-font-color;
+          width: 300px;
+          box-shadow: 0 3px 2px 0 $table-row-border-color;
+          border: solid 1px $table-row-border-color;
+          font-family: $body-font-family;
+          font-size: 12px;
+          padding: 14px 20px;
+        }
+      }
+    }
+  }
+  .newIcon{
+    display: inline-block;
+    @extend .icon_nav_sm_arrow_right, .icon_nav_sm_arrow_right-dims;
+    margin-right: 3px;
+  }
+  .icon_help_utility_test {
+    fill: green;
+  }
+  .icon_help_utility_hover_test {
+    fill: red;
+  }
+  .icon_help_utility_disabled_test {
+    fill: orange;
+  }
+  .slipstream_list_grid_sample{
+    background: #FFF;
+    width: 400px;
+    padding-top: 13px;
+    #listGrid{
+      .slipstreamgrid_row{
+        border: none;
+        height: 30px;
+        td{
+          border: none;
+        }
+      }
+      .listGrid_id{
+        font-weight: bold;
+      }
+    }
+  } 
+}
+
+.grid-widget_multiselectCell_footerTooltip {
+  width: 279px !important;
+  height: 254px;
+
+  .multiselectCell_footerTooltip_title {
+    height: 16px;
+    margin: 12px 0px 0px 19px;
+    position: relative;
+    .multiselectCell_footerTooltip_title_text {
+      font-size: 14px;
+      float: left;
+    }
+    .close {
+      display: inline-block;
+      float: right;
+      @extend .icon_close_12X12, .icon_close_12X12-dims;
+      fill: $secondary-action-icon-color;
+
+      &:hover {
+      fill: $secondary-action-icon-hover;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .multiselectCell_footerTooltip_linebreak {
+    border: solid 1px $drag-n-drop-tooltip-separator-color;
+    margin-top: 12px;
+    margin-bottom: 13px;
+  }
+
+  .multiselectCell_footerTooltip_content {
+    width: 230px;
+    height: 163px;
+    margin-left: 19px;
+
+    .multiselectCell_footerTooltip_text {
+      position: relative;
+      margin-right: 19px;
+      font-size: 12px;
+      line-height: 16px;
+      dt {
+        font-weight: bold;
+        display: inline;
+      }
+      dd {
+        display: inline;
+      }
+    }
+  }
+}

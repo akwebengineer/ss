@@ -1,0 +1,191 @@
+.action-bar-widget {
+  $action-height: 30px;
+  $subtitle-font-color: #666;
+  $menu-font-color: #444;
+  //action icon colors are defined in _settings.scss
+  height: $action-height;
+  .sub-nav { //dl
+    margin-left: 0px;
+    display: flex; //for dd items
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    line-height: $action-height;
+    dd {
+      font-size: 12px;
+      margin-right: 12px;
+      flex-shrink: 0;
+      justify-content: flex-start;
+      &.subTitle {
+        font-size: 12px;
+        color: $subtitle-font-color;
+        min-width: 160px;
+        margin-right: 10px; //overwritten by media
+        flex: initial; //overwritten by media
+        display: flex; //for content and help
+        .content {
+          margin-right: 4px;
+          padding: 0;
+          @include text-ellipsis;
+        }
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+      .slipstream-small-primary-button {
+        margin-right: 0px !important;
+        height: 22px;
+      }
+      .iconImg {
+        vertical-align: middle;
+        cursor: pointer;
+        &.defaultIcon {
+          fill: $action-icon-color;
+        }
+        &.hoverIcon {
+          fill: $action-icon-hover;
+        }
+        &.disabledIcon {
+          fill: $action-icon-disabled;
+        }
+        &.backgroundIcon {//icon used as background for backward compatibility
+          width: 16px;
+          height: 16px;
+          display: inline-block;
+        }
+      }
+      &[disabled], &[disabled]:hover {
+        cursor: default;
+      }
+      &.actionMenu {
+        cursor: pointer;
+        .menu-label {
+          border: 1px solid $secondary-button-border-color;
+          border-radius: 2px;
+          background-color: $secondary-button-color;
+          padding: 0px 5px 0px 10px;
+          color: $secondary-button-font-color;
+          font-size: 11px;
+          line-height: 20px;
+          height: 22px;
+          display: inline-block;
+          & svg {
+            @extend .icon_arrow_down_centered, .icon_arrow_down_centered-dims;
+            margin-left: 10px;
+            vertical-align: middle;
+          }
+          &:hover {
+            background-color: $secondary-button-hover-color;
+            border: 1px solid $secondary-button-hover-border-color;
+            box-shadow: 0 1px 2px 0 $secondary-button-hover-box-shadow;
+          }
+          &:active,&:focus{
+            border: 1px solid $secondary-button-border-color;
+            background-color: $secondary-button-color;
+          }
+          &[disabled] {
+            color: $button-disabled-font-color !important;
+            background: $primary-button-disabled-background;
+            border-color: $primary-button-disabled-border-color;
+            box-shadow: none;
+            & svg {
+              fill: $action-icon-disabled;
+            }
+          }
+        }
+      }
+      &.actionSeparator {
+        border-right: 1px solid $secondary-body-bg-color;
+        height: 19px;
+        margin-top: 1px;
+      }
+      &.search_container {
+        height: 30px;
+        padding-top: 4px;
+      }
+    }
+  }
+  .grid-layout {
+    &.sub-nav {
+      line-height: $action-height - 2; //border top and bottom takes 1 px each one
+      dd {
+        border-top: 1px solid $secondary-body-bg-color;
+        border-bottom: 1px solid $secondary-body-bg-color;
+        margin-right: 0px;
+        &.subTitle {
+          flex: 1; //overwritten by media
+          margin-right: 0px;
+        }
+        &.actionMenu {
+          .menu-label {
+            border: 0px;
+            background: transparent;
+            font-size: 12px;
+            color: $menu-font-color;
+            margin-right: 0px;
+            padding: 0px;
+            & svg {
+              margin: 0 24px;
+              @extend %svg-common;
+              &:hover {
+                fill: $action-icon-hover;
+              }
+            }
+            &:hover {
+              box-shadow: none;
+            }
+            &.disabled svg {
+              fill: $action-icon-disabled;
+            }
+          }
+        }
+        &.actionSeparator {
+          height: $action-height;
+          margin: 0px;
+          & + dd {
+            padding-left: 24px;
+          }
+        }
+        &.filter_input {
+          height: $action-height;
+        }
+      }
+    }
+  }
+  @media (min-width: 600px) { //to be decreased once more menu gets introduced
+    .sub-nav dd {
+      &.subTitle {
+        flex: 1;
+        margin-right: 40px;
+      }
+    }
+    .grid-layout {
+      &.sub-nav dd {
+        &.subTitle {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
+}
+
+.slipstream-widget-test-page.action-bar-widget-test {
+  .icon_row_menu-default {
+    fill: $action-icon-hover;
+  }
+  .icon_row_menu-hover {
+    fill: $action-icon-color;
+  }
+  .icon_row_menu-hover_test {
+    fill: yellow;
+  }
+  .icon_collapse_all_test {
+    fill: orange;
+  }
+  .icon_collapse_all_hover_test {
+    fill: green;
+  }
+  .icon_collapse_all_disable_test {
+    fill: red;
+  }
+}

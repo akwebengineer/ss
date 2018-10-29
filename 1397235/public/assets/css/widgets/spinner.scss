@@ -1,0 +1,82 @@
+$color-dark-gray: #333;
+@keyframes spinner {
+	to {transform: rotate(360deg);}
+}
+.spinner-component{
+	height: 100%;
+}
+.spinner-widget{
+	&.determinateSpinnerContainer{
+		margin: auto;
+		text-align: center;
+		height: 110px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 5;
+		
+		.spinnerContainer{
+			position: relative;
+		}
+		.spinner{
+			width: 65px;
+			height: 65px;
+			position: relative;
+			margin: 10px auto;
+		}
+		.spinner_label{
+			font-size: 12px;
+			color: $color-dark-gray;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: 0;
+			transform: translate(-50%, -50%);
+		}
+		.spinnerLabel{
+			font-size: 12px;
+			color: $color-dark-gray;
+		}
+	}
+
+	&.indeterminateSpinnerContainer{
+		margin: auto;
+		text-align: center;
+		height: 85px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 5;
+
+		.icon_spinner{ //Added css for spinner
+			width:65px;
+		    height:65px;
+		    display: inline-block;
+		    margin-top: 10px;
+			animation: spinner 1.7s linear infinite;
+		}
+		.spinnerLabel{
+			font-size: 12px;
+			color: $color-dark-gray;
+		}
+	}
+}
+
+
+.parentContainer{
+	position: relative;
+}
+
+.test_spinner_widget{
+	#spinner1, #spinner2, #spinner1_react, #spinner2_react{
+		width: 210px;
+		height: 150px;
+	}
+	#overlay_btn{
+		width: 120px;
+	}
+}

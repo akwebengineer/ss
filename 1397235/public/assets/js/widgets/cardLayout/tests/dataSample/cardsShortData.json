@@ -1,0 +1,28 @@
+{
+  "root1": {
+    "root2": {
+      "root3": [
+        {
+          "cardId": "summary1_s",
+          "title": "Total Links",
+          "content": "3"
+        },
+        {
+          "cardId": "summary2_s",
+          "title": "Bandwidth Utilized",
+          "content": "90%"
+        },
+        {
+          "cardId": "summary3_s",
+          "title": "Throughput (MB/sec)",
+          "content": "78.6"
+        },
+        {
+          "cardId": "summary4_s",
+          "title": "Latency (ms)",
+          "content": "8"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,100 @@
+<div>
+    <h1 id="time-range-widget">Time Range Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>A time range widget is a graph to allow selection of time range for viewing a certain subset of the available data.</p>
+<p>A time range widget in Slipstream can be implemented using the framework&#39;s time range widget.</p>
+<h2 id="api">API</h2>
+<pre><code>function TimeRangeWidget(conf) {…}</code></pre>
+<p>Used to create a new time range.
+where conf is of the format:</p>
+<pre><code>{
+    container: &lt;reference to the DOM element where the time range widget needs to be rendered&gt;,
+    options: &lt;object containing time range options&gt;
+}</code></pre>
+<p>options is of the format:</p>
+<pre><code>{
+    data: &lt;array of data points for the series&gt;
+    afterSetTimeRange: &lt;callback function after the time range changed&gt;
+}</code></pre>
+<p>data can be specified in an array of objects:</p>
+<ul>
+<li>name: is a string value that represents the name of the data series</li>
+<li>point: is an array of arrays representing each point in the time range widget</li>
+<li>color: is the color to be used for the timeline.</li>
+</ul>
+<pre><code>     In the data value, each point&#39;s x value represents the epoch time-stamp (https://en.wikipedia.org/wiki/Unix_time), the y value represents the value you want to display.
+
+     Note: Ensure your list is sorted in ascending order of x values (timestamp) in case you are setting a threshold, so excessive processing isn&#39;t done in the browser for the threhold line
+
+     Eg. data: [{
+                   name: &#39;AAPL&#39;,
+                   color: &#39;#ec1c24&#39;,
+                   points: [[1147651200000,67.79],[1147737600000,64.98],[1147824000000,65.26],[1147910400000,63.18],[1147996800000,64.51],[1148256000000,63.38],[1148342400000,63.15],[1148428800000,63.34],[1148515200000,64.33],[1148601600000,63.55],[1148947200000,61.22],[1149033600000,59.77],[1149120000000,62.17],[1149206400000,61.66],[1149465600000,60],[1149552000000,59.72],[1149638400000,58.56],[1149724800000,60.76],[1149811200000,59.24],[1150070400000,57],[1150156800000,58.33],[1150243200000,57.61],[1150329600000,59.38],[1150416000000,57.56],[1150675200000,57.2],[1150761600000,57.47],[1150848000000,57.86],[1150934400000,59.58],[1151020800000,58.83],[1151280000000,58.99],[1151366400000,57.43],[1151452800000,56.02],[1151539200000,58.97],[1151625600000,57.27],[1151884800000,57.95],[1152057600000,57],[1152144000000,55.77],[1152230400000,55.4],[1152489600000,55],[1152576000000,55.65]]
+                }]</code></pre>
+<pre><code>function build() {…}</code></pre>
+<p>Used to render the time range widget.</p>
+<pre><code>function destroy() {…}</code></pre>
+<p>Used to destroy the time range widget and clean up resources.</p>
+<pre><code>function addSeries(options) {…}</code></pre>
+<p>Used to add data dynamically in the time range widget.</p>
+<p>var options = [{
+                 name: &#39;AAPL&#39;,
+                 color: &#39;#ec1c24&#39;,
+                 points: [[1147651200000,67.79],[1147737600000,64.98],[1147824000000,65.26],[1147910400000,63.18],[1147996800000,64.51],[1148256000000,63.38],[1148342400000,63.15],[1148428800000,63.34],[1148515200000,64.33],[1148601600000,63.55],[1148947200000,61.22],[1149033600000,59.77],[1149120000000,62.17],[1149206400000,61.66],[1149465600000,60],[1149552000000,59.72],[1149638400000,58.56],[1149724800000,60.76],[1149811200000,59.24],[1150070400000,57],[1150156800000,58.33],[1150243200000,57.61],[1150329600000,59.38],[1150416000000,57.56],[1150675200000,57.2],[1150761600000,57.47],[1150848000000,57.86],[1150934400000,59.58],[1151020800000,58.83],[1151280000000,58.99],[1151366400000,57.43],[1151452800000,56.02],[1151539200000,58.97],[1151625600000,57.27],[1151884800000,57.95],[1152057600000,57],[1152144000000,55.77],[1152230400000,55.4],[1152489600000,55],[1152576000000,55.65]]
+              }]</p>
+<pre><code>function removeSeries(name) {…}</code></pre>
+<p>Used to remove existing data series from the time range widget.</p>
+<p>@param: name is a String which is the name of a data series, eg: &#39;AAPL&#39;</p>
+<pre><code>function getTimeRange() {…}</code></pre>
+<p>Used to get current range in the time range widget.</p>
+<p>@return {Object} contains the following info:</p>
+<ul>
+<li>dataMax: The maximum value of the axis&#39; associated series.</li>
+<li>dataMin: The minimum value of the axis&#39; associated series.</li>
+<li>max: The maximum axis value, either automatic or set manually. If the max option is not set and maxPadding is 0, this value will be the same as dataMax.</li>
+<li>min: The minimum axis value, either automatic or set manually. If the min option is not set and minPadding is 0, this value will be the same as dataMin.</li>
+</ul>
+<pre><code>function setTimeRange(min, max) {…}</code></pre>
+<p>Used to set range in the time range widget.</p>
+<h2 id="usage">Usage</h2>
+<p>Steps to add a time range widget:</p>
+<ol>
+<li>Instantiate the time range widget and provide the configuration object</li>
+<li>Call the build method</li>
+</ol>
+<h5 id="example-1-">Example 1:</h5>
+<p>The following configuration object renders a time range widget with</p>
+<ul>
+<li>data with numerical values</li>
+</ul>
+<pre><code>var conf = {
+                container: timeRangeElement,
+                options: options
+           };</code></pre>
+<pre><code>var options = {
+                data: [{
+                   name: &#39;AAPL&#39;,
+                   color: &#39;#ec1c24&#39;,
+                   points: [[1147651200000,67.79],[1147737600000,64.98],[1147824000000,65.26],[1147910400000,63.18],[1147996800000,64.51],[1148256000000,63.38],[1148342400000,63.15],[1148428800000,63.34],[1148515200000,64.33],[1148601600000,63.55],[1148947200000,61.22],[1149033600000,59.77],[1149120000000,62.17],[1149206400000,61.66],[1149465600000,60],[1149552000000,59.72],[1149638400000,58.56],[1149724800000,60.76],[1149811200000,59.24],[1150070400000,57],[1150156800000,58.33],[1150243200000,57.61],[1150329600000,59.38],[1150416000000,57.56],[1150675200000,57.2],[1150761600000,57.47],[1150848000000,57.86],[1150934400000,59.58],[1151020800000,58.83],[1151280000000,58.99],[1151366400000,57.43],[1151452800000,56.02],[1151539200000,58.97],[1151625600000,57.27],[1151884800000,57.95],[1152057600000,57],[1152144000000,55.77],[1152230400000,55.4],[1152489600000,55],[1152576000000,55.65]]
+                }]
+           };</code></pre>
+<h2 id="event">Event</h2>
+<h5 id="aftersettimerange">afterSetTimeRange</h5>
+<p>After changing the time range, this event will get trigger</p>
+<ul>
+<li>define the callback function in the configuration</li>
+</ul>
+<pre><code>var afterSetTimeRangeFn = function(event, data){
+        console.log(data);
+    };
+var conf = {
+      container: el,
+      options: { data: TestData.navigatorData.data,  
+                 afterSetTimeRange: afterSetTimeRangeFn
+    }
+
+var timeRangeWidgetObj = new TimeRangeWidget(conf);</code></pre>
+
+
+</div>
+ 

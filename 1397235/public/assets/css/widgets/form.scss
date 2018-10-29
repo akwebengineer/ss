@@ -1,0 +1,725 @@
+$section-description-text: #999999;
+$overlay-button-height: 38px;
+$form-input-border: #dddddd;
+$element-label-width: 217px;
+$label-max-width: 158px;
+$option-selection-label-max-width: 250px;
+$indent-visibility-padding: 20px;
+@mixin error-text-style {
+  margin-bottom: 0;
+  outline: none !important;
+  border-color: $form-error-color;
+}
+
+.form-pattern {
+  $info-border-color: #0099FF;
+
+  > .row {
+    max-width: 100%;
+  }
+
+  .row {
+    margin: 0px !important;
+  }
+
+  .form_section {
+    margin-bottom: 30px;
+    .progressive_disclosure {
+      @extend .icon_nav_big_arrow_down, .icon_nav_big_arrow_down-dims;
+      float: left;
+      cursor: pointer;
+      margin: 9px 8px 0px 2px;
+      &:not(.collapsed) {
+        fill: $arrow-icon-color;
+      }
+      &.collapsed {
+        fill: $collapsed-arrow-icon-color;
+        margin: 10px 10px 0px 0px;
+        transform: rotate(270deg);
+      }
+    }
+    &:last-of-type {
+      margin-bottom: 0px;
+    }
+
+    .section_content {
+      margin-top: 15px;
+
+      @mixin password-strength-div {
+        margin-top: 4px;
+        margin-bottom: 4px;
+        background-color: $password-strength-div-color;
+        height: $password-strength-div-height;
+        position: relative;
+        border: none !important;
+        padding: 0px !important;
+      }
+
+      @mixin password-strength-meter($color) {
+        background: $color;
+        height: 100%;
+        display: block;
+      }
+
+      @mixin verdict-text($text-color) {
+        color: $text-color;
+        font-size: small;
+      }
+
+      @mixin separator($left-margin) {
+        display: inline-block;
+        position: absolute;
+        background-color: $separator-color;
+        width: 1px;
+        z-index: 10;
+        height: 3px;
+        left: $left-margin;
+      }
+
+      .password-strength-location .progress {
+        @include password-strength-div;
+        .meter { @include password-strength-meter($default-color); }
+        &.secondary .meter { @include password-strength-meter($password-strength-meter-secondary-color); }
+        &.success .meter { @include password-strength-meter($password-strength-meter-success-color); }
+        &.alert .meter { @include password-strength-meter($password-strength-meter-alert-color); }
+        &.warning .meter { @include password-strength-meter($password-strength-meter-warning-color); }
+      }
+      .verdict-location .alert { @include verdict-text($alert-verdict-color); }
+      .verdict-location .success { @include verdict-text($success-verdict-color); }
+      .verdict-location .warning { @include verdict-text($warning-verdict-color); }
+      .separator-left { @include separator($separator-left); }
+      .separator-right { @include separator($separator-right); }
+    }
+    .section_title h5 {
+      height: 24px;
+      font-size: 18px;
+      font-weight: 600;
+      color: $form-label-color;      
+    }
+    .section_description h6 {
+      padding: 2px 0 9px;
+      color: $section-description-text;
+    }
+    .progressive_disclosure_content {
+      &.collapsed {
+        display: none;
+      }
+      .section_description, .elementlabel{
+        padding-left: 23px;
+      }
+    }
+    .toggle_section.optionselection {
+      margin: -5px 0px 37px;
+    }
+    .row {
+      &.row_description {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        .elementdescription {
+          width: auto;
+          word-break: break-all;
+          line-height: 1.3;
+          margin-left: 23px;
+          label {
+            font-weight: normal;
+            color: $form-value-color;
+          }
+        }
+        .elementlabel + .elementdescription {
+          margin-left: 0px;
+          margin-top: 7px;
+        }
+        .elementlink {
+          padding-top: 0px;
+        }
+        &.hide {
+          display: none;
+        }
+      }
+      &.indent_visibility_element {
+        padding-left: $indent-visibility-padding;
+        .elementlabel {
+          padding-right: 30px;
+          label {
+            word-wrap: break-word;
+            max-width: $label-max-width - $indent-visibility-padding;
+          }
+        }
+        .elementinput {
+          margin-left: -20px;
+        }
+      }
+    }
+  }
+
+  .columns {
+    padding-left: 0px !important;
+  }
+
+  &.onOverlay {
+    height: inherit;
+    max-height: inherit;
+    .slipstream-content-title {
+      padding-left: 25px;
+      padding-top: 24px;
+      padding-bottom: 18px;
+      margin-bottom: 0px;
+      width: 100%;
+      background-color: $body-bg;
+      height: 61px;
+      div {
+        height: 26px;
+      }
+    }
+    & > .form-content {
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-left: 12px;
+      padding-right: 12px;
+      padding-top: 24px;
+      height: 100%;
+      &.slipstream-content-wrapper {
+        .form_section {
+          margin-left: 15px;
+        }
+      }
+    }
+    .buttons.onOverlay {
+      border-top: 1px solid $border-color;
+      height: $overlay-button-height;
+      width: 100%;
+      background-color: $body-bg;
+      .elementinput {
+        float: right !important;
+        width: auto;
+        height: inherit;
+        margin-bottom: 0px;
+        input {
+          margin-right: 0px !important;
+          height: inherit;
+        }
+        .cancelLink {
+          float: left;
+          display: inline-block;
+          height: inherit;
+          padding-top: 8px;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
+
+  h3 {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+  }
+
+  h5, h6 {
+    padding: 0 0 20px 0;
+    margin-bottom: 0px;    
+  }
+
+  h6 {
+    font-size: 12px;
+
+  }
+  a {
+    color: $link-active-color;
+    font-size: 12px;
+  }
+
+  input {
+    margin: 0px;
+    height: 30px;
+    &:not([type="button"]):not([type="submit"]){
+      padding: 6px;
+      box-shadow: unset;
+    }
+    &:focus {
+        border-color: $input-active-border;
+      }
+  }
+
+  .elementlabel {
+    min-width: $element-label-width;
+    height: 30px;
+    padding-right: 10px;
+    label, .requiredsign {
+      @include vertical-align;
+      color: $form-label-color;
+      padding: 0;
+      word-wrap: break-word;
+      font-weight: 600;
+      font-size: 12px;
+      @include text-ellipsis;
+      max-width: $label-max-width;
+      line-height: 16px;
+    }
+    .requiredsign {
+      float:left;
+    }
+    .form-element {
+      @include vertical-align;
+      display: inline-block;
+      margin-left: 6px;
+    }
+  }
+
+  .elementinput {
+    width: 295px;
+    margin-bottom: 10px;
+    max-height: inherit;
+    position: relative;
+    div[data-widget="grid"], div[data-widget="tabContainer"], div[data-widget="tabContainer"] > div {
+      max-height: inherit;
+    }
+    div[data-widget="tabContainer"] {
+      padding-top: 10px !important;
+    }
+    .toggle-button-widget {
+      margin-top: 5px;
+    }
+  }
+
+  .auto-width .elementinput {
+    width: auto;
+  }
+
+  .optionselection {
+    height: 20px;
+    label {
+      font-weight: normal;
+      padding-top: 10px;
+      color: $form-value-color;
+      vertical-align: top;
+      @include text-ellipsis;
+      max-width: $option-selection-label-max-width;
+      &.disabled {
+        color: $input-disabled-bg;
+      }
+    }
+    & ~ .help-style {
+      margin-top: 8px;
+    }
+  }
+
+  .buttons {
+    .hideButtonLabel {
+      display: none;
+    }
+    .showCancelLink {
+      display: block;
+    }
+    .buttonsAlignedRight {
+      float: right !important;
+      width: auto;
+    }
+  }
+  .no-container {
+    display: none;
+  }
+
+  .styleselect {
+    background: url('/assets/images/arrow_down.png') no-repeat top right;
+
+    select {
+      background: transparent;
+      font-size: $form-font-size;
+      color: $form-label-color;
+      border: 1px solid $border-color;
+      margin-bottom: 0px;
+      height: 30px;
+      padding: 6px;
+      outline: none;
+      -moz-appearance: none;
+      text-indent: 0.01px;
+      text-overflow: '';
+      option {
+        width: 295px;
+      }
+      option:disabled {
+        color: red;
+      }
+    }
+  }
+
+  textarea {
+    vertical-align: top;
+    resize: none;
+    height: auto;
+    box-shadow: unset;
+    border: 1px solid $form-input-border;
+  }
+
+  .elementinlinelabel {
+    color: $form-value-color;
+    font-size: 12px;
+    float: left;
+    line-height: 30px;
+    padding-left: 5px;
+  }
+
+  .elementlink {
+    padding-left: 10px;
+    line-height: 28px;
+    display: inline-block;
+  }
+
+  .inlineicons {
+    cursor: pointer;
+    height: 30px;
+    padding: 6px 10px 6px 10px;
+    float: left;
+    &:hover {
+      > .elementiconlabel {
+        color: $action-icon-hover;
+      }
+      > svg.elementicon {
+        fill: $action-icon-hover;
+      }
+    }
+  }
+
+  svg.elementicon {
+    fill: $action-icon-color;
+  }
+
+  .elementiconlabel {
+    color: $action-icon-color;
+    font-size: 12px;
+    padding: 0 10px 0 3px;
+  }
+
+  .elementbuttons {
+    margin-left: 15px;
+  }
+
+  .inline-text {
+    font-weight: normal;
+    padding-top: 11px;
+    font-size: 0.75rem;
+    color: $form-label-color;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .inline-help {
+    display: block;
+    margin: 0px;
+    font-size: 11px;
+    color: $form-label-color;
+  }
+
+  .help-style {
+    margin-top: 3px;
+    line-height: 14px;
+    color: $section-description-text;
+  }
+
+
+
+  .valid {
+    color: $form-valid-color;
+    font-weight: bold;
+  }
+
+  .error small.error, span.error, small.error {
+    @include form-error-message;
+  }
+
+  span.error, small.error {
+    display: none;
+  }
+
+  .error small.error {
+    margin: 14px 0px 0px;
+    padding: 0px;
+    font-style: normal;
+    font-size: 11px;
+    background: inherit;
+    color: $form-error-color;
+    width: 295px;
+  }
+
+  .error {
+    input {
+      @include error-text-style;
+    }
+    textarea {
+      @include error-text-style;
+    }
+    select {
+      @include error-text-style;
+    }
+    a {
+      color: $link-active-color;
+    }
+  }
+  .errorimage {
+    svg {
+      @extend .icon_error, .icon_error-dims;
+      fill: $icon-error-color;
+      float: left;
+    }
+    span {
+      float: left;
+      width: calc(100% - 25px);
+      line-height: 14px;
+      margin: 2px 0px 0px 5px;
+    }
+  }
+
+  .alert-box {
+    border-width: 2px;
+    font-size: 12px;
+    background-color: $body-bg;
+    margin-bottom: 16px;
+    display: none;
+    a {
+      color: $link-active-color;
+      &:hover {
+        text-decoration: underline;
+      }
+      &:focus {
+        text-decoration: underline;
+      }
+      &:visited {
+        color: $link-visited-color;
+      }
+    }
+    .content-icon{
+      float: left;
+      margin-right: 9px;
+      margin-top: -4px;
+    }
+    &.error-message{
+      color: $form-error-color;
+      border-color: $form-error-color;
+      svg {
+        @extend .content-icon;
+        @extend .icon_error, .icon_error-dims;
+        fill: $icon-error-color;
+      }
+    }
+    &.info-message{
+      border-color: $info-border-color;
+      svg {
+        @extend .content-icon;
+        @extend .icon_info_search, .icon_info_search-dims;
+      }
+    }
+  }
+
+  .warnimage:before {
+    @extend .icon_warn, .icon_warn-dims;
+    content: "";
+    float: left;
+    margin-right: 5px;
+    margin-top: -2px;
+  }
+
+  .warning-box {
+    @extend .alert-box;
+    box-shadow: 1px 2px 6px 0px $box-shadow-color-1;
+    border-width: 2px;
+    border-color: $form-warning-color;
+    color: black;
+  }
+
+  .hideHelp, .hideIcon {
+    display: none;
+  }
+
+  input[disabled], textarea[disabled] {
+    background-color: $input-disabled-background;
+    color: $input-disabled-text-color;
+    border: solid 1px $input-disabled-border-color;
+  }
+
+  .list-builder{
+    max-height: inherit;
+    .elementinput {
+      max-height: inherit;
+      width: 100%;
+    }
+    .elementlabel + .elementinput {
+      width: calc(100% - #{$element-label-width});
+    }
+    & > input {
+      width: 295px;
+    }
+  }
+
+  .delete_row {
+    @extend .icon_close, .icon_close-dims;
+    background-repeat: no-repeat;
+    background-origin: left;
+    margin: 7px;
+    cursor: pointer;
+  }
+
+  div[data-widgetidentifier^=datePicker_] .elementinput {
+    width: auto;
+  }
+
+  div[data-widgetidentifier^=dateTime_] {
+    & > .elementinput {
+      width: auto !important;
+    }
+    //    div[data-widget=dateTime]{
+    //      position: absolute;
+    //      left: 328px;
+    //      .row_time_input .elementinput{
+    //        width: 82px;
+    //      }
+    //    }
+  }
+
+  div[data-widgetidentifier^=grid_], div[data-widgetidentifier^=tabContainer_] {
+    max-height: inherit;
+    .elementinput {
+      max-height: inherit;
+      width: 100%;
+    }
+    .elementlabel + .elementinput {
+      width: calc(100% - #{$element-label-width});
+    }
+  }
+
+  div[data-widgetidentifier^=tabContainer_] {
+    .elementinput .tabContainer-widget > div{
+      padding-top: 0px !important;
+    }
+  }
+
+  div[data-widgetidentifier^=numberStepper_] .elementinput.error {
+    .numberStepper-widget {
+      & > .ui-widget {
+        border: 1px solid $form-error-color !important;
+        input.ui-spinner-input {
+          border: 1px solid transparent;
+        }
+      }
+    }
+  }
+
+  div[data-widgetidentifier^=slider_] {
+    .elementinput {
+      width: 100%;
+      padding-left: 23px;
+    }
+    .elementlabel + .elementinput {
+      width: calc(100% - #{$element-label-width});
+      padding-left: 0px;
+    }
+  }
+
+  .fileupload_container {
+    position: relative;
+    .fileupload-button {
+      position: absolute;
+      top: 0;
+      left: 310px;
+      text-align: center;
+      line-height: 21px;
+      cursor: pointer;
+    }
+    input.fileupload {
+      opacity: 0;
+      position: absolute;
+      width: 70px;
+      height: 30px;
+      top: 0;
+      left: 310px;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+      display: block;
+    }
+    .fileupload::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+  }
+  > .indeterminateSpinnerContainer {
+    position:fixed;
+    left:50%;
+    transform:translateX(-50%);
+  }
+}
+
+#test_form_widget, #test_form_widget_on_overlay {
+  #copy_rows_form {
+    .copy_multiple {
+      float: left;
+      padding: 5px;
+      &.first_element {
+        clear: both;
+      }
+    }
+    .copy_row_buttons .elementinput {
+      width: auto;
+    }
+    #section_widget {
+      clear: both;
+      padding-top: 20px;
+    }
+
+  }
+
+  #sample_form {
+    .buttons_row .elementinput {
+      width: auto;
+    }
+    .test-elementicon1 {
+      @extend .icon_create, .icon_create-dims;
+      background-repeat: no-repeat;
+      background-origin: left;
+      &:hover {
+        @extend .icon_create_hover, .icon_create_hover-dims;
+        background-repeat: no-repeat;
+        background-origin: left;
+      }
+    }
+    div[data-widgetidentifier^=grid_] {
+      .action-filter-container {
+        padding-top: 0px;
+      }
+    }
+  }
+
+  #declarative_sample_form {
+    .twoColumns {
+      width: 50%;
+    }
+  }
+}
+
+.form-component {
+  .section_content .row {
+    .field-end {
+      line-height: 30px;
+      text-align: center;
+      padding-left: 5px;
+      .slipstream-primary-button, .slipstream-secondary-button {
+        margin-left: 10px;
+      }
+    }
+    .elementinput small.error:not(:nth-of-type(1)){
+        display: none !important;
+    }
+  }
+  .slipstream-buttons-wrapper{
+    padding-bottom: 10px;
+  }
+  .row .elementLink{
+    display: inline-block;
+    height: 30px;
+    padding-top: 6px;
+    padding-right: 20px;
+    a{
+      color: $link-button-color;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.color-picker-widget {
+  @import "../../js/vendor/jquery/jquery-ui";
+}
+
+//needed a css to keep images in its vendor folder and namespace is not allowed when importing css
+@import "/assets/js/vendor/jquery/colorpicker/colorpicker.css";
+
+.color-picker-widget {
+  .color-picker-input{
+    padding: 6px;
+    width: 125px;
+    outline: none;
+  }
+  .color-picker-output {
+    display: inline-block;
+    padding: 14px 35px;
+    vertical-align: bottom;
+    height: 20px;
+    margin-left: 15px;
+  }
+  &.color-picker-widget-dialog-wrapper.ui-colorpicker-dialog {
+    padding: 0px;
+    width: 352px;
+  }
+}
+
+.slipstream-widget-test-page.color-picker-widget-test {
+  .toggle-buttons {
+    margin: 20px 0px 40px;
+  }
+}

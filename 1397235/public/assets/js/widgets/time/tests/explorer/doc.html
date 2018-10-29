@@ -1,0 +1,74 @@
+<div>
+    <h1 id="time-widget">Time Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Slipstream&#39;s Time widget provides an input UI widget for any workflow which needs to show and interact time values. It contains following HTML input fields: </p>
+<ul>
+<li>a text-input field for display and take time value in <strong>HH:MM</strong> or <strong>HH:MM:SS</strong> format. </li>
+<li>a select box with options: <strong>AM</strong>, <strong>PM</strong> and <strong>24 hour</strong></li>
+</ul>
+<p>The widget handles all user input validations using slipstream validator &amp; displays an error message: <em>Must be HH:MM:SS.</em> The widget automatically adjusts the time value when user select different period in select box (e:g if the current shown values 03:45:56 with PM option and then user selects 24 hour, the time value is changed to 15:45:56.)</p>
+<h2 id="api">API</h2>
+<p>The Time widget follows the widget programming interface standards.
+Time widget object exposes undermentioned functions:</p>
+<pre><code>function TimeWidget(conf) {…}</code></pre>
+<p>Creates a time widget object instance with specified <strong>conf</strong> object specifying the required <strong>container</strong> (DOM element) where the widget will render itself and an optional <strong>value</strong> for a pre-set time value. Note: when a value is not specified, the widgets shows time of the client machine.</p>
+<pre><code>function build() {…}</code></pre>
+<p>Renders the time widget&#39;s UI elements (time input field and period drop down)in the specified container (DOM element).</p>
+<pre><code>function destroy() {…}</code></pre>
+<p>Removes the rendered view from the specified container and unbinds events.</p>
+<pre><code>function getTime() {…}</code></pre>
+<p>Returns the current time value string.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has two variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered | required&gt;,
+    value: &lt;time value as input | default: current time from system | optional&gt;
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="steps-for-using-time-widget-">Steps for using Time widget:</h3>
+<h4 id="1-under-js-views-create-a-object-for-the-widget">1. Under js/views create a object for the widget</h4>
+<p>Example: widgetView.js</p>
+<pre><code>define([
+    &#39;jquery&#39;,
+    &#39;underscore&#39;,
+    &#39;backbone&#39;,
+    &#39;widgets/time/timeWidget&#39;
+], function($, _, Backbone, TimeWidget){
+    /**
+     * Constructs a TimeView
+     */
+  var TimeView = Backbone.View.extend({
+
+    el: &#39;#main-sample-content&#39;,
+
+    initialize: function () {
+      this.render();
+    },
+
+    render: function () {
+      this.timeWidget = new TimeWidget({
+        &#39;container&#39;: &quot;#time-widget&quot;
+      });
+      this.timeWidget.build();
+
+      return this;
+    }
+  });
+
+  return TimeView;
+});</code></pre>
+<h4 id="2-under-js-views-create-a-view-for-the-widget">2. Under js/views create a view for the widget</h4>
+<p>Example: exampleView.js</p>
+<pre><code>define([
+    &#39;jquery&#39;,
+    &#39;foundation.dropdown&#39;
+], function ($, foundation) {
+    $(document).foundation();
+        require([ &#39;./widgetView&#39;], function(TimeView){
+          new TimeView({});
+    });
+});</code></pre>
+
+
+</div>
+ 

@@ -1,0 +1,90 @@
+{
+  "ruleCollection": {
+    "rules": [
+      {
+        "definitionType": "CUSTOM",
+        "rowId": 2155542,
+        "domainId": 2,
+        "editVersion": 0,
+        "version": 1,
+        "name": "grp-Zone-Post-2",
+        "policyMOID": "net.juniper.jnap.sm.dcpolicymanager.jpa.DCPolicyEntity:33039",
+        "policyName": "grp",
+        "disabled": false,
+        "ruleOrder": 0,
+        "errorLevel": -1,
+        "ruleLevel": 3,
+        "parent": 200,
+        "leaf": true,
+        "rulePath": {
+          "path": [
+            "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:655440",
+            "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:655439",
+            "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:33043",
+            "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:33041"
+          ]
+        },
+        "count": 0,
+        "ruleGroupMOID": "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:655439",
+        "serialNumber": 2,
+        "ruleType": "RULE",
+        "ruleGroupType": "CUSTOM",
+        "ruleGroupDepth": 0,
+        "action": "DENY",
+        "appSigType": "NONE",
+        "applications": {
+          "domainId": 1,
+          "domainName": "SYSTEM",
+          "id": 131072,
+          "MOID": "net.juniper.jnap.sm.om.jpa.ApplicationEntity:131072",
+          "name": "Any"
+        },
+        "CustomColumnValues": "",
+        "destinationAddress": {
+          "addresses": {
+            "domainId": 1,
+            "domainName": "SYSTEM",
+            "id": 65547,
+            "MOID": "net.juniper.jnap.sm.om.jpa.AddressEntity:65547",
+            "name": "Any",
+            "addressType": "ANY",
+            "variableId": 0
+          },
+          "excludeList": false
+        },
+        "fromZone": {
+          "name": "trust",
+          "resolved": false,
+          "variableId": 0,
+          "zoneType": "ZONE"
+        },
+        "hashKey": "8CD9DB4E42BA2C434ED0799111173026654DF793",
+        "IPSMode": "ADVANCED",
+        "ipsEnabled": false,
+        "MOID": "net.juniper.jnap.sm.dcpolicymanager.jpa.DCRuleEntity:655440",
+        "ruleOptions": "",
+        "ruleProfile": {
+          "profileType": "INHERITED"
+        },
+        "sourceAddress": {
+          "addresses": {
+            "domainId": 1,
+            "domainName": "SYSTEM",
+            "id": 65547,
+            "MOID": "net.juniper.jnap.sm.om.jpa.AddressEntity:65547",
+            "name": "Any",
+            "addressType": "ANY",
+            "variableId": 0
+          },
+          "excludeList": false
+        },
+        "toZone": {
+          "name": "untrust",
+          "resolved": false,
+          "variableId": 0,
+          "zoneType": "ZONE"
+        }
+      }
+    ]
+  }
+}

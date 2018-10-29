@@ -1,0 +1,65 @@
+<div class='dashboardDashlet' id='{{dashletId}}'>
+
+    <div class='dashboardDashletHeader'>&nbsp;
+        <div class='dashletTitle'>
+            <span class='dashletTitleText'>
+                {{title}}
+            </span>
+        </div>
+        <dl class='sub-nav dashletActions'>
+            {{#editExists}}
+            <dd>
+                <svg class='dashletButton edit'><use href="#icon_dashlet_edit"></use></svg>
+            </dd>
+            {{/editExists}}
+            {{#refreshExists}}
+            <dd>
+               <svg class='dashletButton refresh'><use href="#icon_dashlet_refresh"></use></svg>
+            </dd>
+            {{/refreshExists}}
+            <dd>
+                <svg class='dashletButton close'><use href="#icon_dashlet_delete"></use></svg>
+            </dd>
+        </dl>
+    </div>
+    <div class='clear'></div>
+    <div class='dashboardDashletFiltersArea row'>
+        {{#filters}}
+            <div class='dashboardDashletFilters'>
+                <label for='{{name}}' name='{{name}}' class='dashboardDashletFilterLabel elementlabel left'>{{label}}: </label>
+                <div class="element_dropdown left styleselect">
+                    <select name='{{name}}' id='{{name}}' class='right dashletFilter'>
+                        {{#values}}
+                            <option value='{{value}}' {{#selected}}selected=selected{{/selected}}>
+                                {{label}}
+                            </option>
+                        {{/values}}
+                    </select>
+                </div>
+            </div>
+        {{/filters}}
+    </div>
+    <div class='dashletOverlay'/>
+    <div class='dashletRefreshing'>
+    </div>
+    <div class='dashletRefreshError'>
+        <div class='row dashletRefreshNoDataContainer'>
+            <svg class='dashletRefreshNoDataIndicator'><use href="#icon_dashlet_no_data"></use></svg>
+        </div>
+        <div class='row dashletRefreshErrorContainer'>
+            <svg class='dashletRefreshErrorIndicator'><use href="#icon_dashlet_warning"></use></svg>
+            <span class='dashletRefreshStatusMessage'></span>
+        </div>
+    </div>
+    <div class='dashboardDashletContent'>&nbsp;</div>
+    <div class='dashboardDashletFooter'>
+        <span>
+            <div class='updated'>{{lastUpdated_label}}&nbsp;{{footer}}</div>
+            {{#detailsHref}}
+                <div class='moreDetails'>
+                    <a class='moreDetailsLink'>{{moreDetails_label}}</a>
+                </div>
+            {{/detailsHref}}
+        </span>
+    </div>
+</div>

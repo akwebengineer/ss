@@ -1,0 +1,100 @@
+.barchartContainer {
+	$controlsFontSize: 10px;
+
+	.barchart {
+
+		$barTitleColor: #666666;
+		$barAxisLabelColor: #a3b2ba;
+		$barTooltipBackgroundColor: #fefefe;
+		$barTooltipBorderColor: #aaaaaa;
+		$barLegendLabelColor: #a3b2ba;
+		$barDataLabelColor: #666666;
+
+		height: inherit;
+		width: inherit;
+
+		.barLabelEllipsis {
+			overflow: hidden;
+		}
+
+		.highcharts-title {
+			font-family: $body-font-family;
+			font-size: 16px !important;
+			font-weight: 300;
+			color: $barTitleColor !important;
+			fill: $barTitleColor !important;
+		}
+
+		.axis-title {
+			font-family: $body-font-family;
+			font-size: 10px;
+			font-weight: normal;
+			color: $barAxisLabelColor !important;
+			fill: $barAxisLabelColor !important;
+		}
+
+		.axis-label {
+			font-family: $body-font-family !important;
+			font-weight: normal !important;
+			font-size: 10px !important;
+			color: $barAxisLabelColor !important;
+			fill: $barAxisLabelColor !important;
+		}
+
+		.highcharts-yaxis-title {
+			@extend .axis-title;
+		}
+
+		.highcharts-xaxis-title {
+			@extend .axis-title;
+		}
+
+		.highcharts-legend-item text {
+			font-family: $body-font-family;
+			font-size: 10px !important;
+			font-weight: normal !important;
+			color: $barLegendLabelColor !important;
+			fill: $barLegendLabelColor !important;
+		}
+
+		.highcharts-axis-labels {
+			span {
+				@extend .axis-label;
+			}
+			text {
+				@extend .axis-label;
+			}
+		}
+
+		.highcharts-tooltip span {
+			background-color: $barTooltipBackgroundColor;
+			opacity: 1;
+			z-index: 9999 !important;
+			padding: 8px;
+			border: 1px solid $barTooltipBorderColor;
+		}
+
+        .data-label {
+            font-family: $body-font-family !important;
+            font-weight: normal !important;
+            font-size: 10px !important;
+            color: $barDataLabelColor !important;
+            fill: $barDataLabelColor !important;
+        }
+
+        .highcharts-data-labels {
+            span, text {
+                @extend .data-label;
+            }
+        }
+	}
+
+	.chartControls {
+		margin-left: 12px;
+		float: left;
+		.btnShowHide {
+			color: $link-button-color !important;
+			font-size: $controlsFontSize;
+		}
+	}
+}

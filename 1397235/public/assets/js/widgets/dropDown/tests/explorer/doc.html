@@ -1,0 +1,369 @@
+<div>
+    <h1 id="dropdown-widget">DropDown Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The DropDown widget is a reusable graphical user interface that allows users to show a searchable dropdown with simple or multiple selection dropdown in the selected container.</p>
+<h2 id="api">API</h2>
+<p>The DropDown widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has the following parameters:</p>
+<pre><code>{
+    container: &lt;DOM object that defines where the widget will be rendered&gt;,
+    data: &lt;JSON object that defines the elements that will be showed in the drop down (select elements)&gt;,
+    matcher: &lt;javascript function that defines a specific filter functionality&gt;,
+    placeholder: &lt;string that defines a short hint for the user&gt;,
+    multipleSelection: &lt;object that defines the configuration for multi-value select boxes&gt;,
+    showCheckboxes: &lt;boolean, true allows to show a checkbox next to the dropdown option&gt;
+    initValue: &lt;The initial value of the dropdown&gt;
+    onChange: &lt;function called when the value selection of the dropdown is changed&gt;,
+    onSelect: &lt;function called when the value of the dropdown has been updated&gt;,
+    enableSearch: &lt;true if search should be enabled for the values in the dropdown, false otherwise&gt;,
+    remoteData: &lt;JSON object that is used to initiate lazy loading of remote data&gt;
+    templateResult: optional, function should return a string containing the text to be displayed, or an object that contains the data that should be displayed.
+    templateSelection: optional, function should return a string containing the text to be displayed as selection.
+    allowClearSelection: optional. allows to remove all elements from the list of selected options when it is set to true. &lt;true if clear button should be visible, false otherwise&gt; Defaults value is false. placeholder  configuration option should be set when setting allowClearSelection to true.
+    dropdownTooltip: Can either be a boolean or an object. Boolean true or an object with functionBefore callback will show tooltip on hovering over the dropdown item.
+}</code></pre>
+<p>The container that will have a DropDown widget should be a select tag. For example:</p>
+<pre><code>&lt;select class=&quot;basic-selection-nodata&quot;&gt;
+    &lt;option value=&quot;one&quot;&gt;First&lt;/option&gt;
+    &lt;option value=&quot;two&quot; disabled=&quot;disabled&quot;&gt;Second (disabled)&lt;/option&gt;
+    &lt;option value=&quot;three&quot; selected=&quot;selected&quot;&gt;Third&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+<p>A DropDown widget with default values should be instantiated with:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+});</code></pre>
+<p>A DropDown widget with user defined values could be instantiated with:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application,
+    &quot;matcher&quot;: newMatcher
+}).build();</code></pre>
+<p>where the &quot;data&quot; should be a JSON object defined in a set of key/value pairs. For example:</p>
+<pre><code>var application = [{
+  &quot;id&quot;: &quot;tftp&quot;,
+  &quot;text&quot;: &quot;junos-tftp&quot;,
+  &quot;disabled&quot;: true
+},
+{
+  &quot;id&quot;: &quot;rtsp&quot;,
+  &quot;text&quot;: &quot;junos-rtsp&quot;
+},
+{
+  &quot;id&quot;: &quot;netbios&quot;,
+  &quot;text&quot;: &quot;junos-netbios-session&quot;
+},
+{
+  &quot;id&quot;: &quot;smb&quot;,
+  &quot;text&quot;: &quot;junos-smb-session&quot;,
+  &quot;selected&quot;: true
+}]</code></pre>
+<h3 id="container">Container</h3>
+<p>The container parameter represents the DOM element that will have the drop down widget.</p>
+<h3 id="data">Data</h3>
+<p>The data parameter represents the select elements that the drop down will be showing. It could be composed by:</p>
+<ul>
+<li>only html tags; for example:</li>
+</ul>
+<pre><code>&lt;select class=&quot;basic-selection-nodata&quot;&gt;
+    &lt;option value=&quot;one&quot;&gt;First&lt;/option&gt;
+    &lt;option value=&quot;two&quot; disabled=&quot;disabled&quot;&gt;Second (disabled)&lt;/option&gt;
+    &lt;option value=&quot;three&quot; selected=&quot;selected&quot;&gt;Third&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+<p>and a widget configuration like:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-nodata&#39;)
+}).build();</code></pre>
+<p>will produce a widget with select elements coming only from the html select definition.</p>
+<ul>
+<li>only data from a JSON object (data parameter); for example:</li>
+</ul>
+<pre><code>&lt;select class=&quot;basic-selection-data&quot;&gt;&lt;/select&gt;</code></pre>
+<p>and a widget configuration like:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application
+}).build();</code></pre>
+<p>will produce a widget with only select elements coming from the data parameter (application object).</p>
+<ul>
+<li>html tags and widget data configuration; for example:</li>
+</ul>
+<pre><code>&lt;select class=&quot;basic-selection-data&quot;&gt;
+    &lt;option value=&quot;one&quot;&gt;First&lt;/option&gt;
+    &lt;option value=&quot;two&quot; disabled=&quot;disabled&quot;&gt;Second (disabled)&lt;/option&gt;
+    &lt;option value=&quot;three&quot; selected=&quot;selected&quot;&gt;Third&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+<p>and a widget configuration like:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application
+}).build();</code></pre>
+<p>will produce a drop down widget with select elements coming from the data parameter (application object) and the html declaration (option tags).</p>
+<p>Data parameter can also define some attributes of the option tag like the disabled and selected. For example:</p>
+<pre><code>[ ...
+    {
+        &quot;id&quot;: &quot;tftp&quot;,
+        &quot;text&quot;: &quot;junos-tftp&quot;,
+        &quot;disabled&quot;: true
+    },
+    {
+        &quot;id&quot;: &quot;rtsp&quot;,
+        &quot;text&quot;: &quot;junos-rtsp&quot;
+    },
+    {
+        &quot;id&quot;: &quot;smb&quot;,
+        &quot;text&quot;: &quot;junos-smb-session&quot;,
+        &quot;selected&quot;: true
+    },
+...]</code></pre>
+<h3 id="initializing-the-value-of-the-dropdown">Initializing the value of the dropdown</h3>
+<p>The initial value of the dropdown can be set by specifiying the <em>initValue</em> property in the configuration object.  This property is an object with the following attributes:</p>
+<p><strong>id</strong>
+The identifier associated with the value to be set</p>
+<p><strong>text</strong>
+The text value to be set</p>
+<p>For example:</p>
+<pre><code>var someInitialValue = {
+    id: 10,
+    text: &#39;California&#39;
+};
+
+var dropDown = new DropDownWidget({
+   ...
+   initValue: someInitialValue
+});</code></pre>
+<h3 id="matcher">Matcher</h3>
+<p>This parameter allows a javascript function to overwrite the default widget match implementation. It can be used when the match criteria should be only the options starting with the filter word or be case sensitive, etcetera. For example the following matcher function:</p>
+<pre><code>var newMatcher = function (params, data) {
+    // if there are no search terms, return all of the data
+    if ($.trim(params.term) === &#39;&#39;) {
+        return data;
+    }
+    // params.term should be the term that is used for searching and data.text is the text that is displayed for the data object
+    if (data.text.indexOf(params.term) &gt; -1) {
+        var modifiedData = $.extend({}, data, true);
+        modifiedData.text += &#39; (matched)&#39;; //return search with modified object
+        return modifiedData;
+    }
+    // return &#39;null&#39; if the term should not be displayed
+    return null;
+}</code></pre>
+<p>adds the word &#39;matched&#39; at the end of each result when the function is added in the configuration of the Drop Down widget, like in the following:</p>
+<pre><code>new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;matcher&quot;: newMatcher
+}).build();</code></pre>
+<h3 id="multiple-selection">Multiple Selection</h3>
+<p>The multipleSelection parameter defines an object that allows to add multiple selection to a simple dropdown. It has the following parameters:</p>
+<ul>
+<li>maximumSelectionLength: restricts the maximum number of options selected</li>
+<li>createTags: allows user to create new entries to the list of available options.</li>
+<li>allowClearSelection: allows to remove all elements from the list of selected options when it is set to true (Will be depracated in future releases and moved up to dropdown config. See allowClearSelection under dropdown config options)</li>
+</ul>
+<p>For example:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.containers.multipleDefault,
+    &quot;data&quot;: application,
+    &quot;multipleSelection&quot;: {
+        maximumSelectionLength: 3,
+        createTags: true,
+        allowClearSelection: true
+    },
+    &quot;placeholder&quot;: &quot;Select an option&quot;
+});</code></pre>
+<h3 id="lazy-loading-infinite-scrolling">Lazy loading / Infinite scrolling</h3>
+<p>The parameter defines an object that allows to add the lazy loading of the records. This option is advisable with huge data set.</p>
+<ul>
+<li>remoteData: required, if virtual scroll is to be used.if used it will ignore the &#39;data&#39; parameter used for static listing of values in drop down. It is composed by following under mentioned configuration parameters.<ul>
+<li>headers: an object of additional header key/value pairs to send along with requests.</li>
+<li>url: required, a string containing the URL to which the request is sent.</li>
+<li>delay: optional, the number of milliseconds to wait for the user to stop typing before issuing the ajax request. Default value is 250.</li>
+<li>dataType: optional, the type of data that is expected back from the server. Default value is json.</li>
+<li>numberOfRows: required, defines the number of rows that will be requested from the API to show the next set of rows for virtual scrolling (pagination).</li>
+<li>jsonRoot: required, defines where the data begins in the JSON response.</li>
+<li>jsonRecords: required, defines a function that returns the total number of records for API response.</li>
+<li>success: optional, a function to be called if the request succeeds. This indicates the server request was successful &amp; can be used to parse the data.</li>
+<li>error: optional, a function to be called if the request fails. This indicates the error in API response &amp; can be used to handle error conditions related to data manipulation.</li>
+</ul>
+</li>
+</ul>
+<p>For example:</p>
+<pre><code>var dropDown = new DropDownWidget({
+    &quot;container&quot;: this.containers.SimpleDataInfiniteScroll,
+    &quot;enableSearch&quot;: true,
+    &quot;remoteData&quot;: {
+           headers: {
+               &quot;accept&quot; : &quot;application/vnd.juniper.sd.address-management.address-refs+json;version=1;q=0.01&quot;,
+               &quot;Content-Type&quot;: &quot;application/vnd.juniper.sd.address-management.address-refs+json;version=1;q=0.01&quot;
+           },
+           &quot;url&quot;: &quot;/api/juniper/sd/address-management/addresses?sortby=(name(ascending))&quot;,
+           &quot;numberOfRows&quot;: 10,
+           &quot;jsonRoot&quot;: &quot;addresses.address&quot;,
+           &quot;jsonRecords&quot;: function(data) {
+               return data[&#39;addresses&#39;][&#39;total&#39;]
+           },
+           &quot;success&quot;: function(data){console.log(&quot;call succeeded&quot;)},
+           &quot;error&quot;: function(){console.log(&quot;error while fetching data&quot;)}
+       },
+     &quot;templateResult&quot;: formatRemoteResult,
+     &quot;templateSelection&quot;: formatRemoteResultSelection
+});
+
+var formatRemoteResult =  function (data) {
+    if (data.loading) return data.text;
+    var markup = data.name;
+    return markup;
+},
+
+var formatRemoteResultSelection =  function (data) {
+   return data.name;
+},</code></pre>
+<h3 id="build">build</h3>
+<p>Adds the dom elements and events of the DropDown widget in the specified container. For example:</p>
+<pre><code>dropDown.build();</code></pre>
+<h3 id="destroy">destroy</h3>
+<p>Clean up the specified container from the resources created by the DropDown widget.</p>
+<pre><code>dropDown.destroy();</code></pre>
+<h3 id="setvalue">setValue</h3>
+<p>Set the value of the dropdown</p>
+<pre><code>dropDown.setValue(value);</code></pre>
+<p>value can either be an Object or a String, depending on the type of the dropdown.</p>
+<ul>
+<li>For remote data dropdown - value must be an object of the format {&quot;id&quot;: <id of the dropdown>, &quot;text&quot;: <text to be displayed in the dropdown>}</li>
+<li>For local data dropdown - <pre><code>When String value is passed, it must be the id of the dropdown option and the parameter is used as is.
+When Object is passed, value.id is used and value.text is ignored</code></pre>
+</li>
+</ul>
+<ul>
+<li>For remoteData, setValue can be used to change the displayed value to ANY value by passing the params {id: &lt; &gt;, text: &lt; &gt;}. </li>
+<li><strong>**</strong> Care should be taken to pass the same value to the remote data source</li>
+<li><strong>**</strong> If setValue() is used for setting the initial value of a remote dropdown, the text and id must match a value from the expected remote data.</li>
+<li>For local data, setValue can be used to change the displayed value to a value that exists in conf.data. The method CANNOT be used to set the display to a value that is not in conf.data. </li>
+</ul>
+<p>For example;</p>
+<pre><code>var dropDown = new DropDownWidget({...});
+// For local data - String Input
+dropDown.setValue(&quot;California&quot;);
+
+// For local data - object Input ()
+dropDown.setValue({
+      &quot;id&quot;: &quot;12345&quot;,
+      &quot;text&quot;: &quot;California&quot;
+  });
+
+// For remote data - string input
+dropDown.setValue({
+      &quot;id&quot;: &quot;12345&quot;,
+      &quot;text&quot;: &quot;California&quot;
+  });</code></pre>
+<h3 id="getvalue">getValue</h3>
+<p>Get the value of the dropdown</p>
+<pre><code>var value = dropDown.getValue();</code></pre>
+<p>For example:</p>
+<pre><code>var dropDown = new DropDownWiddget({...});
+...
+var value = dropDown.getValue();
+console.log(&quot;dropdown value=&quot;, value);
+
+&gt; California</code></pre>
+<h3 id="adddata">addData</h3>
+<p>Append or reset data in the dropdown based on the resetData parameter:
+resetData = true  will replace the dropdown list with new list
+resetData = false will append the new list to existing list</p>
+<p> <strong><em> Not for use with remoteData since addData extends conf.data which is ignored in cases of conf.remoteData </em></strong></p>
+<pre><code>var value = dropDown.addData(dataArray, resetData);</code></pre>
+<p>For example:</p>
+<pre><code>var dropDown = new DropDownWiddget({...});
+dropDown.addData(application, true);</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To include the DropDown widget, a select element should be defined. For example:</p>
+<pre><code>&lt;select class=&quot;basic-selection-data&quot;&gt;&lt;/select&gt;</code></pre>
+<p>The Javascript code that will be used to render a drop down for the HTML markup above with simple selection could be:</p>
+<pre><code>new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application,
+}).build();</code></pre>
+<p>The Javascript code that will be used to render a drop down for the HTML markup above with multiple selection could be:</p>
+<pre><code>new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application,
+    &quot;multipleSelection&quot;: {
+        maximumSelectionLength: 3,
+        createTags: true,
+        allowClearSelection: true
+    }
+}).build();</code></pre>
+<h3 id="dropdowntooltip">dropdownTooltip</h3>
+<p>If this parameter is set to true, it will show tooltip on hovering over the dropdown items.</p>
+<pre><code>new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application,
+    &quot;dropdownTooltip&quot;: true
+}).build();</code></pre>
+<p>To provide content to be rendered on the tooltip,</p>
+<ul>
+<li>set &#39;tooltip_text&#39; parameter in dropdown data.</li>
+</ul>
+<p>For example:</p>
+<pre><code>
+[{
+        &quot;id&quot;: &quot;ftp&quot;,
+        &quot;text&quot;: &quot;junos-ftp&quot;,
+        &quot;tooltip_text&quot;: &quot;FTP tooltip&quot;
+    },
+    {
+        &quot;id&quot;: &quot;tftp&quot;,
+        &quot;text&quot;: &quot;junos-tftp&quot;,
+        &quot;disabled&quot;: true,
+    },
+    {
+        &quot;id&quot;: &quot;rtsp&quot;,
+        &quot;text&quot;: &quot;junos-rtsp&quot;,
+        &quot;tooltip_text&quot;: &quot;RTSP tooltip&quot;
+    }
+}]</code></pre>
+<p>If &#39;dropdownTooltip&#39; parameter is assigned to an object which has &#39;functionBefore&#39; callback, it will show tooltip on hovering over the dropdown items. The content for the tooltip should be provided from the assigned callback function.  </p>
+<p>The callback expects a string or an HTML view to render in tooltip widget. It provides the dropdownData and renderTooltip parameter.renderTooltip is a callback that should be invoked to provide the view to be showed in the tooltip. dropDownData is the &#39;id&#39; of the dropdown item on which hover event is triggered. App can use this variable to know which dropdown item is hovered.</p>
+<p>For example:</p>
+<pre><code>var dropdownTooltipObj = {
+    &quot;functionBefore&quot;: this.dropdownTooltip
+};
+
+dropdownTooltip: function (dropdownData, renderTooltip){
+
+   $.ajax({
+      type: &#39;GET&#39;,
+      url: &#39;/assets/js/widgets/dropDown/tests/dataSample/tooltipSample.json&#39;,
+      success: function(data) {
+
+          data.forEach(function(item) {
+              if(item[&#39;id&#39;] == dropdownData) {
+                  renderTooltip(item[&#39;tooltip_text&#39;]);
+              }
+          });    
+      }
+  });
+
+}
+
+new DropDownWidget({
+    &quot;container&quot;: this.$el.find(&#39;.basic-selection-data&#39;),
+    &quot;data&quot;: application,
+    &quot;dropdownTooltip&quot;: dropdownTooltipObj
+}).build();</code></pre>
+<p>Example to render custom HTML view on tooltip:</p>
+<pre><code>var dropdownTooltipObj = {
+    &quot;functionBefore&quot;: this.dropdownTooltip
+};
+
+dropdownTooltip: function (dropdownData, renderTooltip){
+
+ var tooltip_data = $(&quot;&lt;span&gt; this is &lt;br/&gt; sample template &lt;/span&gt;&quot;);
+ renderTooltip(tooltip_data);
+
+}</code></pre>
+<p>By default, &#39;dropdownTooltip&#39; object will get the priority. if &#39;dropdownTooltip&#39; is set to true, then corresponding value of &#39;tooltip_text&#39; parameter in dropdown data will be displayed on tooltip. If no &#39;tooltip_text&#39; parameter is provided, the tooltip won&#39;t be rendered for that dropdown item.</p>
+
+
+</div>
+ 

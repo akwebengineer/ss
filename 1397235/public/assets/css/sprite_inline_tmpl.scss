@@ -1,0 +1,32 @@
+{{! This template is provided by the svg-sprite nodejs package.  It's purpose}}
+{{! is to allow customization of the way in which the svg sprite's SCSS file is generated.}}
+{{! It has been copied here from the svg-sprite distribution and modified.}}
+
+{{#hasMixin}}@mixin {{mixinName}} {
+    {{! ensure that the svg sprite is referenced using an absolute path}}
+	fill: $default-slipstream-icon-color;
+}
+
+{{#hasCommon}}.{{commonName}} {
+	@include {{mixinName}};
+}
+
+{{/hasCommon}}{{/hasMixin}}{{^hasMixin}}{{#hasCommon}}.{{/hasCommon}}{{^hasCommon}}%{{/hasCommon}}{{commonName}} {
+    {{! ensure that the svg sprite is referenced using an absolute path}}
+	fill: $default-slipstream-icon-color;
+}
+
+{{/hasMixin}}{{#shapes}}{{#selector.shape}}{{expression}}{{^last}},
+{{/last}}{{/selector.shape}} {
+	{{^hasCommon}}{{#hasMixin}}@include {{mixinName}};{{/hasMixin}}{{^hasMixin}}@extend %{{commonName}};{{/hasMixin}}{{/hasCommon}}{{#dimensions.inline}}
+	width: {{width.outer}}px;
+	height: {{height.outer}}px;{{/dimensions.inline}}
+}{{#dimensions.extra}}
+
+{{#selector.dimensions}}{{expression}}{{^last}},
+{{/last}}{{/selector.dimensions}} {
+	width: {{width.outer}}px;
+	height: {{height.outer}}px;
+}{{/dimensions.extra}}
+
+{{/shapes}}

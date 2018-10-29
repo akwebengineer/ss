@@ -1,0 +1,16 @@
+<dl class="sub-nav filter-container right">
+    <dd class="grid_filter_input hide collapse-search">
+        <span class="filter-wrapper">
+            <input class="filter" type="text">
+            <svg class="filter-icon"><use href="#icon_search_sm"></use></svg>
+        </span>
+    </dd>
+    <dd class="grid_show_filters hide">
+        <svg class="{{#columnFilter}}columnFilter{{/columnFilter}}{{#showFilter}} menuFilters{{/showFilter}}">
+            <use href="{{^showFilter}}#icon_filter{{/showFilter}}{{#showFilter}}#icon_filter_with_drop_down{{/showFilter}}"></use>
+        </svg>
+    </dd>
+    <dd class="grid_filter_options hide">
+        <svg class="filter-options-icon"><use href="#icon_filter_menu"></use></svg>
+    </dd>
+</dl>

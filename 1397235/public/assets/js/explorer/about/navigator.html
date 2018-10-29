@@ -1,0 +1,82 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-navigator">Slipstream.SDK.Navigator</h1>
+<p>Navigator provides methods that let plugins add nodes and leaf nodes to breadcrumb on the fly. </p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.Navigator()</code></pre>
+<h3 id="parameters">Parameters</h3>
+<p>Navigator is a no argument constructor.</p>
+<h2 id="description">Description</h2>
+<p>When an activity needs to update the app navigation on the fly with information that are not pre-configured, but are known only at the time of resolving the activity, Navigation provides utility methods that allow plugins to update on demand.</p>
+<h2 id="navigator-instances">Navigator Instances</h2>
+<p>All Navigator instances inherit from Navigator.prototype.</p>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="update-navobj-">update(navObj)</h4>
+<p> Allows plugins to update breadcrumb with dynamically provided leaf node data.
+ navObj must contain the intent and internationalized data for the leafNode that needs to be added to the breadcrumb</p>
+<p> Example:</p>
+<pre><code class="language-javascript">
+ render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>    
+      <span class="keyword">this</span>.$el.append(<span class="xml"><span class="tag">&lt; <span class="attribute">some</span> <span class="attribute">template</span> <span class="attribute">rendered</span> &gt;</span>);
+
+      var navObj = {
+          intent: this.options.getIntent(),
+          leafNode: 'Internationalized_Dynamically_Added_LeafNode'
+      }
+
+      var navigator = new Slipstream.SDK.Navigator();
+
+      navigator.update(navObj);
+
+      return this;
+  }</span></code></pre>
+</li>
+</ul>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

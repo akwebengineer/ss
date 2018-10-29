@@ -1,0 +1,23 @@
+<dd id="{{key}}" class="actionIcon">
+    {{#icon.default.icon_url}}
+        {{^disabledStatus}}
+            <svg class="actionIcon{{#label}} tooltip{{/label}} {{icon.default.icon_class}}{{#icon.default.icon_color}} {{icon.default.icon_color}}{{/icon.default.icon_color}}{{^icon.default.icon_color}} defaultIcon{{/icon.default.icon_color}}" title="{{label}}"><use href="{{icon.default.icon_url}}"></use></svg>
+        {{/disabledStatus}}
+        {{#disabledStatus}}
+            <svg class="actionIcon{{#label}} tooltip{{/label}} {{icon.default.icon_class}}{{#icon.disabled}} {{icon.disabled}}{{/icon.disabled}}{{^icon.disabled}} disabledIcon{{/icon.disabled}} disabled" title="{{label}}"><use href="{{icon.default.icon_url}}"></use></svg>
+        {{/disabledStatus}}
+    {{/icon.default.icon_url}}
+    {{^icon.default.icon_url}}
+        {{#icon.default}}
+            {{^disabledStatus}}
+            <span class="actionIcon backgroundIcon{{#label}} tooltip{{/label}} {{icon.default}}" title="{{label}}"></span>
+            {{/disabledStatus}}
+            {{#disabledStatus}}
+            <span class="actionIcon backgroundIcon{{#label}} tooltip{{/label}} {{icon.disabled}} disabled" title="{{label}}"></span>
+            {{/disabledStatus}}
+        {{/icon.default}}
+        {{^icon.default}}
+            <span class="actionIcon backgroundIcon{{#label}} tooltip{{/label}} {{icon}}{{#disabledStatus}} disabled{{/disabledStatus}}" title="{{label}}"></span>
+        {{/icon.default}}
+    {{/icon.default.icon_url}}
+</dd>

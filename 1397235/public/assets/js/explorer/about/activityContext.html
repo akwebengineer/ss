@@ -1,0 +1,124 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-activitycontext">Slipstream.SDK.ActivityContext</h1>
+<p>Provides a runtime context for activities.  Plugins should never need to instantiate an <em>ActivityContext</em> object.  Context objects are created by the framework and associated with a running activity.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.ActivityContext(ctx_name, ctx_root)</code></pre>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><p><strong>ctx_name</strong>
+The name of the context.  Slipstream sets this to the name of the plugin associated with the activity.</p>
+</li>
+<li><p><strong>ctx_root</strong>
+The fully qualified path to the root directory of the plugin associated with the activity.</p>
+</li>
+</ul>
+<h2 id="activitycontext-instances">ActivityContext Instances</h2>
+<h3 id="properties">Properties</h3>
+<ul>
+<li><h4 id="ctx_name">ctx_name</h4>
+<p>The name of the context.  Slipstream sets this to the name of the plugin associated with the activity.</p>
+</li>
+<li><h4 id="ctx_root">ctx_root</h4>
+<p>The fully qualified path to the root directory of the plugin associated with the activity.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-activitycontext-prototype-getmessage-key-sub_values-">SDK.ActivityContext.prototype.getMessage(key, sub_values)</h4>
+<p>Retrieve a localized message by key.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>key</strong>
+The key to the message to be retrieved</p>
+</li>
+<li><p><strong>sub_values</strong> (optional)
+An array of substitution values that should be interpolated into the retrieved message string.</p>
+</li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p>The localized message string with the <em>sub_values</em> interpolated.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> my_key = <span class="string">"A message with not {0} but {1} substitution values"</span>;
+<span class="keyword">var</span> msg = <span class="keyword">this</span>.context.getMessage(<span class="string">"my_key"</span>, [<span class="string">"one"</span>, <span class="string">"two"</span>]);
+console.log(msg);
+
+&gt; <span class="string">"A message with not one but two substitution values"</span></code></pre>
+</li>
+<li><h4 id="sdk-activitycontext-prototype-startactivity-intent-">SDK.ActivityContext.prototype.startActivity(intent)</h4>
+<p>Start an activity</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><strong>intent</strong>
+The intent used to define the activity to be started.</li>
+</ul>
+</li>
+<li><h4 id="sdk-activitycontext-prototype-startactivityforresult-intent-callback-">SDK.ActivityContext.prototype.startActivityForResult(intent, callback)</h4>
+<p>Start an activity with the expectation of getting a result</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>intent</strong>
+The intent used to define the activity to be started.</p>
+</li>
+<li><p><strong>callback</strong>
+A callback that will be called when the started activity finishes.  Callback signature is function(resultCode, data) {}.</p>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-activitycontext-prototype-lookupactivity-intent-">SDK.ActivityContext.prototype.lookupActivity(intent)</h4>
+<p>Lookup an activity</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><strong>intent</strong>
+The intent used to define the activity to be looked up.</li>
+</ul>
+<h4 id="returns">Returns</h4>
+<p><em>true</em> if an activity matching the intent is found, <em>false</em> otherwise.</p>
+</li>
+</ul>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

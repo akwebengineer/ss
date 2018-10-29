@@ -1,0 +1,78 @@
+.lineChart {
+
+	$lineTitleColor: #666666;
+	$lineAxisLabelColor: #a3b2ba;
+	$lineLegendLabelColor: #a3b2ba;
+	$lineDataLabelColor: #666666;
+
+	height: inherit;
+	width: inherit;
+
+	.highcharts-title {
+	    font-family: $body-font-family;
+	    font-size: 16px !important;
+	    font-weight: 300;
+	    color: $lineTitleColor !important;
+	    fill: $lineTitleColor !important;
+	}
+
+	.axis-title {
+	    font-family: $body-font-family;
+	    font-size: 10px;
+	    font-weight: normal;
+	    color: $lineAxisLabelColor !important;
+	    fill: $lineAxisLabelColor !important;
+	}
+
+	.highcharts-yaxis-title {
+	    @extend .axis-title;
+	}
+
+	.highcharts-xaxis-title {
+	    @extend .axis-title;
+	}
+
+	.axis-label {
+	    font-family: $body-font-family !important;
+	    font-weight: normal !important;
+	    font-size: 10px !important;
+	    color: $lineAxisLabelColor !important;
+	    fill: $lineAxisLabelColor !important;
+	}
+
+	.highcharts-axis-labels {
+	    span {
+	        @extend .axis-label;
+	    }
+	    text {
+	        @extend .axis-label;
+	    }
+	}
+
+	.lineLegendLabelEllipsis {
+	    overflow: hidden;
+	    font-family: $body-font-family;
+	    font-size: 10px;
+	    font-weight: normal;
+	    line-height: 16px;
+	    color: $lineLegendLabelColor;
+	    fill: $lineLegendLabelColor;
+    }
+
+    .data-label {
+        font-family: $body-font-family !important;
+        font-weight: normal !important;
+        font-size: 10px !important;
+        color: $lineDataLabelColor !important;
+        fill: $lineDataLabelColor !important;
+    }
+
+    .highcharts-data-labels {
+        span {
+            @extend .data-label;
+        }
+        text {
+            @extend .data-label;
+        }
+    }
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="" class="waves-effect waves-teal active-nav">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<div>
+						<p>Slipstream is a lightweight framework for building management user interfaces in a decoupled way.  It allows workflows to be dynamically created from independently developed and deployed <em>plugins</em>.  Plugins can dynamically discover other plugins and use those discovered plugins in their own workflows.  </p>
+						<h3 id="plugins">Plugins</h3>
+						<p>Plugins are a combination of Javascript code, HTML templates, CSS files, and other resources such as message bundles used for localization.  A plugin&#39;s workflows can be written using the MVC library of the developer&#39;s choice - Slipstream does not dictate how the workflows are written.</p>
+						<h3 id="workflows-and-activities">Workflows and Activities</h3>
+						<p>The building blocks of workflows are Slipstream <em>Activities</em>.   Activities are written as Javascript modules that are packaged with a plugin.  These modules conform to a simple interface that Slipstream relies on to discover, load and start their lifecycle.  Once started, an activity is in complete control of its workflow and can render its views to the Slipstream content area and discover and start other activities. </p>
+						<h3 id="activity-discovery-and-intents">Activity Discovery and Intents</h3>
+						<p>Slipstream Activities are discovered and started by creating an <em>Intent</em>.  An Intent describes a desire to perform some activity.  The activity to be performed is defined by an <em>action</em> and a combination of a MIME type and a URI.  For example, a plugin that renders a view containing an IP address may want to provide the option to render the geolocation data for that address on a map.  .  If the plugin does not have the capability to render such a map itself it can create an intent to render a map and request that Slipstream launch a map activity if one exists.  An intent for this might specify an action of <em>Slipstream.Intent.action.VIEW</em> and a URI of <em>geo:34.57,-140.4</em>, where 34.57 and -140.4 are the latitude and longitude of the data to be displayed, respectively. If an activity matching the intent is found, Slipstream will launch the map activity and pass the geolocation data to it so that the activity can render the desired data on the map.  In this way, workflows, and the activities that comprise them, can be completely decoupled.</p>
+						<h3 id="ui-widgets">UI Widgets</h3>
+						<p>Plugins, activities and intents are the building blocks of decoupled Slipstream workflows.  While Slipstream doesn&#39;t dictate how a workflow&#39;s views are created it does provide a widget toolkit that contains a core set of UI widgets including forms, grids, overlays, wizards, graph and dashboard widgets that follow established user experience practices.  Slipstream also provides support for internationalization of views and allows plugins to supply their own locale-specific message bundles that the framework manages and automatically loads based on the client&#39;s locale.</p>
+						<h2 id="learn-more">Learn more</h2>
+						<p>Follow these links to learn more about Slipstream:</p>
+						<p><a href="plugins.html">Writing Slipstream Plugins</a></p>
+						<p><a href="#">Writing Slipstream Dashboard Plugins</a></p>
+						<p><a href="activity.html">Activities</a></p>
+						<p><a href="intent.html">Intents</a></p>
+						<p><a href="views.html">Views</a></p>
+						<p><a href="asyncMessaging.html">Asynchronous Messaging</a></p>
+						<p><a href="userNotifications.html">Notifications</a></p>
+						<p><a href="utilityToolbar.html">The Utility Toolbar</a></p>
+						<p><a href="widgets.html">The Slipstream Widget Toolkit</a></p>
+						<p><a href="i18n.html">Internationalizing views</a></p>
+						<p><a href="dateFormatter.html">Formatting dates</a></p>
+						<p><a href="userAssistance.html">User Assistance</a></p>
+						<p><a href="preferences.html">User Preferences</a></p>
+						<p><a href="analytics.html">User Analytics</a></p>
+						</div>
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>

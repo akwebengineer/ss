@@ -1,0 +1,14 @@
+#dashboard_test_content {
+	box-shadow: 0 20px 20px -20px black inset;
+	padding: 55px 30px 40px 25px
+}
+
+.login_background {
+	background:none !important;
+}
+
+.sample-dashlet {
+	font-size: 15px;
+	font-family: $font-family-helvetica;
+	padding: 18px;
+}

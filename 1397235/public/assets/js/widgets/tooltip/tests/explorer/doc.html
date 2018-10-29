@@ -1,0 +1,111 @@
+<div>
+    <h1 id="tooltip-widget">Tooltip Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Tooltip widget is a reusable graphical user interface that allows users to show a tooltip in the selected container.</p>
+<h2 id="api">API</h2>
+<p>The Tooltip widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has three variables:</p>
+<pre><code>{
+    container: &lt;define the DOM element where the widget will be rendered&gt;,
+    elements: &lt;optional, define the parameters that overwrite the default behavior of the tooltip like minWidth, maxHeight, position, etc.&gt;
+    view: &lt;optional, define the content that the tooltip will show when the assigned container is hovered.&gt;
+}</code></pre>
+<p>For example, a Tooltip widget with default values should be instantiated with:</p>
+<pre><code>var tooltip = new TooltipWidget({
+    &quot;container&quot;: this.el
+});</code></pre>
+<p>A Tooltip widget with user defined values should be instantiated with:</p>
+<pre><code>var tooltip = new TooltipWidget({
+    &quot;elements&quot;: configurationSample,
+    &quot;container&quot;: stringTooltipContainer
+    &quot;view&quot;: templateView
+}).build()</code></pre>
+<p>where the &quot;elements&quot; should be defined in a set of key/value pairs. For example:</p>
+<pre><code>var configurationSample = {
+    &quot;minWidth&quot;: 300,
+    &quot;maxHeight&quot;: 300,
+    &quot;position&quot;: &#39;right&#39;,
+    &quot;interactive&quot;: true
+}</code></pre>
+<h2 id="container">Container</h2>
+<p>It represents the DOM element that will have a tooltip. If the container doesn&#39;t include the &#39;tooltip&#39; class, then a view (view parameter) should be provided.</p>
+<h2 id="elements">Elements</h2>
+<p>It represents an object with the configuration parameters required to overwrite the default tooltip behavior. The parameters are:</p>
+<p><strong>minWidth</strong>
+Set a minimum width for the tooltip. Default: 0 (auto width).</p>
+<p><strong>maxWidth</strong>
+Set a maximum width for the tooltip. Default: null (no max width).</p>
+<p><strong>position</strong>
+Set the position of the tooltip. Default: &#39;top&#39;.</p>
+<p><strong>offsetX</strong>
+Offsets the tooltip (in pixels) farther left/right from the origin. Default: 0.</p>
+<p><strong>offsetY</strong>
+Offsets the tooltip (in pixels) farther up/down from the origin. Default: 0.</p>
+<p><strong>functionBefore</strong>
+Create a custom function to be fired before the tooltip opens. This function may prevent or hold off the opening. Default: function(origin, continueTooltip) { continueTooltip(); }</p>
+<p><strong>functionReady</strong>
+Create a custom function to be fired when the tooltip and its contents have been added to the DOM. Default: function(origin, tooltip) {}</p>
+<h2 id="view">View</h2>
+<p>It defines the content of the tooltip. The content can be a simple string o a HTML markup like images, text formatting tags, etc. If a view is not defined, all elements with a tooltip class will be searched and their title attribute will be used as the content of the tooltip.</p>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the Tooltip widget in the specified container. For example:</p>
+<pre><code>tooltip.build();</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the Tooltip widget.</p>
+<pre><code>tooltip.destroy();</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To include the Tooltip widget, a container with a tooltip class or a html node or string should be defined.</p>
+<h3 id="using-a-tooltip-class">Using a tooltip class</h3>
+<ul>
+<li>The HTML markup should include a container with the tooltip class and the title that will be showed in a tooltip:</li>
+</ul>
+<pre><code>&lt;li&gt;
+    Tooltip with simple text on the image: &lt;span class=&quot;ua-field-help tooltip&quot; title=&quot;Test Help Tooltp&quot;&gt;&lt;/span&gt;
+&lt;/li&gt;</code></pre>
+<ul>
+<li>The Javascript code that will be used to render a tooltip for the HTML markup above should be:</li>
+</ul>
+<pre><code>new TooltipWidget({
+    &quot;container&quot;: this.el
+}).build();</code></pre>
+<h3 id="using-a-string-as-a-tooltip-content">Using a string as a tooltip content</h3>
+<ul>
+<li>The HTML markup that will be hovered to show a tooltip could be the following:</li>
+</ul>
+<pre><code> &lt;li id=&quot;stringTooltip&quot;&gt;
+    Tooltip with string on the view
+&lt;/li&gt;</code></pre>
+<ul>
+<li>The Javascript code that will be used to render a tooltip for the HTML markup above should be:</li>
+</ul>
+<pre><code>var stringView  = &quot;build: build information&quot;;
+new TooltipWidget({
+    &quot;elements&quot;: configurationSample.stringContent,
+    &quot;container&quot;: this.containers.stringTooltip,
+    &quot;view&quot;: stringView
+}).build();</code></pre>
+<h3 id="using-a-html-markup-as-a-tooltip-content">Using a HTML markup as a tooltip content</h3>
+<ul>
+<li>The HTML markup that will be hovered to show a tooltip could be the following:</li>
+</ul>
+<pre><code>&lt;li id=&quot;formTooltip&quot; class=&quot;viewLine&quot;&gt;
+    Tooltip with form on hover over the text
+&lt;/li&gt;</code></pre>
+<ul>
+<li>The Javascript code that will be used to render a tooltip for the HTML markup above should be:</li>
+</ul>
+<pre><code>var formView =  new AddView().render().el;
+new TooltipWidget({
+    &quot;elements&quot;: configurationSample.formContent,
+    &quot;container&quot;: this.containers.formTooltip,
+    &quot;view&quot;: formView
+}).build();</code></pre>
+<h2 id="utility-methods">Utility methods</h2>
+<p>The Tooltip widget exposes additional methods intended to help user to use the widget.</p>
+<h4 id="refresh">refresh</h4>
+<p>It refreshes the tooltip content by destroying any instance of it and adding a new tooltip.</p>
+
+
+</div>
+ 

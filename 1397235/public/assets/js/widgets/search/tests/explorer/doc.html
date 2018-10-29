@@ -1,0 +1,126 @@
+<div>
+    <h1 id="search-widget">Search Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Search widget is a reusable graphical user interface that allows users to add a search container with tokens that represent the search criteria.</p>
+<h2 id="api">API</h2>
+<p>The Search widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has multiple parameters. Only the container parameter is a required one.</p>
+<pre><code>{
+    container:  &lt;DOM object that defines where the widget will be rendered.&gt;
+    readOnly: &lt;boolean that defines if the token area will be shown as a read only container. In this case, the filter and logic menus won&#39;t be available.&gt;
+    filterMenu: &lt;Object that defines the filter context menu that will be shown on the token area. It is used to select the key and value of a token.&gt;
+    logicMenu: &lt;Array that defines the logic menu that will be shown on the token area between two tokens. It is used to replace the default AND logic operator added by default between two tokens.&gt;
+    afterTagAdded: &lt;callback function invoked after a tag is added.&gt;
+    afterTagRemoved: &lt;callback function invoked after a tag is removed.&gt;
+    afterAllTagRemoved: &lt;callback function invoked after all tags are removed.&gt;
+}</code></pre>
+<p>For example, a Search widget would be instantiated with:</p>
+<pre><code>var readOnlySearchContainer = this.$el.find(&#39;.readOnlySearchContainer&#39;)[0];
+
+var searchWidget = new SearchWidget({
+    &quot;container&quot;: readOnlySearchContainer,
+    &quot;readOnly&quot;: true
+});</code></pre>
+<h3 id="container">container</h3>
+<p>It represents the DOM element that will have a Search.</p>
+<h3 id="readonly">readOnly</h3>
+<p>It represents a boolean that defines if the token area will be shown as a read only container. If it is set to true, the search container will turn into a read only mode and the filter and logic menus won&#39;t be available.</p>
+<h3 id="filtermenu">filterMenu</h3>
+<p>Defines the items that will be listed in filter context menu and that will be available on the token area. It is used to select the key and value of a token. If the readOnly parameter is set to true, this parameter will be ignored. For example:</p>
+<pre><code>var filterMenu = {
+    &#39;name&#39;: {
+        &#39;label&#39;:&#39;name&#39;,
+        &#39;value&#39;:[&#39;SRX&#39;,&#39;MX&#39;,&#39;EX&#39;]
+    },
+    &#39;sourceAddress&#39;: {
+        &#39;label&#39;:&#39;sourceAddress&#39;,
+        &#39;value&#39;:[&#39;12.1&#39;,&#39;12.2&#39;,&#39;12.3&#39;,&#39;12.4&#39;,&#39;13.1&#39;,&#39;13.3&#39;,&#39;13.3&#39;,&#39;13.4&#39;]
+    },
+    &#39;Platform&#39;: {
+        &#39;label&#39;:&#39;Platform&#39;,
+        &#39;value&#39;:[&#39;srx650&#39;, &#39;srx5800&#39;, &#39;mx2020&#39;, &#39;ex2200&#39;]
+    },
+    &#39;ManagedStatus&#39;: {
+        &#39;label&#39;:&#39;ManagedStatus&#39;,
+        &#39;value&#39;:[&#39;In Sync&#39;,&#39;Out of Sync&#39;,&#39;Connecting&#39;]
+    },
+    &#39;ConnectionStatus&#39;: {
+        &#39;label&#39;:&#39;ConnectionStatus&#39;,
+        &#39;value&#39;:[&#39;Down&#39;, &#39;Up&#39;]
+    },
+    &#39;IPAddress&#39;: {
+        &#39;label&#39;:&#39;IPAddress&#39;,
+        &#39;value&#39;:[&#39;&#39;]
+    }
+};</code></pre>
+<p>Where the key of the object is the item key and the label represents the label of the item while value represents the value that will be showed if the item is selected.</p>
+<h3 id="logicmenu">logicMenu</h3>
+<p>It defines the logic menu that will be shown on the token area between two tokens. It is used to replace the default AND logic operator added by default between two tokens. It is represented by an array. For example</p>
+<pre><code>var logicMenu = [&#39;AND&#39;,&#39;OR&#39;,&#39;OR NOT&#39;,&#39;AND NOT&#39;]</code></pre>
+<h3 id="aftertagadded">afterTagAdded</h3>
+<p>It defines a callback function that is invoked after a tag is added.</p>
+<h3 id="aftertagremoved">afterTagRemoved</h3>
+<p>It defines a callback function that is invoked after a tag is removed.</p>
+<h3 id="afteralltagremoved">afterAllTagRemoved</h3>
+<p>It defines a callback function that is invoked after all tags are removed.</p>
+<h2 id="build">build</h2>
+<p>Adds the DOM elements and events for the Search widget in the specified container. For example:</p>
+<pre><code>{
+    searchWidget.build();
+}</code></pre>
+<h2 id="destroy">destroy</h2>
+<p>Cleans up the specified container from the resources created by the Search widget.</p>
+<pre><code>{
+    searchWidget.destroy();
+}</code></pre>
+<h2 id="other-methods">Other Methods</h2>
+<h3 id="gettabsdata">getTabsData</h3>
+<h2 id="usage">Usage</h2>
+<p>To include the Search widget, a container should be identified, and the passed it to the constructor of the Search widget, and finally call the build method on this instance. The steps to follow are:</p>
+<h3 id="step-1">Step 1</h3>
+<p>Add the HTML markup that needs to show a context menu when the container is click (or right click depending on configuration). For example:</p>
+<pre><code>&lt;div class=&quot;searchContainer&quot;&gt;&lt;/div&gt;</code></pre>
+<h3 id="step-2">Step 2</h3>
+<p>Create a configuration object with the filter and logic menus if the search is editable (readOnly set to false). For example:</p>
+<pre><code>var searchConf = {};
+
+searchConf.filterMenu = {
+    &#39;name&#39;: {
+        &#39;label&#39;:&#39;name&#39;,
+        &#39;value&#39;:[&#39;SRX&#39;,&#39;MX&#39;,&#39;EX&#39;]
+    },
+    &#39;sourceAddress&#39;: {
+        &#39;label&#39;:&#39;sourceAddress&#39;,
+        &#39;value&#39;:[&#39;12.1&#39;,&#39;12.2&#39;,&#39;12.3&#39;,&#39;12.4&#39;,&#39;13.1&#39;,&#39;13.3&#39;,&#39;13.3&#39;,&#39;13.4&#39;]
+    },
+    &#39;Platform&#39;: {
+        &#39;label&#39;:&#39;Platform&#39;,
+        &#39;value&#39;:[&#39;srx650&#39;, &#39;srx5800&#39;, &#39;mx2020&#39;, &#39;ex2200&#39;]
+    },
+    &#39;ManagedStatus&#39;: {
+        &#39;label&#39;:&#39;ManagedStatus&#39;,
+        &#39;value&#39;:[&#39;In Sync&#39;,&#39;Out of Sync&#39;,&#39;Connecting&#39;]
+    },
+    &#39;ConnectionStatus&#39;: {
+        &#39;label&#39;:&#39;ConnectionStatus&#39;,
+        &#39;value&#39;:[&#39;Down&#39;, &#39;Up&#39;]
+    },
+    &#39;IPAddress&#39;: {
+        &#39;label&#39;:&#39;IPAddress&#39;,
+        &#39;value&#39;:[&#39;&#39;]
+    }
+};
+
+searchConf.logicMenu = [&#39;AND&#39;,&#39;OR&#39;,&#39;OR NOT&#39;,&#39;AND NOT&#39;];</code></pre>
+<h3 id="step-3">Step 3</h3>
+<p>Instantiate the Search widget using the container created in step 1 and the configuration created in step 2 and then build the widget. For example:</p>
+<pre><code>new SearchWidget({
+    &quot;filterMenu&quot;: configurationSample.filterMenu,
+    &quot;logicMenu&quot;: configurationSample.logicMenu,
+    &quot;container&quot;: searchContainer
+});.build();</code></pre>
+
+
+</div>
+ 

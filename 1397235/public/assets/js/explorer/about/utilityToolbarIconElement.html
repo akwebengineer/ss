@@ -1,0 +1,108 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="" class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="icontoolbarelement">IconToolbarElement</h1>
+<p>The IconToolbarElement is a plugin&#39;s interface to the Slipstream <a href="utilityToolbar.html">Utility Toolbar</a> for icon-based elements.  A reference to a IconToolbarElement is made available through a toolbar activity&#39;s <em>context</em> object.</p>
+<h2 id="methods">Methods</h2>
+<ul>
+<li><h4 id="sdk-icontoolbarelement-prototype-setenabled-state-">SDK.IconToolbarElement.prototype.setEnabled(state)</h4>
+<p>Set the enabled state of the utility toolbar element.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>state</strong></p>
+<p> A boolean value indicating the enabled state of the icon element.  If <em>true</em> the icon element will be enabled.  If <em>false</em> it will be disabled.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h4 id="sdk-icontoolbarelement-prototype-seticonbadge-badge-">SDK.IconToolbarElement.prototype.setIconBadge(badge)</h4>
+<p>Set the badge on the element&#39;s icon.  The badge can either be a numeric value or an icon.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>badge</strong></p>
+<p> A numeric value or a string.  If the value is a string, then it represents the relative path to the icon image to be used as the badge.  The path is relative to the &quot;/img&quot; directory associated with the plugin defining this utility toolbar element.  Otherwise, it is a numeric value to be used as the icon badge.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h4 id="sdk-icontoolbarelement-prototype-seticon-iconpath-">SDK.IconToolbarElement.prototype.setIcon(iconPath)</h4>
+<p>Set the icon for the utility toolbar element.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><strong>icon</strong>
+ The relative path to the icon image to use for this element.  The path is relative to the &quot;/img&quot; directory associated with the plugin defining this utility toolbar element.</li>
+</ul>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> ToolbarActivity = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+
+           <span class="comment">// Set the element's icon badge to '5'</span>
+           <span class="keyword">this</span>.context.toolbarElement.setIconBadge(<span class="number">5</span>);
+
+           <span class="comment">// Set the element's icon to the image in 'img/someIcon.svg'</span>
+           <span class="keyword">this</span>.context.toolbarElement.setIcon(<span class="string">"someIcon.svg"</span>);
+
+           <span class="comment">// Set the element's icon badge to the image in 'img/iconBadge.svg'</span>
+           <span class="keyword">this</span>.context.toolbarElement.setIconBadge(<span class="string">"iconBadge.svg"</span>);
+
+           <span class="comment">// Disable the toolbar element</span>
+           <span class="keyword">this</span>.context.toolbarElement.setEnabled(<span class="literal">false</span>);   
+        }
+    };
+
+    ToolbarActivity.prototype = Object.create(Slipstream.SDK.Activity.prototype);
+    ToolbarActivity.prototype.constructor = ToolbarActivity;
+
+    <span class="keyword">return</span> ToolbarActivity;
+});</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

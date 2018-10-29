@@ -1,0 +1,45 @@
+<!-- 
+Base Template for Topology Widget
+@copyright Juniper Networks, Inc. 2017
+-->
+<div class="topology-widget-container">
+    {{#allowZoomAndPan}}
+    <div id="topology-external-controls" class="topology-external-controls">
+        <dl class="topology-controls-container">
+            <dd class="topology-control">
+                <svg class="topology-zoom-in">
+                    <use href="#icon_topology_zoom_in"/>
+                </svg>
+
+            </dd>
+            <dd class="topology-control">
+                <svg class="topology-zoom-out">
+                    <use href="#icon_topology_zoom_out"/>
+                </svg>
+            </dd>
+            <dd class="topology-control">
+                <svg class="topology-reset">
+                    <use href="#icon_topology_reset"/>
+                </svg>
+            </dd>
+        </dl>
+    </div>
+    {{/allowZoomAndPan}}
+    {{#showLegend}}
+    <div class="topology-legend">
+        <div class="legend-view-container legend-collapsed">
+            <div class="topology-legend-view">
+                {{{legendView}}}
+            </div>
+        </div>
+        <div class="topology-legends">
+            <div class="topology-legend-icon">
+                <svg class="topology_legend">
+                    <use href="#icon_topology_legend"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    {{/showLegend}}
+    <div class="topology-canvas"></div>
+</div>

@@ -1,0 +1,62 @@
+﻿//colors
+$color_mountain_mist_approx: #999;
+$white: #fff;
+$mine_shaft_64: rgba(50, 50, 50, 0.64);
+$color_gallery_approx: #f0f0f0;
+$black: #000;
+$color_celeste_approx: #ccc;
+
+//fonts
+$font_0: sans-serif;
+
+body {
+	font-family: $font_0;
+	font-size: 14px;
+	line-height: 1.6em;
+	margin: 0;
+	padding: 0;
+}
+.container {
+	width: 800px;
+	margin: 0 auto;
+}
+.autocomplete-suggestions {
+	//Instead of the line below you could use @include box-sizing($bs)
+	box-sizing: border-box;
+	border: 1px solid $color_mountain_mist_approx;
+	background: $white;
+	cursor: default;
+	overflow: auto;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 1px 4px 3px $mine_shaft_64;
+	strong {
+		font-weight: bold;
+		color: $black;
+	}
+}
+.autocomplete-suggestion {
+	padding: 2px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.autocomplete-no-suggestion {
+	padding: 2px 5px;
+}
+.autocomplete-selected {
+	background: $color_gallery_approx;
+}
+.autocomplete-group {
+	padding: 2px 5px;
+	font-weight: bold;
+	font-size: 16px;
+	color: $black;
+	display: block;
+	border-bottom: 1px solid $black;
+}
+input {
+	font-size: 28px;
+	padding: 10px;
+	border: 1px solid $color_celeste_approx;
+	display: block;
+	margin: 20px 0;
+}

@@ -1,0 +1,269 @@
+$bottom-bar-height: 38px;
+$top-bar-height: 54px;
+
+$minimum-padding: 30px;
+
+$xlarge-width: 1100px;
+$xlarge-min-height: 570px;
+$xlarge-max-height: 900px;
+
+$large-width: 940px;
+$large-min-height: 460px;
+$large-max-height: 800px;
+
+$medium-width: 780px;
+$medium-min-height: 460px;
+$medium-max-height: 700px;
+
+$small-width: 620px;
+$small-min-height: 350px;
+$small-max-height: 680px;
+
+$xsmall-width: 460px;
+$xsmall-min-height: 150px;
+$xsmall-max-height: 300px;
+
+$flexible-min-width: 780px;
+$flexible-min-height: 460px;
+
+$modal_bottombar_border_top_color: #ccc;
+$custom-red-border: #eb2125;
+$red-button-text-color: #fff;
+/* Modal positioning */
+.bbm-wrapper * {
+  box-sizing: border-box;
+}
+
+.bbm-wrapper {
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 110;
+  overflow: hidden;
+  text-align: center;
+  &.overlayBg {
+    background: rgba(0, 0, 0, 0.25) !important;
+  }
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+}
+
+.bbm-modal {
+  background: white;
+  height: inherit;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.bbm-modal__xicon {
+  width: 12px;
+  height: 12px;
+  margin: 15px 15px 0 0;
+}
+
+.bbm-modal_scrolldiv {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.bbm-modal__bottombar {
+  text-align: right;
+  border-top: 1px solid $modal_bottombar_border_top_color;
+  width: 100%;
+  height: 38px;
+  .bbm-space { //todo: delete once the dependency from Appvisibility code is removed
+    margin-right: 13px;
+  }
+  .overlay-done{
+    float: right !important;
+    margin-right: 0px !important;
+  }
+  .overlay-cancel {
+    padding-left: 20px;
+    float: right !important;
+    height: 38px;
+    padding-top: 10px;
+  }
+  input {
+    margin: 0px;
+    height: 38px;
+  }
+}
+
+.bbm-modal--open {
+  box-shadow: 0px 2px 4px 0px rgba($box-shadow-color-2, 0.3);
+  -o-box-shadow: 0px 2px 4px 0px rgba($box-shadow-color-2, 0.3);
+  -webkit-box-shadow: 0px 2px 4px 0px rgba($box-shadow-color-2, 0.3);
+  -moz-box-shadow: 0px 2px 4px 0px rgba($box-shadow-color-2, 0.3);
+}
+
+.bbm-modal--stacked {
+  -webkit-animation-duration: 0.1s;
+  -webkit-animation-name: bbm-stacked;
+  -webkit-animation-fill-mode: both;
+}
+
+@mixin overlay($size, $min-width, $max-width, $min-height, $max-height) {
+  min-width: $min-width;
+  //max-width: $max-width;
+  width: $max-width;
+  min-height: $min-height;
+  //max-height: $max-height;
+  height: inherit;
+  text-align: left;
+  @if $size != "fullpage" {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+  .bbm-modal__section {
+    min-height: $min-height - $bottom-bar-height - $top-bar-height;
+    height: inherit;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: $content-body-secondary-bg;
+    > div {
+      max-height: inherit;
+      min-height: inherit;
+      height: inherit;
+    }
+    > .slipstream-overlay-widget-content {
+      padding: 15px;
+    }
+    &.no-title {
+      //      min-height: $min-height - $bottom-bar-height !important;
+      top: 0px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+    &.no-bottom-bar {
+      bottom: 0px !important;
+    }
+  }
+}
+
+.overlay-title {
+  padding-top: 24px;
+  padding-bottom: 18px;
+  padding-left: 15px;
+  margin-bottom: 0px !important;
+}
+
+.overlay-fullpage {
+  max-width: unset;
+  max-height: unset;
+  @include overlay("fullpage",unset, 100%, unset, unset);
+  height: 100%;
+  .bbm-modal__section {
+    min-height: unset !important;
+    max-height: unset !important;
+    > div {
+      max-height: unset;
+      min-height: unset;
+    }
+  }
+}
+
+.overlay-xlarge {
+  @include overlay("xlarge", $xlarge-width, $xlarge-width, $xlarge-min-height, $xlarge-max-height);
+}
+
+.overlay-large {
+  @include overlay("large", $large-width, $large-width, $large-min-height, $large-max-height);
+}
+
+.overlay-medium {
+  @include overlay("medium", $medium-width, $medium-width, $medium-min-height, $medium-max-height);
+}
+
+.overlay-small {
+  @include overlay("small", $small-width, $small-width, $small-min-height, $small-max-height);
+}
+
+.overlay-xsmall {
+  @include overlay("xsmall", $xsmall-width, $xsmall-width, $xsmall-min-height, $xsmall-max-height);
+}
+
+.overlay-wrapper {
+  height: inherit;
+  .button {
+    padding: 0px 30px;
+    font-size: 13px;    
+    margin-top: 15px;
+    background-color: $button-active-background;
+    border-color: $button-active-border;
+  }
+
+  .button:hover {
+    background-color: $button-hover-background;
+    border-color: $button-hover-border;
+  }
+
+  .content-wrapper {
+    .activity_indicator_img {
+      text-align: center;
+      margin: 20px 0 0 0;
+      span.activity_img {
+        background: url('/assets/images/activity_indicator.svg') no-repeat right;
+        width:63px;
+        height:63px;
+        display: inline-block;
+        @include prefixed(animation, rotation 2s infinite linear);
+      }
+    }
+  }
+  .grid-widget .ui-jqgrid .loading{
+    z-index: 3;
+  }
+}
+
+.test_overlay_widget {//overlay content test page
+  @mixin customPrimaryButton {
+    background-color: $custom-red-border;
+    color: $red-button-text-color;
+    border:1px solid $custom-red-border !important;
+  }
+  @mixin customBorder {
+    border: 2px solid $custom-red-border;
+  }
+  &.overlayCustomBorder {
+    @include customBorder;
+  }
+  &.overlayCustomButton {
+    .slipstream-primary-button{
+      @include customPrimaryButton;
+    }
+  }
+  .slipstream-overlay-widget-border {
+    .slipstream-content-title {
+      .errorImg {
+        display: inline-block;
+        @extend .icon_error-bg, .icon_error-bg-dims;
+      }
+    }
+  }
+  .slipstream-overlay-widget-content {
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+.test_widgets.overlay-widget-test {//main test page
+  font-size: 12px;
+  input + label {
+    font-weight: normal;
+  }
+  a {
+    line-height: 24px;
+  }
+  h4 {
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,13 @@
+{{#accordionSections}}
+<li class="accordion-{{level.group}} accordion-section{{#isNested}} isNested{{/isNested}}" data-accordion-id="{{id}}">
+    <a class="title-status" data-accordion-id_title="{{id}}">
+        <svg class="arrow icon_arrow_right_{{level.icon}} icon_arrow_right_{{level.icon}}-dims"><use href="#icon_arrow_right_{{level.icon}}"></use></svg>
+        <span class="accordion-title"></span>
+        <span class="accordion-status right">
+            {{<stateIcon}}
+        </span>
+    </a>
+    <ul class="accordion-content{{#isNested}} accordion-wrapper{{/isNested}}" data-accordion-id_content="{{id}}"></ul>
+    <div class="accordion-description"></div>
+</li>
+{{/accordionSections}}

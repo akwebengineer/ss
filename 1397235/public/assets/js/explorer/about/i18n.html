@@ -1,0 +1,95 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="internationalizing-views">Internationalizing Views</h1>
+<p>Slipstream supports the internationalization of  views by</p>
+<ol>
+<li><p>Providing a UI widget toolkit that is locale sensitive.</p>
+</li>
+<li><p>Providing a locale-sensitive API for fetching strings from message bundles that have been translated for each supported language.</p>
+</li>
+</ol>
+<p>Translated message bundles are packaged in a plugin&#39;s <em>nls</em> directory.  Message files consist of key/value pairs, where each key uniquely identifies a message string.</p>
+<pre><code class="language-javascript">welcome_message = <span class="string">"Hello and Welcome to Slipstream!"</span></code></pre>
+<p>Messages can also contain substitution values that can be used to parametrize message strings.  For example,</p>
+<pre><code class="language-javascript">parametrized_welcome_message = <span class="string">"Hello {0} and Welcome to Slipstream!"</span></code></pre>
+<p>Values for the message parameters can then be substituted into the translated message via the Slipstream message API.</p>
+<h2 id="message-file-naming">Message file naming</h2>
+<p>Message file names follow the pattern </p>
+<p><em>msgs_language_code[_country_code].properties</em></p>
+<p>where <em>language_code</em> is an <a href="http://en.wikipedia.org/wiki/ISO_639">ISO-639</a> language code and <em>country_code</em> is an (optional) <a href="http://en.wikipedia.org/wiki/ISO_3166">ISO-3166</a> country code.  For example, the message file containing US English strings should be named: </p>
+<p><em>msgs_en_US.properties</em></p>
+<p>Message files are always loaded from least locale specific to most locale specific.  For example, if a plugin provides message files </p>
+<ol>
+<li>msgs.properties</li>
+<li>msgs_fr.properties</li>
+<li>msgs_fr_FR.properties</li>
+</ol>
+<p>the files would be loaded in that order, with strings defined in later files overriding strings defined in earlier files.  Therefore, msgs.properties is the <em>base</em> file and can provide values for strings that do not appear in the locale-specific files.</p>
+<h2 id="locale-detection">Locale Detection</h2>
+<p>Slipstream uses the browser&#39;s locale setting to determine which message bundle to use as the source of message strings when a string is fetched via the message API.</p>
+<h2 id="accessing-localized-message-strings">Accessing localized message strings</h2>
+<p>Plugins can access their localized message strings via the runtime <a href="activityContext.html">context</a> attribute in an  <a href="activity.html">Activity</a> object.  The runtime context contains a function called <em>getMessage()</em> that can be used to retrieve localized message strings. </p>
+<p>msgs_en_US.properties:</p>
+<pre><code class="language-javascript">welcome_message = <span class="string">"Welcome to Slipstream {0}"</span></code></pre>
+<p>activity.js:</p>
+<pre><code class="language-Javascript">...
+this.onStart = function() {
+    var subs = [&quot;Fred&quot;];
+    var message = this.context.getMessage(&quot;welcome_message&quot;, subs);
+    console.log(message);
+}
+...</code></pre>
+<p>outputs:</p>
+<pre><code class="language-javascript">&gt; <span class="string">"Welcome to Slipstream Fred"</span></code></pre>
+<p>Similarly, if the browser&#39;s locale is fr_FR and the plugin&#39;s <em>nls</em> directory contains this message bundle</p>
+<p>msgs_fr_FR.properties:</p>
+<pre><code class="language-javascript">welcome_message = <span class="string">"Bienvenue dans le cadre Slipstream {0}"</span></code></pre>
+<p>the code snippet above would output:</p>
+<pre><code class="language-javascript">&gt; <span class="string">"Bienvenue dans le cadre Slipstream Fred"</span></code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

@@ -1,0 +1,818 @@
+<div>
+    <h1 id="dashboard-widget">Dashboard Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Slipstream framework provides a programming construct for plugin developers to display their individual dashboard widgets. These widgets can contain any information the plugin developers want to display on the dashboard - for example visual graphs, real-time data, status, chassis information and links to quick setup wizards.</p>
+<h5 id="the-dashboard-contains-three-main-sections-">The dashboard contains three main sections:</h5>
+<ol>
+<li>The title, along with action buttons.</li>
+<li>The thumbnail container, which can be expanded or collapsed.</li>
+<li>The dashlet container, which contains the main widgets.</li>
+</ol>
+<h2 id="api">API</h2>
+<p>The dashboard widget object exposes the following methods and attributes:</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">Dashboard</span><span class="params">(config)</span> {</span>…}</code></pre>
+<p>Constructor, used to create a new Dashboard widget.
+The configuration attributes are defined as below:
+<strong>container</strong> - The attribute to search for and append the dashboard widget&#39;s html to once rendered. e.g. &#39;#dashboard_container&#39;.
+If you are using the dashboard outside of Slipstream framework context, this parameter is mandatory for the dashboard to render content properly. Refer to the <a href="#dashboard_without_framework">&quot;Using Dashboard widget without the Slipstream framework context&quot;</a> section below.
+If you are using the dashboard widget within the Slipstream framework&#39;s context, you need not specify a container. Refer to the <a href="&quot;#dashboard_with_framework&quot;">&quot;Using Dashboard widget in the Slipstream framework context&quot;</a> section below.</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">addDashboardWidget</span><span class="params">(dashboardWidget)</span></code></pre>
+<p>Function to add a widget template to the dashboard widget from which users can spawn multiple widgets in the dashlet container area. You need to use this function if you are using the Dashboard widget without the Slipstream framework context. Refer to the <a href="#dashboard_without_framework">&quot;Using Dashboard widget without the Slipstream framework context&quot;</a> section below.</p>
+<p>The parameter dashboardWidget is an object containing the following attributes:</p>
+<p><strong>title</strong> - The dashboard widget&#39;s title</p>
+<p><strong>size</strong> - A string from the following set indicating the size of the widget when added to the dashboard container area:
+small: (width: 200px, height: 100px),
+single: (width: 400px, height: 300px),
+double: (width: 800px, height: 300px),
+vertical: (width: 400px, height: 600px),
+large: (width: 800px, height: 600px),
+wide: (width: 1200px, height: 300px)</p>
+<p><strong>details</strong> - String details for the dashboard widget that need to be shown in the dropdown when hoevered over the thumbnail in the thumbnail container</p>
+<p><strong>view</strong> - A reference to the view class from which new widgets should be initialized when dragging and dropping thumbnails from the thumbnail container to dashlet container. Refer to the <a href="#dashboard_without_framework">&quot;Using Dashboard widget without the Slipstream framework context&quot;</a> section below for an example of the view parameter. The view itself is a class written as per Slipstream&#39;s View guidelines. Refer to <a href="Views.md">Views</a> for these guidelines.</p>
+<p><strong>image</strong> - An instantiated view that renders an image for the widget&#39;s thumbnail in the thumbnail container. Refer to the <a href="#dashboard_without_framework">&quot;Using Dashboard widget without the Slipstream framework context&quot;</a> section below for an example of the image parameter.</p>
+<p><strong>customEditView</strong> - An instantiated view that renders custom controls for the widget&#39;s Edit form. </p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">build</span><span class="params">(conf)</span></code></pre>
+<p>Function to setup and render the dashboard using conf params. conf is an object with following parameters:
+<strong>dashboard_title</strong> - (optional) The title to be displayed on the upper left corner for the dashboard.
+<strong>onDone</strong> - (optional) Callback function for dashboard to call when it has been destroyed.</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">destroy</span><span class="params">()</span></code></pre>
+<p>Function to close the widgets, close the dashboard, free up other resources and remove it from the DOM.</p>
+<p><strong>customInitData</strong> - In addition to supplying data to the customEditView, <em>customInitData</em> can be used by the dashlet view to send and receive custom settings from the framework. The framework will store this JSON object, and the app is responsible for managing it.</p>
+<h2 id="views">Views</h2>
+<p>As mentioned above, dashlets views should be written as per Slipstream&#39;s <a href="Views.md">Views</a> guidelines. To implement custom behavior, the view class can implement several custom functions.</p>
+<h3 id="dashlet-view">Dashlet View</h3>
+<p><strong>More Details</strong> - To display a &#39;More Details&#39; link, the view should implement the <code>moreDetails</code> function. When the link is clicked, the framework delegates the event to this function for the view to handle.</p>
+<p><strong>Custom Init Data</strong> - A JSON object which is passed back and forth between the views and the framework to handle custom data, such as refresh interval, dashlet type, etc. This is passed into the view during initialization. An initial set of custom data can be specified in plugin.json, which is passed in when the dashlet is created, or when no custom data is found. This is described below.</p>
+<pre><code class="language-javascript">    <span class="keyword">this</span>.initialize: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.customData = <span class="keyword">this</span>.options.customInitData;
+    }</code></pre>
+<ul>
+<li><p><strong>getCustomInitData</strong> - An optional function which allows the view to save customInitData. It is called by the framework after initialization, and after a dashlet has been edited. Rather than expecting data to be returned, a callback is passed in for the view to call when it&#39;s ready. This allows the view to make asynchronous calls if it needs to, and update the customInitData later.</p>
+<p><strong>Note:</strong> if the <code>getCustomInitData</code> function is implemented in a view, the <code>doneCallback</code> <em>must</em> be called, or the framework will not persist the dashlet.</p>
+<pre><code class="language-javascript">getCustomInitData: <span class="function"><span class="keyword">function</span> <span class="params">(doneCallback)</span> {</span>
+    <span class="keyword">var</span> customData = ...;
+    <span class="comment">// process data</span>
+    doneCallback(customData);
+}</code></pre>
+</li>
+</ul>
+<p><strong>refresh</strong> - This function is called under two circumstances: when the refresh button is clicked, and after the dashlet is updated. For both cases, a progress indicator is displayed, and a <code>done</code> callback is passed in. Call this callback to hide the progress indicator. In the latter case, a dashlet model is passed in, which includes all the dashlet settings, including <code>customInitData</code>. This allows the view to handle any additional processing it needs to do following an update.</p>
+<pre><code class="language-javascript">refresh: <span class="function"><span class="keyword">function</span><span class="params">(done, proposedModel)</span> {</span>
+    <span class="keyword">if</span> (proposedModel !== <span class="literal">undefined</span>) {
+        <span class="comment">// The dashlet was updated</span>
+        <span class="comment">// re-fetch data with updated parameters</span>
+    } <span class="keyword">else</span> {
+        <span class="comment">// Refresh button was clicked</span>
+    }
+    done();
+}</code></pre>
+<p><strong>close</strong> - This function is called to cleanup a dashlet when navigating away from the dashboard, or when the dashlet is deleted. When a dashlet is deleted, a parameter with boolean value <code>true</code> is passed in. Otherwise, no parameter is passed in. This distinction may be necessary if some processing is needed on the remote device, beyond what Slipstream is managing.</p>
+<pre><code class="language-javascript">close: <span class="function"><span class="keyword">function</span><span class="params">(deleteDashlet)</span> {</span>
+    <span class="keyword">if</span> (deleteDashlet) {
+        <span class="comment">// process dashlet delete</span>
+    }
+    <span class="keyword">this</span>.$el.remove();
+    ...
+}</code></pre>
+<h3 id="custom-edit-view">Custom Edit View</h3>
+<p>The framework supplies a standard set of controls for editing a dashlet, including the title and description. The <code>customEditView</code> can define any additional controls, in any format. Custom data is handled by the framework through the <em>customInitData</em> object.</p>
+<ul>
+<li><p><strong><em>serialize</em></strong> - This function is called by the framework to fetch custom data. Data items can include <em>size</em>, and <em>customInitData</em>. <em>customInitData</em> is simply a JSON object, and can include anything that JSON can support. The <em>size</em> property must match one of the supported dashlet sizes. Developers are responsible for maintaining integrity of this object.</p>
+<pre><code class="language-javascript"><span class="keyword">this</span>.serialize: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">return</span> {
+        <span class="string">'size'</span>: <span class="string">'double'</span>,
+        <span class="string">'customInitData'</span>: {
+            <span class="string">'chartType'</span>: <span class="string">'BAR'</span>,
+            <span class="string">'auto_refresh'</span>: <span class="number">25</span>,
+            <span class="string">'show_top'</span>: <span class="number">10</span>
+        }
+    };
+};</code></pre>
+</li>
+<li><strong><em>render</em></strong> - The view&#39;s render function will be called by the framework when it is ready to display the customEditView.</li>
+</ul>
+<h3 id="filters">Filters</h3>
+<p>The framework supports an optional filter area below the dashlet header. Up to two dropdown box filters can be added to a dashlet.
+To add a filter, define the parameters in a conf file, eg. defaultFilterConf.js.
+Then include the conf file in plugin.json for each dashlet.</p>
+<pre><code class="language-javascript">define([], <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    <span class="keyword">var</span> FilterConf = <span class="function"><span class="keyword">function</span> <span class="params">(context)</span> {</span>
+        <span class="keyword">var</span> filters = [
+            {
+                <span class="string">'name'</span>: <span class="string">'dashlet_previous_filter'</span>,
+                <span class="string">'label'</span>: <span class="string">'Previous'</span>,
+                <span class="string">'values'</span>: [
+                    {
+                        <span class="string">'label'</span>: <span class="string">'5 mins'</span>,
+                        <span class="string">'value'</span>: <span class="number">300000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'15 mins'</span>,
+                        <span class="string">'value'</span>: <span class="number">900000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'30 mins'</span>,
+                        <span class="string">'value'</span>: <span class="number">1800000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'1 hour'</span>,
+                        <span class="string">'value'</span>: <span class="number">3600000</span>,
+                        <span class="string">'selected'</span>: <span class="literal">true</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'8 hours'</span>,
+                        <span class="string">'value'</span>: <span class="number">28800000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'1 day'</span>,
+                        <span class="string">'value'</span>: <span class="number">86400000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'4 days'</span>,
+                        <span class="string">'value'</span>: <span class="number">345600000</span>
+                    },
+                    {
+                        <span class="string">'label'</span>: <span class="string">'7 days'</span>,
+                        <span class="string">'value'</span>: <span class="number">604800000</span>
+                    }
+                ]
+            }
+        ];
+        <span class="keyword">this</span>.getValues = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">return</span> filters;
+        };
+    };
+    <span class="keyword">return</span> FilterConf;
+});
+}</code></pre>
+<h3 id="plugin-json">plugin.json</h3>
+<p>The framework finds the dashlet and custom edit views via two values in the plugin&#39;s manifest file. An initial <code>customInitData</code> object can also be specified, which is used during dashlet creation, or if no customInitData is stored.</p>
+<pre><code class="language-javascript">{
+    <span class="string">'name'</span>: <span class="string">'pluginName'</span>,
+    ...
+    <span class="string">'dashboard'</span>: {
+        <span class="string">'widgets'</span>: [
+            {
+                <span class="string">'title'</span>: <span class="string">"Dashlet Title"</span>,
+                <span class="string">'size'</span>: <span class="string">"double"</span>,
+                <span class="string">'details'</span>: <span class="string">"Dashlet Description"</span>,
+                <span class="string">'module'</span>: <span class="string">"myDashletView"</span>,  <span class="comment">// specified dashlet view</span>
+                <span class="string">'thumbnail'</span>: <span class="string">"top-applications.jpg"</span>,
+                <span class="string">'editView'</span>: <span class="string">"myDashletEditView"</span>,    <span class="comment">// specified dashlet's custom edit view</span>
+                <span class="string">'filterConf'</span>: <span class="string">"defaultFilterConf"</span>,  <span class="comment">// specified dashlet's filter configuration</span>
+                <span class="string">'customInitData'</span>: {
+                    <span class="string">'myCustomSetting'</span>: <span class="number">1234</span>
+                }
+            }
+        ]
+    }
+}</code></pre>
+<h2 id="using-dashboard-widget-without-the-slipstream-framework-context-a-name-dashboard_without_framework-a-">Using Dashboard widget without the Slipstream framework context  <a name="dashboard_without_framework"></a></h2>
+<p>The Dashboard widget can be used without without the Slipstream framework.</p>
+<h3 id="writing-your-dashboard-container-template">Writing your dashboard container template</h3>
+<p>Example: testDashboard.html</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        &lt;title&gt;Test Dashboard Widget&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/css/app.css&quot; /&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;./testDashboard.css&quot; /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;dashboard_test_content&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;overlay_content&quot;&gt;&lt;/div&gt;
+        &lt;script data-main=&quot;main&quot; src=&quot;/assets/js/vendor/require/require.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p><strong><em>Note</em></strong>: Your html template needs to have a div with id=&quot;overlay_content&quot; under a location that spans 100% of height and width of your page. This is required by the overlay widget to render itself with the proper size and at the proper location. The dashboard uses the overlay widget to prompt for confirmation of removal of widgets from the dashboard.</p>
+<h2 id="writing-your-require-config-file">Writing your require config file</h2>
+<p>As you can see in the previous section, the html page includes a start point module for require.js - main.js.
+main.js is supposed to load and inject all third party dependencies required for Slipstream widgets.
+This file also loads a lightweight version of the Slipstream framework which provides custom template rendering support to the dashboard.</p>
+<p>Example main.js</p>
+<pre><code class="language-javascript">require.config({
+    baseUrl: <span class="string">'/assets/js'</span>,
+    paths: {
+        URI: <span class="string">'vendor/uri/URI'</span>,
+        jquery: <span class="string">'vendor/jquery/jquery'</span>,
+        jqueryui: <span class="string">'vendor/jquery/jquery-ui'</span>,
+        <span class="string">"jqueryDatepicker"</span>: <span class="string">'vendor/jquery/jquery-ui-datepicker'</span>,
+        <span class="string">"jquery-i18n"</span>: <span class="string">'lib/jquery-i18n-properties/jquery.i18n.properties'</span>,
+        <span class="string">"jquery.idle-timer"</span>: <span class="string">'vendor/jquery/jquery.idle-timer'</span>,
+        <span class="string">'jquery.shapeshift'</span>: <span class="string">'vendor/jquery/jquery.shapeshift'</span>,
+        <span class="string">'jquery.toastmessage'</span>: <span class="string">'vendor/jquery/jquery.toastmessage'</span>,
+        <span class="string">'toastr'</span>: <span class="string">'vendor/jquery/toastr/toastr'</span>,
+        jcarousel: <span class="string">'vendor/jquery/jcarousel/jquery.jcarousel'</span>,
+        modernizr: <span class="string">'vendor/modernizr/modernizr'</span>,
+        foundation: <span class="string">'vendor/foundation/foundation'</span>,
+        underscore: <span class="string">'vendor/underscore/underscore'</span>,
+        template: <span class="string">'vendor/hogan.js/web/builds/2.0.0/template-2.0.0'</span>,
+        hogan: <span class="string">'vendor/hogan.js/web/builds/2.0.0/hogan-2.0.0'</span>,
+        backbone: <span class="string">'vendor/backbone/backbone'</span>,
+        <span class="string">'backbone.localStorage'</span>: <span class="string">'vendor/backbone/backbone.localStorage'</span>,
+        <span class="string">'backbone.picky'</span>: <span class="string">'vendor/backbone/backbone.picky'</span>,
+        <span class="string">"backbone.modal"</span>: <span class="string">"vendor/backbone/backbone.modal"</span>,
+        <span class="string">"backbone.marionette.modals"</span>: <span class="string">"vendor/backbone/backbone.marionette.modals"</span>,
+        <span class="string">'backbone.syphon'</span>: <span class="string">'vendor/backbone/backbone.syphon'</span>,
+        marionette: <span class="string">'vendor/backbone/backbone.marionette'</span>,
+        validator: <span class="string">'vendor/validator/validator'</span>,
+        text: <span class="string">'vendor/require/text'</span>,
+        d3: <span class="string">'vendor/d3/d3'</span>,
+        highcharts: <span class="string">'vendor/highcharts/highcharts'</span>,
+        highchartsmore: <span class="string">'vendor/highcharts/highcharts-more'</span>,
+        gridLocale: <span class="string">'vendor/jquery/jqGrid/i18n/grid.locale-en'</span>,
+        jqGrid: <span class="string">'vendor/jquery/jqGrid/jquery.jqGrid'</span>,
+        <span class="string">'jquery.contextMenu'</span>: <span class="string">'vendor/jquery/jqContextMenu/jquery.contextMenu'</span>,
+        <span class="string">'jquery.tooltipster'</span>: <span class="string">'vendor/jquery/jqTooltipster/jquery.tooltipster'</span>,
+
+        <span class="comment">/* Foundation */</span>
+        <span class="string">'foundation.core'</span>: <span class="string">'vendor/foundation/js/foundation'</span>,
+        <span class="string">'foundation.abide'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.abide'</span>,
+        <span class="string">'foundation.accordion'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.accordion'</span>,
+        <span class="string">'foundation.alert'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.alert'</span>,
+        <span class="string">'foundation.clearing'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.clearing'</span>,
+        <span class="string">'foundation.dropdown'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.dropdown'</span>,
+        <span class="string">'foundation.interchange'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.interchange'</span>,
+        <span class="string">'foundation.joyride'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.joyride'</span>,
+        <span class="string">'foundation.magellan'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.magellan'</span>,
+        <span class="string">'foundation.offcanvas'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.offcanvas'</span>,
+        <span class="string">'foundation.orbit'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.orbit'</span>,
+        <span class="string">'foundation.reveal'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.reveal'</span>,
+        <span class="string">'foundation.tab'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.tab'</span>,
+        <span class="string">'foundation.tooltip'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.tooltip'</span>,
+        <span class="string">'foundation.topbar'</span>: <span class="string">'vendor/foundation/js/foundation/foundation.topbar'</span>
+
+    },
+    shim: {
+        <span class="string">'URI'</span>: {
+            exports: <span class="string">'URI'</span>
+         },
+        <span class="string">'underscore'</span>: {
+            exports: <span class="string">'_'</span>
+        },
+        <span class="string">'template'</span>: {
+            exports: <span class="string">'template'</span>
+        },
+        <span class="string">'hogan'</span>: {
+            deps: [ <span class="string">'template'</span> ],
+            exports: <span class="string">'Hogan'</span>
+        },
+        <span class="string">'jquery.shapeshift'</span>: {
+            deps: [<span class="string">'jqueryui'</span>],
+            exports: <span class="string">'shapeshift'</span>
+        },
+        jcarousel: {
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'jcarousel'</span>
+        },
+        <span class="string">'toastr'</span>: {
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'toastr'</span>
+        },
+        <span class="string">'backbone'</span>: {
+            deps: [ <span class="string">'underscore'</span>, <span class="string">'jquery'</span>],
+            exports: <span class="string">'Backbone'</span>
+        },
+        <span class="string">'backbone.localStorage'</span>: {
+            deps: [ <span class="string">'backbone'</span>],
+            exports: <span class="string">'Backbone.LocalStorage'</span>
+        },
+        <span class="string">'backbone.picky'</span>: [<span class="string">'backbone'</span>],
+        <span class="string">'backbone.syphon'</span>: {
+            deps: [ <span class="string">'backbone'</span>],
+            exports: <span class="string">'Backbone.Syphon'</span>
+        },
+        <span class="string">'marionette'</span>: {
+            deps: [<span class="string">'backbone'</span>],
+            exports: <span class="string">'Marionette'</span>
+        },
+        <span class="string">'backbone.modal'</span>: {
+            deps: [ <span class="string">'backbone'</span>],
+            exports: <span class="string">'Backbone.Modal'</span>
+        },
+        <span class="string">'backbone.marionette.modals'</span>: {
+            deps: [ <span class="string">'backbone'</span>,<span class="string">'marionette'</span>],
+            exports: <span class="string">'Backbone.Marionette.Modals'</span>
+        },
+        <span class="string">'modernizr'</span>: {
+            exports: <span class="string">'Modernizr'</span>
+        },
+        <span class="string">'jquery-i18n'</span>: {
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'jQuery.i18n'</span>
+        },
+        <span class="string">'jqueryDatepicker'</span>:{
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'jqueryDatepicker'</span>
+        },
+        <span class="string">'highcharts'</span>: {
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'highcharts'</span>
+        },
+        <span class="string">'highchartsmore'</span>: {
+            deps: [<span class="string">'highcharts'</span>, <span class="string">'jquery'</span>],
+            exports: <span class="string">'highchartsmore'</span>
+        },
+        jqGrid: {
+            deps: [<span class="string">'jquery'</span>,<span class="string">'gridLocale'</span>],
+            exports: <span class="string">'jqGrid'</span>
+        },
+        <span class="string">'jquery.contextMenu'</span>: {
+            deps: [<span class="string">'jquery'</span>],
+            exports: <span class="string">'$.contextMenu'</span>
+        },
+
+        <span class="comment">/* Foundation */</span>
+        <span class="string">'foundation.core'</span>: {
+            deps: [
+                <span class="string">'jquery'</span>,
+                <span class="string">'modernizr'</span>
+            ],
+            exports: <span class="string">'Foundation'</span>
+        },
+        <span class="string">'foundation.abide'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.accordion'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.alert'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.clearing'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.dropdown'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.interchange'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.joyride'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>,
+                <span class="string">'foundation.cookie'</span>
+            ]
+        },
+        <span class="string">'foundation.magellan'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.offcanvas'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.orbit'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.reveal'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.tab'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.tooltip'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'foundation.topbar'</span>: {
+            deps: [
+                <span class="string">'foundation.core'</span>
+            ]
+        },
+        <span class="string">'jquery.tooltipster'</span>: {
+            deps: [
+                <span class="string">'jquery'</span>
+            ],
+            exports: <span class="string">'tooltipster'</span>
+        }
+    }
+});
+
+define([
+    <span class="string">'jquery'</span>,
+    <span class="string">'foundation.core'</span>,
+    <span class="string">'Slipstream'</span>
+], <span class="function"><span class="keyword">function</span> <span class="params">($, foundation, Slipstream)</span> {</span>
+
+    $(document).foundation();
+    Slipstream.initialize();
+    Slipstream.vent.on(<span class="string">"framework:booted"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        require([<span class="string">'widgets/dashboard/tests/appDashboard'</span>], <span class="function"><span class="keyword">function</span><span class="params">(DashboardView)</span>{</span>
+            <span class="keyword">new</span> DashboardView({
+                el: $(<span class="string">'#dashboard_test_content'</span>)
+            });
+        });
+    });
+});</code></pre>
+<h3 id="writing-your-controller-view-that-uses-the-dashboard">Writing your controller/view that uses the dashboard</h3>
+<p>The example below shows 3 different widgets being added to the dashboard. Refer to <a href="#creating_widget_with_manual_refresh">&quot;Creating a dashboard widget with manual refresh functionality&quot;</a> section below for further information on how to create use the refresh function to indicate success/failure.</p>
+<p>Example: appDashboard.js</p>
+<pre><code class="language-javascript">define([
+    <span class="string">'backbone'</span>,
+    <span class="string">'widgets/dashboard/dashboard'</span>
+], <span class="function"><span class="keyword">function</span><span class="params">(Backbone, Dashboard)</span>{</span>
+
+    <span class="keyword">var</span> BBView = Backbone.View.extend({
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+            _.extend(<span class="keyword">this</span>, options);
+        },
+        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.template);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
+    });
+
+    <span class="keyword">var</span> MyTestView1 = Backbone.View.extend({
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+            _.extend(<span class="keyword">this</span>, options);
+        },
+        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.template);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail1.jpg"&gt;&lt;/div&gt;'</span>
+    });
+
+    <span class="keyword">var</span> MyTestView2 = Backbone.View.extend({
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+            _.extend(<span class="keyword">this</span>, options);
+        },
+        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.template);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail2.jpg"&gt;&lt;/div&gt;'</span>,
+        refresh: <span class="function"><span class="keyword">function</span><span class="params">(done)</span> {</span>
+            setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                done();
+            }, <span class="number">2000</span>);
+        }
+    });
+
+    <span class="keyword">var</span> MyTestView3 = Backbone.View.extend({
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+            _.extend(<span class="keyword">this</span>, options);
+        },
+        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.$el.html(<span class="keyword">this</span>.template);
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+        template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail3.jpg"&gt;&lt;/div&gt;'</span>,
+        refresh: <span class="function"><span class="keyword">function</span><span class="params">(done)</span> {</span>
+
+            setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                done(<span class="keyword">new</span> Error(<span class="string">'Error refreshing MyTestView3'</span>));
+            }, <span class="number">2000</span>);
+        }
+    });
+
+    <span class="keyword">var</span> DashboardView = Backbone.View.extend({
+
+        initialize: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">this</span>.dashboard = <span class="keyword">new</span> Dashboard({
+                container: <span class="string">'#dashboard_test_content'</span>
+            });
+
+            <span class="keyword">var</span> pluginContext = {
+                ctx_name: <span class="string">''</span>,
+                ctx_root: <span class="string">''</span>
+            };
+
+            <span class="keyword">var</span> self = <span class="keyword">this</span>;
+            self.dashboard.addDashboardWidget({
+                title: <span class="string">'Test 1'</span>,
+                size: <span class="string">'double'</span>,
+                details: <span class="string">'Test'</span>,
+                image: <span class="keyword">new</span> BBView({
+                    template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail1.jpg"&gt;&lt;/div&gt;'</span>
+                }),
+                view: MyTestView1,
+                context: pluginContext
+            });
+
+            self.dashboard.addDashboardWidget({
+                title: <span class="string">'Test 2'</span>,
+                size: <span class="string">'double'</span>,
+                details: <span class="string">'Test'</span>,
+                image: <span class="keyword">new</span> BBView({
+                    template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail2.jpg"&gt;&lt;/div&gt;'</span>
+                }),
+                view: MyTestView2,
+                context: pluginContext
+            });
+
+
+            self.dashboard.addDashboardWidget({
+                title: <span class="string">'Test 3'</span>,
+                size: <span class="string">'double'</span>,
+                details: <span class="string">'Test'</span>,
+                image: <span class="keyword">new</span> BBView({
+                    template: <span class="string">'&lt;div&gt;&lt;img src="/assets/images/dashboard/testApp/thumbnail3.jpg"&gt;&lt;/div&gt;'</span>
+                }),
+                view: MyTestView3,
+                context: pluginContext
+            });
+
+            self.render();
+        },
+
+        render: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">var</span> self = <span class="keyword">this</span>;
+            self.dashboard.build({
+                dashboard_title: <span class="string">'NGSRX'</span>,
+                onDone: _.bind(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                    console.log(<span class="string">'called onDone back'</span>);
+                }, <span class="keyword">this</span>)
+            });
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        close: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.dashboard.destroy();
+        }
+    });
+
+    <span class="keyword">return</span> DashboardView;
+});</code></pre>
+<h3 id="adding-capabilities-to-save-and-restore-dashboard-state">Adding capabilities to save and restore dashboard state</h3>
+<p>The dashboard uses a Slipstream backend provided RESTful API and DB to save and restore the state of the dashboard if the database is available. If used within the Slipstream framework context, the backend DB and the RESTful API are automatically loaded for the dashboard to use. However, if you are using the dashboard without thr Slipstream framework, you will need to provide a RESTful API that adheres to the following semantics:</p>
+<h4 id="user-preferences-api">User preferences API</h4>
+<pre><code>HTTP GET /slipstream/preferences/user</code></pre>
+<p>Should return the preferences associated with the logged in user if found. The API should also verify a user is logged in based on the value of the api.sid cookie passed into the request.</p>
+<pre><code>HTTP PUT /slipstream/preferences/user</code></pre>
+<p>Should update/create the preferences for the logged in user. The API should also verify a user is logged in based on the value of the api.sid cookie passed into the request.</p>
+<pre><code>HTTP DELETE /slipstream/preferences/user</code></pre>
+<p>Should delete the user record associated with the logged in user if found. The API should also verify a user is logged in based on the value of the api.sid cookie passed into the request.</p>
+<pre><code>HTTP POST /slipstream/preferences/user</code></pre>
+<p>Should return a 403 (NOT ALLOWED) error.</p>
+<h4 id="session-preferences-api">Session preferences API</h4>
+<pre><code>HTTP GET /slipstream/preferences/session</code></pre>
+<p>Should return the preferences associated with the session id passed in as the api.sid cookie if found.</p>
+<pre><code>HTTP PUT /slipstream/preferences/session</code></pre>
+<p>Should update/create the preferences for the session id passed in as the api.sid cookie in the request.</p>
+<pre><code>HTTP DELETE /slipstream/preferences/session</code></pre>
+<p>Should delete the record associated with the session id passes in as the api.sid cookie in the request if found.</p>
+<pre><code>HTTP POST /slipstream/preferences/session</code></pre>
+<p>Should return a 403 (NOT ALLOWED) error.</p>
+<h2 id="using-dashboard-widget-in-the-slipstream-framework-context-a-name-dashboard_with_framework-a-">Using Dashboard widget in the Slipstream framework context <a name="dashboard_with_framework"></a></h2>
+<p>When used in the context of the Slipstream framework, the Dashboard plugin uses the plugin discovery mechanism that Slipstream provides to give the additional benefit of writing declarative dashboard widget-plugins to be rendered in the Slipstream UI framework.
+The Slipstream framework allows a plugin developer to create widget-plugins which the dashboard renders within itself and adds functionality to.
+Plugin developers can write their own view module along with models, html templates and thumbnails; and provide information in the plugin.json file for the Slipstream framework to capture the plugin and render it.</p>
+<p>The dashboard object is part of the framework and does not need to be referenced by a plugin developer in most cases.
+The only case where the dashboard may need to be referenced directly in a plugin is to make the dashboard navigable through an activity.
+Slipstream comes with a stock plugin that does this launching for plugin developers. In case you want to develop your own dashboard launch plugin, please refer to <a href="#launch_plugin">Writing your own Dashboard Launch Plugin</a></p>
+<h3 id="writing-your-dashboard-widget-plugins">Writing your dashboard widget plugins</h3>
+<p>This section outlines how you write a dashboard widget plugin to render in the dashboard.</p>
+<h4 id="steps-for-developing-a-new-dashboard-widget-">Steps for developing a new dashboard widget:</h4>
+<h5 id="1-create-a-new-folder-under-your-plugins-folder-following-the-guildelines-to-create-a-new-plugin-">1. Create a new folder under your plugins folder following the guildelines to create a new plugin.</h5>
+<p>The structure of the folder should look as below. Only plugin.json, js/views folder with the base view and img folder with thumbnail image are mandatory. All other folders are optional.</p>
+<pre><code>plugins
+ |-- your_dashboard_widget_plugin_folder
+  |--  plugin.json
+  |--  js
+   |-- views
+    |-- your_javascript_view_files
+   |-- models
+    |-- your_javascript_model_files_to_support_views
+  |-- templates
+   |-- your_html_or_hogan_template_files
+  |-- img
+   |-- your_img_files
+  |-- test
+   |-- your_test_files
+  |-- nls
+   |-- translation_files_as_per_slipstream_translation_guidelines</code></pre>
+<h5 id="2-write-your-plugin-json-file-as-follows-">2. Write your plugin.json file as follows:</h5>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;your_widget_plugin_name&quot;,
+  &quot;description&quot;: &quot;Description for your plugin&quot;,
+  &quot;publisher&quot;: &quot;Juniper Networks, Inc.&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;release_date&quot;: &quot;08.29.2014&quot;,
+  &quot;min_platform_version&quot;: &quot;0.0.1&quot;,
+  &quot;dashboard&quot;: {
+    &quot;widgets&quot;: [
+      {
+        &quot;title&quot;: &quot;Your Dashboard Widget Title&quot;,
+        &quot;size&quot;: &quot;double&quot;, // size can be one of the following: 
+                          // small (width: 200px, height: 100px),
+                          // single (width: 400px, height: 300px),
+                          // double (width: 800px, height: 300px),
+                          // vertical (width: 400px, height: 600px),
+                          // large (width: 800px, height: 600px),
+                          // wide (width: 1200px, height: 300px)
+        &quot;details&quot;: &quot;Details for the dashboard widget that need to be shown in the dropdown&quot;,
+        &quot;module&quot;: &quot;name_of_base_view&quot;,
+        &quot;thumbnail&quot;: &quot;Relative path to image that will be shown as the thumbnail under img folder&quot;
+      }
+    ]
+  }
+}</code></pre>
+<p>An example is as follows:</p>
+<pre><code class="language-json">{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"device_utilization_plugin"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"NG-SRX Dashboard Device Utilization Plugin"</span></span>,
+  "<span class="attribute">publisher</span>": <span class="value"><span class="string">"Juniper Networks, Inc."</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+  "<span class="attribute">release_date</span>": <span class="value"><span class="string">"08.29.2014"</span></span>,
+  "<span class="attribute">min_platform_version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+  "<span class="attribute">dashboard</span>": <span class="value">{
+    "<span class="attribute">widgets</span>": <span class="value">[
+      {
+        "<span class="attribute">title</span>": <span class="value"><span class="string">"Device Utilization Widget"</span></span>,
+        "<span class="attribute">size</span>": <span class="value"><span class="string">"double"</span></span>,
+        "<span class="attribute">details</span>": <span class="value"><span class="string">"Device Utilization View details"</span></span>,
+        "<span class="attribute">module</span>": <span class="value"><span class="string">"deviceUtilizationView"</span></span>,
+        "<span class="attribute">thumbnail</span>": <span class="value"><span class="string">"thumbnailDeviceUtil.jpg"</span>
+      </span>}
+    ]
+  </span>}
+</span>}</code></pre>
+<h5 id="3-create-your-view-model-template-files-under-js-folder-and-name-your-base-view-as-indicated-in-plugin-json-">3. Create your view, model, template files under js folder and name your base view as indicated in plugin.json.</h5>
+<p>Develop your views, models and templates as you normally would as per Slipstream standards.
+<strong>Important: </strong> Implement a &quot;close&quot; function in your base view that is reponsible for cleanup such as unbinding from events, closing internally created views, etc.</p>
+<h6 id="creating-a-dashboard-widget-with-manual-refresh-functionality-a-name-creating_widget_with_manual_refresh-a-">Creating a dashboard widget with manual refresh functionality <a name="creating_widget_with_manual_refresh"></a></h6>
+<p>If your dashboard widget needs to be manually refreshed by clicking on the refresh button in the dashboard, then implement a &quot;refresh&quot; function that accepts a callback function. The callback function must be called once the widget has fetched new data and has rendered the new data with an optional JavScript Error object in case of failure to indicate that a failure has occured to the dashboard.</p>
+<p>Here&#39;s an example of a dashboard widget base view that implements both close and refresh:</p>
+<pre><code class="language-javascript">define([<span class="string">"marionette"</span>,
+        <span class="string">"./chassisView.js.hogan"</span>, 
+        <span class="string">"text!../../templates/systemChassisLayout.tpl"</span>], <span class="function"><span class="keyword">function</span><span class="params">(Marionette, ChassisView, systemChassisLayoutTemplate)</span> {</span>
+    <span class="comment">/**
+     * Constructs a SystemChassisLayout
+     */</span>
+    <span class="keyword">var</span> SystemChassisLayout = Marionette.Layout.extend({
+        template: systemChassisLayoutTemplate,
+
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.context = <span class="keyword">new</span> Slipstream.SDK.ActivityContext(<span class="keyword">this</span>.options.context.ctx_name, <span class="keyword">this</span>.options.context.ctx_root);
+
+            <span class="keyword">this</span>.chassis_view = <span class="keyword">new</span> ChassisView({context: <span class="keyword">this</span>.context});
+        },
+
+        onRender: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.chassisView.show(<span class="keyword">this</span>.chassis_view);
+        },
+
+        regions: {
+            chassisView: <span class="string">"#chassisView"</span>,
+        },
+
+        refresh: <span class="function"><span class="keyword">function</span><span class="params">(done)</span> {</span>
+            <span class="function"><span class="keyword">function</span> <span class="title">successCallback</span><span class="params">()</span> {</span>
+                done();
+            };
+
+            <span class="function"><span class="keyword">function</span> <span class="title">errorCallback</span><span class="params">()</span> {</span>
+                done(<span class="keyword">new</span> Error(<span class="string">'Error refreshing System Chassis Layout'</span>));
+            };
+
+            $.when(<span class="keyword">this</span>.chassis_view.refresh())
+            .then(successCallback, errorCallback);
+        },
+
+        close: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.chassisView.close();
+        }
+    });
+
+    <span class="keyword">return</span> SystemChassisLayout;
+});</code></pre>
+<h6 id="creating-a-dashboard-widget-without-manual-refresh">Creating a dashboard widget without manual refresh</h6>
+<p>Some widgets may be either static or may require dynamic updates based on the model.
+For such widgets, a manual refresh is not required.
+To indicate to the dashboard widget that a refresh isn&#39;t required, simply do not implement the &quot;refresh&quot; function.</p>
+<h3 id="writing-your-own-dashboard-launch-plugin-a-name-launch_plugin-a-">Writing your own Dashboard Launch Plugin <a name="launch_plugin"></a></h3>
+<p>In most cases you will not need to implement your own dashboard launch plugin as the Slipstream plugins will ship with a stock launch plugin. In case it does not, follow these steps to create your own dashboard launch plugin.</p>
+<h5 id="1-create-a-new-plugin-activity">1. Create a new plugin activity</h5>
+<p>The structure of the folder should be as per Slipstream standards.
+The plugin.json file can be as follows:</p>
+<pre><code class="language-json">{
+  "<span class="attribute">name</span>": <span class="value"><span class="string">"dashboard_launch_plugin"</span></span>,
+  "<span class="attribute">description</span>": <span class="value"><span class="string">"NG-SRX Dashboard Launch"</span></span>,
+  "<span class="attribute">publisher</span>": <span class="value"><span class="string">"Juniper Networks, Inc."</span></span>,
+  "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+  "<span class="attribute">release_date</span>": <span class="value"><span class="string">"07.29.2014"</span></span>,
+  "<span class="attribute">min_platform_version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+  "<span class="attribute">activities</span>": <span class="value">[
+    {
+      "<span class="attribute">module</span>": <span class="value"><span class="string">"dashboardLaunchActivity"</span></span>,
+      "<span class="attribute">filters</span>": <span class="value">[
+        {
+          "<span class="attribute">id</span>": <span class="value"><span class="string">"dashboard.launch.view"</span></span>,
+          "<span class="attribute">action</span>": <span class="value"><span class="string">"VIEW"</span></span>,
+          "<span class="attribute">data</span>": <span class="value">{ 
+            "<span class="attribute">mime_type</span>": <span class="value"><span class="string">"vnd.juniper.net.dashboard.launch"</span>
+          </span>}
+        </span>}
+      ]
+    </span>}
+  ]</span>,
+  "<span class="attribute">navigation_paths</span>": <span class="value">[
+    {
+      "<span class="attribute">path</span>": <span class="value"><span class="string">"Monitor"</span></span>,
+      "<span class="attribute">filter</span>": <span class="value"><span class="string">"dashboard.launch.view"</span>
+    </span>}
+  ]
+</span>}</code></pre>
+<h5 id="2-create-the-dashboardlaunchactivity-file-under-js-folder">2. Create the dashboardLaunchActivity file under js folder</h5>
+<p>Contents of the file should be as follows:</p>
+<pre><code class="language-javascript">define([
+  <span class="string">"./views/dashboardView.js"</span>
+  ], <span class="function"><span class="keyword">function</span><span class="params">(DashboardView)</span> {</span>
+  <span class="comment">/**
+   * Constructs a DashboardLaunchActivity.
+   */</span>
+  <span class="keyword">var</span> DashboardLaunchActivity = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      console.log(<span class="string">"DashboardLaunchActivity started"</span>);
+
+        <span class="keyword">this</span>.setContentView(<span class="keyword">this</span>.view);
+    };
+
+    <span class="keyword">this</span>.onCreate = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      console.log(<span class="string">"DashboardLaunchActivity created"</span>);
+
+      <span class="keyword">this</span>.view = <span class="keyword">new</span> DashboardView({
+          onDone:  _.bind(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            console.log(<span class="string">'Dashboard activity done'</span>);
+          }, self),
+          context: <span class="keyword">this</span>.getContext(),
+          dashboard: <span class="keyword">this</span>.getDashboard()
+        });
+    };
+
+    <span class="keyword">this</span>.onDestroy = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      console.log(<span class="string">"DashboardLaunchActivity being destroyed"</span>);
+    };
+  };
+
+  DashboardLaunchActivity.prototype = <span class="keyword">new</span> Slipstream.SDK.Activity();
+
+  <span class="keyword">return</span> DashboardLaunchActivity;
+});</code></pre>
+<h5 id="3-create-a-dashboardview-js-file-under-js-views">3. Create a dashboardView.js file under js/views</h5>
+<p>Contents of the file should be as follows:</p>
+<pre><code class="language-javascript">define([
+    <span class="string">'backbone'</span>,
+    <span class="string">'widgets/dashboard/dashboard'</span>
+], <span class="function"><span class="keyword">function</span><span class="params">(Backbone, Dashboard)</span> {</span>
+    <span class="keyword">var</span> DashboardView = Backbone.View.extend({
+
+        initialize: <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+            <span class="keyword">var</span> self = <span class="keyword">this</span>;
+
+            <span class="keyword">if</span> (options.onDone) {
+                <span class="keyword">this</span>.closeCallback = options.onDone;
+            }
+            <span class="keyword">this</span>.context = <span class="keyword">this</span>.options.context;
+            <span class="keyword">this</span>.dashboard = <span class="keyword">this</span>.options.dashboard;
+
+            <span class="keyword">this</span>.dashboard.build({
+                dashboard_title: <span class="string">'NGSRX'</span>,
+                onDone: _.bind(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                    self.closeCallback();
+                }, <span class="keyword">this</span>)
+            });
+
+            <span class="keyword">this</span>.el = <span class="keyword">this</span>.dashboard.el;
+            <span class="keyword">this</span>.$el = $(<span class="keyword">this</span>.el);
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        },
+
+        close: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">this</span>.dashboard.destroy();
+        }
+    });
+
+    <span class="keyword">return</span> DashboardView;
+});</code></pre>
+
+
+</div>
+ 

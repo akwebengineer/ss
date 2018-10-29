@@ -1,0 +1,142 @@
+<div>
+    <h1 id="layout-widget">Layout Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Layout widget is a reusable graphical user interface that allows users to render a complex layout with multiple panels.</p>
+<h2 id="api">API</h2>
+<p>The Layout widget follows the widget programming interface standards, therefore it exposes: build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has the following parameters:</p>
+<pre><code>{
+    container:  &lt;DOM object that defines where the widget will be rendered&gt;
+    panels: &lt;Array of objects that defines the panels that will be rendered and that is part of a layout. It should be an array with objects with the following parameters:&gt;
+    id: &lt;String, defines the id of the panel, required. The id should be unique in the layout configuration.&gt;
+    content: &lt;Array or Slipstream view, required. Defines content of the panel and represented by a [Slipstream view](docs/Views.md) object data type or an array of Objects if the content of the panel is expected to be another sets of panels.&gt;
+    height: &lt;number that defines the height of a panel. The height of this item is relative to the other children of its parent in percent.&gt;
+    width: &lt;number that defines the width of a panel. The width of this item is relative to the other children of its parent in percent.&gt;
+    isClosable &lt;boolean that determines if the panel is closable. If false, the close icon on the items tab will be hidden . Default value is false.
+    type &lt;String that defines the type of the panel. Possible values are &#39;row&#39;, &#39;column&#39;, or &#39;component&#39;. row and column should be used when content is an array of other panels. component should be used when the content is a [Slipstream view](docs/Views.md) and is the default value.
+}</code></pre>
+<p>For example, a layout widget could be instantiated with the following configuration:</p>
+<pre><code>    var layoutWidget = new LayoutWidget({
+                                     container:  layoutContainer,
+                                     panels: panelsArray
+                                 });</code></pre>
+<p>where the panelsArray variable for the panels parameter is an array of objects. For example:</p>
+<pre><code>    var panelsArray = [{
+       type: &#39;column&#39;,
+       id: &#39;grids&#39;,
+       content: [{
+           id:&quot;simpleGrid&quot;,
+           content:new SimpleGridView(),
+           height: 70,
+           width: 70
+       },{
+           id:&quot;smallGrid&quot;,
+           height: 30,
+           width: 100,
+           content: new SmallGrid(),
+           isClosable: true
+       }]
+    }];</code></pre>
+<h3 id="container">container</h3>
+<p>The container parameter represents the DOM element that will contain the layout widget.</p>
+<h3 id="panels">panels</h3>
+<p>The panels parameter represents the panels that will be rendered and that is part of a layout. It should be an array with objects with the following parameters:</p>
+<ul>
+<li>id: id of the panel and represented by a string primitive data type. The id should be unique in the layout configuration.</li>
+<li>content: content of the panel and represented by a Slipstream view object data type <a href="docs/Views.md">Slipstream view</a> or an array of Objects if the content of the panel is expected to be another sets of panels.</li>
+<li>height <optional>: defines the height of a panel. The height of this item is relative to the other children of its parent in percent. If it is not specified, then the panels height will take the available height.</li>
+<li>width <optional>: defines the height of a panel. The width of this item is relative to the other children of its parent in percent. If it not specified, then the panel width will be divided equally among the available width.</li>
+<li>isClosable <optional>: determines if the panel is closable. If false, the close icon on the items tab will be hidden . Default value is false.</li>
+<li>isExpandable <optional>: determines if the panel is expandable/collapsable. If false, the expand icon on the items tab will be hidden . Default value is false.</li>
+<li>type <optional>: Define the type of the panel. Possible values are &#39;row&#39;, &#39;column&#39;, or &#39;component&#39;. row and column should be used when content is an array of other panels. component should be used when the content is a <a href="docs/Views.md">Slipstream view</a>, it is the default value.</li>
+</ul>
+<p>For example:</p>
+<pre><code>    var panelsArray = [{
+       type: &#39;column&#39;,
+       id: &#39;grids&#39;,
+       content: [{
+           id:&quot;simpleGrid&quot;,
+           content:new SimpleGridView(),
+           height: 70,
+           width: 70
+       },{
+           id:&quot;smallGrid&quot;,
+           height: 30,
+           width: 100,
+           content: new SmallGrid(),
+           isClosable: true
+       }]
+    }];</code></pre>
+<p>A column type will render panels horizontally. A row type will render panels vertically, next to each other. A combination of them is possible when the content of one of the panels define a group of panels by using an array of objects.</p>
+<h2 id="build">build</h2>
+<p>Adds the dom elements and events of the Layout widget in the specified container. For example:</p>
+<pre><code>    layoutWidget.build();</code></pre>
+<h2 id="destroy">destroy</h2>
+<p>Clean up the specified container from the resources created by the Layout widget.</p>
+<pre><code>    layoutWidget.destroy();</code></pre>
+<h2 id="updatepanel">updatePanel</h2>
+<p>Updates the content of a panel by creating the new panel or updating an existing one. It requires the itemConfiguration parameter:</p>
+<ul>
+<li>itemConfiguration - Configuration of the panel to add/update with same parameters defined for content</li>
+<li>location - by default, a panel will be added at the end of the layout (either at he bottom of the grid if the type of panels is column or at the right if the type is row). If the location is defined as an object with a parentId parameter as the id of the parent panel, then the panel will be added as a child. This option is currently not available in Slipstream, as of now, all panels added using the updatePanel will be added at the end of the layout.</li>
+</ul>
+<p>For example:</p>
+<pre><code>    layoutWidget.updatePanel({
+            id:&quot;quickView&quot;,
+            height: 70,
+            width: 30,
+            content: quickView,
+            isClosable: true
+        }, {
+            parentId: &#39;simpleGridQuickView&#39;
+    });</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To include the layout widget, define the container, and the panels (name and views). For example:</p>
+<pre><code>    new LayoutWidget({
+        container: layoutContainer,
+        panels: [{
+            type: &#39;column&#39;,
+            id: &#39;grids&#39;,
+            content: [{
+                    id:&quot;simpleGrid&quot;,
+                    content:new SimpleGridView(),
+                    height: 70,
+                    width: 100
+                },{
+                    id:&quot;smallGrid&quot;,
+                    height: 30,
+                    width: 100,
+                    content: new SmallGrid(),
+                    isClosable: true
+            }]
+        }]
+    }).build();</code></pre>
+<p>Or for a layout that will have a dynamic panel (updatePanel method):</p>
+<pre><code>    new LayoutWidget({
+        container: layoutContainer,
+        panels: [{
+            type: &#39;column&#39;,
+            id: &#39;grids&#39;,
+            content: [{
+                type: &#39;row&#39;,
+                id:&quot;simpleGridQuickView&quot;,
+                content: [{
+                    id:&quot;simpleGrid&quot;,
+                    content:new SimpleGridView(),
+                    height: 70,
+                    width: 70
+                }]
+            },{
+                id:&quot;smallGrid&quot;,
+                height: 30,
+                width: 100,
+                content: new SmallGrid(),
+                isClosable: true
+            }]
+        }]
+    }).build();</code></pre>
+
+
+</div>
+ 

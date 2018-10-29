@@ -1,0 +1,214 @@
+.tree-widget {
+  @import "../../js/vendor/jquery/jstree/themes/default/style";
+
+  $sprite: "/assets/images/icon-sprite.svg";
+  $checkbox: "/assets/images/background/icon_checkbox.svg";
+  $checkbox-checked: "/assets/images/background/icon_checkbox_checked.svg";
+  $small-arrow-down-selected: "/assets/images/background/icon_nav_sm_arrow_down_hover.svg";
+  $small-arrow-right-selected: "/assets/images/background/icon_nav_sm_arrow_right_hover.svg";
+  $small-arrow-down: "/assets/images/background/icon_nav_sm_arrow_down.svg";
+  $small-arrow-right: "/assets/images/background/icon_nav_sm_arrow_right.svg";
+  $big-arrow-down-selected: "/assets/images/background/icon_nav_big_arrow_down_hover.svg";
+  $big-arrow-right-selected: "/assets/images/background/icon_nav_big_arrow_right_hover.svg";
+  $big-arrow-down: "/assets/images/background/icon_nav_big_arrow_down.svg";
+  $big-arrow-right: "/assets/images/background/icon_nav_big_arrow_right.svg";
+  $default-grey-color: #444444;
+  $selected-blue-color: #008991;
+  @mixin sprite-background() {
+    background-image: url($sprite);
+  }
+
+  .jstree-default .jstree-icon {
+    @include sprite-background();
+  }
+
+  #jstree-dnd.jstree-default .jstree-ok,
+  #jstree-dnd.jstree-default .jstree-er {
+    @include sprite-background();
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }
+
+  .jstree-default-small .jstree-node,
+  .jstree-default-small .jstree-icon {
+    @include sprite-background();
+  }
+
+  #jstree-dnd.jstree-default-small .jstree-ok,
+  #jstree-dnd.jstree-default-small .jstree-er {
+    @include sprite-background();
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }
+
+  .jstree-default-large .jstree-node,
+  .jstree-default-large .jstree-icon {
+    @include sprite-background();
+  }
+
+  #jstree-dnd.jstree-default-large .jstree-ok,
+  #jstree-dnd.jstree-default-large .jstree-er {
+    @include sprite-background();
+    background-repeat: no-repeat;
+    background-color: transparent;
+  }
+
+  .jstree-default .jstree-node,
+  .jstree-default .jstree-icon {
+    @include sprite-background();
+  }
+
+  .jstree-default{
+    .jstree-icon:empty {
+      height: 16px;
+      width: 16px;
+      line-height: 16px;
+    }
+    .jstree-anchor {      
+      font-size: 12px;
+    }
+    .jstree-checkbox {
+      background-image: url($checkbox);
+      background-position: 0px;
+      margin-left: 6px;
+      margin-right: 6px;
+      margin-top: 4px;
+      @extend .icon_checkbox-bg-dims;
+    }
+    .jstree-checkbox:hover {
+      background-image: url($checkbox);
+      background-position: 0px;
+      @extend .icon_checkbox-bg-dims;
+    }
+  }
+
+
+
+    
+  .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox,
+  .jstree-default .jstree-checked > .jstree-checkbox {
+    background-image: url($checkbox-checked);
+    background-position: 0px;
+    @extend .icon_checkbox_checked-bg-dims;
+  }
+
+  .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox:hover,
+  .jstree-default .jstree-checked > .jstree-checkbox:hover {
+    background-image: url($checkbox-checked);
+    background-position: 0px;
+    @extend .icon_checkbox_checked-bg-dims;
+  }
+
+  .jstree-default{
+    .jstree-leaf {
+      padding-left: 2px;
+    }
+    .jstree-closed {
+      padding-left: 3px;
+    }
+    .jstree-hovered {
+      background: inherit;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .jstree-clicked {
+      background: inherit;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .jstree-checkbox-no-clicked .jstree-clicked.jstree-hovered {
+      background: inherit;
+    }
+    .jstree-anchor > .jstree-undetermined {
+      background-position: 0px;
+    }
+    .jstree-anchor > .jstree-undetermined:hover {
+      background-position: 0px;
+    }
+    .jstree-search {
+      font-style: inherit;
+      color: inherit;
+      font-weight: inherit;
+    }
+    .jstree-container-ul {
+
+      .jstree-node[aria-expanded="true"]>.jstree-anchor {
+        font-weight:bold;        
+        font-size: 12px;
+        color: $default-grey-color;
+
+      }
+      .jstree-node[aria-selected="true"]>.jstree-anchor{
+        font-weight:bold;        
+        font-size: 12px;
+        color: $selected-blue-color;
+      }
+      &>.jstree-node[aria-expanded="false"]> .jstree-ocl{
+        background: url($big-arrow-right) no-repeat;
+        background-position: 0px 0px;
+        margin-top: 4px;
+        margin-right: 10px;
+        width: 8px;
+        height: 14px;
+      }
+      &>.jstree-node[aria-expanded="true"]> .jstree-ocl{
+        background: url($big-arrow-down) no-repeat;
+        background-position: 0px 0px;
+        margin-top: 8px;
+        margin-right: 10px;
+        width: 14px;
+        height: 14px;
+      }
+      &>.jstree-node[aria-selected="true"][aria-expanded="false"]> .jstree-ocl{
+        background: url($big-arrow-right-selected) no-repeat;
+        background-position: 0px 0px;
+        margin-top: 4px;
+        margin-right: 10px;
+        width: 8.4px;
+        height: 14px;
+      }
+      &>.jstree-node[aria-selected="true"][aria-expanded="true"]> .jstree-ocl{
+        background: url($big-arrow-down-selected) no-repeat;
+        background-position: 0px 0px;
+        margin-top: 8px;
+        margin-right: 10px;
+        width: 14px;
+        height: 14px;
+      }
+      .jstree-children{
+        .jstree-closed> .jstree-ocl{
+          background: url($small-arrow-right) no-repeat;
+          width: 4.8px;
+          height: 8px;
+          background-position: 0px 0px;
+          margin-top: 8px;
+          margin-right: 10px;
+        }
+        .jstree-open> .jstree-ocl{
+          background: url($small-arrow-down) no-repeat;
+          width: 8px;
+          height: 8px;
+          background-position: 0px 0px;
+          margin-top: 10px;
+          margin-right: 10px;
+        }
+        .jstree-closed[aria-selected="true"]> .jstree-ocl{
+          background: url($small-arrow-right-selected) no-repeat;
+          width: 4.8px;
+          height: 8px;
+          background-position: 0px 0px;
+          margin-top: 8px;
+          margin-right: 10px;
+        }
+        .jstree-open[aria-selected="true"]> .jstree-ocl{
+          background: url($small-arrow-down-selected) no-repeat;
+          width: 8px;
+          height: 8px;
+          background-position: 0px 0px;
+          margin-top: 10px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,175 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-intent">Slipstream.SDK.Intent</h1>
+<p>An Intent describes an action to be performed as part of a workflow and the type of the data on which to perform that action. The data type can be described using a MIME type and/or a URI.  Intents are matched against the activity filters defined in plugin manifest files in order to find activities that satisfy the intent.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.Intent(action, data)</code></pre>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><p><strong>action</strong>
+The action to be performed by the target activity.</p>
+</li>
+<li><p><strong>data</strong>
+An object describing the data to be operated on by the activity.  This object can contain one or both of the following attributes:</p>
+</li>
+<li><p><strong>uri</strong>
+The URI of the data to be operated on.  During activity resolution, the segments of the URI are matched against those specified in the activity filters defined in each plugin&#39;s manifest.</p>
+<p><strong>Note</strong>: The URI <em>scheme</em> is the only segment currently supported.</p>
+</li>
+<li><p><strong>mime_type</strong>
+The MIME type of the data to be operated on.  The MIME type is matched against the type specified in the activity filters defined in each plugin&#39;s manifest. </p>
+<p>An Intent matches an activity if and only if the specified MIME type and URI match the MIME type and URI segments declared in one of the activity&#39;s filters.</p>
+</li>
+</ul>
+<h4 id="standard-actions">Standard Actions</h4>
+<ul>
+<li><p><strong>Slipstream.SDK.Intent.action.AUTHENTICATE</strong> = &quot;slipstream.intent.action.AUTHENTICATE&quot;</p>
+<p> Allow a user to authenticate himself to the system.</p>
+<p> Input data required: None</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.VIEW</strong> = &quot;slipstream.intent.action.VIEW&quot;</p>
+<p>  View the definition of a resource</p>
+<p>   Input data required:  The URI of the resource to be viewed.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.LIST</strong> = &quot;slipstream.intent.action.LIST&quot;</p>
+<p>   Display a list of resources of the given type.</p>
+<p>   Input data required:  The MIME type of the resources to be listed.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.CREATE</strong> = &quot;slipstream.intent.action.CREATE&quot;</p>
+<p> Create a resource of the given type.</p>
+<p> Input data required: The MIME type of the resource to be created.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.EDIT</strong> = &quot;slipstream.intent.action.EDIT&quot;</p>
+<p>  Edit a resource.  Similar to ACTION_VIEW except that ACTION_EDIT allows the resource to be modified.</p>
+<p>  Input data required: The URI of the resource to be edited.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.CLONE</strong> = &quot;slipstream.intent.action.CLONE&quot;</p>
+<p>  Clone a resource.  Similar to ACTION_CREATE except that ACTION_CLONE accepts a resource id and populates
+  the creation form based on the properties of the identified resource.</p>
+<p>  Input data required: The URI of the resource to be cloned.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.SELECT</strong> = &quot;slipstream.intent.action.SELECT&quot;</p>
+<p>  Allows selection from the list of resources.</p>
+<p>  Input data required: An optional list of resources already selected.</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.ASSIST</strong> = &quot;slipstream.intent.action.ASSIST&quot;</p>
+<p> Provide user assistance for a given topic</p>
+<p> Input data required:  The URI of the help topic to be displayed.
+ <em>example</em>: help://[path_to_topic]</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.SEARCH</strong> = &quot;slipstream.intent.action.SEARCH&quot;</p>
+<p> Search for resources that match a query.</p>
+<p> Input data required:  The URI of the search query to be executed.
+ <em>example</em>: search://query</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.MONITOR</strong> = &quot;slipstream.intent.action.MONITOR&quot;</p>
+<p> Display a dashboard of system health and performance monitoring data.</p>
+<p> Input data required: None</p>
+</li>
+<li><p><strong>Slipstream.SDK.Intent.action.QUICK_SETUP</strong> = &quot;slipstream.intent.action.QUICK_SETUP&quot;</p>
+<p>  Perform a quick setup of some portion of the configuration.</p>
+<p>  Input data required: A URI identifying the configuration area to be configured.  eg. setup://initial, setup://vpn</p>
+</li>
+</ul>
+<h2 id="description">Description</h2>
+<p>When a plugin needs to perform some action that is not implemented in one of its own workflows, it can create an Intent describing the action to be performed and the type of data on which to perform it.  This intent can then be used to <a href="">lookup</a> or <a href="">start</a> an activity that satisfies the requirements of the intent.</p>
+<p>plugin.json:</p>
+<pre><code class="language-json">&quot;activities&quot;: [
+    {
+        &quot;url_path&quot;: &quot;/&quot;,
+        &quot;module&quot;: &quot;mapActivity&quot;,
+        &quot;filters&quot;: [
+            {
+                &quot;action&quot;: &quot;VIEW&quot;,
+                &quot;data&quot;: {
+                    &quot;scheme&quot;: &quot;geo&quot;
+                }
+            }
+        ]
+    }
+]</code></pre>
+<p>activity.js:</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> uri = <span class="keyword">new</span> URI(“geo:<span class="number">34.57</span>,-<span class="number">128.43</span>”);
+<span class="keyword">var</span> intent = <span class="keyword">new</span> Slipstream.SDK.Intent(Slipstream.Intent.action.VIEW, uri);
+
+<span class="keyword">var</span> activity = <span class="keyword">this</span>.context.lookupActivity(intent);
+<span class="keyword">if</span> (activity) {
+    <span class="keyword">this</span>.context.startActivity(intent);
+}</code></pre>
+<p>An activity can obtain the intent used to start it by reading its <em>intent</em> property.</p>
+<pre><code class="language-javascript"><span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    ...
+    <span class="keyword">var</span> myIntent = <span class="keyword">this</span>.intent;
+    ...
+}</code></pre>
+<h2 id="intent-instances">Intent Instances</h2>
+<p>All Intent instances inherit from Intent.prototype.</p>
+<h3 id="properties">Properties</h3>
+<p>See <a href="#standard-actions">Standard Actions</a> for a list of properties defining standard Intent actions.</p>
+<ul>
+<li><h4 id="action">action</h4>
+<p>The action to be performed by the target activity.</p>
+</li>
+<li><h4 id="data">data</h4>
+<p>An object describing the <a href="#parameters">data</a> to be operated on by the activity.</p>
+</li>
+<li><h4 id="extras">extras</h4>
+<p>An object storing additional parameters for the matching activity&#39;s consumption.</p>
+</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="putextras-extras-">putExtras(extras)</h4>
+<p>Method to allow passing arbitrary data for matching activity&#39;s consumption. extras can be a complex object. Calling this method multiple times on same intent overwrites previous values.</p>
+</li>
+<li><h4 id="getextras">getExtras</h4>
+<p>Method to retrieve the extras stored in this intent object into a JavaScript object.</p>
+</li>
+</ul>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

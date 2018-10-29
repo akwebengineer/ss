@@ -1,0 +1,414 @@
+<div>
+    <h1 id="map-widget">Map Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The Map widget is a UI control that provides map-like behavior.</p>
+<h2 id="api">API</h2>
+<p>The Map widget follows the widget programming interface standards, therefore it implements the build and destroy methods. A configuration object is passed to its constructor which is used to configure the many options of the map widget.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The map widget has many configurable options.  The absolute minimum configuration parameters that must be declared by any client application is a container and a geoJsonObject.  </p>
+<p>The minimum configuration object has the following parameters:</p>
+<pre><code class="language-json">{
+  container: &lt;DOM object that defines where the widget will be rendered&gt;,
+  geoJsonObject: &lt;a javascript object that was parsed from a geoJson data formatted source - ie. a geojson.json file.&gt;
+}</code></pre>
+<p>The container that will have a map widget can be any block element but commonly is a div. For example:</p>
+<pre><code>&lt;div class=&quot;.map&quot;&gt;&lt;/div&gt;</code></pre>
+<h3 id="geojsonobject">geoJsonObject</h3>
+<p>The geoJsonObject parameter will be consumed by the Map Widget to acquire information about the geographic features to be rendered on the map.  </p>
+<p>The geoJsonObject should have been parsed using JSON.parse(data); where data is the raw (geo) json file.  The raw geojson data should adhere to the geojson formatting standard.  A default geojson file has been provided and can be found at:  </p>
+<pre><code>% public/widgets/map/conf/countries.geojson.json</code></pre>
+<p>This geojson file embodies the world map and contains every continent and every country circa 2015.</p>
+<p>A minimum Map widget with default configuration values should be instantiated with:</p>
+<pre><code class="language-javascript"><span class="comment">// rawGeoJsonData (json) should have been acquired from some data source.</span>
+<span class="keyword">var</span> mapWidget = <span class="keyword">new</span> MapWidget({
+    <span class="string">"container"</span>: <span class="keyword">this</span>.$el.find(<span class="string">'.map'</span>),
+    <span class="string">"geoJsonObject"</span>: JSON.parse(rawGeoJsonData)
+});</code></pre>
+<p>Custom data can be appended to each &#39;feature&#39; in the geoJson object and be rendered on the feature itself.  Usually this will be some color value whose color is a function of the custom value itself.  See &#39;getColor&#39; for more details.</p>
+<p>The <em>container</em> and the <em>geoJsonObject</em> parameters are the only mandatory parameters that a client must supply in order for the map widget to render.</p>
+<p>If you instantiate a map widget with the above (bare minimum) configuration you will get a gray map.  When you hover your mouse over any country you should see the hovered over country become highlighted.  By default the highlight styling is such that the country&#39;s outline is colored yellow.  The highlight styling of any given country is configurable.</p>
+<p>(Again every configuration option below this point is optional)</p>
+<h2 id="optional-configuration-parameters">Optional Configuration Parameters</h2>
+<p>All optional configuration parameters will be specified in an options object hash.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> mapWidget = <span class="keyword">new</span> MapWidget({
+    <span class="string">'container'</span>     : <span class="keyword">this</span>.$el.find(<span class="string">'.map'</span>),
+    <span class="string">'geoJsonObject'</span> : JSON.parse(geoJsonData),
+    <span class="string">'options'</span>       : {
+        <span class="string">'highlightCountryStyle'</span>   : {...},
+        <span class="string">'defaultCountryStyle'</span>     : {...}      
+        ...
+    }
+});</code></pre>
+<h3 id="highlightcountrystyle">highlightCountryStyle</h3>
+<p>The highlightCountryStyle parameter represents the styling of a geoJson feature should a country become highlighted.  This is not a behavioral parameter - rather, as the name describes, it is merely a styling.  A highlightCountryStyle style object must embody these parameters:</p>
+<pre><code class="language-json">    {
+        weight          : 2,
+        color           : &#39;red&#39;,        // outline color
+        dashArray       : &#39;&#39;,
+        fillOpacity     : 0.7,
+        fillColor       : &#39;cyan&#39;        
+    }</code></pre>
+<p>Every parameter in the object hash (excluding fillColor) will describe attributes of the geojson feature for highlighting.  </p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>color</td>
+<td>String</td>
+<td>white</td>
+<td>Stroke color.</td>
+</tr>
+<tr>
+<td>weight</td>
+<td>Number</td>
+<td>2</td>
+<td>Stroke width in pixels.</td>
+</tr>
+<tr>
+<td>opacity</td>
+<td>Number</td>
+<td>1</td>
+<td>Stroke opacity.</td>
+</tr>
+<tr>
+<td>dashArray</td>
+<td>String</td>
+<td><empty string></td>
+<td>A string that defines the stroke dash pattern.</td>
+</tr>
+<tr>
+<td>fillOpacity</td>
+<td>Number</td>
+<td>0.7</td>
+<td>Fill opacity.</td>
+</tr>
+<tr>
+<td>fillColor</td>
+<td>String</td>
+<td>#808080</td>
+<td>Fill Color.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="defaultcountrystyle">defaultCountryStyle</h3>
+<p>The defaultCountryStyle parameter represents the styling of a geoJson feature by default - when there are no events, etc.  Essentially a feature&#39;s default state.  This is not a behavioral parameter - rather, as the name describes, it is merely a styling.  A highlightCountryStyle style object must embody these parameters:</p>
+<pre><code class="language-json">    {
+        weight          : 2,
+        color           : &#39;red&#39;,        // outline color
+        dashArray       : &#39;&#39;,
+        fillOpacity     : 0.7
+    }</code></pre>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>color</td>
+<td>String</td>
+<td>white</td>
+<td>Stroke color.</td>
+</tr>
+<tr>
+<td>weight</td>
+<td>Number</td>
+<td>1</td>
+<td>Stroke width in pixels.</td>
+</tr>
+<tr>
+<td>opacity</td>
+<td>Number</td>
+<td>1</td>
+<td>Stroke opacity.</td>
+</tr>
+<tr>
+<td>dashArray</td>
+<td>String</td>
+<td>3</td>
+<td>A string that defines the stroke dash pattern.</td>
+</tr>
+<tr>
+<td>fillOpacity</td>
+<td>Number</td>
+<td>0.7</td>
+<td>Fill opacity.</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that there is no &#39;fillColor&#39; attribute like there is for highlightCountryStyle.  This is to facilitate the default state of a feature to be a function of some value.  For example, if you wanted to render a choropleth map based on threat events, each country would have a different number of threat events.  If you are rendering a choropleth map then you would want the shading of each country to be a function of some color range.  This takes us to the next configurable parameters - getColor and dataPropertyKey.</p>
+<h3 id="getcolor-and-datapropertykey">getColor and dataPropertyKey</h3>
+<p>First, these two parameters should be specified together.  Why?  Because the getColor should be defined as a function.  The purpose of this function is to provide the features on your map with a default fill color.  As explained above, if you want each of your features (countries, states, provinces, prefectures, etc) to have it&#39;s color be a function of some value then you must provide these two parameters.  An example of getColor could like like this:</p>
+<pre><code class="language-javascript">    <span class="string">'getColor'</span> : <span class="function"><span class="keyword">function</span><span class="params">(datum)</span>{</span>
+        <span class="keyword">if</span>(datum&lt;=<span class="number">5</span>) <span class="keyword">return</span> <span class="string">'red'</span>;
+        <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">'blue'</span>;
+    }</code></pre>
+<p>The getColor function will be invoked by the map widget to get the color of a feature when the map is rendered and updated.</p>
+<p>What is the &#39;datum&#39; parameter you ask?  &#39;datum&#39; is value of the attribute on the geojson feature that is indexed by the dataPropertyKey.  Confused?  Here&#39;s an example.</p>
+<p>I have geoJson feature here (a single entry in a geojson record):</p>
+<pre><code class="language-json">{
+   "<span class="attribute">type</span>":<span class="value"><span class="string">"Feature"</span></span>,
+   "<span class="attribute">properties</span>":<span class="value">{
+      "<span class="attribute">threatEventCount</span>" : <span class="value"><span class="number">4</span></span>,
+      "<span class="attribute">scalerank</span>":<span class="value"><span class="number">1</span></span>,
+      "<span class="attribute">sovereignt</span>":<span class="value"><span class="string">"Argentina"</span></span>,
+      "<span class="attribute">sov_a3</span>":<span class="value"><span class="string">"ARG"</span></span>,
+      "<span class="attribute">name</span>":<span class="value"><span class="string">"Argentina"</span></span>,
+      "<span class="attribute">abbrev</span>":<span class="value"><span class="string">"Arg."</span></span>,
+      "<span class="attribute">postal</span>":<span class="value"><span class="string">"AR"</span></span>,
+      "<span class="attribute">formal_en</span>":<span class="value"><span class="string">"Argentine Republic"</span></span>,
+      "<span class="attribute">continent</span>":<span class="value"><span class="string">"South America"</span></span>,
+      "<span class="attribute">region_un</span>":<span class="value"><span class="string">"Americas"</span></span>,
+      "<span class="attribute">region_wb</span>":<span class="value"><span class="string">"Latin America &amp; Caribbean"</span></span>,
+      "<span class="attribute">geometry</span>":<span class="value">{
+         "<span class="attribute">type</span>":<span class="value"><span class="string">"MultiPolygon"</span></span>,
+         "<span class="attribute">coordinates</span>":<span class="value">[
+            [
+               [
+                  [
+                     -<span class="number">65.5</span>,
+                     -<span class="number">55.2</span>
+                  ],
+                    ...
+                  ],
+                  [
+                     -<span class="number">64.964892137294584</span>,
+                     -<span class="number">22.075861504812352</span>
+                  ]
+               ]
+            ]
+         ]
+      </span>}
+   </span>}
+</span>}</code></pre>
+<p>There is a lot of data here just for a single feature - but here we have the country Argentina.  Notice that there is a &#39;properties&#39; object hash embedded inside the feature object.  Furthermore, notice that the first property within the properties object hash is &#39;threatEventCount&#39;.</p>
+<p>In this example, if I want to render a choropleth map where the country shading is either red or blue based on the property &#39;threatEventCount&#39;, then the value for my dataPropertyKey will be &#39;threatEventCount&#39;.</p>
+<p>Here is the full map widget instantiation and configuration.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> mapWidget = <span class="keyword">new</span> MapWidget({
+    <span class="string">'container'</span>     : <span class="keyword">this</span>.$el.find(<span class="string">'.map'</span>),
+    <span class="string">'geoJsonObject'</span> : JSON.parse(geoJsonData),
+    <span class="string">'options'</span>       : {
+        <span class="string">'getColor'</span>          : <span class="function"><span class="keyword">function</span><span class="params">(datum)</span>{</span>
+                                <span class="keyword">if</span>(datum&lt;=<span class="number">5</span>) <span class="keyword">return</span> <span class="string">'red'</span>;
+                                <span class="keyword">else</span> <span class="keyword">return</span> <span class="string">'blue'</span>;
+                              },
+        <span class="string">'dataPropertyKey'</span>   : <span class="string">'threatEventCount'</span>
+    }
+});</code></pre>
+<p>Given this configuration, in what color will Argentina render?  Try it!</p>
+<h3 id="defaultcountriescolor">defaultCountriesColor</h3>
+<p>What if you do not want to create a choropleth map and just want every map feature to be uniform in color you should specify this parameter.</p>
+<pre><code class="language-javascript"><span class="string">'defaultCountriesColor'</span> : <span class="string">'#808080'</span> <span class="comment">// default country color if 'getColor' has NOT been defined.</span></code></pre>
+<h3 id="getpopovercontent">getPopoverContent</h3>
+<p>As the name of this optional parameter suggests, the value that the client shall provide is a function that returns a string or HTML element.  The developer should keep in mind that the value returned by this function will be used to render content in a popover.  That is the single purpose of providing this parameter - just content for a popover.  The &#39;getPopoverContent&#39; function will be invoked by the Map Widget and when invoked will pass in an argument whose value will be the target feature from which the event originated.  Ie. If a user clicks on Argentina and a popover is to open, then &#39;getPopoverContent&#39; will be invoked where the argument provided to the function invocation will be the Argentina javascript object.  </p>
+<p>Below is an example configuration that returns the name of the map feature that was clicked.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> mapWidget = <span class="keyword">new</span> MapWidget({
+    <span class="string">'container'</span>     : <span class="keyword">this</span>.$el.find(<span class="string">'.map'</span>),
+    <span class="string">'geoJsonObject'</span> : JSON.parse(geoJsonData),
+    <span class="string">'options'</span>       : {
+        <span class="string">'getPopoverContent'</span> : <span class="function"><span class="keyword">function</span><span class="params">(countryObject)</span>{</span>
+                                <span class="keyword">var</span> countryName = countryObject.properties.name.trim();
+                                <span class="keyword">var</span> contentString = <span class="string">'&lt;div&gt;'</span> + countryName + <span class="string">'&lt;/div&gt;'</span>
+                                <span class="keyword">return</span> contentString;
+                        }  
+    }
+});</code></pre>
+<p>An additional example is provided at:  <Slipstream root directory>/public/assets/js/widgets/map/tests/popoverView/testMap.html.  The purpose of this example is to exhibit the usage of a Slipstream View within &#39;getPopoverContent&#39;.</p>
+<h3 id="gethovercontent">getHoverContent</h3>
+<p>The &#39;getHoverContent&#39; should be used in the exact same manner as &#39;getPopoverContent&#39;.  So please refer to the docuementation for &#39;getPopoverContent&#39;.  The &#39;getHoverContent&#39; function should be provided only if you want a pop over to appear on hover events.  If not provided then no hover behavior will activated.</p>
+<h3 id="animateline">animateLine</h3>
+<p>The &#39;animateLine&#39; should be used to perform an animation.  To perform an animation the client must provide four parameters.  The source, destination, fadeTime and lineColor.  Both, the source and destiation, must be an object hash that contains a &#39;lat&#39; and &#39;lng&#39; property where the values are are of type number.  The fadeTime property must be of type number and positive.  The lineColor can be either a valid html supported color string or hex value.</p>
+<h3 id="animatesprite">animateSprite</h3>
+<p>The &#39;animateSprite&#39; should be used to perform an animation where the animation involves an object moving from one source point to another destination point.  To perform an animation the client must provide 3 parameters.  The source, destination and lineColor.  Both, the source and destiation, must be an object hash that contains a &#39;lat&#39; and &#39;lng&#39; property where the values are are of type number.  The lineColor can be either a valid html supported color string or hex value.  The lineColor will be used to visually fill in the sprite object.</p>
+<h3 id="mapbackgroundcolor">mapBackgroundColor</h3>
+<p>The &#39;mapBackgroundColor&#39; configuration option can be used to set the background of the map (ie.  the oceans).  As with all color based config options, the valid values are legal html color value strings or hex values.</p>
+<h3 id="unknowncountry">unknownCountry</h3>
+<p>The &#39;unknownCountry&#39; option should be used to specify an unknown continent on the map widget.  By default the &#39;unknownCountry&#39; is specified.
+The &#39;unknownCountry&#39; option is specified as an object hash.  The properties of the object are described in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>defaultImage</td>
+<td>String</td>
+<td>/assets/images/unknown_country_live.svg</td>
+<td>The path to the image resource to be used to represent the unknown country.</td>
+</tr>
+<tr>
+<td>coordinates</td>
+<td>Object</td>
+<td>{lat: -49.61, lng: -12.83}</td>
+<td>An object that has properties &#39;lat&#39; and &#39;lng&#39; for the latitude and longitude geo coordinates.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Unknown</td>
+<td>A string value that will be used to name the unknown country.</td>
+</tr>
+<tr>
+<td>iso_a2</td>
+<td>String</td>
+<td>qq</td>
+<td>A string of length 2 that should be used to uniquely identify the unknown country.  This could be used by the client to apply a flag via css or to lookup the unknown country in the client side model.</td>
+</tr>
+</tbody>
+</table>
+<p>The author of this documentation recommends using the website:  <a href="http://www.latlong.net/">http://www.latlong.net/</a> to find the (latitude and longitude) coordinates of where you want to place the unknownCountry.</p>
+<p>The remaining options (below in the table) should be added to the options object described and used above (in the previous examples).</p>
+<h2 id="other-map-options">Other Map Options</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Desciption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mapCenter</td>
+<td>Array</td>
+<td>29.278420174798246, -5.309598025402226</td>
+<td>Initial geographical center of the map. Array elements should be ordered as [longitude, latitude]</td>
+</tr>
+<tr>
+<td>isDraggable</td>
+<td>Boolean</td>
+<td>true</td>
+<td>Whether the map be draggable with mouse/touch or not.</td>
+</tr>
+<tr>
+<td>minZoom</td>
+<td>Number</td>
+<td>2.0</td>
+<td>Minimum zoom level of the map.</td>
+</tr>
+<tr>
+<td>maxZoom</td>
+<td>Number</td>
+<td>5</td>
+<td>Maximum zoom level of the map.</td>
+</tr>
+<tr>
+<td>zoomLevel</td>
+<td>Number</td>
+<td>1.8</td>
+<td>Initial map zoom.</td>
+</tr>
+<tr>
+<td>zoomControl</td>
+<td>Boolean</td>
+<td>true</td>
+<td>Whether the zoom UI controls (+ / -) are added to the map.</td>
+</tr>
+<tr>
+<td>doubleClickZoom</td>
+<td>Boolean</td>
+<td>true</td>
+<td>Whether the map can be zoomed in by double clicking on it and zoomed out by double clicking while holding shift.</td>
+</tr>
+<tr>
+<td>scrollWheelZoom</td>
+<td>Boolean</td>
+<td>false</td>
+<td>Whether the map can be zoomed by using the mouse wheel.</td>
+</tr>
+<tr>
+<td>touchZoom</td>
+<td>Boolean</td>
+<td>false</td>
+<td>Whether the map can be zoomed by touch-dragging with two fingers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="map-widget-methods">Map Widget Methods</h2>
+<h3 id="build">build</h3>
+<p>Standard Slipstream widget lifecycle method.  Adds the dom elements and events of the Map widget in the specified container. For example:</p>
+<pre><code class="language-javascript">mapWidget.build();</code></pre>
+<h3 id="destroy">destroy</h3>
+<p>Standard Slipstream widget lifecycle method.  Clean up the specified container from the resources created by the Map widget.</p>
+<pre><code class="language-javascript">mapWidget.destroy();</code></pre>
+<h3 id="addlegend">addLegend</h3>
+<p>Add a legend to the map.  This method has no return value.  There are two required  parameters.  The first parameter is &#39;position&#39;; it is a string.  The set of valid values for position are [&#39;topleft&#39;, &#39;topright&#39;, bottomleft, bottomright].</p>
+<p>The second parameter is &#39;content&#39;.This parameter is the innerHTML content of the legend and therefore can be either a string or an object.</p>
+<h4 id="css-classes-for-the-legend">css classes for the legend</h4>
+<p>In addition to the ability to add a legend to the map, the Slipstream map widget has two predefined css classes that can be optionally used to style the legend content.  These two classes are - <strong>legendTitle</strong> and <strong>legendItem</strong>.</p>
+<p>The recommended usage of <strong>legendTitle</strong> is that it be applied to the html element that contains the legend&#39;s title.</p>
+<pre><code class="language-html">&lt;div class=&quot;legendTitle&quot;&gt;My Legend Title&lt;/div&gt;</code></pre>
+<p>Similarly, the recommended usage of <strong>legendItem</strong> is that it be applied to the html element that contains the legend&#39;s items.</p>
+<pre><code class="language-html">&lt;span class=&quot;legendItem&quot;&gt;
+  &lt;i style=&quot;background: #707070&quot;&gt;&lt;/i&gt;
+  Info
+&lt;/span&gt;
+&lt;span class=&quot;legendItem&quot;&gt;
+  &lt;i style=&quot;background: #808080&quot;&gt;&lt;/i&gt;
+  Warning
+&lt;/span&gt;
+&lt;span class=&quot;legendItem&quot;&gt;
+  &lt;i style=&quot;background: #909090&quot;&gt;&lt;/i&gt;
+  Critical
+&lt;/span&gt;</code></pre>
+<h3 id="removelegend">removeLegend</h3>
+<p> Remove a legend from the map.  This method has no return value.  There is one required parameter.  It is a string that specifies, by position, which legend to remove.  The set of valid values for position are [&#39;topleft&#39;, &#39;topright&#39;, bottomleft, bottomright]. </p>
+<h3 id="invalidatesize">invalidateSize</h3>
+<p> Checks if the map container size changed and updates the map if so — call it after you&#39;ve changed the map size dynamically, also animating pan by default.</p>
+<h3 id="isdraggable">isDraggable</h3>
+<p>Getter for the <strong>isDraggable</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getminzoom">getMinZoom</h3>
+<p>Getter for the <strong>minZoom</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getmaxzoom">getMaxZoom</h3>
+<p>Getter for the <strong>maxZoom</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getmapcenter">getMapCenter</h3>
+<p>Getter for the <strong>mapCenter</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getzoomlevel">getZoomLevel</h3>
+<p>Getter for the <strong>zoomLevel</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getdefaultcountriescolor">getDefaultCountriesColor</h3>
+<p>Getter for the <strong>defaultCountriesColor</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="gethighlightstyle">getHighlightStyle</h3>
+<p>Getter for the <strong>highlightStyle</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getdefaultcountrystyle">getDefaultCountryStyle</h3>
+<p>Getter for the <strong>defaultCountryStyle</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getpopovercontent">getPopoverContent</h3>
+<p>Getter for the <strong>getPopoverContent</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="getdatapropertykey">getDataPropertyKey</h3>
+<p>Getter for the <strong>dataPropertyKet</strong> parameter value of the current map instance.  The returned value should be that which was passed into the MapWidget at constuction time or default.</p>
+<h3 id="createmarkertype">createMarkerType</h3>
+<p>Create a marker.  Returns true if successful, false if creation has failed.The function accepts 2 parmeters but only the first is required.  The first is &#39;key&#39;.  They key should be of type string.  This key will be used to identify the marker type to be created.  If the key already exists the function will return false.  The second (<strong>optional</strong>) parmeter should be the URL to the icon image (absolute or relative to your script path).  The icon image will be used to create a custom marker. </p>
+<h3 id="getmarkertype">getMarkerType</h3>
+<p>Getter to be used to retrieve the marker type of a given type.  There is a required parameter whose value must be a string or object that was used to create the marker type to be retrieved.  If given a valid key, a marker type will be returned.</p>
+<h3 id="addmarker">addMarker</h3>
+<p>Adds a marker in the Map widget and will be rendered on the map.  There are 2 required parameters - the first is &#39;key&#39;.  Key is a string and will be used to specify a marker type.  This marker type must be one that was previously created using &#39;createMarkerType&#39;.  The second parameter is an Array of 2 elements.  These 2 elements are the latitude and logitude values; where latitude is index 0 and longitude is index 1 in the array.  This parameter will be used to specify the geographic point on the map widget where the marker shall be rendered.</p>
+<h3 id="getcolor">getColor</h3>
+<p>Provides a color for a geojson feature (from which the event originated).  The default color returned will be &#39;#808080&#39;.  The return value of this method can be overridden by specifying &#39;getColor&#39; on the options object hash as <strong>getColor</strong>.  There is one parameter that is required; it should be of type string.  The value shall be the attribute on the geojson feature that is indexed by the <strong>dataPropertyKey</strong>.</p>
+<h3 id="getunknowncountryicon">getUnknownCountryIcon</h3>
+<p>Getter for the unknownCountry&#39;s <strong>defaultImage</strong> parameter value of the current map instance.  The returned value should be of String type and that which was passed into the MapWidget at constuction time or default.  If unknownCountry&#39;s value was set to false then this getter should return null.</p>
+<h3 id="getunknowncountrycoordinates">getUnknownCountryCoordinates</h3>
+<p>Getter for the unknownCountry&#39;s <strong>coordinates</strong> parameter value of the current map instance.  The returned value should be an Object type and that which was passed into the MapWidget at constuction time or default.  The latitude can be referenced with key &#39;lat&#39; and the longitude can be refereneced with key &#39;lng&#39;.  If the <strong>unknownCountry</strong>&#39;s value was set to false then this getter should return null.</p>
+<h2 id="glossary">Glossary</h2>
+<p><strong>feature</strong>:  an abstraction for a item on a map - ie country, state, province, prefecture, county, city, building, house, street, tree etc.  A geographic feature.</p>
+<p><strong>geojson</strong>: GeoJSON is a format for encoding a variety of geographic data structures. A GeoJSON object may represent a geometry, a feature, or a collection of features. GeoJSON supports the following geometry types: Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon, and GeometryCollection.</p>
+<p><strong>choropleth map</strong>: a map that uses differences in shading, coloring, or the placing of symbols within predefined areas to indicate the average values of a property or quantity in those areas.</p>
+
+
+</div>
+ 

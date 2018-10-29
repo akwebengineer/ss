@@ -1,0 +1,308 @@
+<div>
+    <h1 id="contextmenu-widget">ContextMenu Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The ContextMenu widget is a reusable graphical user interface that allows users to add a custom right click menu or a click menu to any HTML element or selected container.</p>
+<h2 id="api">API</h2>
+<p>The ContextMenu widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods. Any data required by the widget is passed by its constructor.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has two variables:</p>
+<pre><code>{
+    container: &lt;define the DOM element where the widget will be rendered&gt;,
+    elements: &lt;optional, define the parameters required to build the ContextMenu like items of the menu and callback functions.&gt;,
+    dynamic: &lt;optional, defines a context menu which DOM-footprint will be created every time the menu is opened and destroyed when the menu is hidden&gt;
+
+}</code></pre>
+<p>For example, a ContextMenu widget would be instantiated with:</p>
+<pre><code>new ContextMenuWidget({
+    &quot;elements&quot;: configurationSample,
+    &quot;container&quot;: &#39;.context-menu&#39;
+}).build();</code></pre>
+<p>where the &quot;elements&quot; should be defined in a set of key/value pairs as described in the following section. For example:</p>
+<pre><code>var configurationSample = {
+        &quot;callback&quot;: function(key, opt){ console.log(opt); },
+        &quot;items&quot;: [{
+                &quot;label&quot;:&quot;Edit Rule&quot;,
+                &quot;key&quot;:&quot;edit&quot;
+            },{
+                &quot;label&quot;:&quot;Disable Rule&quot;,
+                &quot;key&quot;:&quot;disable&quot;
+            },{
+                &quot;label&quot;:&quot;Create Rule Before&quot;,
+                &quot;key&quot;:&quot;createBefore&quot;
+        }],
+        &quot;events&quot;: {
+            &quot;show&quot;:function(opt){console.log(&#39;Show Event&#39; + opt);},
+            &quot;hide&quot;:function(opt){console.log(&#39;Hide Event&#39; + opt);}
+        }
+    }</code></pre>
+<h3 id="container">Container</h3>
+<p>It represents the id or the class of the element that will have a ContextMenu.</p>
+<h3 id="elements">Elements</h3>
+<p>It represents an object with the configuration parameters required to build the ContextMenu widget. The parameters are:</p>
+<p><strong>items</strong>
+Defines the items or commands to be listed in contextMenu. For example:</p>
+<pre><code>&quot;items&quot;: [{
+        &quot;label&quot;:&quot;Edit Rule&quot;,
+        &quot;key&quot;:&quot;edit&quot;
+    },{
+        &quot;label&quot;:&quot;Disable Rule&quot;,
+        &quot;key&quot;:&quot;disable&quot;
+    },{
+        &quot;label&quot;:&quot;Copy Rule&quot;,
+        &quot;key&quot;:&quot;copy&quot;
+    },{
+        &quot;label&quot;:&quot;Paste Rule Before&quot;,
+        &quot;key&quot;:&quot;pasteBefore&quot;,
+        &quot;disabled&quot;:true
+    },{
+        &quot;label&quot;:&quot;Paste Rule After&quot;,
+        &quot;key&quot;:&quot;pasteAfter&quot;,
+        &quot;disabled&quot;:true
+    },{
+        &quot;label&quot;:&quot;Delete Rule&quot;,
+        &quot;key&quot;:&quot;delete&quot;
+    },{
+        &quot;label&quot;:&quot;Reset Hit Count&quot;,
+        &quot;key&quot;:&quot;resetHit&quot;
+    },{
+        &quot;label&quot;:&quot;Disable Hit Count&quot;,
+        &quot;key&quot;:&quot;disableHit&quot;
+}]</code></pre>
+<p>An item has the following properties:</p>
+<ul>
+<li><p><strong>label</strong>
+Specifies the label that an item will show when the context menu is opened.</p>
+</li>
+<li><p><strong>key</strong>
+Defines a unique identifier for an item in the context menu.</p>
+</li>
+<li><p><strong>items</strong>
+Defines a second level of menus to be assigned to an item located at the first level menu. The parameters are the same as the one defined for an item located at the first level menu. For example:</p>
+</li>
+</ul>
+<pre><code>&quot;items&quot;: {
+    &quot;label&quot;:&quot;SubMenu 1&quot;,
+    &quot;key&quot;:&quot;fold1&quot;,
+    &quot;items&quot;: [{
+            &quot;label&quot;:&quot;SubMenu1 Menu1&quot;,
+            &quot;key&quot;:&quot;fold1-key1&quot;,
+            &quot;icon&quot;:&quot;edit&quot;,
+            &quot;callback&quot;:printKey
+        },{
+            &quot;label&quot;:&quot;SubMenu1 Menu2&quot;,
+            &quot;key&quot;:&quot;fold1-key2&quot;,
+            &quot;icon&quot;:&quot;copy&quot;,
+            &quot;callback&quot;:printKey
+        },{
+            &quot;separator&quot;: &quot;true&quot;
+        },{
+            &quot;label&quot;:&quot;SubMenu1 Menu3&quot;,
+            &quot;key&quot;:&quot;fold1-key3&quot;,
+            &quot;icon&quot;:&quot;cut&quot;,
+            &quot;callback&quot;:printKey
+     }]
+}</code></pre>
+<ul>
+<li><strong>separator</strong>
+Provides a line to divide an item label from the next one when its value is set to true. For example:</li>
+</ul>
+<pre><code>&quot;separator&quot;: &quot;true&quot;</code></pre>
+<ul>
+<li><strong>title</strong>
+Defines a title for a set of item menus. For example the context menu configuration for the items parameter could include:</li>
+</ul>
+<pre><code>items: [{
+            &quot;label&quot;:&quot;Edit Rule&quot;,
+            &quot;key&quot;:&quot;edit&quot;
+        },{
+            &quot;separator&quot;: true
+        },{
+            &quot;title&quot;:&quot;Checkbox title&quot;,
+            &quot;className&quot;: &quot;checkboxTitle1&quot;
+        },{
+            &quot;key&quot;: &quot;column1&quot;,
+            &quot;label&quot;: &quot;Column 1&quot;,
+            &quot;type&quot;: &quot;checkbox&quot;,
+            &quot;selected&quot;: true,
+            &quot;value&quot;: &#39;1&#39;,
+            &quot;events&quot;: checkboxChangeEvent
+        }]</code></pre>
+<ul>
+<li><p><strong>className</strong>
+Defines the class name that can be applied to an item menu in the context menu.</p>
+</li>
+<li><p><strong>disabled</strong>
+Specifies if an item in the context menu is disabled (true) or enabled (false). It can be defined as a boolean or as a callback function. The callback is executed in the context of the triggering object (so this inside the function refers to the element the context menu was shown for). The first argument is the key of the command. The second argument is the options object. Options parameters are:</p>
+</li>
+<li><p><strong>$trigger</strong>
+jQuery object with the element triggering the menu.</p>
+</li>
+<li><p><strong>$menu</strong>
+jQuery object with the menu element</p>
+</li>
+<li><p><strong>callbacks</strong>
+Object with the registered callbacks of all commands (including those of sub-menus)</p>
+</li>
+<li><p><strong>commands</strong>
+Object with the registered commands (including those of sub-menus)</p>
+</li>
+<li><p><strong>inputs</strong>
+Object with the registered commands of input-type (including those of sub-menus).</p>
+</li>
+<li><p><strong>hasTypes</strong>
+Flag denoting if the menu contains input elements</p>
+</li>
+<li><p><strong>ns</strong>
+The namespace (including leading dot) all events for this contextMenu instance were registered under</p>
+</li>
+</ul>
+<p><strong>callback</strong>
+Specifies the default callback to be used in case an item does not expose its own callback. For example:</p>
+<pre><code> &quot;callback&quot;: function(key, opt){ console.log(opt); },</code></pre>
+<p><strong>events</strong>
+Defines the events to register on the items like show or hide. For example:</p>
+<pre><code>&quot;events&quot;: {
+    &quot;show&quot;:function(opt){console.log(&#39;Show Event&#39; + opt);},
+    &quot;hide&quot;:function(opt){console.log(&#39;Hide Event&#39; + opt);}
+}</code></pre>
+<p><strong>autoHide</strong>
+Specifies if the menu must be hidden when the mouse pointer is moved out of the trigger and menu elements. Default: false.</p>
+<p><strong>zIndex</strong>
+Specifies the offset to add to the calculated zIndex of the trigger element. Default is set to 200.</p>
+<p><strong>trigger</strong>
+Specifies the event to show the contextMenu. Possible values: &quot;right&quot;, &quot;left&quot;, &quot;hover&quot;, &quot;none&quot;.</p>
+<p><strong>position</strong>
+Sets the position of the context menu.The function is executed in the context of the trigger object. The first argument is the $menu jQuery object. The second and third arguments are x and y coordinates provided by the showing event.
+x and y may either be integers denoting the offset from the top left corner, undefined, or the string &quot;maintain&quot;. If the string &quot;maintain&quot; is provided, the current position of the $menu must be used. If the coordinates are undefined, appropriate coordinates must be determined. An example of how this can be achieved is provided with determinePosition. For example:</p>
+<pre><code>&quot;position&quot;: function(opt, x, y){opt.$menu.css({top: 10, left: 20});}</code></pre>
+<p><strong>type</strong>
+Defines an item menu as an input element. It could be a checkbox ( &quot;type&quot;: &quot;checkbox&quot;), a radio button (&quot;type&quot;: &quot;radio&quot;) or a text (&quot;type&quot;: &quot;text&quot;). For example:</p>
+<pre><code>{
+...
+items: [{  // generates &lt;input type=&quot;checkbox&quot;&gt;
+        &quot;key&quot;: &quot;column1&quot;,
+        &quot;label&quot;: &quot;Column 1&quot;,
+        &quot;type&quot;: &quot;checkbox&quot;,
+        &quot;selected&quot;: true,
+        &quot;value&quot;: &#39;1&#39;,
+        &quot;events&quot;: checkboxChangeEvent
+    },{ // generates &lt;input type=&quot;radio&quot;&gt;
+        &quot;key&quot;: &quot;radio1&quot;,
+        &quot;label&quot;: &quot;Radio 1&quot;,
+        &quot;type&quot;: &quot;radio&quot;,
+        &quot;radio&quot;: &#39;radio&#39;,
+        &quot;value&quot;: &#39;1&#39;
+    },
+...
+}</code></pre>
+<p><strong>context</strong>
+Indicates the DOM node from where the Context Menu search of the provided container (id or class) will start. Default: body.</p>
+<h2 id="build">Build</h2>
+<p>Adds the dom elements and events of the ContextMenu widget in the specified container. For example:</p>
+<pre><code>{
+    ContextMenu.build();
+}</code></pre>
+<h2 id="destroy">Destroy</h2>
+<p>Cleans up the specified container from the resources created by the ContextMenu widget.</p>
+<pre><code>{
+    ContextMenu.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To include the ContextMenu widget, a container with a ContextMenu class or id should be identified, and the passed it to the constructor of the Context Menu widget, and finally call the build method on this instance. The steps to follow are:</p>
+<h3 id="step-1">Step 1</h3>
+<p>Add the HTML markup that needs to show a context menu when the container is click (or right click depending on configuration). For example:</p>
+<pre><code>&lt;div class=&quot;context-menu&quot;&gt;Menu1&lt;/div&gt;</code></pre>
+<h3 id="step-2">Step 2</h3>
+<p>Create a configuration object with the items or commands to be showed in the Context Menu. For example:</p>
+<pre><code>var configurationSample = {
+    &quot;autoHide&quot;: &quot;true&quot;,
+    &quot;items&quot;: [{
+            &quot;label&quot;:&quot;Edit&quot;,
+            &quot;key&quot;:&quot;edit&quot;,
+            &quot;icon&quot;:&quot;edit&quot;,
+            &quot;callback&quot;:printKey
+        },{
+            &quot;label&quot;:&quot;Cut&quot;,
+            &quot;key&quot;:&quot;cut&quot;,
+            &quot;icon&quot;:&quot;cut&quot;,
+            &quot;callback&quot;:printKey
+        },{
+            &quot;label&quot;:&quot;Copy&quot;,
+            &quot;key&quot;:&quot;copy&quot;,
+            &quot;icon&quot;:&quot;copy&quot;,
+            &quot;callback&quot;:toggle_copy
+        },{
+            &quot;label&quot;:&quot;Paste&quot;,
+            &quot;key&quot;:&quot;paste&quot;,
+            &quot;icon&quot;:&quot;paste&quot;,
+            &quot;callback&quot;:printKey,
+            &quot;disabled&quot;: function(key, opt){ return true; }
+        },{
+            &quot;label&quot;:&quot;Delete&quot;,
+            &quot;key&quot;:&quot;delete&quot;,
+            &quot;icon&quot;:&quot;delete&quot;,
+            &quot;callback&quot;:printKey,
+            &quot;disabled&quot;: function(key, opt){ return !!this.data(&#39;disabled&#39;); }
+    },{
+            &quot;separator&quot;: &quot;true&quot;
+        },{
+            &quot;label&quot;:&quot;Quit&quot;,
+            &quot;key&quot;:&quot;quit&quot;,
+            &quot;icon&quot;:&quot;quit&quot;,
+            &quot;callback&quot;:printKey
+        },{
+            &quot;separator&quot;: &quot;true&quot;
+        },{
+            &quot;label&quot;:&quot;SubMenu 1&quot;,
+            &quot;key&quot;:&quot;fold1&quot;,
+            &quot;items&quot;: [{
+                    &quot;label&quot;:&quot;SubMenu1 Menu1&quot;,
+                    &quot;key&quot;:&quot;fold1-key1&quot;,
+                    &quot;icon&quot;:&quot;edit&quot;,
+                    &quot;callback&quot;:printKey
+                },{
+                    &quot;label&quot;:&quot;SubMenu1 Menu2&quot;,
+                    &quot;key&quot;:&quot;fold1-key2&quot;,
+                    &quot;icon&quot;:&quot;copy&quot;,
+                    &quot;callback&quot;:printKey
+                },{
+                    &quot;separator&quot;: &quot;true&quot;
+                },{
+                    &quot;label&quot;:&quot;SubMenu1 Menu3&quot;,
+                    &quot;key&quot;:&quot;fold1-key3&quot;,
+                    &quot;icon&quot;:&quot;cut&quot;,
+                    &quot;callback&quot;:printKey
+             }]
+        },{
+            &quot;separator&quot;: &quot;true&quot;
+        },{
+            &quot;label&quot;:&quot;SubMenu 2&quot;,
+            &quot;key&quot;:&quot;fold2&quot;,
+            &quot;items&quot;: [{
+                &quot;label&quot;:&quot;SubMenu2 Menu1&quot;,
+                &quot;key&quot;:&quot;fold2-key1&quot;,
+                &quot;icon&quot;:&quot;edit&quot;,
+                &quot;callback&quot;:printKey
+            },{
+                &quot;label&quot;:&quot;SubMenu2 Menu2&quot;,
+                &quot;key&quot;:&quot;fold2-key2&quot;,
+                &quot;icon&quot;:&quot;copy&quot;,
+                &quot;callback&quot;:printKey
+            },{
+                &quot;label&quot;:&quot;SubMenu2 Menu3&quot;,
+                &quot;key&quot;:&quot;fold2-key3&quot;,
+                &quot;icon&quot;:&quot;cut&quot;,
+                &quot;callback&quot;:printKey
+            }]
+        }]
+};</code></pre>
+<h3 id="step-3">Step 3</h3>
+<p>Instantiate the ContextMenu widget using the container created in step 1 and the configuration created in step 2 and then build the widget. For example:</p>
+<pre><code>new ContextMenuWidget({
+    &quot;elements&quot;: configurationSample.simpleContextMenu,
+    &quot;container&quot;: &#39;.context-menu&#39;
+}).build();</code></pre>
+
+
+</div>
+ 

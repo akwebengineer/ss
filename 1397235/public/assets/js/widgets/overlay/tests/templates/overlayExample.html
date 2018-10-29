@@ -1,0 +1,63 @@
+<div class="test_widgets overlay-widget-test">
+    <div class="slipstream-content-title">Overlay Widget -new OverlayWidget(conf)-</div>
+    <h4>Configuration</h4>
+    <h6>Click on <b>Open Overlay</b> for rendering an overlay with selected configuration.</h6>
+    <div>
+        <label>Overlay size</label>
+        <input type="radio" name="overlaySize" value="xsmall" id="xsmall" checked tabindex="3"><label>Extra Small</label>
+        <input type="radio" name="overlaySize" value="small" id="small"><label>Small</label>
+        <input type="radio" name="overlaySize" value="medium" id="medium"><label>Medium</label>
+        <input type="radio" name="overlaySize" value="large" id="large"><label>Large</label>
+        <input type="radio" name="overlaySize" value="xlarge" id="xlarge"><label>Extra Large</label>
+        <input type="radio" name="overlaySize" value="fullpage" id="fullpage"><label>Full Page</label>
+
+        <label>Overlay title</label>
+        <input type="radio" id="overlayTextTitle" name="overlayTitle" checked tabindex="1"><label>Title (text)</label>
+        <input type="radio" id="overlayHtmlTitle" name="overlayTitle" tabindex="1"><label>Title (HTML)</label>
+        <input type="radio" id="overlayNoTitle" name="overlayTitle" tabindex="1"><label>No title</label>
+        <br/>
+        <input type="checkbox" id="overlayTitleTooltip" checked tabindex="1"><label>Title with tooltip</label>
+
+        <label>Overlay style</label>
+        <input type="checkbox" id="overlayButtons" checked tabindex="4"><label>Default buttons</label>
+        <input type="checkbox" id="overlayCustomButton" tabindex="4"><label>Custom buttons</label>
+        <input type="checkbox" id="overlayCustomBorder" tabindex="4"><label>Custom border</label>
+
+        <label>Content size</label>
+        <input type="radio" name="contentSize" value="minimal" id="minimal" checked tabindex="2"><label>Minimal</label>
+        <input type="radio" name="contentSize" value="overflowing" id="overflowing"><label>Scrolling</label>
+
+        <label>Content options</label>
+        <input type="checkbox" id="contentTitle" value="false"><label>With a title</label>
+        <input type="checkbox" id="contentButtons" value="false"><label>With buttons</label>
+        <input type="checkbox" id="contentField" value="false"><label>With a field</label>
+    </div>
+    <div>
+        <button class="slipstream-primary-button" id="open">Open Overlay</button>
+    </div>
+
+    <h4>Usage</h4>
+    <h6>Select a radio button or link to render an overlay with a configuration that has <b>no title</b> and <b>no buttons</b>.</h6>
+    <div>
+        <label>Medium size overlay with form content and content size:</label>
+        <input type="radio" name="mediumOverlayNestedForm" value="min" id="formTestCaseLinkMin"><label>Minimal</label>
+        <input type="radio" name="mediumOverlayNestedForm" value="scroll" id="formTestCaseLink"><label>Scrolling</label>
+
+        <label>Full page size overlay with form content and content size:</label>
+        <input type="radio" name="fullpageOverlayNestedForm" value="min" id="fullpageFormTestCaseLinkMin"><label>Minimal</label>
+        <input type="radio" name="fullpageOverlayNestedForm" value="scroll" id="fullpageFormTestCaseLink"><label>Scrolling</label>
+
+        <label>Overlay with short wizard content and overlay size:</label>
+        <input type="radio" name="overlayWizardSize" value="medium" id="mediumFormWizardRadio"><label>Medium</label>
+        <input type="radio" name="overlayWizardSize" value="large" id="largeFormWizardRadio"><label>Large</label>
+        <input type="radio" name="overlayWizardSize" value="xlarge" id="xlargeFormWizardRadio"><label>Extra Large</label>
+        <input type="radio" name="overlayWizardSize" value="fullpage" id="fullpageFormWizardRadio"><label>Full Page</label>
+    </div>
+    <div>
+        <a id="overlayWithFixedContainerTestCaseLink">Overlay with responsive height content (grid widget in a form widget within an overlay widget)</a><br/>
+        <a id="formTabGridFullPageOverlayLink">Form/Tab/Grid/Full page overlay</a><br/>
+        <a id="nestedOverlay">Overlay that contains other nested overlays</a><br/>
+    </div>
+</div>
+
+        

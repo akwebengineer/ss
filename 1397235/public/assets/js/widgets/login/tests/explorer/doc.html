@@ -1,0 +1,103 @@
+<div>
+    <h1 id="login-widget">Login Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The login widget is a reusable graphical user interface that allows a plugin to include a login view  with a username/password pair that should be used to log into the application.</p>
+<h2 id="api">API</h2>
+<p>The login widget follows the widget programming interface standards, therefore it exposes: a build method and a destroy method and any data required by the widget is passed by its constructor. It has an additional method called &#39;onSubmitCredentials&#39; that allows plugin give feedback to the login widget of the result of authentication request.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The configuration object has the following variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered, if it is not available, the widget will be rendered on an overlay&gt;,
+    loginTitles: &lt;define the content that overwrites default titles of the login view&gt;,
+    submitCredentials: &lt;define the function that the login widget will call to execute the authentication provided by the plugin&gt;,
+}</code></pre>
+<p>For example:</p>
+<pre><code>var self = this;
+var loginWidget = new LoginWidget({
+    container: self.$el,
+    content: titles,
+    submitCredentials: _.bind(self.submitCredentials, self)
+});
+loginWidget.build();</code></pre>
+<p>where the content is an object with the parameters: title, subtitle, version and copyrightYear. For example:</p>
+<pre><code>var titles = {
+     title: this.context.getMessage(&quot;login_title&quot;),
+     subtitle: this.context.getMessage(&quot;login_model&quot;),
+     version: this.context.getMessage(&quot;login_version&quot;),
+     copyrightYear: &quot;2014&quot;
+ },</code></pre>
+<p>and submitCredential has the parameters:</p>
+<ul>
+<li>username: user provided in the login form</li>
+<li>password: password provided in the login form</li>
+<li>onSubmitCredentials: function callback that gives the login widget a feedback with the response of the user authentication. It&#39;s execution is <strong>required</strong> and it has the parameter success. If the success parameter is set to false, it will show an error message at the top of the login box; otherwise, the application homepage will be showed.</li>
+</ul>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the login widget in the specified container. For example:</p>
+<pre><code>{
+    loginWidget.build();
+}</code></pre>
+<h3 id="onsubmitcredentials">onSubmitCredentials</h3>
+<p>Allows the login widget to receive a feedback with the response of the user authentication. First, it destroys the activity indicator, and then, if the response was an error, it will show an error message at the top of the login box; otherwise, it will remove the login background. For example:</p>
+<pre><code>var self = this;
+this.model.set(&#39;user&#39;, username);
+this.model.set(&#39;password&#39;, password);
+this.model.save(null, {
+    error: function (data) {
+        console.log(&#39;error in login: &#39;, JSON.stringify(data));
+        self.loginWidget.onSubmitCredentials(&#39;error&#39;);
+    },
+    success: function (data) {
+        console.log(&#39;success in login: &#39;, JSON.stringify(data));
+        self.loginWidget.onSubmitCredentials(&#39;success&#39;);
+        self.onLogin();
+    }
+});</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the login widget.</p>
+<pre><code>{
+    loginWidget.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a login/set password view in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the login widget and provide the configuration object with the title, subtitle and other plugin specific labels and the container where the login widget will be rendered.</li>
+<li>Call the build method of the login widget.</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the login widget.</p>
+<pre><code>new LoginWidget({
+    container: self.$el,
+    content: {
+        title: this.context.getMessage(&quot;login_title&quot;),
+        subtitle: this.context.getMessage(&quot;login_model&quot;),
+        version: this.context.getMessage(&quot;login_version&quot;),
+        copyrightYear: &quot;2014&quot;
+    },
+    submitCredentials: _.bind(self.submitCredentials, self)
+}).build();</code></pre>
+<p>If the login widget needs to be used in the context of the first page of an application, then the plugin that instantiates the login widget needs to create an activity with a MAIN action. For example, the plugin.json should look like this:</p>
+<pre><code>{
+    &quot;name&quot;: &quot;preload&quot;,
+    &quot;description&quot;: &quot;Set password or login&quot;,
+    &quot;publisher&quot;: &quot;Juniper Networks, Inc.&quot;,
+    &quot;version&quot;: &quot;0.0.1&quot;,
+    &quot;release_date&quot;: &quot;03.24.2014&quot;,
+    &quot;min_platform_version&quot;: &quot;0.0.1&quot;,
+    &quot;activities&quot;: [
+        {
+            &quot;module&quot;: &quot;loginActivity&quot;,
+            &quot;filters&quot;: [
+                {
+                    &quot;action&quot;: &quot;MAIN&quot;,
+                    &quot;data&quot;: {
+                        &quot;mime_type&quot;: &quot;vnd.juniper.net.login&quot;
+                    }
+                }
+            ]
+        }
+    ]
+}</code></pre>
+
+
+</div>
+ 

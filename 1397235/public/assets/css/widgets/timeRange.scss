@@ -1,0 +1,70 @@
+$color-light: #CCC;
+$color-medium: #999;
+$color-dark: #333;
+$color-blue: #05a4ff;
+
+.timeRangeDemo{
+  margin: 0 10px;	
+  #grid{
+    margin-left: 15px;
+
+    .action-filter-container{
+     display:none;
+    } 
+  }
+  #barchart{
+    .barchart{
+      margin: 0;
+    }
+  }
+  .IPS_event_label{
+    div{
+      display: inline-block;
+      cursor: pointer;
+      .default{
+        background-color: $color-light;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin: 0 5px 0 10px;
+        
+      }
+      .text{
+        font-size: 10px;
+        color: $color-light;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+    #all {
+      cursor: default;
+      .default{
+        background-color: $color-blue;
+      }
+      .text{
+        color: $color-dark;
+      }
+    }
+  }  
+}
+.timeRange{
+
+  .highcharts-navigator-handle-right, .highcharts-navigator-handle-left{
+    rect{
+      width: 4px;
+      height: 16px;
+      x: -2.5px;
+    }
+    path{
+      stroke: transparent;
+    }
+  }
+}
+.timestamp{
+  width: 100%;
+  text-align: left; 
+  padding: 10px 9px;
+  font-size: 10px;
+  color: $color-medium;
+}
+

@@ -1,0 +1,68 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="asynchronous-messaging">Asynchronous Messaging</h1>
+<p>Slipstream provides a mechanism for plugins to act as providers of asynchronous messages and to deliver those messages to other plugins registered to listen to them.  These messages can originate from within or outside the framework.  Two framework abstractions are provided in support of this: <a href="messageResolver.html">MessageResolver</a> and <a href="messageProvider.html">MessageProvider</a>.</p>
+<h2 id="messageresolver">MessageResolver</h2>
+<p>The <a href="messageResolver.html">MessageResolver</a> provides a unified way to work with <em>topic subscriptions</em> across the Slipstream framework.  Plugins use the MessageResolver to subscribe to topics made available by MessageProviders, thereby eliminating the need for plugins to work directly with a MessageProvider.  </p>
+<pre><code>          ┌────────────┐           ┌────────────────┐         ┌────────────────┐
+          │   Plugin   │  -----&gt;   │ MessageResolver│ &lt;------ │ MessageProvider│
+          └────────────┘ subscribe └────────────────┘ register└────────────────┘
+                                                      topics</code></pre>
+<h2 id="messageprovider">MessageProvider</h2>
+<p>A MessageProvider should be created if your plugin will be publishing messages that may be of interest to other plugins. The framework will aggregate all providers defined in the plugin&#39;s manifest file. Any plugin that will be providing cross-plugin messages will need to subclass the <a href="messageProvider.html">MessageProvider</a> from the SDK. To allow the framework to register the MessageProvider, the provider must be described in the plugin&#39;s manifest file. This allows the framework to instantiate the MessageProvider when the plugin is first discovered. The provider must provide a unique URI that will be used to identify it. The topics provided within a message provider must also be unique within that message provider.</p>
+<pre><code>                                      Message Bus
+                ┌──────────────────────────────────────────────────────┐
+                │                                                      ^
+                │ message                                              │ publish message
+                v                                                      │ 
+          ┌────────────┐           ┌────────────────┐         ┌────────────────┐
+          │   Plugin   │  -----&gt;   │ MessageResolver│ &lt;------ │ MessageProvider│
+          └────────────┘ subscribe └────────────────┘ register└────────────────┘
+                                                      topics</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

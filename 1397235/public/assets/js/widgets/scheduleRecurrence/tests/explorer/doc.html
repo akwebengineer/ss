@@ -1,0 +1,156 @@
+<div>
+    <h1 id="schedule-recurrence-widget">Schedule Recurrence Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The schedule recurrence widget is a reusable graphical user interface that allows users to schedule a job optionally with recurrence. </p>
+<h2 id="api">API</h2>
+<p>The schedule recurrence widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has the following variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    isFormSection: &lt;define whether the &quot;container&quot; is a section of a form&gt;,
+    title: &lt;define the heading for the widget(optional)&gt;,
+    disableScheduleSection: &lt;define whether to disable the schedule section of widget(optional, default: false)&gt;,
+    disableRecurrenceSection: &lt;define whether to disable the recurrence section of widget(optional, default: false)&gt;,
+    values: &lt;define the values to set in the schedule recurrence widget(optional)&gt;,
+    scheduleLabel: &lt;define custom label for the schedule section of widget(optional, if not specified default label will displayed)&gt;,
+    scheduleTooltip: &lt;define the tooltip content for the schedule section of widget(optional, if not specified default tooltip content will displayed)&gt;,
+    recurrenceRepeatUnits: &lt;define the time units for the repeat options in the recurrence section of widget(optional, default:all) Repeat options can be any of ScheduleRecurrenceWidget.recurrence.repeatUnits.*&gt;
+}</code></pre>
+<p>where the <code>values</code> should be an object and can have the following parameters:</p>
+<pre><code>{
+    scheduleStartTime: &lt;define the Date object used to set schedule start date and time&gt;
+    recurrenceInfo: {
+        repeatUnit : &lt;define the repeat unit which has to be set. It can be any of ScheduleRecurrenceWidget.recurrence.repeatUnits.* &gt;
+        repeatValue : &lt;define the repeat value to set&gt;
+        selectedDays : &lt;define the days which has to be selected for weekly &#39;repeatUnit&#39;.It should be an array of integers representing days (i.e) 1 for sunday, 2 for monday ... 7 for saturday)&gt;
+        endTime : &lt;define the Date object used to set recurrence end date and time&gt;
+             }
+}</code></pre>
+<p>If the schedule recurrence widget has to be placed inside a form (i.e The container provided in the configuration is a part of the form (form section) ) then the &quot;isFormSection&quot; configuration parameter should be &quot;true&quot;. If &quot;isFormSection&quot; is set to &quot;false&quot; or not provided then the schedule recurrence widget will be constructed with a form and then appended to the given container. </p>
+<p>For example:</p>
+<pre><code>{
+    var scheduleRecurrence = new ScheduleRecurrenceWidget({
+        &quot;container&quot;: this.$el,
+        &quot;title&quot;: &quot;Heading of the widget&quot;,//optional
+        &quot;disableRecurrenceSection&quot;: true, // optional and default value is false
+        &quot;scheduleLabel&quot;: &quot;Schedule Type&quot;, // optional custom label. Default is &quot;Type&quot;
+        &quot;scheduleTooltip&quot;: &quot;ScheduleRecurrenceWidget schedule types&quot;, // optional
+        &quot;recurrenceRepeatUnits&quot;: [
+                ScheduleRecurrenceWidget.recurrence.repeatUnit.MINUTES,
+                ScheduleRecurrenceWidget.recurrence.repeatUnit.HOURS          
+        ] // optional
+    });
+}</code></pre>
+<p>where the &quot;disableRecurrenceSection&quot; is an optional variables and default value for this variable is false. The &quot;title&quot; is optional and the heading will not be shown if &quot;title&quot; is not provided.</p>
+<h3 id="build">Build</h3>
+<p>Adds the DOM elements and events of the schedule recurrence in the specified container. For example:</p>
+<pre><code>{
+    scheduleRecurrence.build();
+}</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the schedule recurrence widget.</p>
+<pre><code>{
+    scheduleRecurrence.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="adding-the-schedule-recurrence-widget-to-a-form">Adding the schedule recurrence widget to a form</h3>
+<p>To add a schedule recurrence widget to a form, follow these steps:</p>
+<ol>
+<li>Instantiate the schedule recurrence widget by providing a configuration object with &quot;container&quot; as the section of a form(where the schedule recurrence widget will be rendered) and &quot;isFormSection&quot; as &quot;true&quot; and other attributes as mentioned in Configuration section.</li>
+<li>Call the build method of the schedule recurrence widget.</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up the resources created by the schedule recurrence widget.</p>
+<pre><code>{
+    var scheduleRecurrence = new ScheduleRecurrenceWidget({
+        &quot;container&quot;: $formSection, //Should be a section of a form 
+        &quot;isFormSection&quot;: true,
+        &quot;title&quot;: &quot;Heading of the widget&quot;,//optional,
+        &quot;scheduleLabel&quot;: &quot;Schedule Type&quot;, // optional custom label. Default is &quot;Type&quot;        
+        &quot;scheduleTooltip&quot;: &quot;ScheduleRecurrenceWidget schedule types&quot; // optional
+    });
+
+    scheduleRecurrence.build();
+}</code></pre>
+<h3 id="adding-the-schedule-recurrence-widget-to-a-container">Adding the schedule recurrence widget to a container</h3>
+<p>To add a schedule recurrence widget to a container which is not a part of the form, follow these steps:</p>
+<ol>
+<li>Instantiate the schedule recurrence widget by providing a configuration object with the container where the schedule recurrence widget will be rendered and other attributes as mentioned in Configuration section.</li>
+<li>Call the build method of the schedule recurrence widget.</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up the resources created by the schedule recurrence widget.</p>
+<pre><code>{
+    var scheduleRecurrence = new ScheduleRecurrenceWidget({
+        &quot;container&quot;: this.$el,
+        &quot;title&quot;: &quot;Heading of the widget&quot;,//optional
+        &quot;scheduleLabel&quot;: &quot;Schedule Type&quot;, // optional custom label. Default is &quot;Type&quot;
+        &quot;scheduleTooltip&quot;: &quot;ScheduleRecurrenceWidget schedule types&quot; // optional
+    });
+
+    scheduleRecurrence.build();
+}</code></pre>
+<h2 id="methods">Methods</h2>
+<h3 id="getschedulestarttime">getScheduleStartTime</h3>
+<p>Gets the date object containing the date and time when the schedule should start and it returns null if schedule section is not enabled or if the schedule type is &quot;Run now&quot; or if the inputs are invalid. For example:</p>
+<pre><code>   var schedulerStartTime = scheduleRecurrence.getScheduleStartTime();</code></pre>
+<h3 id="getschedulerecurrenceinfo">getScheduleRecurrenceInfo</h3>
+<p>Gets the object containing the recurrence information.It has 
+repeatUnit, repeatValue, selectedDays array and endTime. The &quot;selectedDays&quot; is returned only if the &quot;repeatUnit&quot; is &quot;Weeks&quot; and if the recurrence end type is selected as &quot;Never&quot; then &quot;endTime&quot; will be returned as &quot;null&quot;. </p>
+<p>It returns null if recurrence section is not enabled or if the inputs are invalid. For example:</p>
+<pre><code>     var scheduleRecurrenceInfo = scheduleRecurrence.getScheduleRecurrenceInfo();
+     var repeatUnit = scheduleRecurrenceInfo.repeatUnit; //ex: &quot;Weeks&quot;
+     var repeatvalue = scheduleRecurrenceInfo.repeatvalue; // ex: 2
+     var selectedDays = scheduleRecurrenceInfo.selectedDays; // ex: [&quot;2&quot;, &quot;3&quot;] if monday and tuesday is selected.
+     var recurrenceEndTime = scheduleRecurrenceInfo.endTime;// Javascript Date object representing end time</code></pre>
+<p>The following scheduleRecurrenceInfo  </p>
+<pre><code>    {
+        &quot;repeatUnit&quot; : &quot;Weeks&quot;,
+        &quot;repeatvalue&quot; : 2,
+        &quot;selectedDays&quot; : [&quot;1&quot;, &quot;2&quot;]
+    }</code></pre>
+<p>means repeat every 2 weeks on sunday and monday.</p>
+<h3 id="getscheduleinfoasurlquery">getScheduleInfoAsURLQuery</h3>
+<p>Gets the schedule(if enabled) and recurrence(if enabled) component informations as a URL query which can be appended with a REST URL.</p>
+<p>Example : </p>
+<pre><code>schedule-at= ( 10-03-2018 10:20:30 am )&amp;schedule-recurrence= ( unit eq Weeks and repeat-interval eq 1 days eq ( 1 , 2 ) end-date eq ( 10-03-2018 10:20:30 pm ) )</code></pre>
+<p>Example usage : </p>
+<pre><code>    var params = &quot;..&quot;;
+    params = params + &quot;&amp;&quot; +scheduleRecurrence.getScheduleInfoAsURLQuery();
+    var url = &quot;/some/REST/URL&quot;;
+    url = url + &quot;?&quot; +  params;</code></pre>
+<h3 id="setschedulestarttime-starttime-">setScheduleStartTime(startTime)</h3>
+<p>Sets the schedule start date and time from the input JavaScript Date Object.
+If the input Date is null or undefined then the schedule start type is selected to be &#39;Run now&#39; in UI.</p>
+<p>Example usage : </p>
+<pre><code>var today = new Date(); 
+scheduleRecurrence.setScheduleStartTime(today);</code></pre>
+<h3 id="setschedulerecurrenceinfo-recurrenceinfo-">setScheduleRecurrenceInfo(recurrenceInfo)</h3>
+<p>Sets the recurrence values from the input &#39;recurrenceInfo&#39; Object.
+The input &#39;recurrenceInfo&#39; object can have the following properties</p>
+<pre><code>repeatUnit : &lt;define the repeat unit which has to be set. It can be &quot;Minutes&quot;, &quot;Hours&quot;, &quot;Days&quot;, &quot;Weeks&quot;, &quot;Months&quot;, &quot;Years&quot;&gt;
+repeatValue : &lt;define the repeat value to set&gt;
+selectedDays : &lt;define the days which has to be selected for weekly &#39;repeatUnit&#39;.It should be an array of integers representing days (i.e) 1 for sunday, 2 for monday ... 7 for saturday)&gt;
+endTime : &lt;define the Date object used to set recurrence end date and time&gt;</code></pre>
+<p>If the &#39;recurrenceInfo&#39; is null or undefined then the recurrence section will be collapsed</p>
+<p>Example usage : </p>
+<pre><code>var recurrenceInfo = {
+    &quot;repeatUnit&quot;:&quot;Weeks&quot;, // It can be any of ScheduleRecurrenceWidget.recurrence.repeatUnits.*
+    &quot;repeatValue&quot;:&quot;2&quot;,
+    &quot;selectedDays&quot;:[2, 3],
+    &quot;endTime&quot;:new Date()
+}; 
+scheduleRecurrence.setScheduleRecurrenceInfo(recurrenceInfo);</code></pre>
+<h3 id="isvalid">isValid</h3>
+<p>Returns boolean value representing whether the input provided in the widget is valid or not.
+If the schedule recurrence widget is not added to an existing form section( i.e <code>isFormSection</code> = false ) then this method can be used to find if the input provided in the widget is valid or not.
+If the schedule recurrence widget is added to an existing form then invoking this method would invoke existing form&#39;s <code>isValidInput</code> method</p>
+<pre><code>    if (scheduleRecurrence.isValid()) {
+        ...
+    }
+    else {
+        return;
+    }</code></pre>
+
+
+</div>
+ 

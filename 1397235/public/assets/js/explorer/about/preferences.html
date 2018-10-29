@@ -1,0 +1,113 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="" class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="user-preferences">User Preferences</h1>
+<p>Slipstream provides a <em>preferences</em> API that activities can use to read and write UI-related user preferences. For example, an activity could use this API to store the preferred sort order or visible subset of columns for a grid instance.</p>
+<p>The API is very generic and provides a lot of flexibility in the format of the stored preference data.  The only requirement is that the object to be stored be serializable to JSON format and defines a unique object <em>namespace</em>.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="sdk-preferences-save-path-value-">SDK.Preferences.save(path, value)</h3>
+<p>Save a preference.</p>
+<h4 id="parameters">Parameters</h4>
+<p><strong>path</strong>
+The path to the preferences setting within the preferences store.  It takes the form:</p>
+<p><em>pathFrag_1:pathFrag_2:...pathFrag_n</em></p>
+<p>Where pathFrag~n~ is the n-th fragment of the preference&#39;s path in the preferences object.  </p>
+<p>For example the path</p>
+<p><em>ui:nav:left:width</em></p>
+<p>represents the path to the attribute in the preferences store representing the width of the UI&#39;s left navigation pane.  The  preference will be stored at</p>
+<p><em>ui.nav.left.width</em></p>
+<p>in the user preferences store.</p>
+<p><strong>val</strong>
+The new value for the preference.</p>
+<h4 id="sdk-preferences-fetch-path-">SDK.Preferences.fetch(path)</h4>
+<p>Fetch a preference.</p>
+<h4 id="parameters">Parameters</h4>
+<p><strong>path</strong>
+The path to the preferences setting within the preferences store.  It takes the form:</p>
+<p><em>pathFrag_1:pathFrag_2:...pathFrag_n</em></p>
+<p>Where pathFrag~n~ is the n-th fragment of the preference&#39;s path in the preferences store.  </p>
+<h2 id="examples">Examples</h2>
+<p>Save a preference:</p>
+<pre><code class="language-javascript"><span class="comment">// Set the sort order for the firewall policies grid to ascending.</span>
+<span class="keyword">var</span> path = <span class="string">"firewall_policies:policies_grid:sort_order"</span>;
+Slipstream.SDK.Preferences.save(path, <span class="string">"asc"</span>);</code></pre>
+<p>Fetch a preference:</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> path = <span class="string">"firewall_policies:policies_grid:sort_order"</span>;
+<span class="keyword">var</span> sort_order = Slipstream.SDK.Preferences.fetch(path);
+
+console.log(<span class="string">"sort order for firewall policies table is"</span>, sort_order);</code></pre>
+<p>Save and fetch the grid widget using the Preference API - Grid Widget:</p>
+<pre><code class="language-javascript"><span class="comment">// inside a slipstream view</span>
+initialize: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    <span class="keyword">this</span>.mockApiResponse();
+    <span class="keyword">var</span> self = <span class="keyword">this</span>;
+    <span class="keyword">this</span>.context = <span class="keyword">this</span>.options.context;
+
+    <span class="keyword">var</span> id = <span class="string">'someUniqueIdForThisGrid'</span>;
+    <span class="keyword">var</span> preferencesPath = self.context[<span class="string">'ctx_name'</span>] + <span class="string">':'</span> + id;
+
+    <span class="keyword">var</span> doWriteToPreferencesAPI = <span class="function"><span class="keyword">function</span><span class="params">(updatedConf)</span> {</span>
+        Slipstream.SDK.Preferences.save(preferencesPath, updatedConf);
+    };
+
+    <span class="keyword">var</span> updatedConfig = <span class="literal">null</span>;
+    updatedConfig = Slipstream.SDK.Preferences.fetch(preferencesPath);
+    <span class="keyword">if</span> (updatedConfig) {
+        SampleConfigurationElements.simpleGridElements = updatedConfig.elements;
+        SampleConfigurationElements.simpleGridSearch = updatedConfig.search;
+    }
+    <span class="keyword">this</span>.grid = <span class="keyword">new</span> GridWidget({
+        container: self.el,
+        elements: SampleConfigurationElements.simpleGridElements,
+        search: SampleConfigurationElements.simpleGridSearch,
+        onConfigUpdate: doWriteToPreferencesAPI
+    });
+    <span class="keyword">return</span> <span class="keyword">this</span>;
+},</code></pre>
+<p>See : test/resources/gridPrefsSamplePlugin.spi for full plugin reference implementation.</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

@@ -1,0 +1,153 @@
+<div>
+    <h1 id="ip-cidr-widget">IP CIDR Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The IP CIDR widget is a reusable graphical user interface that allows users to get a set of IP address (version 4 or version 6), CIDR and subnet mask inputs. Each input is validated according to the expected value (IP, CIDR or Subnet) and also according to the combination of values of the fields.</p>
+<h2 id="api">API</h2>
+<p>The IP CIDR widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has two variables:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    elements: &lt;optional, define the set of key/value that should be used to overwrite the default IP CIDR values&gt;
+}</code></pre>
+<p>For example, an IP CIDR widget with default values should be instantiated with:</p>
+<pre><code>{
+    var ipCidr = new IpCidrWidget({
+                     &quot;container&quot;: &#39;#ipCidr&#39;
+                 });
+}</code></pre>
+<p>The IP CIDR widget default values are:</p>
+<pre><code>    {
+        &quot;ip_label&quot;: &quot;IP Address&quot;,
+        &quot;ip_id&quot;: &quot;text_ip&quot;,
+        &quot;ip_name&quot;: &quot;text_ip&quot;,
+        &quot;ip_placeholder&quot;: &quot;IPv4 or IPv6 address&quot;,
+        &quot;ip_required&quot;: &quot;true&quot;,
+        &quot;ip_tooltip&quot;: &quot;IPv6 example: 2001:db8:85a3:0:0:8aa2e:370:7334&quot;,
+        &quot;ip_error&quot;: &quot;Invalid IP address format&quot;,
+        &quot;cidr_label&quot;: &quot;/&quot;,
+        &quot;cidr_id&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_name&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_placeholder&quot;: &quot;CIDR&quot;,
+        &quot;cidr_error&quot;: &quot;Invalid CIDR&quot;,
+        &quot;subnet_label&quot;: &quot;Subnet mask&quot;,
+        &quot;subnet_id&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_name&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_placeholder&quot;: &quot;&quot;,
+        &quot;subnet_error&quot;: &quot;Please enter a valid subnet mask&quot;
+    },</code></pre>
+<p>An IP CIDR widget with user defined values should be instantiated with:</p>
+<pre><code>    var ipCidr = new IpCidrWidget({
+                     &quot;container&quot;: &#39;#ipCidr&#39;,
+                     &quot;elements&quot;: userValues
+                 })</code></pre>
+<p>where the &quot;elements&quot; should be defined in a set of key/value pairs. For example:</p>
+<pre><code>    var userValues = {
+                        &quot;ip_label&quot;: &quot;IP Address&quot;,
+                        &quot;ip_id&quot;: &quot;text_ip&quot;,
+                        &quot;ip_name&quot;: &quot;text_ip&quot;,
+                        &quot;ip_placeholder&quot;: &quot;IP v4 or v6&quot;,
+                        &quot;ip_required&quot;: &quot;true&quot;,
+                        &quot;ip_tooltip&quot;: &quot;IP v6 example&quot;,
+                        &quot;ip_error&quot;: &quot;Invalid IP address&quot;,
+                        &quot;cidr_label&quot;: &quot;/&quot;,
+                        &quot;cidr_id&quot;: &quot;text_cidr&quot;,
+                        &quot;cidr_name&quot;: &quot;text_cidr&quot;,
+                        &quot;cidr_placeholder&quot;: &quot;CIDR&quot;,
+                        &quot;cidr_error&quot;: &quot;Invalid CIDR&quot;,
+                        &quot;subnet_label&quot;: &quot;Subnet&quot;,
+                        &quot;subnet_id&quot;: &quot;text_subnet&quot;,
+                        &quot;subnet_name&quot;: &quot;text_subnet&quot;,
+                        &quot;subnet_placeholder&quot;: &quot;Subnet placeholder&quot;,
+                        &quot;subnet_error&quot;: &quot;Please enter a valid subnet mask&quot;
+                      }</code></pre>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the IP CIDR widget in the specified container. For example:</p>
+<pre><code>{
+    ipCidr.build();
+}</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the IP CIDR widget.</p>
+<pre><code>{
+    ipCidr.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="programmatic-form-form-widget-">Programmatic Form (Form Widget)</h3>
+<p>The IP CIDR widget is integrated to the form widget. To include it, the configuration object of the Form Widget (elements parameter) should include an element_ipCidrWidget parameter like the following:</p>
+<pre><code>    {
+        &quot;element_ipCidrWidget&quot;: true
+    },</code></pre>
+<p>When the form widget is build, it will include the IP CIDR widget with its default values. To overwrite default values from the Form Widget configuration object, include the following parameters:</p>
+<pre><code>    {
+        &quot;element_ipCidrWidget&quot;: true,
+        &quot;id&quot;: &quot;text_ipCidrWidget1&quot;,
+        &quot;label&quot;: &quot;IP/CIDR Widget&quot;,
+        &quot;ip_id&quot;: &quot;text_ip1&quot;,
+        &quot;ip_name&quot;: &quot;text_ip1&quot;,
+        &quot;ip_placeholder&quot;: &quot;IP v4 or v6&quot;,
+        &quot;ip_required&quot;: &quot;true&quot;,
+        &quot;ip_tooltip&quot;: &quot;IP v6 example&quot;,
+        &quot;ip_error&quot;: &quot;Invalid IP address&quot;,
+        &quot;cidr_id&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_name&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_placeholder&quot;: &quot;CIDR&quot;,
+        &quot;cidr_error&quot;: &quot;Invalid CIDR&quot;,
+        &quot;subnet_id&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_name&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_placeholder&quot;: &quot;Subnet placeholder&quot;,
+        &quot;subnet_error&quot;: &quot;Please enter a valid subnet mask&quot;
+    },</code></pre>
+<p>If custom validation is required, then a &quot;customValidationCallback&quot; configuration should be included. The callback has eleIp, eleCidr, eleSubnet and showErrorMessage parameters. eleIp is the DOM element of IP input. eleCidr is the DOM element of CIDR input. eleSubnet is the DOM element of Subnet input. showErrorMessage is a callback that should be invoked with one parameter: error. The parameter is optional. If it&#39;s given, the given message will be shown, if not, the default error message will be shown. For example, the customValidationCallback could be defined as:</p>
+<pre><code>    {
+        &quot;element_ipCidrWidget&quot;: true,
+        &quot;label&quot;: &quot;For custom validation&quot;,
+        &quot;customValidationCallback&quot;: function(eleIp, eleCidr, eleSubnet, showErrorMessage) {
+            var result = true,
+                cidrVal = eleCidr.value,
+                isIpv4 = validator.isValidValue(&#39;ipv4&#39;, eleIp);
+            if(isIpv4 &amp;&amp; parseInt(cidrVal) &gt; 5){
+                result = false;
+            }else if(!isIpv4 &amp;&amp; parseInt(cidrVal) &gt; 10){
+                result = false;
+            }
+            if(! result){
+                showErrorMessage(&quot;Ipv4&#39;s cidr cannot exceed 5, Ipv6&#39;s cidr cannot exceed 10&quot;);
+            }
+        }
+    }</code></pre>
+<p>Additionally, &quot;ip_version&quot; parameter can be set to specify the valid IP address version(version 4 or 6). &quot;4&quot; for version 4 and &quot;6&quot; for version 6.</p>
+<pre><code>    {
+        &quot;element_ipCidrWidget&quot;: true,
+        &quot;label&quot;: &quot;IPv4 Only&quot;,
+        &quot;ip_version&quot;: &quot;4&quot;
+    }</code></pre>
+<h3 id="declarative-form">Declarative Form</h3>
+<p>To add an IP CIDR widget in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the IP CIDR widget and provide a configuration object with the list of elements to overwrite the widget default values (optional) and the container where the IP CIDR widget will be rendered</li>
+<li>Call the build method of the IP CIDR widget</li>
+</ol>
+<pre><code>     var ipCidr = new IpCidrWidget({
+         &quot;container&quot;: &#39;#ipCidr&#39;,
+         &quot;elements&quot;: userValues
+     });
+    ipCidr.build();</code></pre>
+<p>Optionally, the destroy method can be called to clean up resources created by the list builder widget.</p>
+<h2 id="utility-methods">Utility methods</h2>
+<p>The IP CIDR widget exposes additional methods intended to help user to get the values assigned to its inputs. These methods are: getValues, getIpCidrValue and setValues.</p>
+<h4 id="getvalues">getValues</h4>
+<p>It provides the values assigned to the IP, CIDR and Subnet inputs. It&#39;s presented in an object key/value set for each input, where key is the id of the input and value is the value of the input.</p>
+<h4 id="getipcidrvalue">getIpCidrValue</h4>
+<p>It provides the values assigned to the IP and CIDR inputs. It&#39;s presented in a string composed by the value of the IP input plus the &quot;/&quot; symbol plus the CIDR value.</p>
+<h4 id="setvalues">setValues</h4>
+<p>Set the value of the IP CIDR widget.
+<strong>ip</strong>: The given IP address.
+<strong>cidr</strong>: The given IP CIDR.
+<strong>subnet</strong>: The given subnet.</p>
+<p>For example:</p>
+<pre><code>    widgetInstance = this.form.getInstantiatedWidgets()[widgetIdentifier].instance;
+    widgetInstance.setValues(&#39;2.3.4.5&#39;,&#39;5&#39;);</code></pre>
+
+
+</div>
+ 

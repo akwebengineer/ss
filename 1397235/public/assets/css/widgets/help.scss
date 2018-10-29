@@ -1,0 +1,19 @@
+.help-widget {
+  .ua-field-help {
+    margin: 0px 0px 3px;
+    vertical-align: middle;
+    &.disabled {
+      fill: $help-icon-disabled;
+      cursor: default;
+    }
+    &.small {
+      @extend .icon_help_form_12x12-dims;
+    }
+  }
+}
+
+.slipstream-widget-test-page.help-widget-test {
+  .toggle-buttons {
+    margin: 20px 0px 40px;
+  }
+}

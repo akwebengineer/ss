@@ -1,0 +1,206 @@
+.link[data-type=started_default] {
+    stroke: #96a5aa !important;
+    stroke-width: 1.5px !important;
+}
+
+.link[data-type=dropped_default] {
+    stroke: #FF5A5A !important;
+    stroke-width: 1.5px !important;
+}
+
+.link-arrow[data-type=dropped_default] {
+    fill: red !important;
+}
+
+.link[data-type=contacted_default] {
+    stroke: #FFAD5A !important;
+    stroke-linecap: square;
+    stroke-dasharray: 1,5;
+}
+.link-arrow[data-type=contacted_default] {
+    fill: orange !important;
+    stroke: orange !important;
+    stroke-dasharray: 0,0;
+}
+.link[data-type=sub_node_link] {
+    stroke: #78bb4c !important;
+    stroke-linecap: square;
+    stroke-dasharray: 1,0;
+}
+.link-arrow[data-type=sub_node_link] {
+    fill: #78bb4c !important;
+    stroke-dasharray: 0,0;
+}
+.link[data-type=bidirectional_link] {
+    stroke: #78bb4c !important;
+    stroke-linecap: square;
+    stroke-dasharray: 1,0;
+}
+.link-arrow[data-type=bidirectional_link] {
+    fill: #78bb4c !important;
+    stroke-dasharray: 0,0;
+}
+.link[data-type=sub_node_link_error] {
+    stroke: #ff3333 !important;
+    stroke-linecap: square;
+    stroke-dasharray: 2,5;
+    stroke-width: 1.5px !important;
+}
+.link-arrow[data-type=sub_node_link_error] {
+}
+.link[data-type=vpn_link] {
+    stroke: #96a5aa !important;
+    stroke-width: 2px !important;
+}
+
+/********* Customizing the subNode badge *********/
+.node[data-type=vpn-custom] .badge-text {
+    fill: white !important;
+}
+.node[data-type=vpn-custom] .node-badge {
+    fill: red !important;
+}
+.node[data-type=vpn-custom] .node-badge.selected {
+    fill: #FF5A5A !important;
+}
+
+/*********Chords*********/
+.chord[data-type=critical]{
+    fill: #b72841 !important;
+}
+.chord[data-type=major]{
+    fill: #ff9a00 !important;
+}
+.chord[data-type=minor]{
+    fill: #f7ca18 !important;
+}
+.chord[data-type=ok]{
+    fill: #00b96f !important;
+}
+/*************************/
+
+/*********Palette*********/
+.topology_palette_controls {
+    background-color: #DCDCDC;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.topology_palette_controls .item{
+    margin: 20px;
+    display: inline-block;
+    border: 3px #7EC0EE dashed;
+}
+.topology_palette_controls img:hover {
+    cursor: move;
+}
+.helper_styling {
+    border: 3px #20B2AA dashed!important;
+    padding: 3px;
+}
+/*************************/
+.test_topology_legend dl {
+    margin: 10px;
+    font-size: small;
+}
+.test_topology_legend dl dd {
+    clear:both;
+    padding: 4px;
+}
+.legend_image {
+    height: 25px;
+    width: 25px;
+}
+.legend_text {
+    margin-left:4px;
+}
+
+/*********Graph editor**********/
+
+.link.dropped_default {
+    stroke: #FF5A5A !important;
+    animation: linkStrobe 1s ease infinite;
+    animation-direction: alternate;
+}
+
+@keyframes linkStrobe {
+    to { stroke: darkred; stroke-width: 2; }
+}
+
+.link.endpoint.dropped_default * {
+    fill: #FF5A5A !important;
+}
+
+.link.bidirectional_link {
+    stroke: #78bb4c !important;
+}
+
+.link.endpoint.bidirectional_link * {
+    fill: #78bb4c !important;
+}
+
+.link.connected {
+    stroke: #00b96f !important;
+    animation: linkStrobes 1s ease infinite;
+    animation-direction: alternate;
+}
+
+@keyframes linkStrobes {
+    to { stroke: #dcecd2; stroke-width: 3px; }
+}
+
+.link.newConnection {
+    animation: newConnection 1s ease;
+    animation-direction: alternate;
+}
+
+@keyframes newConnection {
+    to { stroke: #78bb4c; stroke-width: 1.5; }
+}
+
+.customContainer {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.customContainer.selected {
+    border-color: #8be8fb;
+}
+
+.customNodeImage {
+    height: inherit;
+    background-repeat: no-repeat;
+}
+
+.customNode {
+    position: absolute;
+    top: -50px;
+    width: 142px;
+    height: 30px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px #dddddd;
+    font-size: 12px;
+    color: #444444;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.5;
+    letter-spacing: normal;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.customStatus {
+    left: 10px;
+    top: 8px;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+}

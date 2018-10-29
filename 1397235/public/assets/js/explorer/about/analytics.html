@@ -1,0 +1,362 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-user-analytics">Slipstream User Analytics</h1>
+<p>Gaining insight into the way a user interacts with a web application is critical to providing a good user experience.  Failure rates, time to completion, navigational paths, and other metrics provide the data necessary to improve and optimize workflows.  Static metrics like browser and version used, screen resolution and type of client device also provide important insights that can drive application optimization and help in making design trade-offs. </p>
+<p>Slipstream will provide a set of interfaces in the SDK for gathering user analytics.  The framework will automatically track metrics related to visited URLs, global search queries/number of results, the authenticated user, and other metrics that are related to framework-provided elements.  Plugins can use the provided interfaces to gather additional metrics related to content impressions/interactions, link traversal, etc.</p>
+<h1 id="slipstream-tracker">Slipstream Tracker</h1>
+<p>Slipstream will provide a set of abstract programming interfaces that can be used for gathering user metrics.    Plugins can provide concrete implementations of these interfaces as <em>analytics providers</em> that act as adapters to specific tracker implementations.  The framework will provide one such provider that acts as an adapter to the open source <a href="https://piwik.org/">Piwik tracker</a>.</p>
+<h2 id="analytics-api">Analytics API</h2>
+<p>The Slipstream.SDK.Analytics class exposes the following programmatic interfaces for tracking analytics events:</p>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-analytics-prototype-trackevent">SDK.Analytics.prototype.trackEvent</h4>
+<p>Explicitly track a user analytics event.  This can be used to track events that the framework doesn&#39;t already track on the plugin&#39;s behalf.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>category</strong></p>
+<p> The event category (eg. Firewall)</p>
+</li>
+<li><p><strong>action</strong></p>
+<p> The event action (eg. &quot;Create Rule&quot;)</p>
+</li>
+<li><p><strong>name</strong></p>
+<p> The event name {optional}</p>
+</li>
+<li><p><strong>value</strong></p>
+<p> A value associated with the event (optional)</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">addFirewallRule</span><span class="params">()</span> {</span>
+totalRules++;
+...
+<span class="comment">// log an event describing the addition of a new firewall rule and the current number of rules.</span>
+Slipstream.SDK.Analytics.trackEvent(<span class="string">"firewall"</span>, <span class="string">"add rule"</span>, <span class="string">""</span>, totalRules);
+...
+}</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-tracklink">SDK.Analytics.prototype.trackLink</h4>
+<p>Manually log a link click event.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>url</strong></p>
+<p> The URL associated with the link</p>
+</li>
+<li><p><strong>linkType</strong> (optional)</p>
+<p> The type of the link to be tracked.  If not specified the value defaults to &#39;link&#39;.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> link;
+...
+link.onClick(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+ Slipstream.SDK.Analytics.trackLink(<span class="string">"/event/4885883"</span>, <span class="string">"link"</span>);
+});</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-trackcontentimpressionswithinnode">SDK.Analytics.prototype.trackContentImpressionsWithinNode</h4>
+<p>Scans the given DOM node and its children for content blocks and tracks an impression for them if no impression was already tracked for it.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>domNode</strong></p>
+<p>The DOM node within which content impressions should be tracked.</p>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-trackcontentimpression">SDK.Analytics.prototype.trackContentImpression</h4>
+<p>Explicitly tracks a content impression.   This can be used to track impressions for content that is added dynamically after a view is rendered via an activity&#39;s <em>setContentView()</em> method.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>contentName</strong></p>
+<p>The name of the content section</p>
+</li>
+<li><p><strong>contentPiece</strong></p>
+<p>A description of the content</p>
+</li>
+<li><p><strong>contentTarget</strong></p>
+<p>The target (if any) of a click on the content</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> view = <span class="keyword">new</span> CustomView();
+<span class="keyword">var</span> container;
+...
+<span class="keyword">var</span> newContent = view.render();
+container.append(newContent);
+
+Slipstream.SDK.Analytics.trackContentImpression(<span class="string">"Device Definition"</span>, <span class="string">"Device 1"</span>, <span class="string">"/devices/device1"</span>);</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-trackcontentinteractionnode">SDK.Analytics.prototype.trackContentInteractionNode</h4>
+<p>Explicitly tracks an interaction with the given DOM node.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>domNode</strong></p>
+<p>The DOM node for which the content interaction to be tracked</p>
+</li>
+<li><p><strong>contentInteraction</strong></p>
+<p>The name of the content interaction to be set eg. &#39;click&#39; or &#39;submit&#39;.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> domNode;
+...
+Slipstream.SDK.TrackContentInteractionNode(domNode, <span class="string">"click"</span>)</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-trackcontentinteraction">SDK.Analytics.prototype.trackContentInteraction</h4>
+<p>Explicitly tracks a content interaction using a set of specified values describing the content.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>contentInteraction</strong></p>
+<p>The name of the content interaction to be set eg. &#39;click&#39; or &#39;submit&#39;.</p>
+</li>
+<li><p><strong>contentName</strong></p>
+<p>The name of the content for which the interaction is to be tracked.</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>contentPiece</strong></p>
+<p>  A description of the content for which the interaction is to be tracked</p>
+</li>
+<li><p><strong>contentTarget</strong></p>
+<p>  The target (if any) of a click on the content</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> deviceNode;
+...
+devicetNode.onClick(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+   Slipstream.SDK.Analytics.trackContentInteraction(<span class="string">"click"</span>, <span class="string">"device1"</span>, <span class="string">"device definition"</span>, <span class="string">"/devices/device1"</span>);
+});</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-addlistener">SDK.Analytics.prototype.addListener</h4>
+<p>Add a click listener to a specific link element. When clicked, Slipstream will log the click automatically.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>element</strong></p>
+<p>The link element for which a click listener should be added.  Element clicks will be tracked automatically.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> element;
+...
+Slipstream.SDK.Analytics.addListener(element);</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-tracksearch">SDK.Analytics.prototype.trackSearch</h4>
+<p>Track a search query.  This method can be used to track any search interaction in the UI.  An optional category can be provided to further describe the context of the search (eg. &#39;global&#39;, &#39;firewall rules grid&#39;, etc.).</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>query</strong></p>
+<p>The search string to be tracked</p>
+</li>
+<li><p><strong>category</strong> (optional)</p>
+<p>The search category</p>
+</li>
+<li><p><strong>resultCount</strong> (optional)</p>
+<p>The number of search results for query</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">doSearch</span><span class="params">(query)</span> {</span>
+   executeQuery(query, <span class="function"><span class="keyword">function</span><span class="params">(results)</span> {</span>
+       Slipstream.SDK.Analytics.trackSearch(query, <span class="string">"network events"</span>, results.length); 
+   });
+}</code></pre>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-analytics-prototype-setuserid">SDK.Analytics.prototype.setUserId</h4>
+<p>Set the userid that will be associated with subsequent tracking events.  Plugins will not typically need to call this method as the authenticated userid is tracked by the framework.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>username</strong></p>
+<p>The userid associated with subsequent tracking events</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="analytics-providers">Analytics Providers</h2>
+<p>An <em>analytics provider</em> acts as an adapter to a concrete tracker implementation.  The provider implements the abstract tracking interface defined by Slipstream.</p>
+<p>A Slipstream analytics provider is implemented as a Javascript AMD module in <a href="http://requirejs.org/docs/api.html">requireJS</a> format.  The module must return a no-argument Javascript constructor that extends from <em>Slipstream.SDK.AnalyticsProvider</em>.  The framework will use this constructor to instantiate the provider.</p>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">SomeAnalyticsProvider</span><span class="params">()</span> {</span>
+       ...
+    }
+
+    <span class="keyword">this</span>.onCreate = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        <span class="comment">// Perform required create time initialization of the provider</span>
+    }
+
+    <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        <span class="comment">// Perform required startup time initialization of the provider</span>
+    }
+
+    <span class="comment">// Inherit from the Slipstream AnalyticsProvider class</span>
+    SomeAnalyticsProvider.prototype = Object.create(Slipstream.SDK.AnalyticsProvider.prototype);
+    SomeAnalyticsProvider.prototype.constructor = SomeAnalyticsProvider;
+
+    <span class="comment">// Return the constructor as the value of this module</span>
+    <span class="keyword">return</span> SomeAnalyticsProvider;
+});</code></pre>
+<h3 id="provider-lifecycle">Provider Lifecycle</h3>
+<p>An AnalyticsProvider has a well-defined lifecycle that takes it through a series of states including <em>create</em> and <em>start</em>, <em>destroy</em>.</p>
+<pre><code>    ┌─────────────────────┐
+    │   Launch Provider   │
+    └─────────────────────┘
+               ↓ 
+    ┌─────────────────────┐
+    │      onCreate()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │      onStart()      │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │  Provider active    │  
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │     onDestroy()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │ Provider Terminated │
+    └─────────────────────┘</code></pre>
+<p>Each state of an analytics provider has a corresponding lifecycle method in an AnalyticsProvider object: <em>onCreate()</em>, <em>onStart()</em>, <em>onDestroy()</em>.</p>
+<p>When an analytics provider is first created its <em>onCreate()</em> method is called.  By default this method is a no-op but providers can override it to perform any operations necessary prior to the provider being started. Once the <em>onCreate()</em> method returns, the provider&#39;s onStart() method is immediately invoked.</p>
+<p>When a provider is either no longer needed (eg. its associated plugin is removed from the system) it may be destroyed. Before a provider is destroyed its <em>onDestroy()</em> method is called. This allows the provider an opportunity to perform any cleanup operations prior to it being destroyed.</p>
+<p><strong>Note</strong>: The destroy state and it&#39;s corresponding <em>onDestroy()</em> method are not currently used by Slipstream but are reserved for future use.</p>
+<h2 id="analytics-provider-instances">Analytics Provider Instances</h2>
+<p>All AnalyticsProvider instances inherit from Slipstream.SDK.AnalyticsProvider.prototype.  In addition to providing an implementation for all base Slipstream.SDK.Analytics.prototype methods, an AnalyticsProvider should implement the following methods:</p>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-analyticsprovider-prototype-oncreate">SDK.AnalyticsProvider.prototype.onCreate</h4>
+<p>The lifecycle callback that is invoked when an AnalyticsProvider is created.  This occurs after instantiation but before the provider is started.  Anything that an provider needs to do before it is started should be done here.  </p>
+<p>  A plugin can assume that the user has been authenticated prior to this method being called.</p>
+<p>The method in the AnalyticsProvider prototype is a no-op and should be overridden by objects implementing an AnalyticsProvider.</p>
+</li>
+<li><h4 id="sdk-analyticsprovider-prototype-onstart">SDK.AnalyticsProvider.prototype.onStart</h4>
+<p>The lifecycle callback that is invoked when a AnalyticsProvider is started.  </p>
+<p>  A plugin can assume that the user has been authenticated prior to this method being called.</p>
+<p>The method in the AnalyticsProvider prototype is a no-op and should be overridden by objects implementing an AnalyticsProvider.</p>
+</li>
+<li><h4 id="sdk-analyticsprovider-prototype-ondestroy">SDK.AnalyticsProvider.prototype.onDestroy</h4>
+<p>The lifecycle callback that is invoked when a provider is destroyed.  </p>
+<p> The method in the AnalyticsProvider prototype is a no-op and should be overridden by objects implementing a AnalyticsProvider.</p>
+<p><strong>Note</strong>: This method is not currently used by Slipstream but is reserved for future use.</p>
+</li>
+</ul>
+<h3 id="declaring-an-analyticsprovider">Declaring an AnalyticsProvider</h3>
+<p>A plugin must declare the analytics provider that it exposes via its plugin.json file.  Only a single analytics provider can exist in an instance of the Slipstream framework.  If multiple provider definitions exist, then Slipstream will use the last definition found during plugin discovery.</p>
+<p>A sample plugin.json with the relevant AnalyticsProvider settings is shown below.</p>
+<pre><code class="language-json">{
+   ...
+   providers: [
+      {
+          &quot;uri&quot;: &quot;analytics://&quot;,
+          &quot;module&quot;: &quot;analyticsProvider&quot;
+      }
+   ]
+   ...
+}</code></pre>
+<p>When a plugin is loaded and the configuration includes <em>providers</em>, the module identified will be instantiated and the <em>onCreate()</em> function called to initialize the provider.</p>
+<h2 id="example-analytics-provider">Example Analytics Provider</h2>
+<pre><code class="language-javascript">define([<span class="string">"piwik"</span>], <span class="function"><span class="keyword">function</span><span class="params">(Piwik)</span> {</span>    
+  <span class="function"><span class="keyword">function</span> <span class="title">PiwikAnalyticsProvider</span><span class="params">()</span> {</span>
+   Slipstream.SDK.AnalyticsProvider.call(<span class="keyword">this</span>);
+   ...
+  }
+
+  PiwikAnalyticsProvider.prototype = Object.create(Slipstream.SDK.AnalyticsProvider.prototype);
+  PiwikAnalyticsProvider.prototype.constructor = PiwikAnalyticsProvider;
+
+  PiwikAnalyticsProvider.prototype.trackEvent = <span class="function"><span class="keyword">function</span><span class="params">(category, action, name, value)</span> {</span>
+    ...
+  }
+
+  PiwikAnalyticsProvider.prototype.trackLink = <span class="function"><span class="keyword">function</span><span class="params">(url, linkType)</span> {</span>
+    ...
+  }
+  ...
+  <span class="keyword">return</span> PiwikAnalyticsProvider;
+})</code></pre>
+<h2 id="plugin-requirements-for-analytics">Plugin Requirements for Analytics</h2>
+<p>Slipstream will automatically track data for all framework-provided UI elements including the primary and secondary navigation, utility toolbar and global search.  It will also track information about the currently logged in user.  In addition it will automatically track data on the client-side runtime environment such as OS and version, browser type and version, screen resolution, etc.  </p>
+<p>Plugins will be responsible for explicitly calling the Slipstream tracker API to track application-specific events.  Plugins will also be responsible for declaring content sections in its rendered views for which impressions and interactions are to be tracked.</p>
+<h3 id="identifying-content-sections">Identifying Content Sections</h3>
+<p>In order to track content impressions and interactions, content sections must be explicitly declared in the section’s markup.  This is done using the following HTML data-* attributes:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data-track-content</td>
+<td>Defines a content block </td>
+</tr>
+<tr>
+<td>data-content-name=&quot;<name>&quot;</td>
+<td>Defines the name of the content block</td>
+</tr>
+<tr>
+<td>data-content-piece=&quot;<identifier>&quot;</td>
+<td>Identifies the piece of content that is displayed (eg. /assets/foo.jpg)</td>
+</tr>
+<tr>
+<td>data-content-target=&quot;<target>&quot;</td>
+<td>Defines the content target (eg. the URL of a landing page that is displayed when clicking on the content)</td>
+</tr>
+<tr>
+<td>data-content-ignoreinteraction</td>
+<td>Specifies that interactions with the content should not be tracked automatically</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example">Example</h4>
+<p>The following markup defines a named content section:</p>
+<pre><code>&lt;div id=”onboarding” data-track-content data-content-name=”onboarding guide”&gt;
+ …
+&lt;/div&gt;</code></pre>
+<p>The framework will automatically track content impressions for content that is rendered into the content pane via an Activity’s <em>setContentView</em> method.  However, only content that is rendered from the content view&#39;s render method will be tracked automatically.  A plugin must explicitly call the appropriate content tracking methods to track any content that it adds to the content pane after the content view’s render method returns (eg. content that is added dynamically due to progressive disclosure).</p>
+<h2 id="opting-out-of-tracking">Opting-out of Tracking</h2>
+<p>Most modern browsers provide a ‘do not track’ option so that users can explicitly opt-out of tracking.  The Slipstream tracker will honor this setting and will not generate any tracking data if this option is enabled.</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

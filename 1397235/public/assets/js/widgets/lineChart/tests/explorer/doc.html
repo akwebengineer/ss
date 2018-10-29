@@ -1,0 +1,195 @@
+<div>
+    <h1 id="line-chart-widget">Line Chart Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The line chart is represented by a series of datapoints connected with a straight line. Line charts are most often used to visualize data that changes over time.</p>
+<p>A line chart in Slipstream can be implemented using the framework&#39;s line chart widget.</p>
+<h2 id="api">API</h2>
+<p>The line chart widget exposes 4 functions: a constructor, a build method that creates the chart, an update method that updates the chart and a destroy method that cleans up the resources set by itself.</p>
+<pre><code>function LineChartWidget(conf) {…}</code></pre>
+<p>Used to create a new line chart.
+where conf is of the format:</p>
+<pre><code>{
+    container: &lt;reference to the DOM element where the chart needs to be rendered&gt;,
+    options: &lt;object containing line chart options&gt;
+}</code></pre>
+<p>options is of the format:</p>
+<pre><code>{
+    title: &lt;chart title&gt;
+    xAxisTitle: &lt;xAxis title&gt;
+    yAxisTitle: &lt;yAxis title&gt;
+    maxLabelSize: &lt;maximum number of characters, a label exceeding this size is truncated and full label is displayed only on hover&gt;
+    categories: &lt;array of names used for the xAxis&gt;
+    colors: &lt;array to specify custom colors and override default colors&gt;
+    legend: &lt;legend box displaying name and color for items appearing on the chart&gt;
+        enabled: &lt;boolean, setting to true displays legend on the chart&gt;
+        position: &lt;string specifying the legend position &#39;right&#39; or &#39;bottom&#39;&gt;
+    markers: &lt;marker symbols displayed for each data point appearing on the line&gt;
+        enabled: &lt;boolean, setting to true displays markers on the lines&gt;
+        multiple: &lt;boolean, setting to true displays multiple marker symbols on the lines instead of only circles&gt;
+    lines: &lt;array of objects for each series&gt;
+        name: &lt;name of the series&gt;
+        data: &lt;array of data points for the series&gt;
+}</code></pre>
+<h5 id="chart-size">Chart Size</h5>
+<pre><code>&lt;div id=&quot;linechart-container&quot; style=&quot;width:800px; height:300px;&quot;&gt;&lt;/div&gt;</code></pre>
+<p>As shown in the example above, the chart will inherit the size (width and height) specified in the container&#39;s div.</p>
+<pre><code>function build() {…}</code></pre>
+<p>Used to render the line chart.</p>
+<pre><code>function update(options) {…}</code></pre>
+<p>Used to update the chart with new options.</p>
+<pre><code>function destroy() {…}</code></pre>
+<p>Used to destroy the chart and clean up resources.</p>
+<h2 id="usage">Usage</h2>
+<p>Steps to add a line chart:</p>
+<ol>
+<li>Instantiate the line chart widget and provide the configuration object</li>
+<li>Call the build method</li>
+</ol>
+<h5 id="example-1-">Example 1:</h5>
+<p>The following configuration object renders a line chart with</p>
+<ul>
+<li>chart title</li>
+<li>titles on both axes</li>
+<li>names of the months displayed on the x-axis (categories)</li>
+<li>legend label exceeding 10 characters is truncated</li>
+<li>lines with name and data array for each series</li>
+<li>since colors array is not specified, widget default colors array will be used</li>
+<li>since legend parameters are not specified, legend will be dispalyed on the right</li>
+<li>since markers parameters are not specified, markers will be hideen and displayed only on hover</li>
+</ul>
+<pre><code>var conf = {
+                container: lineChartElement,
+                options: options
+           };</code></pre>
+<pre><code>var options = {
+                title: &#39;Sample Chart&#39;
+                xAxisTitle: &#39;Months&#39;,
+                yAxisTitle: &#39;Count&#39;,
+                categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;],
+                maxLabelSize: 10,
+                lines: [{
+                        name: &#39;Device 1&#39;,
+                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                    }, {
+                        name: &#39;Device 2&#39;,
+                        data: [2.0, 5.0, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                    }, {
+                        name: &#39;Device 3&#39;,
+                        data: [5.9, 6.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 2.0]
+                    }, {
+                        name: &#39;Device 4&#39;,
+                        data: [10, 20, 23, 12, 5, 4, 11, 16, 17, 15, 14, 5]
+                    }, {
+                        name: &#39;Long Device Name&#39;,
+                        data: [7, 7, 7, 7, 17, 7, 7, 7, 14.3, 9.0, 3.9, 2.0]
+                    }, {
+                        name: &#39;Device 6&#39;,
+                        data: [5,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+                    }, {
+                        name: &#39;Device 7&#39;,
+                        data: [2, 3, 3.9, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+                    }, {
+                        name: &#39;Device 8&#39;,
+                        data: [12, 12, 14, 14, 14, 16, 16, 16, 16, 18, 18, 18]
+                    }, {
+                        name: &#39;Device 9&#39;,
+                        data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+                    }, {
+                        name: &#39;Device 10&#39;,
+                        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]
+           };</code></pre>
+<h5 id="example-2-">Example 2:</h5>
+<p>The following configuration object renders a line chart with</p>
+<ul>
+<li>no chart title</li>
+<li>titles on y-axis only</li>
+<li>names of the months displayed on the x-axis</li>
+<li>3 lines (names and data)</li>
+<li>custom colors </li>
+</ul>
+<pre><code>var conf = {
+                container: lineChartElement,
+                options: options
+           };</code></pre>
+<pre><code>var options = {
+                xAxisTitle: &#39;&#39;,
+                yAxisTitle: &#39;Alarm Count&#39;,
+                categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;],
+                colors: [&#39;#EC1C24&#39;, &#39;#F58B39&#39;, &#39;#ECEC20&#39;],
+                lines: [{
+                    name: &#39;Critical&#39;,
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                    name: &#39;Major&#39;,
+                    data: [2.0, 5.0, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                }, {
+                    name: &#39;Minor&#39;,
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]</code></pre>
+<h5 id="example-3-">Example 3:</h5>
+<p>The following configuration object renders a line chart with</p>
+<ul>
+<li>no chart title</li>
+<li>titles on y-axis only</li>
+<li>names of the months displayed on the x-axis</li>
+<li>default colors</li>
+<li>lines with markers and diffrent symbols (eg. circle, square, triangle) for each line</li>
+</ul>
+<pre><code>var conf = {
+                container: lineChartElement,
+                options: options
+           };</code></pre>
+<pre><code>var options = {
+                xAxisTitle: &#39;&#39;,
+                yAxisTitle: &#39;Alarm Count&#39;,
+                categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;],
+                markers: {
+                    enabled: true,
+                    multiple: true
+                },
+                lines: [{
+                    name: &#39;Critical&#39;,
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                    name: &#39;Major&#39;,
+                    data: [2.0, 5.0, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                }, {
+                    name: &#39;Minor&#39;,
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]</code></pre>
+<h5 id="example-4-">Example 4:</h5>
+<p>The following configuration object renders a line chart with</p>
+<ul>
+<li>no chart title</li>
+<li>titles on y-axis only</li>
+<li>names of the months displayed on the x-axis</li>
+<li>default colors</li>
+<li>legend positioned at the bottom</li>
+</ul>
+<pre><code>var conf = {
+                container: lineChartElement,
+                options: options
+           };</code></pre>
+<pre><code>var options = {
+                xAxisTitle: &#39;&#39;,
+                yAxisTitle: &#39;Alarm Count&#39;,
+                categories: [&#39;Jan&#39;, &#39;Feb&#39;, &#39;Mar&#39;, &#39;Apr&#39;, &#39;May&#39;, &#39;Jun&#39;, &#39;Jul&#39;, &#39;Aug&#39;, &#39;Sep&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;],
+                legend: {
+                    enabled: true,
+                    position: &#39;bottom&#39;
+                },
+                lines: [{
+                    name: &#39;Critical&#39;,
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                    name: &#39;Major&#39;,
+                    data: [2.0, 5.0, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                }, {
+                    name: &#39;Minor&#39;,
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]</code></pre>
+
+
+</div>
+ 

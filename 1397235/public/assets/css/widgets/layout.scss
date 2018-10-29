@@ -1,0 +1,125 @@
+//classes can't be imported in layout-widget namespace because the containers used for drag and drop are added to the root. All golden-layout classes are namespace by the library with lm_
+@import "../../js/vendor/jquery/goldenLayout/goldenlayout-base";
+@import "../../js/vendor/jquery/goldenLayout/goldenlayout-light-theme";
+
+.slipstream-layout-widget{
+  $layout-splitter-color: #999;
+  overflow: hidden;
+  @mixin actionIcon($icon, $hover) {
+    @extend .icon_#{$icon}-bg, .icon_#{$icon}-bg-dims;
+    &:hover{
+      opacity: 1;
+      @extend .icon_#{$hover}-bg, .icon_#{$hover}-bg-dims;
+    }
+  }
+  .lm_goldenlayout {
+    background: inherit;
+    .lm_header{
+      background: inherit;
+      padding: 5px 5px 0px;
+      .lm_tabs{
+        width: calc(100% - 50px);
+        .lm_tab {
+          width: inherit;
+          background: inherit;
+          box-shadow: none;
+          border: 0px;
+          cursor: auto;
+//          .lm_left{ //icon used for drag and drop the panel but it was removed as there is not a use case for it
+//            @include actionIcon('right_panel_drag','right_panel_drag_hover');
+//          }
+          .lm_title{
+            display: none;
+          }
+          .lm_close_tab {
+            display: none !important;
+          }
+        }
+      }
+      .lm_controls{
+        .lm_maximise{
+          @include actionIcon('maximize','maximize_hover');
+        }
+        .lm_close{
+          @include actionIcon('close_12x12_blue','close_12x12_hover');
+        }
+        li{
+          margin: 1px 6px 0px 0px;
+        }
+      }
+    }
+    .lm_maximised {
+      position: inherit;
+      .lm_header{
+        .lm_controls{
+          .lm_maximise{
+            @include actionIcon('minimize','minimize_hover');
+          }
+        }
+      }
+      .lm_content{
+        background: inherit;
+        border: 0px;
+        & > div { //content should have some padding
+          padding: 0px 15px;
+        }
+      }
+    }
+    .lm_items{
+      background: inherit;
+      .lm_content{
+        background: inherit;
+        border: 0px;
+        & > div { //content should have some padding
+            padding: 0px 15px;
+        }
+      }
+    }
+    .lm_splitter {
+      background: $border-color;
+      opacity: 1;
+      &:hover{
+        background: $layout-splitter-color;
+      }
+      &.lm_horizontal .lm_drag_handle {
+        cursor: ew-resize;
+      }
+      &.lm_vertical .lm_drag_handle {
+        cursor: ns-resize;
+      }
+    }
+  }
+}
+
+//overwrites container created by the golden-layout library inside the body -top level- to fix style during the drag and drop of a container
+.lm_dropTargetIndicator{
+  box-shadow: none;
+  .lm_inner{
+    background: transparent;
+    opacity: 1;
+  }
+}
+.lm_dragProxy{
+  box-shadow: none;
+  .lm_header .lm_tab, .lm_content{
+    background: transparent;
+    box-shadow: none;
+    border: 0px;
+  }
+  .lm_content{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.slipstream-layout-widget-test-page{
+  overflow-y: hidden;
+  .tabContainer-widget.tabContainer-navigation{
+    .tabContainer-widget_tabLink{
+      background-color: $content-body-tertiary-bg;
+    }
+    .tabContainer-widget_content{
+      padding: 0px !important;
+      background: inherit !important;
+    }
+  }
+}

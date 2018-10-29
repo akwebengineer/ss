@@ -1,0 +1,8 @@
+<dd class="{{key}} actionMenu">
+    {{#icon}}
+        {{>partialIcon}}
+    {{/icon}}
+    {{^icon}}
+       <span class="menu-label" {{#disabledStatus}}disabled{{/disabledStatus}}> {{label}}<svg><use href="#icon_arrow_down_centered"></use></svg> </span>
+    {{/icon}}
+</dd>

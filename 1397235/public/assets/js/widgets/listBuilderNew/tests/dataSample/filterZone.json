@@ -1,0 +1,29 @@
+{
+    "zone": [
+        {
+            "name": "trust-inet-filtered",
+            "screen": "STD_SCREENS",
+            "host-inbound-traffic": {
+                "system-services": [
+                    {
+                        "name": "ping"
+                    }
+                ]
+            },
+            "interfaces": "ge-0/0/2.60",
+            "id": 10
+        },
+        {
+            "name": "untrust-inet-filtered",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/1.0",
+            "id": 11
+        },
+        {
+            "name": "esf-inet-filtered",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/2.20",
+            "id": 12
+        }
+    ]
+}

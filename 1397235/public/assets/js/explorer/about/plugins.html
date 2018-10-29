@@ -1,0 +1,351 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="writing-slipstream-plugins">Writing Slipstream Plugins</h1>
+<p>A Slipstream plugin encapsulates a set of UI workflows and/or Slipstream dashboard widgets.  Workflows are composed from one or more <a href="activity.html">Activities</a>, each of which is defined in a Javascript <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> module.  A plugin also packages the HTML files, CSS files and other resources necessary to support its workflows, and a <a href="manifest.html">manifest file</a> that provides metadata describing the plugin.</p>
+<p><strong>Note</strong>:  This document outlines how to write workflow plugins.  For dashboard plugins, please refer to <a href="https://ssd-git.juniper.net/spog/slipstream/blob/master/public/assets/js/widgets/dashboard/dashboard.md">Writing Slipstream Dashboard Plugins</a>.</p>
+<h3 id="activity-modules">Activity Modules</h3>
+<p>A workflow is simply a sequence of activities.  Each activity is represented as a Javascript AMD module that implements a well-defined interface.  Like most things in Slipstream, Activities are more convention than definition, but Slipstream provides a base <a href="activity.html">Activity definition</a> that can be extended.</p>
+<p>An Activity has a well-defined <a href="activity.html#activity-lifecycle">lifecycle</a> that takes it through a series of states including create, execute, and destroy.  The base lifecycle methods can be overriden in order to implement the behavior specific to an activity.</p>
+<p>A Slipstream activity is implemented as a Javascript AMD module in <a href="http://requirejs.org/docs/api.html">requireJS</a> format.  The module must return a Javascript constructor that the framework can use to instantiate an instance of the activity.</p>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">SomeActivity</span><span class="params">()</span> {</span>
+        <span class="comment">// Override the Activity lifecycle methods</span>
+        <span class="keyword">this</span>.onCreate = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            ...
+        };
+
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            ...
+        }
+    }
+
+    <span class="comment">// Inherit from the Slipstream Activity class</span>
+    SomeActivity.prototype = <span class="keyword">new</span> Slipstream.SDK.Activity();
+
+    <span class="comment">// Return the constructor as the value of this module</span>
+    <span class="keyword">return</span> SomeActivity;
+});</code></pre>
+<p>You can write your activities using whichever Javascript libraries you choose.  Slipstream only requires that you implement the Activity interface so that it can load, instantiate and call your activity&#39;s lifecycle methods.</p>
+<h3 id="rendering-views">Rendering Views</h3>
+<p>The primary purpose of an activity is to create one or more UI views, register event handlers on those views, and render the views as part of a workflow.  Slipstream reserves an area of the UI called the <em>content pane</em> into which activities can render their views.  </p>
+<p>As with activities, Slipstream doesn&#39;t dictate how a plugin creates its views.  The only requirement is that a view expose a <a href="views.html">well-defined interface</a> that the framework can use to manage it.  Once a view is instantiated and is ready for rendering, an activity can request that the framework render the view into the content pane.  This is done by using the <a href="activity.html#setContentView">setContentView</a> method of an activity.</p>
+<pre><code class="language-javascript"><span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    ...
+    <span class="comment">// Create a view</span>
+    <span class="keyword">var</span> view = <span class="keyword">new</span> SomeView();
+
+    <span class="comment">// Render the view to the Slipstream content area</span>
+    <span class="keyword">this</span>.setContentView(view);
+    ...
+}</code></pre>
+<p>If a view already exists in the content pane it will be closed and replaced by the new view.</p>
+<h3 id="exposing-activities">Exposing Activities</h3>
+<p>A Slipstream plugin isn&#39;t restricted to using its own activities in its workflows.  The framework provides the ability for a plugin to dynamically discover activities provided by other plugins.  Once discovered, the plugin can use the activities to enhance its workflows.  </p>
+<p>For example, suppose a plugin provides the ability to define and deploy a set of virtual security devices in a virtualized network.  A natural part of such a workflow is to allow a user to create security policies on the deployed security devices.  However, the plugin that supports the deployment of virtual devices knows nothing about managing security policies.  In order for the plugin to enhance the deployment workflow to include the creation of security policies, it can query the Slipstream framework for another plugin that contains activities related to security policy management.  If such a plugin exists, the plugin for managing virtual devices can alter its workflow to include a step to create security policies for the deployed devices.  </p>
+<p>In order fo this discovery process to work, plugins need a way to expose their activities to other plugins.  This is done by declaring a plugin&#39;s activities in the plugin manifest file.  For each activity to be exposed, the manifest file declares the Javascript module that implements the activity and the criteria that Slipstream will use to resolve requests for the activity.  These criteria are expressed in the form of <a href="manifest.html">activity filters</a>.</p>
+<pre><code class="language-json">&quot;activities&quot;: [
+    {
+        &quot;module&quot;: &quot;MyActivity&quot;,
+        &quot;filters&quot;: [
+            {
+                &quot;action&quot;: &quot;Slipstream.SDK.Intent.action.MANAGE&quot;,
+                &quot;data&quot;: {
+                    &quot;mime_type&quot; : &quot;vnd.juniper.firewall-policy&quot;
+                }
+            }
+        ]
+    }
+]</code></pre>
+<p>Slipstream processes the set of installed plugins at framework boot time and reads each plugin&#39;s manifest file.  The activities and filters declared in the manifest are stored in a registry managed by the framework.  Slipstream consults this registry when a plugin requests that an activity matching a set of filter criteria be started.</p>
+<h3 id="discovering-and-starting-activities">Discovering and Starting Activities</h3>
+<p>A Slipstream plugin can discover activities exposed by other plugins.  These discovered activities can then be utilized in the plugin&#39;s workflows.</p>
+<p>In order to discover an activity, a plugin must create an <a href="intent.html">Intent</a> to perform some activity.  </p>
+<p>An Intent describes the action to be performed and the type of the data on which to perform that action.  The data type can be described using a MIME type and/or a URI.</p>
+<pre><code class="language-javascript">// Find an activity that can display geo data
+var intent_uri = new Slipstream.SDK.Intent(&quot;Slipstream.SDK.Intent.action.VIEW&quot;, {scheme: &quot;geo&quot;});
+
+// Find an activity that can manage Juniper firewall policies
+var intent_mime = new Slipstream.SDK.Intent(&quot;Slipstream.SDK.Intent.action.MANAGE&quot;, {mime_type: &quot;
+vnd.juniper.firewall-policy&quot;});</code></pre>
+<p>There are two Slipstream APIs that can be used to discover activities.  </p>
+<p>The <a href="">lookupActivity</a> API is used to determine if an activity exists that meets a given criteria.  This API is useful when dynamically augmenting workflows based on the availability of activities.</p>
+<p>The <a href="">startActivity</a> API is used to find an activity that meets a given criteria and start it if it exists.</p>
+<p>You can also add any additional parameters you wish to pass on to the matched activity using the Intent.putExtras() function before you call the <a href="">startActivity</a> API. The additional parameters could be an array or a plain object. These get parameterized as part of the URL and deparameterized for consumption at the started Activity. Values of the additional parameters are coerced if they are number, undefined or boolean. For ex) &quot;123&quot; is coereced to 123, &quot;undefined&quot; is coerced to undefined, &quot;true&quot; is coerced to true.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> intent = <span class="keyword">new</span> Slipstream.SDK.Intent(<span class="string">"Slipstream.SDK.Intent.action.VIEW"</span>, {scheme: <span class="string">"geo"</span>});
+<span class="keyword">var</span> activity = <span class="keyword">this</span>.context.lookupActivity(intent);
+
+<span class="keyword">if</span> (activity) {
+    ...
+    intent.putExtras({
+        param1: <span class="string">'value1'</span>,
+        param2: {
+            nested1: <span class="string">'value2'</span>
+        },
+        param3: [arr1, arr2, arr3]
+    });
+    ...
+    <span class="keyword">try</span> {
+        <span class="keyword">this</span>.context.startActivity(activity);
+    }
+    <span class="keyword">catch</span>(Error) {
+       console.log(<span class="string">"failed to start activity"</span>);
+    }
+    ...
+}</code></pre>
+<h3 id="associating-activities-with-slipstream-navigation-elements">Associating Activities with Slipstream Navigation Elements</h3>
+<p>The Slipstream framework provides primary and secondary navigation elements that users can use to find and launch workflows.  Slipstream plugins can associate their activities with the navigation elements provided by the framework.  When a user selects the navigation element the framework will arrange for the associated activity to be started.</p>
+<pre><code>                            Primary Navigation
+
+             ┌─────────────────────────────────────────────────┐
+             │Dashboard│Device│Policies│Objects│Network│Monitor│
+             ├─────────┼───────────────────────────────────────┤
+             │Security │                                       │
+ Secondary   │  SRX    │                                       │
+Navigation   │         │                                       │
+             │Routing  │                                       │
+             │         │                                       │
+             │Switching│                                       │
+             │         │                                       │
+             └─────────┴───────────────────────────────────────┘</code></pre>
+<p>This association is made declaratively in the <a href="manifest.html">navigation_paths</a> stanza of the plugin manifest file.</p>
+<p>The path to the navigation element is provided in the <em>path</em> attribute.  Paths are made up of <em>segments</em> separated by &#39;/&#39; characters.  Each segment corresponds to a level in the navigation - the first segment corresponds to the primary navigation, the second segment corresponds to the secondary navigation, and so on.    Navigation elements specified in <em>path</em> segments that don&#39;t already exist will be created by the framework.</p>
+<p>Each entry in <em>navigation_paths</em> is associated with an activity via the <em>filter</em> attribute.  This attribute specifies the value of the <em>id</em> attribute in an activity&#39;s <em>filters</em> array.  </p>
+<p>Currently only three levels of navigation are supported - primary, secondary, and the navigation elements nested immediately beneath the secondary level navigation elements.</p>
+<pre><code class="language-json">{
+    "<span class="attribute">activities</span>": <span class="value">[
+        {
+          "<span class="attribute">module</span>": <span class="value"><span class="string">"someActivity"</span></span>,
+          "<span class="attribute">filters</span>": <span class="value">[
+           {
+              "<span class="attribute">id</span>": <span class="value"><span class="string">"some_activity"</span></span>,
+              "<span class="attribute">action</span>": <span class="value"><span class="string">"VIEW"</span></span>,
+              "<span class="attribute">data</span>": <span class="value">{ 
+                "<span class="attribute">mime_type</span>": <span class="value"><span class="string">"application/some.mime.type"</span>
+              </span>}
+            </span>}
+          ]
+        </span>}
+      ]</span>,
+      "<span class="attribute">navigation_paths</span>": <span class="value">[ 
+        {
+          "<span class="attribute">path</span>": <span class="value"><span class="string">"device/security/srx"</span></span>,
+          "<span class="attribute">filter</span>": <span class="value"><span class="string">"some_activity"</span>
+        </span>}
+    ]
+</span>}</code></pre>
+<h3 id="packaging-and-deploying-plugins">Packaging and Deploying Plugins</h3>
+<p>Slipstream plugins are packaged into Zip files with the .spi extension.  The Zip file must have the following directory structure:</p>
+<pre><code>plugin.json
+js/
+   … all JS module files/directories …
+css/
+templates/
+   … all HTML templates …
+img/
+help/
+nls/
+    msgs.properties
+    … non en-US language bundles</code></pre>
+<p>Each plugin must contain a <a href="manifest.html">manifest file</a> in JSON format named <em>plugin.json</em> that contains metadata describing the plugin and a description of the plugin&#39;s activities.</p>
+<h4 id="plugin_manager">plugin_manager</h4>
+<p>Slipstream provides a command-line tool called <em>plugin_manager</em> for packaging and managing plugins.  The <em>plugin_manager</em> can be used to create, install, update, and uninstall plugins.</p>
+<pre><code>plugin_manager [-h] | [[-i | -u | -d] plugin-name] | [-c plugin-directory]
+
+   -i   installs a specified plugin; plugin-name.spi must exist.
+
+   -u   updates a specified plugin, if found in system; plugin-name.spi must exist.
+
+   -d   uninstalls plugin, if found.
+
+   -c   create a plugin package (.spi) from the specified plugin-directory, if found.
+        plugin-directory must exist in the current working directory
+
+   -h   displays this help content.</code></pre>
+<h3 id="signing-plugins">Signing Plugins</h3>
+<p>TBD</p>
+<h3 id="putting-it-all-together-a-maps-plugin">Putting it all Together - A Maps Plugin</h3>
+<p>The following example will illustrate the steps necessary to create a simple Slipstream plugin.  This plugin will expose a single activity for rendering geolocation data on a map.</p>
+<h4 id="1-create-the-plugin-manifest">1. Create the plugin manifest</h4>
+<p>The <a href="manifest.html">plugin manifest</a> provides some basic metadata about the plugin (name, version, etc.) and declares the activity that can be discovered and started to render geolocation data.</p>
+<p><strong>plugin.json</strong></p>
+<pre><code class="language-json">{
+    "<span class="attribute">name</span>": <span class="value"><span class="string">"maps"</span></span>,
+    "<span class="attribute">description</span>": <span class="value"><span class="string">"Slipstream Maps Plugin"</span></span>,
+    "<span class="attribute">publisher</span>": <span class="value"><span class="string">"Juniper Networks, Inc."</span></span>,
+    "<span class="attribute">version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+    "<span class="attribute">release_date</span>": <span class="value"><span class="string">"08.25.2014"</span></span>,
+    "<span class="attribute">min_platform_version</span>": <span class="value"><span class="string">"0.0.1"</span></span>,
+    "<span class="attribute">activities</span>": <span class="value">[
+        {
+            "<span class="attribute">url_path</span>": <span class="value"><span class="string">"/"</span></span>,
+            "<span class="attribute">module</span>": <span class="value"><span class="string">"mapActivity"</span></span>,
+            "<span class="attribute">filters</span>": <span class="value">[
+                {
+                    "<span class="attribute">action</span>": <span class="value"><span class="string">"Slipstream.SDK.Intent.action.VIEW"</span></span>,
+                    "<span class="attribute">data</span>": <span class="value">{
+                        "<span class="attribute">scheme</span>": <span class="value"><span class="string">"geo"</span>
+                    </span>}
+                </span>}
+            ]
+        </span>}
+    ]
+</span>}</code></pre>
+<p>The activity declared in the <em>plugin.json</em> file will be resolved for any intent to view a geo map.</p>
+<h4 id="2-implement-the-activity-module">2. Implement the Activity Module</h4>
+<p>The <em>plugin.json</em> file declared an activity whose module is called <em>mapActivity</em>.  So a module named mapActivity.js is implemented in the /js subdirectory of the plugin.</p>
+<p><strong>/js/mapActivity.js</strong></p>
+<pre><code class="language-javascript"><span class="comment">/**
+ * A module that implements a Slipstream Activity for
+ * viewing maps
+ *
+ * @module MapActivity
+ * @copyright Juniper Networks, Inc. 2014
+ */</span>
+define([<span class="string">'./views/mapView.js'</span>], <span class="function"><span class="keyword">function</span><span class="params">(MapView)</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">MapActivity</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="comment">// get the URI from the intent used to launch this activity</span>
+            <span class="keyword">var</span> uri = <span class="keyword">this</span>.intent.data.uri;
+
+            <span class="comment">// extract the latitude/longitude from the URI</span>
+            <span class="keyword">var</span> lat_long = getLatLong(uri);
+
+            <span class="comment">// Instantiate the view to be rendered</span>
+            <span class="keyword">var</span> mapView = <span class="keyword">new</span> MapView(lat_long[<span class="number">0</span>], lat_long[<span class="number">1</span>]);
+
+            <span class="comment">// render the view into the content pane</span>
+            <span class="keyword">this</span>.setContentView(mapView);
+        };
+
+        <span class="keyword">var</span> getLatLong = <span class="function"><span class="keyword">function</span><span class="params">(uri)</span> {</span>
+            <span class="keyword">var</span> path = uri.path();
+            <span class="keyword">var</span> lat_long = path.split(<span class="string">','</span>);
+
+            <span class="keyword">return</span> lat_long;
+        }
+    };
+
+    MapActivity.prototype = <span class="keyword">new</span> Slipstream.SDK.Activity();
+
+    <span class="keyword">return</span> MapActivity;
+});</code></pre>
+<h4 id="3-implement-the-view">3. Implement the View</h4>
+<p>The maps activity instantiated and rendered a view from a module named  <em>mapView.js</em> to the Slipstream content area.  This module will be implemented in the /js/views directory.</p>
+<p><strong>/js/views/mapView.js</strong></p>
+<pre><code class="language-javascript">define([<span class="string">'./leaflet.js'</span>], <span class="function"><span class="keyword">function</span><span class="params">(L)</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">MapView</span><span class="params">(latitude, longitude)</span> {</span>
+        <span class="keyword">this</span>.$el = $(<span class="string">'&lt;div style="height:550px"&gt;'</span>);
+        <span class="keyword">this</span>.el = <span class="keyword">this</span>.$el[<span class="number">0</span>];
+
+        <span class="keyword">this</span>.render = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">var</span> map = L.map(<span class="keyword">this</span>.el).setView([latitude, longitude], <span class="number">13</span>);
+            L.tileLayer( <span class="string">'http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png'</span>, {
+                subdomains: [<span class="string">'otile1'</span>,<span class="string">'otile2'</span>,<span class="string">'otile3'</span>,<span class="string">'otile4'</span>]
+            }).addTo(<span class="keyword">this</span>.map);
+            L.marker([latitude, longitude]).addTo(<span class="keyword">this</span>.map);
+        }
+    };
+
+    <span class="keyword">return</span> MapView;
+});</code></pre>
+<p>The view module made use of Leaflet to render the geomap and declared it as a dependency in its module definition.  The leaflet.js file must exist at the specified path in order for the view module to be loaded.</p>
+<h4 id="4-resolve-and-load-the-activity">4. Resolve and load the Activity</h4>
+<p>Whenever the maps activity is required to render geomap data, an intent must be created that matches the activity&#39;s declared filter criteria.  The Intent can then be resolved to the maps  activity and the activity can be started.  In this case, the activity is resolved whenever an intent specifies an action of <em>Slipstream.SDK.Intent.action.VIEW</em> and a URI scheme of <em>geo</em>.</p>
+<p><strong>An Activity whose workflow requires a rendered geomap</strong></p>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">SomeActivity</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.onStart = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="comment">// create an intent to view geomap data with a given latitude/longitude</span>
+            <span class="keyword">var</span> intent = <span class="keyword">new</span> Slipstream.SDK.Intent(<span class="string">"Slipstream.SDK.Intent.action.VIEW"</span>, {uri: <span class="keyword">new</span> Slipstream.SDK.URI(<span class="string">"geo:37.3711,-122.0375"</span>)});
+
+            <span class="keyword">if</span> (intent) {
+                <span class="comment">// start the resolved activity</span>
+                <span class="keyword">try</span> {
+                    <span class="keyword">this</span>.context.startActivity(intent);
+                }
+                <span class="keyword">catch</span>(Error) {
+                    console.log(<span class="string">"couldn't start activity"</span>);
+                }
+            }
+        };
+    }
+
+   SomeActivity.prototype = <span class="keyword">new</span> Slipstream.SDK.Activity();
+
+   <span class="keyword">return</span> SomeActivity;
+});</code></pre>
+<h4 id="5-package-the-plugin-for-distribution">5. Package the plugin for distribution</h4>
+<p>Once the plugin has been implemented, it can be packaged into a .spi file for distribution using the <em>plugin_manager</em> command-line tool.  </p>
+<pre><code>
+plugins$ ls
+maps
+
+plugins$ plugin_manager -c maps
+
+Creating plugin file maps.spi from directory maps...
+Done. Please check for errors above.
+
+plugins$ ls
+maps      maps.spi
+
+plugins$ unzip -l maps.spi
+
+Archive:  maps.spi
+  Length     Date   Time    Name
+ --------    ----   ----    ----
+        0  08-25-14 16:03   maps/
+        0  08-25-14 16:16   maps/js/
+      919  08-12-14 19:26   maps/js/mapActivity.js
+        0  08-25-14 16:31   maps/js/views/
+   125410  08-12-14 17:43   maps/js/views/leaflet.js
+      991  08-13-14 01:48   maps/js/views/mapView.js
+      524  08-18-14 01:29   maps/plugin.json
+ --------                   -------
+   163405                   7 files</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

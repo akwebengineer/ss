@@ -1,0 +1,1 @@
+<div class="slipstream-page-right-header">{{{view}}}</div>

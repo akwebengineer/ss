@@ -1,0 +1,31 @@
+{{#queryData}}
+{{#literal}}
+<span class="literal">{{value}}</span>
+{{/literal}}
+
+{{#logicalOperator}}
+<span class="logicalOperator">{{value}}</span>
+{{/logicalOperator}}
+
+{{#fieldExpressionGroup}}
+{{#fieldExpression}}
+{{#fieldName}}
+<span class="fieldName">{{value}}</span>
+{{/fieldName}}
+{{#fieldOperator}}
+<span class="fieldOperator">{{value}}</span>
+{{/fieldOperator}}
+{{#fieldValue}}
+<span class="fieldValue">{{value}}</span>
+{{/fieldValue}}
+{{#fieldValueDelimiter}}
+<span class="fieldValueDelimiter">{{value}}</span>
+{{/fieldValueDelimiter}}
+{{/fieldExpression}}
+{{/fieldExpressionGroup}}
+
+{{#parenExpression}}
+<span class="parenExpression">{{value}}</span>
+{{/parenExpression}}
+
+{{/queryData}}

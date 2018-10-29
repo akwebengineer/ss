@@ -1,0 +1,1857 @@
+<div>
+    <h1 id="form-widget">Form Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The form widget is a reusable graphical user interface that allows users to create a form from a configuration object. A form is used to collect information from a user in order to complete some action, such as creating or editing an object, or setting configuration parameters. The form widget output is a container with elements, style, and interactions like help tooltip and validation. It is appended to the container defined in the form widget configuration object. This approach is knows as the programmatic form.</p>
+<h2 id="api">API</h2>
+<p>The form widget follows the widget programming interface standards, therefore it exposes: a build and destroy methods and any data required by the widget is passed by its constructor. It also exposes some utility methods like isValidInput, insertValuesFromCollection, insertValuesFromJson, insertElementsFromJson, insertElementsToContainer, insertDropdownContentFromJson, copyRow and getInstantiatedWidgets.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object has three parameters:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    elements: &lt;define which elements will be part of the form&gt;
+    values: &lt;define the value of the elements used to bind the fields with a data model&gt;
+}</code></pre>
+<p>For example:</p>
+<pre><code>    var form = new FormWidget({
+                                &quot;container&quot;: this.el
+                                &quot;elements&quot;: configurationObject,
+                                &quot;values&quot;: valueObject,
+                             });</code></pre>
+<p>where configurationObject and valueObject follows a format specific to the form widget and are explained in the next sections.</p>
+<h4 id="elements">Elements</h4>
+<p>The elements parameter is an object that has the following parameters:</p>
+<ul>
+<li>title: the title of the form</li>
+<li>form_id,form_name: the internal id and name of the form</li>
+<li>title-help: adds a tooltip text next to the title of the form. It has two parameters: content and ua-help-identifier. content parameter defines the content of the tooltip and ua-help-identifier parameter adds an alias for user assistance event binding.</li>
+<li>error_div_id, err_div_message, err_div_link, err_div_link_text: the error message that will be showed when the form is submitted and an error happens.</li>
+<li>err_timeout, valid_timeout: time in milliseconds that a validation will take before is triggered</li>
+<li>on_overlay: defines if the form will be rendered on an overlay. The user of the form widget will still need to instantiate the overlay widget and add include the form widget on its view in order to see the form on an overlay. The on_overlay property only sets the style on the form in a way that it will be rendered properly when it is used on an overlay.</li>
+<li>sections: elements in a form grouped by sections</li>
+<li>buttons, unlabeled, cancel_link: buttons in a form and how it will be showed</li>
+<li>footer: footer of the form
+The parameters are optional, so if it&#39;s not used, then it will be absent from the form. Sections, buttons and footer parameters are explained with my detail bellow.</li>
+</ul>
+<p>For example:</p>
+<pre><code>configurationObject = {
+    &quot;title&quot;: &quot;Sample Form Widget&quot;,
+    &quot;form_id&quot;: &quot;sample_form&quot;,
+    &quot;form_name&quot;: &quot;sample_form&quot;,
+    &quot;title-help&quot;: {
+                &quot;content&quot;: &quot;Tooltip for the title of the Form Widget&quot;,
+                &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+            },
+    &quot;err_div_id&quot;: &quot;errorDiv&quot;,
+    &quot;err_div_message&quot;: &quot;One or more fields have errors. Update the fields highlighted below. For detailed information on possible values see&quot;,
+    &quot;err_div_link&quot;:&quot;http://www.juniper.net/techpubs/en_US/junos12.1x46/topics/task/configuration/j-web-basic-settings.html&quot;,
+    &quot;err_div_link_text&quot;:&quot;Configuring Basic Settings&quot;,
+    &quot;err_timeout&quot;: &quot;1000&quot;,
+    &quot;valid_timeout&quot;: &quot;5000&quot;,
+     &quot;on_overlay&quot;: true,
+    &quot;sections&quot;: [ ... ]
+    &quot;buttons&quot;: [ ...],
+    &quot;unlabeled&quot;:&quot;true&quot;,
+    &quot;footer&quot;: [
+        {
+            &quot;text&quot;:&quot;By setting the root password I accept the terms of the &quot;,
+            &quot;url&quot;:&quot;License Agreement&quot;,
+            &quot;id&quot;:&quot;login_agreement&quot;
+        }
+    ]
+};
+valueObject = {
+        &quot;text&quot;: &quot;Sample Form Widget&quot;,
+        &quot;email&quot;: &quot;mvilitanga@gmail.com&quot;,
+        &quot;url&quot;: &quot;www.gmail.com&quot;
+    };</code></pre>
+<h5 id="sections">Sections</h5>
+<p>A form can be composed of multiple sections, each of them contains:</p>
+<ul>
+<li>heading: the title of the section of the form</li>
+<li>heading_text: the details of the section of the form, presented as a text</li>
+<li>section_id: the id of the section</li>
+<li>section_class: the class of the section</li>
+<li>progressive_disclosure: adds an icon next to the title of the section (heading) that allows to close or open the section. The value of the progressive_disclosure property could be: expanded (the section will be showed expanded) or collapsed (the section will be showed collapsed and only the title will be visible). If the progressive_disclosure property is absent, the progressive disclosure icon for the section will not be available.</li>
+<li>toggle_section: adds a checkbox with a label that when it is clicked will show or hide the form elements below the checkbox for the current section. It contains three parameters: label (the label of the checkbox), checked (if the checkbox should be selected by default, value: true/false), and status (if the section should be showed or hidden by default, value: show/hide). If the toggle_section property is absent, the checkbox for the section will not be available.</li>
+<li>elements: the elements of the form section. It is an Array Object and each object represent the parameters the form widget requires to create the element in the form. More details are explained below.</li>
+</ul>
+<p>For example:</p>
+<pre><code>{
+    &quot;sections&quot;: [
+        {
+            &quot;heading&quot;: &quot;Subtitle&quot;,
+            &quot;heading_text&quot;: &quot;Subtitle text&quot;,
+            &quot;section_id&quot;: &quot;section_id&quot;,
+            &quot;section_class&quot;: &quot;section_class&quot;,
+            &quot;progressive_disclosure&quot;: &quot;collapsed&quot;,
+            &quot;toggle_section&quot;:{
+                 &quot;label&quot;: &quot;Select to show the form elements of section 1&quot;,
+                 &quot;status&quot;: &quot;hide&quot;,
+                 &quot;checked&quot;: true
+            },
+            &quot;elements&quot;: [
+                {
+                    &quot;element_text&quot;: true,
+                    &quot;id&quot;: &quot;text_field&quot;,
+                    &quot;name&quot;: &quot;text_feld&quot;,
+                    &quot;label&quot;: &quot;Text&quot;,
+                    &quot;placeholder&quot;: &quot;required&quot;,
+                    &quot;required&quot;: true,
+                    &quot;error&quot;: &quot;Please enter a value for this field&quot;,
+                    &quot;help&quot;: &quot;Inline help text&quot; ,
+                    &quot;field-help&quot;: {
+                        &quot;content&quot;: &quot;Tooltip for a field in the Form Widget&quot;,
+                        &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+                    }
+                },
+                {
+                    &quot;element_text&quot;: true,
+                    &quot;id&quot;: &quot;custom_pattern&quot;,
+                    &quot;name&quot;: &quot;custom_pattern&quot;,
+                    &quot;label&quot;: &quot;Custom Pattern&quot;,
+                    &quot;ua-help&quot;: &quot;alias_for_ua_event_binding&quot;,
+                    &quot;placeholder&quot;: &quot;1234&quot;,
+                    &quot;pattern&quot;: &quot;^([0-9]){3,4}$&quot;,
+                    &quot;error&quot;: &quot;Enter a number with 3 or 4 digits&quot;
+                },
+                {
+                    &quot;element_email&quot;: true,
+                    &quot;id&quot;: &quot;text_area&quot;,
+                    &quot;name&quot;: &quot;text_email&quot;,
+                    &quot;label&quot;: &quot;Text email&quot;,
+                    &quot;placeholder&quot;: &quot;&quot;,
+                    &quot;required&quot;: true,
+                    &quot;error&quot;: &quot;Please enter a valid email&quot;,
+                    &quot;value&quot;: &quot;&quot;
+                }
+            ]
+        }
+    ],
+}</code></pre>
+<p><strong>elements</strong>
+All elements have a set of parameters that is used by the widget form to generate the equivalent html code. For example, if the form widget has a configuration element like the following one:</p>
+<pre><code>{
+    &quot;element_text&quot;: true,
+    &quot;id&quot;: &quot;text_field&quot;,
+    &quot;name&quot;: &quot;text_feld&quot;,
+    &quot;label&quot;: &quot;Text&quot;,
+    &quot;placeholder&quot;: &quot;required&quot;,
+    &quot;required&quot;: true,
+    &quot;ua-help&quot;: &quot;alias_for_ua_event_binding&quot;,
+    &quot;error&quot;: &quot;Please enter a value for this field&quot;,
+    &quot;help&quot;: &quot;Inline help text&quot; ,
+    &quot;field-help&quot;: {
+        &quot;content&quot;: &quot;Tooltip for a field in the Form Widget&quot;,
+        &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+    },
+    &quot;value&quot;: &quot;&quot;
+}</code></pre>
+<p>Then, the form widget will generate a html code like this one:</p>
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+    &lt;!-- Label --&gt;
+        &lt;div class=&quot;elementlabel left&quot;&gt;
+            &lt;label for=&quot;remote_validation&quot; class=&quot;left inline&quot;&gt;Text&lt;/label&gt;
+            &lt;span class=&quot;ua-field-help tooltip tooltipstered&quot; data-ua-id=&quot;alias_for_title_ua_event_binding&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;!-- Form element --&gt;
+    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;validtext&quot; id=&quot;text_field&quot; name=&quot;text_feld&quot; placeholder=&quot;required&quot; required=&quot;&quot; value=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a value for this field&lt;/small&gt;
+        &lt;span class=&quot;inline-help help-style&quot;&gt;Inline help text&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<p>The code above can be divided in:</p>
+<ol>
+<li>The div container with row class. It groups all the element (includes the label and the field)</li>
+<li>The div container with elementlabel class. It groups all label elements.</li>
+<li>The div container with elementinput class. It groups the field elements including the error container.</li>
+</ol>
+<p>The parameters required by each element are:</p>
+<ol>
+<li><strong>id</strong>
+It represents the id of the input field and its located in the elementinput container.</li>
+<li><strong>name</strong>
+It represents the name of the input field and its located in the elementinput container</li>
+<li><strong>label</strong>
+It represents the label of the input field and its located in the elementlabel container.</li>
+<li><strong>placeholder</strong>
+It is a short hint that describes the expected value of an input field and its located in the elementinput container</li>
+<li><strong>required</strong>
+It hints user that the field is required by adding a * next to the field label (elementlabel container) and is also included as a data parameter of the field to be used during validation.</li>
+<li><strong>notshowrequired</strong>
+It hides the <em> attribute from the label of the input. It is used the field should be required during validation, but user does not need to see a &quot;</em>&quot; next to the label.</li>
+<li><strong>ua_help</strong>
+It provides an id to be used by user assistance. It is included in the in the elementlabel container.</li>
+<li><strong>error</strong>
+It defines the message that will be showed to the user when the input value does not comply with the validation for that field. It is included in the in the elementinput container.</li>
+<li><strong>help</strong>
+It is a message intended to help the user to complete the input field successfully. It is included in the in the elementinput container.</li>
+<li><strong>field-help</strong>
+It is a hover message intended to help the user to complete the input field successfully. It has two parameters: content and ua-help-identifier. content parameter defines the content of the tooltip and ua-help-identifier parameter adds an alias for user assistance event binding. It is included in the in the elementlabel container.</li>
+<li><strong>value</strong>
+It represents the value that the field will render. It can be bind to a data model. It is included in the in the elementinput container.</li>
+<li><strong>disabled</strong>
+It allows to disable an input if its value is set to true.</li>
+<li><strong>hidden</strong>
+It allows to hide an input if its value is set to true.</li>
+<li><strong>post_validation</strong>
+It represents the name of the custom event that will be triggered when a validation has been completed. Listeners of the custom event should implement a binding event handler. For example: $(el).bind(custom_event,function(){...});</li>
+<li><p><strong>inlineLinks</strong>
+It adds links next to the form element that could be used to open a form overlay and search for additional data. It requires an array of objects. Each object should include the id and the value parameters to assign an id and a label to the link. For example:</p>
+<pre><code>    &quot;inlineLinks&quot;:[{
+        &quot;id&quot;: &quot;show_overlay&quot;,
+        &quot;value&quot;: &quot;More&quot;
+    }]</code></pre>
+</li>
+<li><p><strong>inlineIcons</strong>
+It adds icons next to the form element that could be used to open a form overlay and search for additional data. It requires an array of objects. Each object should include the id and the class parameter to assign to the icon. The class should provide the image for the icon and any adjustment in the height and width. For example:</p>
+<pre><code>    &quot;inlineIcons&quot;:[{
+            &quot;class&quot;: &quot;test-elementicon1&quot;,
+            &quot;id&quot;: &quot;add-element-icon&quot;
+    }]</code></pre>
+</li>
+<li><p><strong>inlineButtons</strong>
+It adds buttons next to the form element that could be used to open a form overlay and search for additional data. It requires an array of objects. Each object should include the id, name, and value to be assigned to each button. The button is showed with the default Slipstream primary color (blue), if the isInactive is added and set to true, the the button will be showed with Slipstream secondary color (gray). For example:</p>
+<pre><code>    &quot;inlineButtons&quot;:[{
+        &quot;id&quot;: &quot;input_button&quot;,
+        &quot;name&quot;: &quot;input_button&quot;,
+        &quot;value&quot;: &quot;Test&quot;
+    },{
+        &quot;id&quot;: &quot;input_button1&quot;,
+        &quot;name&quot;: &quot;input_button2&quot;,
+        &quot;value&quot;: &quot;Test2&quot;,
+        &quot;isInactive&quot;: true
+    }]</code></pre>
+</li>
+<li><p><strong>disableAutocomplete</strong>
+Set disableAutocomplete=true to disable the autocomplete feature of an input. Autocomplete will be enabled by default.
+This property can be configured to the whole form also, that will disable autocomplete feature for all the elements in this form.</p>
+</li>
+<li><strong>element_&lt;*&gt;</strong>
+element_* stands for the type of elements that the form widget supports and they are described in the following paragraphs.</li>
+</ol>
+<p><strong>element_text</strong>. If it is set to true, the form widget will render an input element of type text and use &quot;validtext&quot; validation.  Validtext checks that input text is not null.</p>
+<p>For example, if the element_text is included in the following object:</p>
+<pre><code>{
+    &quot;element_text&quot;: true,
+    &quot;id&quot;: &quot;text_field&quot;,
+    &quot;name&quot;: &quot;text_feld&quot;,
+    &quot;label&quot;: &quot;Text&quot;,
+    &quot;placeholder&quot;: &quot;required&quot;,
+    &quot;required&quot;: true,
+    &quot;ua-help&quot;: &quot;alias_for_ua_event_binding&quot;,
+    &quot;error&quot;: &quot;Please enter a value for this field&quot;,
+    &quot;help&quot;: &quot;Inline help text&quot; ,
+    &quot;field-help&quot;: {
+        &quot;content&quot;: &quot;Tooltip for text field&quot;,
+        &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+    },
+    &quot;value&quot;: &quot;&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>&lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+    &lt;input type=&quot;text&quot; data-validation=&quot;validtext&quot; id=&quot;text_field&quot; name=&quot;text_feld&quot; placeholder=&quot;required&quot; required=&quot;&quot; value=&quot;&quot;&gt;
+    &lt;!-- Error display --&gt;
+    &lt;small class=&quot;error errorimage&quot;&gt;Please enter a value for this field&lt;/small&gt;
+    &lt;span class=&quot;inline-help help-style&quot;&gt;Inline help text&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+<p>Additionally, the pattern parameter allows user to define a regex pattern and is supported by <em>element_text</em>. When it is added, the field validation will be tested against the user defined pattern.
+Regex pattern can be as following types</p>
+<ul>
+<li>String: default type. Any backslash as part of regex pattern needs to be escaped by user. If backslash not escaped, the regex will not work as expected.</li>
+<li>Regex Object: with this type, either user can provide valid &#39;/ regex /&#39; OR &#39;new RegExp(&quot;regex&quot;)&#39; notation.</li>
+</ul>
+<p>For example, if the element_text is included in the following object with String type pattern:</p>
+<pre><code>{
+    &quot;element_text&quot;: true,
+    &quot;id&quot;: &quot;custom_pattern&quot;,
+    &quot;name&quot;: &quot;custom_pattern&quot;,
+    &quot;label&quot;: &quot;Custom Pattern&quot;,
+    &quot;field-help&quot;: {
+        &quot;content&quot;: &quot;Tooltip for a field in the Form Widget&quot;,
+        &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+    },
+    &quot;placeholder&quot;: &quot;1234&quot;,
+    &quot;pattern&quot;: &quot;^([0-9]){3,4}$&quot;,
+    &quot;error&quot;: &quot;Enter a number with 3 or 4 digits&quot;
+}</code></pre>
+<p>It will be rendered as:</p>
+<pre><code>&lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+    &lt;input type=&quot;text&quot; id=&quot;custom_pattern&quot; name=&quot;custom_pattern&quot; placeholder=&quot;1234&quot; data-pattern=&quot;^([0-9]){3,4}$&quot;&gt;
+    &lt;!-- Error display --&gt;
+    &lt;small class=&quot;error errorimage&quot;&gt;Enter a number with 3 or 4 digits&lt;/small&gt;
+    &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+<p>Regex Pattern Example including the regex object in configuration</p>
+<pre><code>{
+    &quot;element_text&quot;: true,
+    &quot;id&quot;: &quot;custom_pattern_regexObj&quot;,
+    &quot;name&quot;: &quot;custom_pattern_regexObj&quot;,
+    &quot;label&quot;: &quot;Custom Regex Object&quot;,
+    &quot;placeholder&quot;: &quot;https://localhost&quot;,
+    &quot;pattern&quot;: /^(http(s?):[/][/])(www\.)?(\S)+$/,
+   //&quot;pattern&quot;: new RegExp(&quot;^(http(s?):[/][/])(www\\.)?(\\S)+$&quot;),
+    &quot;error&quot;: &quot;Enter valid url string&quot;
+}</code></pre>
+<p>It will be rendered as:</p>
+<pre><code>&lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+    &lt;input type=&quot;text&quot; id=&quot;custom_pattern_regexObj&quot; name=&quot;custom_pattern_regexObj&quot; placeholder=&quot;https://localhost&quot; data-regexobj-pattern=&quot;/^(http(s?):[\/][\/])(www\.)?(\S)+$/&quot;&gt;
+    &lt;!-- Error display --&gt;
+    &lt;small class=&quot;error errorimage&quot;&gt;Enter valid url string&lt;/small&gt;
+    &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+<p>Pattern parameter is used to perform client side validation. If remote validation is required, then a remote configuration should be included. This works where only remote validation is used, as below, or, when used with element_multiple_error when both client and server side validation is needed. For example:</p>
+<pre><code>{
+    &quot;element_text&quot;: true,
+    &quot;id&quot;: &quot;remote_validation&quot;,
+    &quot;name&quot;: &quot;remote_validation&quot;,
+    &quot;label&quot;: &quot;Remote Name Validation&quot;,
+    &quot;remote&quot;: {
+        &quot;url&quot;: buildNameUrl,
+        &quot;type&quot;: &quot;GET&quot;,
+        &quot;headers&quot;: {
+            &quot;Authorization&quot;: &#39;Basic c3VwZXI6am5wcjEyMyE=&#39;,
+            &quot;Accept&quot;: &#39;application/vnd.net.juniper.space.job-management.jobs+json;version=&quot;3&quot;;q=0.03&#39;
+        }
+        &quot;response&quot;: processResponse,
+        &quot;error&quot;: &quot;Must not contain the name of a developer&quot;
+    },
+    &quot;error&quot;: true
+},</code></pre>
+<p>Where remote represents parameters required to do a REST API request. The expected response text should be true or false, but using the response parameter, the response can be reformatted. The remote object is composed by:</p>
+<ul>
+<li>error: The error string to use if remote validation determines the input is invalid</li>
+<li>url: a string that represents the REST API. In case the url needs to be composed by input data, a callback function can be defined instead of the URL string. The url callback function is invoked with the value of the element that needs validation.<ul>
+<li>type: the type of request to make: &quot;POST&quot;,&quot;GET&quot;,&quot;PUT&quot;, or &quot;DELETE&quot;.</li>
+<li>headers: additional parameters required for the header of the url request. this parameter is optional.</li>
+<li>reponse: optional parameter and represents the callback function required to reformat the API response to comply, with the expected return value of &#39;true&#39; or &#39;false&#39;. The response callback function is invoked with two parameters: the status of the response and the response text. It is called once the API request is completed.
+Finally, a custom event with a name composed by the &quot;remote_&quot; and the id of the element will be triggered with the true/false data if the value was valid or invalid.</li>
+</ul>
+</li>
+</ul>
+<p><strong>element_password</strong>. If it is set to true, the form widget will render an input element of type password and use a &quot;multiple&quot; validation. Multiple validation checks if the input value is valid according to one or more criteria or pattern. The list of validations are available in the pattern-error parameter and are tested in the order in which the patterns are listed. Each pattern-error should have the pattern that needs to be validated, any additional data that the pattern might need, and the error message. The name of the patterns can be the same as the data-validation parameter listed for other elements. The error parameter in the root of the object should be marked as &quot;true&quot;.</p>
+<p>For example, if the element_password is included in the following object:</p>
+<pre><code>{
+    &quot;element_password&quot;: true,
+    &quot;id&quot;: &quot;password_pattern&quot;,
+    &quot;name&quot;: &quot;password_pattern&quot;,
+    &quot;label&quot;: &quot;Password Pattern&quot;,
+    &quot;placeholder&quot;: &quot;Sp0g-Sp0g&quot;,
+    &quot;required&quot;: true,
+    &quot;notshowrequired&quot;: true,
+    &quot;pattern-error&quot;: [
+        {
+            &quot;pattern&quot;: &quot;length&quot;,
+            &quot;min_length&quot;:&quot;6&quot;,
+            &quot;max_length&quot;:&quot;8&quot;,
+            &quot;error&quot;: &quot;Must be 6 characters or more.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hasnumbersymbol&quot;,
+            &quot;error&quot;: &quot;At least one number and one symbol is required.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hasmixedcasenumber&quot;,
+            &quot;error&quot;: &quot;A combination of mixed case letters and one number is required.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hasmixedcasesymbol&quot;,
+            &quot;error&quot;: &quot;A combination of mixed case letters and one symbol is required.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hassymbol&quot;,
+            &quot;error&quot;: &quot;At least one symbol is required.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hasnumber&quot;,
+            &quot;error&quot;: &quot;At least one number is required.&quot;
+        },   {
+            &quot;pattern&quot;: &quot;hasmixedcase&quot;,
+            &quot;error&quot;: &quot;A combination of mixed case letters is required.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;validtext&quot;,
+            &quot;error&quot;: &quot;A combination of mixed case letters, numbers, and symbols is required.&quot;
+        }
+    ],
+    &quot;error&quot;: true,
+    &quot;help&quot;: &quot;Must be 6 characters or more. A combination of mixed case letters, numbers, and symbols is required.&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>&lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+    &lt;input type=&quot;password&quot; data-validation=&quot;multiple&quot; data-validation_length=&quot;Must be 6 characters or more.&quot; data-minlength=&quot;6&quot; data-maxlength=&quot;8&quot; data-validation_hasnumbersymbol=&quot;At least one number and one symbol is required.&quot; data-validation_hasmixedcasenumber=&quot;A combination of mixed case letters and one number is required.&quot; data-validation_hasmixedcasesymbol=&quot;A combination of mixed case letters and one symbol is required.&quot; data-validation_hassymbol=&quot;At least one symbol is required.&quot; data-validation_hasnumber=&quot;At least one number is required.&quot; data-validation_hasmixedcase=&quot;A combination of mixed case letters is required.&quot; data-validation_validtext=&quot;A combination of mixed case letters, numbers, and symbols is required.&quot; id=&quot;password_pattern&quot; name=&quot;password_pattern&quot; placeholder=&quot;Sp0g-Sp0g&quot; required=&quot;&quot;&gt;
+    &lt;!-- Error display --&gt;
+    &lt;small class=&quot;error errorimage&quot;&gt;true&lt;/small&gt;
+    &lt;span class=&quot;inline-help help-style&quot;&gt;Must be 6 characters or more. A combination of mixed case letters, numbers, and symbols is required.&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+<p>Additionally, an element_password can use a simple validation to check if the input value is the same as other input password field (&quot;dependency&quot; parameter that has the id of the other input password field).</p>
+<p>In this case, the element_password is included in the following object:</p>
+<pre><code>{
+    &quot;element_password&quot;: true,
+    &quot;id&quot;: &quot;confirm_password_pattern&quot;,
+    &quot;name&quot;: &quot;confirm_password_pattern&quot;,
+    &quot;label&quot;: &quot;Confirm Password&quot;,
+    &quot;placeholder&quot;: &quot;Sp0g-Sp0g&quot;,
+    &quot;required&quot;: true,
+    &quot;notshowrequired&quot;: true,
+    &quot;dependency&quot;: &quot;password_pattern&quot;,
+    &quot;error&quot;: &quot;Passwords must match&quot;
+}</code></pre>
+<p>It will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;password&quot; data-validation=&quot;multiple&quot; id=&quot;confirm_password_pattern&quot; name=&quot;confirm_password_pattern&quot; placeholder=&quot;Sp0g-Sp0g&quot; required=&quot;&quot; data-equalto=&quot;password_pattern&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Passwords must match&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_multiple_error</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;multiple&quot; validation. Multiple validation checks if the input value is valid according to one or more criteria or pattern. The list of validations are available in the pattern-error parameter and are tested in the order in which the patterns are listed. Each pattern-error should have the pattern that needs to be validated, any additional data that the pattern might need, and the error message. The name of the patterns can be the same as the data-validation parameter listed for other elements. The error parameter in the root of the object should be marked as &quot;true&quot;.
+                            User can also provide multiple regex patterns including &#39;String&#39; and &#39;regex Object&#39; type. Patterns will be executed as first come basis from the configuration. &#39;regexId&#39; is mandatory unique attribute while defining regex patterns. If the regex returns false, an error wil be shown just below the element.</p>
+<p>For example, if the element_password is included in the following object:</p>
+<pre><code>{
+    &quot;element_multiple_error&quot;: true,
+    &quot;id&quot;: &quot;username&quot;,
+    &quot;name&quot;: &quot;username&quot;,
+    &quot;label&quot;: &quot;Multiple error&quot;,
+    &quot;pattern-error&quot;: [
+        {
+            &quot;pattern&quot;: &quot;hasnotsymbol&quot;,
+            &quot;error&quot;: &quot;Must not include a symbol.&quot;
+        },
+        {
+            &quot;pattern&quot;: &quot;hasnotspace&quot;,
+            &quot;error&quot;: &quot;Must not include a space.&quot;
+        },
+        {
+            &quot;regexId&quot;:&quot;regex1&quot;,
+            &quot;pattern&quot;: &quot;^([a-zA-Z0-9_]){3,10}$&quot;,
+            &quot;error&quot;: &quot;Must be alphanumeric with 3 to 10 characters.&quot;
+        },
+        {
+            &quot;regexId&quot;:&quot;regex2&quot;,
+            &quot;pattern&quot;: &quot;^[_]{1}&quot;,
+            &quot;error&quot;: &quot;Must begin with underscore&quot;
+        }
+    ],
+    &quot;error&quot;: true
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;multiple&quot; data-validation_hasnotsymbol=&quot;Must not include a symbol.&quot; data-validation_hasnotspace=&quot;Must not include a space.&quot; id=&quot;username&quot; name=&quot;username&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;true&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_email</strong>. If it is set to true, the form widget will render an input element of type email and use a &quot;email&quot; validation. Email validation checks if the input value is a valid email.</p>
+<p>For example, if the element_email is included in the following object:</p>
+<pre><code>{
+    &quot;element_email&quot;: true,
+    &quot;id&quot;: &quot;text_area&quot;,
+    &quot;name&quot;: &quot;text_email&quot;,
+    &quot;label&quot;: &quot;Text email&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;required&quot;: true,
+    &quot;error&quot;: &quot;Please enter a valid email&quot;,
+    &quot;value&quot;: &quot;&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;email&quot; data-validation=&quot;email&quot; id=&quot;text_area&quot; name=&quot;text_email&quot; placeholder=&quot;&quot; required=&quot;&quot; value=&quot;mvilitanga@gmail.com&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid email&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_url</strong>. If it is set to true, the form widget will render an input element of type url and use &quot;url&quot; validation. Url validation checks if the input value is a valid url.</p>
+<p>For example, if the element_url is included in the following object:</p>
+<pre><code>{
+    &quot;element_url&quot;: true,
+    &quot;id&quot;: &quot;text_url&quot;,
+    &quot;name&quot;: &quot;text_url&quot;,
+    &quot;label&quot;: &quot;Text url&quot;,
+    &quot;placeholder&quot;: &quot;http://www.juniper.net&quot;,
+    &quot;error&quot;: &quot;Please enter a valid URL&quot;,
+    &quot;value&quot;: &quot;&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;url&quot; data-validation=&quot;url&quot; id=&quot;text_url&quot; name=&quot;text_url&quot; placeholder=&quot;http://www.juniper.net&quot; value=&quot;www.gmail.com&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid URL&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_string</strong>. If it is set to true, the form widget will render an input element of type text and use  a&quot;string&quot; validation. String validation checks if the input value is a string that contains only letters (a-zA-Z).</p>
+<p>For example, if the element_string is included in the following object:</p>
+<pre><code>{
+    &quot;element_string&quot;: true,
+    &quot;id&quot;: &quot;text_string&quot;,
+    &quot;name&quot;: &quot;text_string&quot;,
+    &quot;label&quot;: &quot;Text string&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid string that contains only letters (a-zA-Z)&quot;,
+    &quot;value&quot;: &quot;&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;alpha&quot; id=&quot;text_string&quot; name=&quot;text_string&quot; placeholder=&quot;&quot; value=&quot;Sample Form Widget&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid string that contains only letters (a-zA-Z)&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_number</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;number&quot; validation. Number validation checks if the input value is a string that only contains numbers. Additionally, the validation could test that the value is bigger than a minimun number and/or smaller than a maximum number.</p>
+<p>For example, if the element_number is included in the following object:</p>
+<pre><code>{
+    &quot;element_number&quot;: true,
+    &quot;id&quot;: &quot;text_number&quot;,
+    &quot;name&quot;: &quot;text_number&quot;,
+    &quot;label&quot;: &quot;Text number&quot;,
+    &quot;min_value&quot;:&quot;2&quot;,
+    &quot;max_value&quot;:&quot;8&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a number between 2 and 8&quot;
+},</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;number&quot; data-validation=&quot;number&quot; id=&quot;text_number&quot; name=&quot;text_number&quot; placeholder=&quot;&quot; data-minvalue=&quot;2&quot; data-maxvalue=&quot;8&quot;&gt;
+        &lt;!-- Error-UA display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a number between 2 and 8&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_alphanumeric</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;alphanumeric&quot; validation. Alphanumeric validation checks if the input value is a string that only contains letters and numbers.</p>
+<p>For example, if the element_alphanumeric is included in the following object:</p>
+<pre><code>{
+    &quot;element_alphanumeric&quot;: true,
+    &quot;id&quot;: &quot;text_alphanumeric&quot;,
+    &quot;name&quot;: &quot;text_alphanumeric&quot;,
+    &quot;label&quot;: &quot;Text alphanumeric&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a string that contains only letters and numbers&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;alphanumeric&quot; id=&quot;text_alphanumeric&quot; name=&quot;text_alphanumeric&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a string that contains only letters and numbers&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_hexadecimal</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;hexadecimal&quot; validation. Hexadecimal validation checks if the input value is a hexadecimal number.</p>
+<p>For example, if the element_hexadecimal is included in the following object:</p>
+<pre><code>{
+    &quot;element_hexadecimal&quot;: true,
+    &quot;id&quot;: &quot;text_hexadecimal&quot;,
+    &quot;name&quot;: &quot;text_hexadecimal&quot;,
+    &quot;label&quot;: &quot;Text hexadecimal&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid hexadecimal number&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;hexadecimal&quot; id=&quot;text_hexadecimal&quot; name=&quot;text_hexadecimal&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid hexadecimal number&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_color</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;color&quot; validation. Color validation checks if the input value is a hexadecimal color.</p>
+<p>For example, if the element_color is included in the following object:</p>
+<pre><code>{
+    &quot;element_color&quot;: true,
+    &quot;id&quot;: &quot;text_color&quot;,
+    &quot;name&quot;: &quot;text_color&quot;,
+    &quot;label&quot;: &quot;Text color&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid hexadecimal color&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;color&quot; id=&quot;text_color&quot; name=&quot;text_color&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid hexadecimal color&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_lowercase</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;lowercase&quot; validation. Lowercase validation checks if the input value is a string in lowercase.</p>
+<p>For example, if the element_lowercase is included in the following object:</p>
+<pre><code>{
+    &quot;element_lowercase&quot;: true,
+    &quot;id&quot;: &quot;text_lowercase&quot;,
+    &quot;name&quot;: &quot;text_lowercase&quot;,
+    &quot;label&quot;: &quot;Text lowercase&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid string in lowercase&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;lowercase&quot; id=&quot;text_lowercase&quot; name=&quot;text_lowercase&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid string in lowercase&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_uppercase</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;uppercase&quot; validation. Uppercase validation checks if the input value is a string in uppercase.</p>
+<p>For example, if the element_uppercase is included in the following object:</p>
+<pre><code>{
+    &quot;element_uppercase&quot;: true,
+    &quot;id&quot;: &quot;text_uppercase&quot;,
+    &quot;name&quot;: &quot;text_uppercase&quot;,
+    &quot;label&quot;: &quot;Text uppercase&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid string in uppercase&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;uppercase&quot; id=&quot;text_uppercase&quot; name=&quot;text_uppercase&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid string in uppercase&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_integer</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;integer&quot; validation. Integer validation checks if the input value is an integer number.</p>
+<p>For example, if the element_integer is included in the following object:</p>
+<pre><code>{
+    &quot;element_integer&quot;: true,
+    &quot;id&quot;: &quot;text_integer&quot;,
+    &quot;name&quot;: &quot;text_integer&quot;,
+    &quot;label&quot;: &quot;Text integer&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid integer&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+         &lt;!-- Input field --&gt;
+         &lt;input type=&quot;text&quot; data-validation=&quot;integer&quot; id=&quot;text_integer&quot; name=&quot;text_integer&quot; placeholder=&quot;&quot;&gt;
+         &lt;!-- Error display --&gt;
+         &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid integer&lt;/small&gt;
+         &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+     &lt;/div&gt;</code></pre>
+<p><strong>element_float</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;float&quot; validation. Float validation checks if the input value is an float number.</p>
+<p>For example, if the element_integer is included in the following object:</p>
+<pre><code>{
+    &quot;element_float&quot;: true,
+    &quot;id&quot;: &quot;text_float&quot;,
+    &quot;name&quot;: &quot;text_float&quot;,
+    &quot;label&quot;: &quot;Text float&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid float&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;float&quot; id=&quot;text_float&quot; name=&quot;text_float&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid float&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_divisible</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;divisible&quot; validation. Divisible validation checks if the input value is a number that&#39;s divisible by another number. The value of the divisor is added using the parameter &quot;divisible_by&quot;.</p>
+<p>For example, if the element_divisible is included in the following object:</p>
+<pre><code>{
+    &quot;element_divisible&quot;: true,
+    &quot;divisible_by&quot;:&quot;5&quot;,
+    &quot;id&quot;: &quot;text_divisible&quot;,
+    &quot;name&quot;: &quot;text_divisible&quot;,
+    &quot;label&quot;: &quot;Text divisible&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a number that is divisible by 5&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;divisible&quot; data-divisibleby=&quot;5&quot; id=&quot;text_divisible&quot; name=&quot;text_divisible&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a number that is divisible by 5&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_length</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;length&quot; validation. Length validation checks if the input value&#39;s length falls in a range. The value of the minimum length is added using the parameter &quot;min_length&quot; and the value of the maximum length is added using the &quot;max_length&quot; parameter.</p>
+<p>For example, if the element_length is included in the following object:</p>
+<pre><code>{
+    &quot;element_length&quot;: true,
+    &quot;min_length&quot;:&quot;2&quot;,
+    &quot;max_length&quot;:&quot;5&quot;,
+    &quot;id&quot;: &quot;text_length&quot;,
+    &quot;name&quot;: &quot;text_length&quot;,
+    &quot;label&quot;: &quot;Text length&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a string that is greater than or equal to 2 but less than or equal to 5&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;length&quot; data-minlength=&quot;2&quot; data-maxlength=&quot;5&quot; id=&quot;text_length&quot; name=&quot;text_length&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a string that is greater than or equal to 2 but less than or equal to 5&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot; style=&quot;display: none;&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_date</strong>. If it is set to true, the form widget will render an input element of type date and use a &quot;date&quot; validation. Date validation checks if the input value is a date.</p>
+<p>For example, if the element_date is included in the following object:</p>
+<pre><code>{
+   &quot;element_date&quot;: true,
+   &quot;id&quot;: &quot;text_date&quot;,
+   &quot;name&quot;: &quot;text_date&quot;,
+   &quot;label&quot;: &quot;Text date&quot;,
+   &quot;placeholder&quot;: &quot;&quot;,
+   &quot;error&quot;: &quot;Please enter a valid date&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;date&quot; data-validation=&quot;date&quot; id=&quot;text_date&quot; name=&quot;text_date&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid date&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_afterdate</strong>. If it is set to true, the form widget will render an input element of type date and use a &quot;afterdate&quot; validation. Afterdate validation checks if the input value is a date that is after the specified date (defaults to now). The value of the after date is added using the &quot;after_date&quot; parameter.</p>
+<p>For example, if the element_afterdate is included in the following object:</p>
+<pre><code>{
+    &quot;element_afterdate&quot;: true,
+    &quot;after_date&quot;:&quot;05/28/2014&quot;,
+    &quot;id&quot;: &quot;text_afterdate&quot;,
+    &quot;name&quot;: &quot;text_afterdate&quot;,
+    &quot;label&quot;: &quot;Text afterdate&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a date after May 28, 2014&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;date&quot; data-validation=&quot;afterdate&quot; data-afterdate=&quot;05/28/2014&quot; id=&quot;text_afterdate&quot; name=&quot;text_afterdate&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a date after May 28, 2014&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_beforedate</strong>. If it is set to true, the form widget will render an input element of type date and use a &quot;beforedate&quot; validation. Beforedate validation checks if the input value is a date that is before the specified date (defaults to now). The value of the before date is added using the &quot;before_date&quot; parameter.</p>
+<p>For example, if the element_beforedate is included in the following object:</p>
+<pre><code>{
+    &quot;element_beforedate&quot;: true,
+    &quot;before_date&quot;:&quot;06/20/2014&quot;,
+    &quot;id&quot;: &quot;text_beforedate&quot;,
+    &quot;name&quot;: &quot;text_beforedate&quot;,
+    &quot;label&quot;: &quot;Text beforedate&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a date before June 20, 2014&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;date&quot; data-validation=&quot;beforedate&quot; data-beforedate=&quot;06/20/2014&quot; id=&quot;text_beforedate&quot; name=&quot;text_beforedate&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a date before June 20, 2014&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_time</strong>. If it is set to true, the form widget will render an input element of type time and use a &quot;time&quot; validation. Time validation checks if the input value is a valid time either if it is in the 24 hours or 12 hours format.</p>
+<p>For example, if the element_time is included in the following object:</p>
+<pre><code>{
+    &quot;element_time&quot;: true,
+    &quot;id&quot;: &quot;text_time&quot;,
+    &quot;name&quot;: &quot;text_time&quot;,
+    &quot;label&quot;: &quot;Text time&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid time&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;time&quot; data-validation=&quot;time&quot; id=&quot;text_time&quot; name=&quot;text_time&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid time&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_inarray</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;inarray&quot; validation. Inarray validation checks if the input value is in a array of allowed values. The allowed values are added using the &quot;values&quot; parameter.</p>
+<p>For example, if the element_inarray is included in the following object:</p>
+<pre><code>{
+    &quot;element_inarray&quot;: true,
+    &quot;id&quot;: &quot;text_inarray&quot;,
+    &quot;name&quot;: &quot;text_inarray&quot;,
+    &quot;label&quot;: &quot;Text inarray&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;values&quot;: [
+        {&quot;value&quot;: &quot;4&quot;},
+        {&quot;value&quot;: &quot;5&quot;},
+        {&quot;value&quot;: &quot;6&quot;}
+    ],
+    &quot;error&quot;: &quot;Please enter one of the allowed values: 4, 5 or 6&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;inarray&quot; data-array=&quot;4,5,6,&quot; id=&quot;text_inarray&quot; name=&quot;text_inarray&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter one of the allowed values: 4, 5 or 6&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot; style=&quot;display: none;&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_creditcard</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;creditcard&quot; validation. Creditcard validation checks if the input value is a credit card number.</p>
+<p>For example, if the element_creditcard is included in the following object:</p>
+<pre><code>{
+    &quot;element_creditcard&quot;: true,
+    &quot;id&quot;: &quot;text_creditcard&quot;,
+    &quot;name&quot;: &quot;text_creditcard&quot;,
+    &quot;label&quot;: &quot;Text creditcard&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid credit card&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;creditcard&quot; id=&quot;text_creditcard&quot; name=&quot;text_creditcard&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid credit card&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_ip</strong>. If it is set to true, the form widget will render an input element of type text and use an &quot;ip&quot; validation. Ip validation checks if the input value is a valid IP address (version 4 or 6). The version is added using the &quot;ip_version&quot; parameter: &quot;4&quot; for version 4 and &quot;6&quot; for version 6.</p>
+<p>For example, if the element_ip is included in the following object:</p>
+<pre><code>{
+    &quot;element_ip&quot;: true,
+    &quot;ip_version&quot;: &quot;4&quot;,
+    &quot;id&quot;: &quot;text_ip&quot;,
+    &quot;name&quot;: &quot;text_ip&quot;,
+    &quot;label&quot;: &quot;Text ip&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid IP address version 4&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; data-validation=&quot;ip&quot; data-ipversion=&quot;4&quot; id=&quot;text_ip&quot; name=&quot;text_ip&quot; placeholder=&quot;&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid IP address version 4&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_textarea</strong>. If it is set to true, the form widget will render a textarea element. It has the parameters:</p>
+<ul>
+<li>id: if of the texarea</li>
+<li>name: name of the texarea</li>
+<li>label: label showed at the left of the text area</li>
+<li>required: if it is set to true, the text area will be a required field</li>
+<li>pattern: defines a regex that can be used to validate the value of the text area. Regex value can be configured of type &#39;String&#39; and valid &#39;regex Object&#39;. if the regex returns false, an error wil be showed below the text area.</li>
+<li>rows: defines the number of rows (height) that the text area should show. Default value is 2 rows.</li>
+<li>placeholder: ghost text showed on the text area</li>
+<li>error: message that will be showed below the text area for a required or pattern specific text area</li>
+<li>value: default value for the text area</li>
+<li>post_validation: custom event that could be triggered after the validation is completed.</li>
+</ul>
+<p>For example, if the element_textarea is included in the following object:</p>
+<pre><code>{
+    &quot;element_textarea&quot;: true,
+    &quot;id&quot;: &quot;text_area&quot;,
+    &quot;name&quot;: &quot;text_area&quot;,
+    &quot;label&quot;: &quot;Textarea&quot;,
+    &quot;pattern&quot;: &quot;^([0-9]){3,4}$&quot;,
+    &quot;required&quot;: true,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Enter a number with 3 or 4 digits&quot;,
+    &quot;post_validation&quot;: &quot;validTextarea&quot;
+}</code></pre>
+<p>Then, the text area field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;textarea data-validation=&quot;validtext&quot; id=&quot;text_area&quot; name=&quot;text_area&quot; placeholder=&quot;&quot; required=&quot;&quot; data-pattern=&quot;^([0-9]){3,4}$&quot;&gt;&lt;/textarea&gt;
+        &lt;!-- Error-UA display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Enter a number with 3 or 4 digits&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p>To listen for the post validation event, the user of the widget could bind the element that has the post_validation property and provide a callback function that will have the event and the isValid parameters. The isValid parameter will be true if the value was valid (element validation) or false otherwise. For example:</p>
+<pre><code>    this.$el.find(&#39;#text_area&#39;).bind(&quot;validTextarea&quot;, function(e, isValid){
+        console.log(&quot;the validation was completed and the result is: &quot; + isValid);
+    });</code></pre>
+<p><strong>element_description</strong>. If it is set to true, the form widget will render a label element along with with the HTML tags rendered. No validation is available.</p>
+<p>For example, if the element_description is included in the following object:</p>
+<pre><code>{
+    &quot;element_description&quot;: true,
+    &quot;label&quot;: &quot;Description&quot;,
+    &quot;value&quot;: &quot;Description&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;span class=&quot;optionselection inline&quot;&gt;
+            &lt;label&gt;Description&lt;/label&gt;
+        &lt;/span&gt;
+        &lt;!-- Error display --&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_description_encode</strong>. If it is set to true, the form widget will render a label element with the value as is, not rendering the html tags. There are no validation available.</p>
+<p>For example, if the element_description_encode is included in the following object:</p>
+<pre><code>{
+    &quot;element_description_encode&quot;: true,
+    &quot;label&quot;: &quot;Description Encode&quot;,
+    &quot;value&quot;: &quot;Description &lt;b&gt;Encode&lt;/b&gt;&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;span class=&quot;optionselection inline&quot;&gt;
+            &lt;label&gt;Description &lt;b&gt;Encode&lt;/b&gt;&lt;/label&gt;
+        &lt;/span&gt;
+        &lt;!-- Error display --&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_checkbox</strong>. If it is set to true, the form widget will render an input element of type checkbox for each of its values objects (&quot;values&quot; parameter). Required field validation is available.</p>
+<p>For example, if the element_checkbox is included in the following object:</p>
+<pre><code>{
+    &quot;element_checkbox&quot;: true,
+    &quot;id&quot;: &quot;checkbox_field&quot;,
+    &quot;label&quot;: &quot;Checkbox&quot;,
+    &quot;required&quot;: true,
+    &quot;values&quot;: [
+        {
+            &quot;id&quot;: &quot;checkbox_enable&quot;,
+            &quot;name&quot;: &quot;enable_disable&quot;,
+            &quot;label&quot;: &quot;Option 1&quot;,
+            &quot;value&quot;: &quot;enable&quot;,
+            &quot;checked&quot;: true,
+            &quot;visibility&quot;: &quot;show_hide_element0&quot;
+
+        },
+        {
+            &quot;id&quot;: &quot;checkbox_disable&quot;,
+            &quot;name&quot;: &quot;enable_disable&quot;,
+            &quot;label&quot;: &quot;Option 2&quot;,
+            &quot;value&quot;: &quot;disable&quot;
+        }
+    ],
+    &quot;error&quot;: &quot;Please make a selection&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;div class=&quot;optionselection&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; data-validation=&quot;validtext&quot; id=&quot;checkbox_enable&quot; name=&quot;enable_disable&quot; value=&quot;enable&quot; checked=&quot;&quot; required=&quot;&quot;&gt;
+            &lt;label for=&quot;checkbox_enable&quot;&gt;Option 1&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;optionselection&quot;&gt;
+            &lt;input type=&quot;checkbox&quot; data-validation=&quot;validtext&quot; id=&quot;checkbox_disable&quot; name=&quot;enable_disable&quot; value=&quot;disable&quot; required=&quot;&quot;&gt;
+            &lt;label for=&quot;checkbox_disable&quot;&gt;Option 2&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please make a selection&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</code></pre>
+<p>The values property of the element_checkbox could include an object with the visibility property. In this case, the visibility property could be a string or an array of strings with all the elements ids that should be showed if the value gets selected. So, for the example above, if the user check on Option 1(id: checkbox_enable), then the form element with id: show_hide_element0 will be showed. If it is unselected, then the element will be hidden. The show_hide_element0 should have been defined like the following:</p>
+<pre><code>    {
+        &quot;element_string&quot;: true,
+        &quot;id&quot;: &quot;show_hide_element0&quot;,
+        &quot;name&quot;: &quot;show_hide_element0&quot;,
+        &quot;label&quot;: &quot;Show Hide 0&quot;,
+        &quot;hidden&quot;: true
+    },</code></pre>
+<p><strong>element_radio</strong>. If it is set to true, the form widget will render an input element of type radio for each of its values objects (&quot;values&quot; parameter). Required field validation is available.</p>
+<p>For example, if the element_radio is included in the following object:</p>
+<pre><code>{
+    &quot;element_radio&quot;: true,
+    &quot;id&quot;: &quot;radio_field&quot;,
+    &quot;label&quot;: &quot;Radio Buttons&quot;,
+    &quot;required&quot;: true,
+    &quot;values&quot;: [
+        {
+            &quot;id&quot;: &quot;radio1&quot;,
+            &quot;name&quot;: &quot;radio_button&quot;,
+            &quot;label&quot;: &quot;Option 1&quot;,
+            &quot;value&quot;: &quot;option1&quot;,
+            &quot;visibility&quot;: [&quot;show_hide_element31&quot;,&quot;show_hide_element32&quot;]
+        },
+        {
+            &quot;id&quot;: &quot;radio2&quot;,
+            &quot;name&quot;: &quot;radio_button&quot;,
+            &quot;label&quot;: &quot;Option 2&quot;,
+            &quot;value&quot;: &quot;option2&quot;
+        }
+    ],
+    &quot;help&quot;: &quot;Radio Buttons help text&quot;,
+    &quot;error&quot;: &quot;Please make a selection&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;div class=&quot;optionselection&quot;&gt;
+            &lt;input type=&quot;radio&quot; data-validation=&quot;validtext&quot; id=&quot;radio1&quot; name=&quot;radio_button&quot; value=&quot;option1&quot; required=&quot;&quot;&gt;
+            &lt;label for=&quot;radio1&quot;&gt;Option 1&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;optionselection&quot;&gt;
+            &lt;input type=&quot;radio&quot; data-validation=&quot;validtext&quot; id=&quot;radio2&quot; name=&quot;radio_button&quot; value=&quot;option2&quot; required=&quot;&quot;&gt;
+            &lt;label for=&quot;radio2&quot;&gt;Option 2&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please make a selection&lt;/small&gt;
+        &lt;span class=&quot;inline-help help-style&quot;&gt;Radio Buttons help text&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p>The values property of the element_radio could include an object with the visibility property. In this case, the visibility property could be a string or an array of strings with all the elements ids that should be showed if the value gets selected. So, for the example above, if the user check on Option 1(id: radio1), then the form element with ids: show_hide_element31 and show_hide_element32 will be showed. If it is unselected, then the element will be hidden. The show_hide_element31 (and show_hide_element32)  should have been defined like the following:</p>
+<pre><code>   {
+        &quot;element_string&quot;: true,
+        &quot;id&quot;: &quot;show_hide_element32&quot;,
+        &quot;name&quot;: &quot;show_hide_element32&quot;,
+        &quot;label&quot;: &quot;Show Hide 22&quot;,
+        &quot;hidden&quot;: true
+    },</code></pre>
+<p><strong>element_dropdown</strong>. If it is set to true, the form widget will render a select element with the option elements representing the element&#39;s possible options (data&quot; parameter). Required field validation is available.</p>
+<p>For example, the element_dropdown can be defined with the following Object:</p>
+<pre><code class="language-javacript">{
+    &quot;element_dropdown&quot;: true,
+    &quot;id&quot;: &quot;dropdown_field&quot;,
+    &quot;name&quot;: &quot;dropdown_field&quot;,
+    &quot;label&quot;: &quot;Dropdown&quot;,
+    &quot;required&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;ftp&quot;,
+            &quot;text&quot;: &quot;junos-ftp&quot;,
+            &quot;visibility&quot;: &quot;show_hide_element&quot;
+        },
+        {
+            &quot;id&quot;: &quot;tftp&quot;,
+            &quot;text&quot;: &quot;junos-tftp&quot;,
+            &quot;disabled&quot;: true
+        },
+        {
+            &quot;id&quot;: &quot;rtsp&quot;,
+            &quot;text&quot;: &quot;junos-rtsp&quot;
+        },
+        {
+            &quot;id&quot;: &quot;netbios&quot;,
+            &quot;text&quot;: &quot;junos-netbios-session&quot;
+        }
+    ],
+    &quot;help&quot;: &quot;Dropdown help text&quot;,
+    &quot;error&quot;: &quot;Please make a selection&quot;
+}</code></pre>
+<p>Then, the form element will be rendered as a select element and its html markup is generated using the dropDown widget.</p>
+<p>The drop down element has properties common to other form elements like id, class, label, name, field-help, error, inlineLinks, inlineIcons, inlineButtons, and help. Other properties are specific to the dropDown widget. More details about the drop down configuration and methods can be found at:</p>
+<p><a href="public/assets/js/widgets/dropDown/dropDown.md">Drop Down Widget</a></p>
+<p>The data property could include an object with the visibility property. It allows to show an element based on a dropdown selection. It could be a string or an array of strings with all the form element ids that needs to be showed/hide. For example, for the configuration above, if the form includes the show_hide_element like in the following configuration:</p>
+<pre><code>    {
+        &quot;element_string&quot;: true,
+        &quot;id&quot;: &quot;show_hide_element&quot;,
+        &quot;name&quot;: &quot;show_hide_element&quot;,
+        &quot;label&quot;: &quot;Show Hide&quot;,
+        &quot;hidden&quot;: true
+    },</code></pre>
+<p>If the user select junos-ftp in the dropdown, then the row in the form (label and input) with an element with id show_hide_element will be showed. If the user change the selection, then the element will be hidden. The feature is available for simple selection of the dropdown widget.</p>
+<p>Finally, the values parameter of the dropdown widget will be deprecated. Instead, it is recommended to use the data property which is defined by a set of id/text instead of the set of value/label pairs defined with the values parameter. The same format id/text is used in the dropDown widget for remoteData and  initValue properties and for the template callback.</p>
+<p><strong>element_file</strong>. If it is set to true, the form widget will render a file element. Required field validation is available.</p>
+<p>For example, if the element_file is included in the following object:</p>
+<pre><code>{
+    &quot;element_file&quot;: true,
+    &quot;id&quot;: &quot;text_file&quot;,
+    &quot;name&quot;: &quot;text_file&quot;,
+    &quot;label&quot;: &quot;File Upload&quot;,
+    &quot;required&quot;: true,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;fileupload_button_label&quot;: &quot;Browse&quot;,
+    &quot;error&quot;: &quot;Please select a valid file&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+    &lt;!-- Input field --&gt;
+        &lt;div class=&quot;fileupload_container&quot;&gt;
+            &lt;input type=&quot;text&quot; class=&quot;fileupload-text&quot; disabled=&quot;disabled&quot; id=&quot;text_file&quot; name=&quot;text_file&quot; placeholder required&gt;
+            &lt;span class=&quot;slipstream-primary-button fileupload-button&quot;&gt;Browse&lt;/span&gt;
+            &lt;input type=&quot;file&quot; class=&quot;fileupload&quot;&gt;
+        &lt;/div&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please select a valid file&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<p><strong>element_fingerprint</strong>. If it is set to true, the form widget will render an input element of type text and use a &quot;fingerprint&quot; validation. Fingerprint validation checks if the input value is a valid SSH public key fingerprint ( Example: 4a:a7:b6:f1:87:cd:bd:c3:4c:6d:1d:2f:9a:e4:32:8b ).</p>
+<p>For example, if the element_fingerprint is included in the following object:</p>
+<pre><code>{
+    &quot;element_fingerprint&quot;: true,
+    &quot;id&quot;: &quot;text_fingerprint&quot;,
+    &quot;name&quot;: &quot;text_fingerprint&quot;,
+    &quot;label&quot;: &quot;Text fingerprint&quot;,
+    &quot;placeholder&quot;: &quot;&quot;,
+    &quot;error&quot;: &quot;Please enter a valid fingerprint&quot;
+}</code></pre>
+<p>Then, the input field will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;elementinput left&quot;&gt;
+        &lt;!-- Input field --&gt;
+        &lt;input type=&quot;text&quot; placeholder=&quot;&quot; name=&quot;text_fingerprint&quot; id=&quot;text_fingerprint&quot; data-validation=&quot;fingerprint&quot;&gt;
+        &lt;!-- Error display --&gt;
+        &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid fingerprint&lt;/small&gt;
+        &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;</code></pre>
+<h4 id="buttons">Buttons</h4>
+<p>The buttons section is composed by two set of elements: parameters and the buttons array.</p>
+<p>The available parameters are:</p>
+<p><strong>buttonsClass</strong>.
+The class or classes assigned to the row that contains the buttons.</p>
+<p><strong>unlabeled</strong>.
+If unlabeled attribute is set to true, then the buttons will be align to the left. If unlabeled is not added in the configuration object, then the buttons will be shown in the input column.</p>
+<p><strong>buttonsAlignedRight</strong>.
+If buttonsAlignedRight attribute is set to true, then the buttons will be align to the right.</p>
+<p><strong>cancel_link</strong>
+Adds a cancel link next to the buttons. It requires the id and value parameters which represent the id and the label of the link. For example:</p>
+<pre><code>    &quot;cancel_link&quot;: {
+        &quot;id&quot;: &quot;cancel_form&quot;,
+        &quot;value&quot;: &quot;Cancel&quot;
+    },</code></pre>
+<p><strong>buttons</strong>
+The buttons array represent the set of buttons that will be showed at the end of the form. It&#39;s composed by a set of button objects with id, name and value. An optional parameter <strong>isInactive</strong> allows to set the background of the button to an inactive color.</p>
+<p>For example, if the buttons section has the following configuration:</p>
+<pre><code>    &quot;unlabeled&quot;:&quot;true&quot;,
+    &quot;buttons&quot;: [
+        {
+            &quot;id&quot;: &quot;update&quot;,
+            &quot;name&quot;: &quot;update&quot;,
+            &quot;value&quot;: &quot;Update&quot;
+        }
+    ]</code></pre>
+<p>Then, the buttons section will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;elementinput left&quot;&gt;
+            &lt;input type=&quot;submit&quot; class=&quot;button&quot; id=&quot;update&quot; name=&quot;update&quot; value=&quot;Update&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</code></pre>
+<h5 id="footer">Footer</h5>
+<p>The footer section is composed by a text, url and id that will be presented at the end of the form.</p>
+<p>For example, if the buttons section has the following configuration:</p>
+<pre><code>    &quot;footer&quot;: [
+        {
+            &quot;text&quot;:&quot;By setting the root password I accept the terms of the &quot;,
+            &quot;url&quot;:&quot;License Agreement&quot;,
+            &quot;id&quot;:&quot;login_agreement&quot;
+        }
+    ]</code></pre>
+<p>Then, the footer section will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;footer&quot;&gt;
+            &lt;h6&gt;By setting the root password I accept the terms of the
+                    &lt;a id=&quot;login_agreement&quot;&gt;License Agreement&lt;/a&gt;
+            &lt;/h6&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</code></pre>
+<h4 id="values">Values</h4>
+<p>A form can have elements with predefined values that can be defined in the configuration (elements property) as explained in the section above, or values that can be specific for some user or set of data. These values could be extracted from the model of a view. In the last case, a data binding happens.</p>
+<p>Form widget provides data binding to all of its form elements:</p>
+<ol>
+<li>input (all the elements minus the ones below)</li>
+<li>check box (element_checkbox)</li>
+<li>radio button (element_radio)</li>
+<li>dropDown widget (element_dropdown)</li>
+<li>datePicker widget (element_datePickerWidget)</li>
+<li>time widget (element_timeWidget)</li>
+<li>dateTime widget (element_dateTimeWidget)</li>
+<li>timeZone widget (element_timeZoneWidget)</li>
+<li><p>ipCidr widget (element_ipCidrWidget)</p>
+</li>
+<li><p><strong>input</strong>
+To include data binding in an input field, the user of the form widget should add `` in the value property. For example, for element_email, the value can be defined as:</p>
+</li>
+</ol>
+<pre><code>    &quot;value&quot;: &quot;&quot;</code></pre>
+<p>If the values property from the form widget configuration has the following email:</p>
+<pre><code>    &quot;email&quot;: &quot;mvilitanga@gmail.com&quot;,</code></pre>
+<p>Then, the email element will be rendered as:</p>
+<pre><code>    &lt;input type=&quot;email&quot; data-validation=&quot;email&quot; id=&quot;text_area&quot; name=&quot;text_email&quot; placeholder=&quot;&quot; required=&quot;&quot; value=&quot;mvilitanga@gmail.com&quot;&gt;</code></pre>
+<ol>
+<li><strong>element_checkbox</strong>
+To include data binding in a check box field, the user of the form widget should add `` in the initValue property. For example, for element_checkbox, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_checkbox&quot;: true,
+    &quot;id&quot;: &quot;checkbox_field&quot;,
+    &quot;initValue&quot;: &quot;&quot;,
+    ...
+    &quot;values&quot;: [
+        {
+            &quot;id&quot;: &quot;checkbox_enable1&quot;,
+            &quot;name&quot;: &quot;checkbox_enable&quot;,
+            &quot;label&quot;: &quot;Option 1&quot;,
+            &quot;value&quot;: &quot;enable&quot;,
+            &quot;checked&quot;: true
+        },
+        {
+            &quot;id&quot;: &quot;checkbox_enable2&quot;,
+            &quot;name&quot;: &quot;checkbox_enable&quot;,
+            &quot;label&quot;: &quot;Option 2&quot;,
+            &quot;value&quot;: &quot;disable&quot;,
+            &quot;checked&quot;: false
+        },
+        {
+            &quot;id&quot;: &quot;checkbox_disable&quot;,
+            &quot;name&quot;: &quot;checkbox_enable&quot;,
+            &quot;label&quot;: &quot;Option 3&quot;,
+            &quot;disabled&quot;: true,
+            &quot;value&quot;: &quot;disable&quot;
+        }
+    ]
+},</code></pre>
+<p>The initValue should be defined as an array of Object with pairs of only id and checked properties. If the values property from the form widget configuration includes the checkBox123 property:</p>
+<pre><code>    &quot;checkBox123&quot;: [
+        {
+            &quot;id&quot;: &quot;checkbox_enable2&quot;,
+            &quot;checked&quot;: true
+        },
+        {
+            &quot;id&quot;: &quot;checkbox_disable&quot;,
+            &quot;checked&quot;: true
+        }
+    ],</code></pre>
+<p>Then, the check box element will have the checkbox_enable2 and checkbox_disable items checked. Other settings in this form element won&#39;t be updated.</p>
+<ol>
+<li><strong>element_radio</strong>
+To include data binding in a radio button field, the user of the form widget should add `` in the initValue property. For example, for element_radio, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_radio&quot;: true,
+    &quot;id&quot;: &quot;radio_field&quot;,
+    &quot;initValue&quot;: &quot;&quot;,
+    ...
+    &quot;values&quot;: [
+        {
+            &quot;id&quot;: &quot;radio1&quot;,
+            &quot;name&quot;: &quot;radio_button&quot;,
+            &quot;label&quot;: &quot;Option 1&quot;,
+            &quot;value&quot;: &quot;option1&quot;,
+            &quot;disabled&quot;: true
+        },
+        {
+            &quot;id&quot;: &quot;radio2&quot;,
+            &quot;name&quot;: &quot;radio_button&quot;,
+            &quot;label&quot;: &quot;Option 2&quot;,
+            &quot;value&quot;: &quot;option2&quot;
+        },
+        {
+            &quot;id&quot;: &quot;radio3&quot;,
+            &quot;name&quot;: &quot;radio_button&quot;,
+            &quot;label&quot;: &quot;Option 3&quot;,
+            &quot;value&quot;: &quot;option3&quot;,
+            &quot;checked&quot;: true
+        }
+    ]
+},</code></pre>
+<p>The initValue should be defined as an array of Object with pairs of only id and checked properties. If the values property from the form widget configuration includes the radioButton123 property:</p>
+<pre><code>    &quot;radioButton123&quot;: [
+        {
+            &quot;id&quot;: &quot;radio1&quot;,
+            &quot;checked&quot;: false
+        },
+        {
+            &quot;id&quot;: &quot;radio2&quot;,
+            &quot;checked&quot;: true
+        }
+    ],</code></pre>
+<p>Then, the radio button element will have only the radio2 item checked. Other settings in this form element won&#39;t be updated.</p>
+<ol>
+<li><strong>element_dropdown</strong>
+To include data binding in a drop down field, the user of the form widget should add `` in the initValue property. For example, for element_dropdown, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_dropdown&quot;: true,
+    &quot;initValue&quot;: &quot;&quot;,
+    ...
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: &quot;ftp&quot;,
+            &quot;text&quot;: &quot;junos-ftp&quot;
+        },
+        {
+            &quot;id&quot;: &quot;tftp&quot;,
+            &quot;text&quot;: &quot;junos-tftp&quot;,
+            &quot;disabled&quot;: true
+        },
+        {
+            &quot;id&quot;: &quot;rtsp&quot;,
+            &quot;text&quot;: &quot;junos-rtsp&quot;
+        },
+        {
+            &quot;id&quot;: &quot;netbios&quot;,
+            &quot;text&quot;: &quot;junos-netbios-session&quot;,
+            &quot;selected&quot;: true
+        }
+    ]
+},</code></pre>
+<p>If the values property from the form widget configuration includes the dropDown123 property:</p>
+<pre><code>    &quot;dropDown123&quot;: {
+        &quot;id&quot;: &quot;rtsp&quot;,
+        &quot;text&quot;: &quot;junos-rtsp&quot;
+    },</code></pre>
+<p>Then, the drop down element will have the rtsp item selected.</p>
+<ol>
+<li><strong>element_datePickerWidget</strong>
+To include data binding in a date picker widget field, the user of the form widget should add `` in the initValue property. For example, for element_datePickerWidget, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_datePickerWidget&quot;: true,
+    &quot;id&quot;: &quot;text_datepickerWidget&quot;,
+    &quot;initValue&quot;: &quot;&quot;,
+    ...
+},</code></pre>
+<p>The initValue should be defined as a string. If the values property from the form widget configuration includes the datePicker123 property:</p>
+<pre><code>    &quot;datePicker123&quot;: &quot;6/20/2010&quot;,</code></pre>
+<p>Then, the datePicker widget element will have the value of the datePicker123 property assigned.</p>
+<ol>
+<li><strong>element_timeWidget</strong>
+To include data binding in a time widget field, the user of the form widget should add `` in the initValue property. For example, for element_timeWidget, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_timeWidget&quot;: true,
+    &quot;id&quot;: &quot;text_timeWidget&quot;,
+    &quot;initValue&quot;: &quot;&quot;
+    ...
+},</code></pre>
+<p>If the values property from the form widget configuration includes the time123 property (an object with time and period properties):</p>
+<pre><code>    &quot;time123&quot;: {
+        &quot;time&quot;: &quot;06:11:00&quot;,
+        &quot;period&quot;: &quot;PM&quot;
+    },</code></pre>
+<p>Then, the time widget element will have the value of the time123 property assigned.</p>
+<ol>
+<li><strong>element_dateTimeWidget</strong>
+To include data binding in a date time element, the user of the form widget should add `` in the initValue property. For example, for element_timeWidget, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_dateTimeWidget&quot;: true,
+    &quot;id&quot;: &quot;text_dateTimeWidget&quot;,
+    &quot;initValue&quot;: &quot;&quot;,
+    &quot;datePickerWidget&quot;: {
+        &quot;id&quot;: &quot;text_dateTime_date_Widget&quot;,
+        ...
+    },
+    &quot;timeWidget&quot;:{
+        &quot;id&quot;: &quot;text_dateTime_time_Widget&quot;,
+        ...
+    }
+},</code></pre>
+<p>If the values property from the form widget configuration includes the dateTime123 property (an object with date, time and period properties):</p>
+<pre><code>    &quot;dateTime123&quot;: {
+        &quot;date&quot;: &quot;3/11/2010&quot;,
+        &quot;time&quot;: &quot;03:11:00&quot;,
+        &quot;period&quot;: &quot;PM&quot;
+    },</code></pre>
+<p>Then, the time widget element will have the value of the dateTime123 property assigned.</p>
+<ol>
+<li><strong>element_timeZoneWidget</strong>
+To include data binding in a time zone widget element, the user of the form widget should add `` in the initValue property. For example, for element_timeZoneWidget, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_timeZoneWidget&quot;: true,
+    &quot;id&quot;: &quot;text_timeZoneWidget&quot;,
+    ...
+    &quot;initValue&quot;: &quot;&quot;
+},</code></pre>
+<p>If the values property from the form widget configuration includes the timeZone123 property:</p>
+<pre><code>   &quot;timeZone123&quot;: &quot;America/New_York&quot;,</code></pre>
+<p>Then, the time widget element will have the timeZone123 value assigned.</p>
+<ol>
+<li><strong>element_ipCidrWidget</strong>
+To include data binding in a ipCidr widget element, the user of the form widget should add `` in the initValue property. For example, for element_ipCidrWidget, the initValue can be defined as:</li>
+</ol>
+<pre><code>{
+    &quot;element_ipCidrWidget&quot;: true,
+    &quot;id&quot;: &quot;text_ipCidrWidget1&quot;,
+    ...
+    &quot;initValue&quot;: &quot;&quot;,
+},</code></pre>
+<p>If the values property from the form widget configuration includes the ipCidr123 property (an object with ip, and cidr properties):</p>
+<pre><code>    &quot;ipCidr123&quot;: {
+        &quot;ip&quot;: &quot;1.2.3.4&quot;,
+        &quot;cidr&quot;: &quot;12&quot;
+    },</code></pre>
+<p>Then, the ipCidr widget element will have the ipCidr123 value assigned.</p>
+<h3 id="events">Events</h3>
+<p>A form can be bind to the &quot;valid&quot; and &quot;invalid&quot; events that will get triggered when a form validation passes (&quot;valid&quot;) or fails (&quot;invalid&quot;).</p>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the form widget in the specified container. For example:</p>
+<pre><code>    form.build();</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the list builder widget.</p>
+<pre><code>    form.destroy();</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a form widget in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the form widget and provide a configuration object with the configuration object of the elements that the form should have, the object for the data binding in the values parameter, and the container where the form widget will be rendered</li>
+<li>Call the build method of the form widget</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the form widget.</p>
+<pre><code>    var form = new FormWidget({
+        &quot;elements&quot;: formConf.elements,
+        &quot;values&quot;: formConf.values,
+        &quot;container&quot;: this.el
+    });
+    form.build();</code></pre>
+<p>utility methods like isValidInput, insertValuesFromCollection, insertValuesFromJson, insertElementsFromJson, and insertElementsToContainer.</p>
+<h3 id="utility-methods">Utility methods</h3>
+<p>The form widget exposes additional methods intended to help user to add elements that were not available when the widget was instantiated or to provide additional information. These methods are: isValidInput, insertValuesFromCollection, insertValuesFromJson, insertElementsFromJson, and insertElementsToContainer.</p>
+<h4 id="isvalidinput">isValidInput</h4>
+<p>It validates that all the fields of the form has the right input using the validation pattern provided for each element as explained in the &quot;elements&quot; section of this document. The input parameter is the form in a jQuery object format and the method returns the same form with attached validation events.</p>
+<h4 id="getvalues">getValues</h4>
+<p>It provides a combination of name/value sets that represents the name of the input field and its value for each element of the form.</p>
+<h4 id="showformerror">showFormError</h4>
+<p>It shows the form error box with the content defined in the form configuration (err<em>div</em>&lt;*&gt; parameters).</p>
+<h4 id="insertvaluesfromcollection">insertValuesFromCollection</h4>
+<p>It inserts values from a collection model in the specified id of the configuration object of the form. The input parameter is the id of the element to be updated and an object of the collection model. The method returns the updated configuration object.</p>
+<h4 id="insertvaluesfromjson">insertValuesFromJson</h4>
+<p>It inserts values from a JSON object in the specified id of the configuration object of the form. The input parameter is the id of the element to be updated and a JSON object. The method returns the updated configuration object. For example:</p>
+<h4 id="insertelementsfromjson">insertElementsFromJson</h4>
+<p>It inserts elements from a JSON object in the specified id of the configuration object of the form. The input parameter is the id of the element to be updated and a JSON object. The method returns the updated configuration object.</p>
+<pre><code>this.formWidget.insertElementsFromJson(&#39;0&#39;, JSON.stringify(summaryList));</code></pre>
+<h4 id="insertelementstocontainer">insertElementsToContainer</h4>
+<p>It inserts elements in a container that is referenced by an input id. The input parameter is the DOM id of the element to be updated and a JSON object. The method returns the updated form.</p>
+<h4 id="insertdropdowncontentfromjson">insertDropdownContentFromJson</h4>
+<p>It inserts dropdown content (option) to a dropdown element (select) after a form has been built. It takes as parameters the id of the dropdown, a JSON object with the content to be inserted, and a boolean to clear existing options.  The object should follow the format [{label:&quot;label&quot;,value:&quot;value&quot;}]. It also takes a deleteDefaultList parameter that if it&#39;s set to true, it removes default content of the dropdown and add JSON object content. If it&#39;s set to false, it appends the content of the dropdown at the end of the existing dropdown list.</p>
+<h4 id="copyrow">copyRow</h4>
+<p>It copies a row using its className and adds it after the last row with the same className. It also allows delete the row by adding the delete icon at the end of the row. When the element is a simple element, the elementConf parameter allows to set the new row with new name, id, and value.</p>
+<h4 id="getinstantiatedwidgets">getInstantiatedWidgets</h4>
+<p>It provides an object with the instances of the widgets used during the integration of the form widget with other form element widgets. It is explained with more details in the next section.</p>
+<h4 id="togglesection">toggleSection</h4>
+<p>Toggle the status of a section from show to hide and vice versa. If the section has the class &#39;hide&#39;, then when the method is called, the hide class will be removed, so that the section will be showed. If the section was showed, when the method is called, the hide class will be added, so that the section will be hidden.</p>
+<h4 id="togglerow">toggleRow</h4>
+<p>Toggle the status of a row from show to hide and vice versa. If the row has the class &#39;hide&#39;, then when the method is called, the hide class will be removed, so that the section will be showed. If the row was showed, when the method is called, the hide class will be added, so that the row will be hidden.</p>
+<h4 id="addsection">addSection</h4>
+<p>Adds a section to the form. It requires the sectionConf parameter. It represents the configuration of the new section as per the form widget configuration format. Additionally, the identifier and the insertBefore parameters can be added. identifier represents the class (&#39;.<className>&#39;) or the id (&#39;#<id>&#39;) of the section that will be used as a reference for adding the section. If the parameter is absent, the section will be added at the end of the form. insertBefore parameter is a boolean that if is set to true, the new section will be added before the identifier. If it is set to false or if it is absent, the new section will be added after the section set in the identifier parameter. If more than one class reference is found for the identifier (more than one row class), then the section will be added before/after each identifier. If the identifier is an id, then only the last id found will be used as a reference. For example:</p>
+<pre><code>form.addSection(dynamicSection, &#39;#section_id&#39;, true);</code></pre>
+<p>where form is an instance of the Form widget and dynamicSection is:</p>
+<pre><code>var dynamicSection = {
+    &quot;heading&quot;: &quot;Appended Section&quot;,
+    &quot;heading_text&quot;: &quot;Subtitle for appended section&quot;,
+    &quot;section_id&quot;: &quot;appended_section_id_1&quot;,
+    &quot;elements&quot;: [
+        {
+            &quot;element_description&quot;: true,
+            &quot;id&quot;: &quot;text_description&quot;,
+            &quot;label&quot;: &quot;Appended Description&quot;,
+            &quot;value&quot;: &quot;Description 1&quot;
+        },
+        {
+            &quot;element_textarea&quot;: true,
+            &quot;id&quot;: &quot;text_area_1&quot;,
+            &quot;name&quot;: &quot;text_area_1&quot;,
+            &quot;label&quot;: &quot;Textarea&quot;,
+            &quot;pattern&quot;: &quot;^([0-9]){3,4}$&quot;,
+            &quot;placeholder&quot;: &quot;&quot;,
+            &quot;error&quot;: &quot;Enter a number with 3 or 4 digits&quot;,
+            &quot;post_validation&quot;: &quot;validTextarea&quot;
+        },
+        {
+            &quot;element_multiple_error&quot;: true,
+            &quot;id&quot;: &quot;username_1&quot;,
+            &quot;name&quot;: &quot;username_1&quot;,
+            &quot;label&quot;: &quot;Username&quot;,
+            &quot;pattern-error&quot;: [
+                {
+                    &quot;pattern&quot;: &quot;hassymbol&quot;,
+                    &quot;error&quot;: &quot;Must include a symbol.&quot;
+                },
+                {
+                    &quot;pattern&quot;: &quot;hasnotspace&quot;,
+                    &quot;error&quot;: &quot;Must not include a space.&quot;
+                },
+                {
+                    &quot;pattern&quot;: &quot;validtext&quot;,
+                    &quot;error&quot;: &quot;This field is required.&quot;
+                }
+            ],
+            &quot;error&quot;: true,
+            &quot;help&quot;: &quot;Must only contain alphanumerics, underscores or hyphens and begin with an alphanumeric or an underscore character.&quot;
+        }
+    ]
+};</code></pre>
+<h4 id="addelements">addElements</h4>
+<p>Adds elements to the form by adding new row elements. It requires the elementConf parameter. It represents the configuration of the new elements as per the form widget configuration format. Additionally, the identifier and the insertBefore parameters can be added. The string identifier represents the class (&#39;.<className>&#39;) or the id (&#39;#<id>&#39;) of the element that will be used as a reference for adding the new elements. insertBefore parameter is a boolean that if is set to true, the new element(s) will be added before the identifier. If it is set to false or if it is absent, the new element(s) will be added after the element set in the identifier parameter. If more than one class reference is found for the identifier (more than one row class), then the elements will be added before/after each identifier. If the identifier is an id, then only the last id found will be used.</p>
+<p>For example:</p>
+<pre><code>form.addElements(dynamicElements, &#39;.text_alphanumeric_class&#39;);</code></pre>
+<p>where form is an instance of the Form widget and dynamicSection is:</p>
+<pre><code>var dynamicElements = [
+      {
+      &quot;element_alphanumeric&quot;: true,
+      &quot;id&quot;: &quot;text_alphanumeric_1&quot;,
+      &quot;name&quot;: &quot;text_alphanumeric_1&quot;,
+      &quot;label&quot;: &quot;Text alphanumeric Dyn1&quot;,
+      &quot;required&quot;: true,
+      &quot;placeholder&quot;: &quot;&quot;,
+      &quot;error&quot;: &quot;Please enter a string that contains only letters and numbers&quot;
+      },
+      {
+          &quot;element_hexadecimal&quot;: true,
+          &quot;id&quot;: &quot;text_hexadecimal_1&quot;,
+          &quot;name&quot;: &quot;text_hexadecimal_1&quot;,
+          &quot;label&quot;: &quot;Text hexadecimal Dyn1&quot;,
+          &quot;placeholder&quot;: &quot;&quot;,
+          &quot;error&quot;: &quot;Please enter a valid hexadecimal number&quot;
+      }
+  ];</code></pre>
+<h4 id="removeelements">removeElements</h4>
+<p>Remove elements or sections in the form. It required the identifier parameter. It is a string represents the class (&#39;.<className>&#39;) or the id (&#39;#<id>&#39;) of the element that will be removed. For example:</p>
+<pre><code>    form.removeElements(&#39;#section_id3&#39;);</code></pre>
+<h4 id="showforminlineerror">showFormInlineError</h4>
+<p>Shows or hides the form inline error box with the app integrated widgets. It requires elementId of the form element to which widget is integrated. Second parameter is optional, type boolean, used to hide the inline error.</p>
+<pre><code>    form.showFormInlineError(&#39;#elementId&#39;);</code></pre>
+<p>where form is an instance of the Form widget.</p>
+<h2 id="integration-with-other-widgets">Integration with other widgets</h2>
+<p>The form widget can work in conjunction with the following widgets:</p>
+<ul>
+<li>DatePicker widget</li>
+<li>IpCidr widget</li>
+<li>Time widget</li>
+<li>TimeZone widget</li>
+<li>Grid widget</li>
+</ul>
+<p>To add it in a form, the configuration object of the form should include the parameters that each widget requires.</p>
+<h3 id="datepicker-widget">DatePicker widget</h3>
+<p>It should include a <strong>element_datePickerWidget</strong> parameter and define a <strong>dateFormat</strong>. The rest of parameters follows the same rules as a regular element of the form widget.</p>
+<p> For example, if the datePicker element has the following configuration:</p>
+<pre><code>    {
+        &quot;element_datePickerWidget&quot;: true,
+        &quot;id&quot;: &quot;text_datepickerWidget&quot;,
+        &quot;name&quot;: &quot;text_datepickerWidget&quot;,
+        &quot;label&quot;: &quot;Date Picker Widget&quot;,
+        &quot;required&quot;: true,
+        &quot;placeholder&quot;: &quot;MM/DD/YYYY&quot;,
+        &quot;dateFormat&quot;: &quot;mm/dd/yyyy&quot;,
+        &quot;pattern-error&quot;: [
+            {
+                &quot;pattern&quot;: &quot;length&quot;,
+                &quot;min_length&quot;:&quot;10&quot;,
+                &quot;max_length&quot;:&quot;10&quot;,
+                &quot;error&quot;: &quot;Incomplete MM/DD/YYYY&quot;
+            },
+            {
+                &quot;pattern&quot;: &quot;date&quot;,
+                &quot;error&quot;: &quot;Must be MM/DD/YYYY&quot;
+            },
+            {
+                &quot;pattern&quot;: &quot;validtext&quot;,
+                &quot;error&quot;: &quot;Please enter a valid date.&quot;
+            }
+        ],
+        &quot;error&quot;: true
+    },</code></pre>
+<p>Then, the datePicker input will be rendered as:</p>
+<pre><code>    &lt;input type=&quot;text&quot; data-widget=&quot;datePicker&quot; widget-type=&quot;datepicker&quot; id=&quot;text_datepickerWidget&quot; name=&quot;text_datepickerWidget&quot; placeholder=&quot;MM/DD/YYYY&quot; required=&quot;&quot; data-validation=&quot;multiple&quot; data-validation_length=&quot;Incomplete MM/DD/YYYY&quot; data-minlength=&quot;10&quot; data-maxlength=&quot;10&quot; data-validation_date=&quot;Must be MM/DD/YYYY&quot; data-validation_validtext=&quot;Please enter a valid date.&quot; data-dateformat=&quot;mm/dd/yyyy&quot; class=&quot;hasDatepicker&quot;&gt;&lt;img class=&quot;ui-datepicker-trigger&quot; src=&quot;/assets/images/date_picker_icon.png&quot; alt=&quot;...&quot; title=&quot;...&quot;&gt;</code></pre>
+<h3 id="ipcidr-widget">IpCidr widget</h3>
+<p>It should include a <strong>element_ipCidrWidget</strong> parameter. The rest of parameters are optional and will be used to overwrite the default values provided by the IpCidr widget.</p>
+<p> For example, if the ipCidrWidget element has the following configuration:</p>
+<pre><code>    {
+        &quot;element_ipCidrWidget&quot;: true,
+        &quot;id&quot;: &quot;text_ipCidrWidget1&quot;,
+        &quot;label&quot;: &quot;IP/CIDR Widget&quot;,
+        &quot;ip_id&quot;: &quot;text_ip1&quot;,
+        &quot;ip_name&quot;: &quot;text_ip1&quot;,
+        &quot;ip_placeholder&quot;: &quot;IP v4 or v6&quot;,
+        &quot;ip_required&quot;: &quot;true&quot;,
+        &quot;ip_field-help&quot;: {
+            &quot;content&quot;: &quot;IP v6 example&quot;,
+            &quot;ua-help-identifier&quot;: &quot;alias_for_title_ua_event_binding&quot;
+        },
+        &quot;ip_error&quot;: &quot;Invalid IP address&quot;,
+        &quot;cidr_id&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_name&quot;: &quot;text_cidr&quot;,
+        &quot;cidr_placeholder&quot;: &quot;CIDR&quot;,
+        &quot;cidr_error&quot;: &quot;Invalid CIDR&quot;,
+        &quot;subnet_label&quot;: &quot;Subnet&quot;,
+        &quot;subnet_id&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_name&quot;: &quot;text_subnet&quot;,
+        &quot;subnet_placeholder&quot;: &quot;Subnet placeholder&quot;,
+        &quot;subnet_error&quot;: &quot;Please enter a valid subnet mask&quot;
+    },</code></pre>
+<p>Then, the ipCidr widget element will be rendered as:</p>
+<pre><code>    &lt;div class=&quot;row  show ip-cidr-widget&quot; data-widgetidentifier=&quot;ipCidr_text_ipCidrWidget1&quot;&gt;    &lt;!-- Form element --&gt;
+        &lt;div class=&quot;row row_ip &quot;&gt;
+            &lt;!-- Label --&gt;
+                &lt;div class=&quot;elementlabel left&quot;&gt;
+                    &lt;label for=&quot;text_ip1&quot; class=&quot;left inline  required  &quot;&gt;
+                    IP/CIDR Widget
+                    &lt;/label&gt;
+                        &lt;span class=&quot;ua-field-help tooltip tooltipstered&quot; data-ua-id=&quot;alias_for_title_ua_event_binding&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;!-- Form field --&gt;
+            &lt;div class=&quot;elementinput left&quot;&gt;
+                &lt;input type=&quot;text&quot; data-validation=&quot;ipv4v6&quot; class=&quot;input_ip&quot; data-ipversion=&quot;&quot; id=&quot;text_ip1&quot; name=&quot;text_ip1&quot; placeholder=&quot;IP v4 or v6&quot; required=&quot;&quot; value=&quot;&quot; data-trigger=&quot;enableCidrSubnet&quot;&gt;
+                &lt;!-- Error-UA display --&gt;
+                &lt;small class=&quot;error errorimage&quot;&gt;Invalid IP address&lt;/small&gt;
+                &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- Form element --&gt;
+        &lt;div class=&quot;row row_cidr &quot;&gt;
+            &lt;!-- Label --&gt;
+                &lt;div class=&quot;elementlabel left&quot;&gt;
+                    &lt;label for=&quot;text_cidr&quot; class=&quot;left inline  &quot;&gt;
+                    /
+                    &lt;/label&gt;
+                &lt;/div&gt;
+        &lt;!-- Form field --&gt;
+            &lt;div class=&quot;elementinput left&quot;&gt;
+                &lt;input type=&quot;text&quot; data-validation=&quot;cidrv4&quot; class=&quot;input_cidr&quot; id=&quot;text_cidr&quot; name=&quot;text_cidr&quot; placeholder=&quot;CIDR&quot; disabled=&quot;&quot; value=&quot;&quot; data-trigger=&quot;updateSubnet&quot;&gt;
+                &lt;!-- Error-UA display --&gt;
+                &lt;small class=&quot;error errorimage&quot;&gt;Invalid CIDR&lt;/small&gt;
+                &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;span class=&quot;row ip_cidr&quot;&gt;&lt;/span&gt;
+        &lt;!-- Form element --&gt;
+        &lt;div class=&quot;row row_subnet &quot;&gt;
+            &lt;!-- Label --&gt;
+                &lt;div class=&quot;elementlabel left&quot;&gt;
+                    &lt;label for=&quot;text_subnet&quot; class=&quot;left inline  &quot;&gt;
+                    Subnet
+                    &lt;/label&gt;
+                &lt;/div&gt;
+        &lt;!-- Form field --&gt;
+            &lt;div class=&quot;elementinput left&quot;&gt;
+            &lt;input type=&quot;text&quot; data-validation=&quot;inarray&quot; class=&quot;input_subnet&quot; id=&quot;text_subnet&quot; name=&quot;text_subnet&quot; placeholder=&quot;Subnet placeholder&quot; disabled=&quot;&quot; value=&quot;&quot; data-trigger=&quot;updateCidr&quot; data-array=&quot;128.0.0.0,192.0.0.0,224.0.0.0,240.0.0.0,248.0.0.0,252.0.0.0,254.0.0.0,255.0.0.0,255.128.0.0,255.192.0.0,255.224.0.0,255.240.0.0,255.248.0.0,255.252.0.0,255.254.0.0,255.255.0.0,255.255.128.0,255.255.192.0,255.255.224.0,255.255.240.0,255.255.248.0,255.255.252.0,255.255.254.0,255.255.255.0,255.255.255.128,255.255.255.192,255.255.255.224,255.255.255.240,255.255.255.248,255.255.255.252,255.255.255.254,255.255.255.255,&quot;&gt;
+                &lt;!-- Error-UA display --&gt;
+                &lt;small class=&quot;error errorimage&quot;&gt;Please enter a valid subnet mask&lt;/small&gt;
+                &lt;span class=&quot;inline-help&quot;&gt;&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</code></pre>
+<h3 id="time-widget">Time widget</h3>
+<p>The time widget is integrated to the form widget. To include it, the configuration object of the Form Widget (elements parameter) should include an element_timeWidget parameter like the following:</p>
+<pre><code>{
+    &quot;element_timeWidget&quot;: true,
+    &quot;id&quot;: &quot;text_timeWidget&quot;,
+    &quot;name&quot;: &quot;text_timeWidget&quot;
+}</code></pre>
+<h3 id="timezone-widget">TimeZone widget</h3>
+<p>The timeZone widget is integrated to the form widget. To include it, the configuration object of the Form Widget (elements parameter) should include an element_timeZoneWidget parameter like the following:</p>
+<pre><code>{
+    &quot;element_timeZoneWidget&quot;: true,
+    &quot;id&quot;: &quot;timezone_widget&quot;,
+    &quot;label&quot;: &quot;Timezone&quot;
+}</code></pre>
+<p>Each widget is showed independently. When the datePicker widget and the time widget needs to be presented in the same line, then a combined version is available. The datePicker widget parameters should be added in the datePickerWidget parameters and the time widget parameters should be added in the timeWidget parameter. Each one contains the same parameters as if the widget were defined independently. Also, the label and the required parameters provide the label and the required validation for the combined element. For example:</p>
+<pre><code>{
+    &quot;element_dateTimeWidget&quot;: true,
+    &quot;label&quot;: &quot;Date Time Widget&quot;,
+    &quot;required&quot;: true,
+    &quot;datePickerWidget&quot;: {
+        &quot;id&quot;: &quot;text_dateTime_date_Widget&quot;,
+        &quot;name&quot;: &quot;text_dateTime_date_Widget&quot;,
+        &quot;placeholder&quot;: &quot;MM/DD/YYYY&quot;,
+        &quot;dateFormat&quot;: &quot;mm/dd/yyyy&quot;,
+        &quot;pattern-error&quot;: [
+            {
+                &quot;pattern&quot;: &quot;length&quot;,
+                &quot;min_length&quot;:&quot;10&quot;,
+                &quot;max_length&quot;:&quot;10&quot;,
+                &quot;error&quot;: &quot;Incomplete MM/DD/YYYY&quot;
+            },
+            {
+                &quot;pattern&quot;: &quot;date&quot;,
+                &quot;error&quot;: &quot;Must be MM/DD/YYYY&quot;
+            },
+            {
+                &quot;pattern&quot;: &quot;validtext&quot;,
+                &quot;error&quot;: &quot;This is a required field&quot;
+            }
+        ],
+        &quot;error&quot;: true,
+        &quot;notshowvalid&quot;: true
+    },
+    &quot;timeWidget&quot;:{
+        &quot;id&quot;: &quot;text_dateTime_time_Widget&quot;,
+        &quot;name&quot;: &quot;text_dateTime_time_Widget&quot;
+    }
+}</code></pre>
+<h3 id="grid-widget">Grid widget</h3>
+<p>The grid widget is integrated to the form widget. To include it, the configuration object of the Form Widget (elements parameter) should include an element_grid parameter like the following:</p>
+<pre><code>{
+    &quot;element_grid&quot;: true,
+    &quot;id&quot;: &quot;text_grid&quot;,
+    &quot;name&quot;: &quot;text_grid&quot;,
+    &quot;label&quot;: &quot;Grid Integration&quot;,
+    &quot;elements&quot;: gridConfiguration.elements,
+    &quot;actionEvents&quot; : gridConfiguration.actions,
+    &quot;error&quot;: &quot;Grid validation failed&quot;
+}</code></pre>
+<p>Where the id is a required field, name, label and error are used by the form widget to render the grid properly in the form widget. The rest of parameters (elements, actionEvents, search, cellTooltip, etc.) corresponds to the grid widget configuration and more details can be found at <a href="public/assets/js/widgets/grid/grid.md">Grid</a> widget.</p>
+<p>When the form is rendered, the grid will be automatically added. When the getValues method from the form widget is invoked, then the getAllVisibleRows method from the grid widget will be called to get all the values for that grid.</p>
+<h2 id="instance-of-the-widgets">Instance of the widgets</h2>
+<p>The form widget instantiates other widgets to include them in the form. The instantiated widgets might contain methods that can be required later after the form has been built.
+The method <em>getInstantiatedWidgets</em> returns the instance of the widgets used during the integration process. For instance:</p>
+<pre><code>var widgets = form.getInstantiatedWidgets();</code></pre>
+<p>will return an object with the instantiated widgets:</p>
+<pre><code>Object {ipCidr: IpCidrWidget, datePicker: DatepickerWidget, time: TimeWidget, timeZone: TimeZoneWidget}</code></pre>
+<p>To use one of the methods of the integrated widget:</p>
+<h4 id="step1">Step1</h4>
+<p>Identify the id of the widget that was integrated. The id will be composed by:</p>
+<p><id of the widget>_<id of the element></p>
+<p><strong>id of the widget</strong>
+Each element widget has the following default id:</p>
+<ul>
+<li>DatePicker widget: datePicker</li>
+<li>IpCidr widget: ipCidr</li>
+<li>Time widget: time</li>
+<li>TimeZone widget: timeZone</li>
+</ul>
+<p><strong>id of the element</strong>
+It represents the id assigned to the element. If id is not available, then, the widget identifier will be <id of the widget>. Nevertheless, when a form has more of one element widget, the id is required.</p>
+<p>For example, for following configuration object:</p>
+<pre><code>    {
+      &quot;element_timeWidget&quot;: true,
+      &quot;id&quot;: &quot;text_timeWidget&quot;
+    }</code></pre>
+<p>The id of the widget will be: time_text_timeWidget</p>
+<h4 id="step2">Step2</h4>
+<p>Get the widget object from integrated form widget based on mentioned id in configuration object.</p>
+<p>For example to use the getTime method of the Time Widget:</p>
+<pre><code>var timeWidget = formWidget.getInstantiatedWidgets()[&#39;instance&#39;][&#39;time_text_timeWidget&#39;];
+var time = timeWidget.getTime();</code></pre>
+<h2 id="declarative-form">Declarative Form</h2>
+<p>The form widget output provides the html markup, visual style and user interaction according to Slipstream User Experience specifications. An alternative approach to the form widget is the usage of a declarative form that could be useful when the layout of the form that needs to be built differs from the one that the form widget auto generates. In this case, application or plugin developers could use html markup to define a form. This markup should follow the same visual style (classes, containers) than the ones that are automatically generated by the form widget so the form could show the same visual style. To include the same user interaction, the declarative form will also need to include the <a href="public/assets/js/widgets/tooltip/tooltip.md">Tooltip</a> widget to achieve help tooltips and <a href="public/assets/js/widgets/form/formValidator.md">Validator</a> framework to validate user inputs.</p>
+<p>For example, a form that needs to have a two column layout and some input, check box and radio buttons elements could use a declarative form like the following:</p>
+<pre><code class="language-javascript">&lt;form id=<span class="string">"declarative_sample_form"</span> name=<span class="string">"sample_form"</span> class=<span class="string">"form-pattern validate"</span> novalidate=<span class="string">""</span> data-err-timeout=<span class="string">"1000"</span> data-valid-timeout=<span class="string">"5000"</span> form-pattern-validator=<span class="string">""</span>&gt;
+
+    <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"slipstream-content-title"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+            Sample Form Widget
+            <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"ua-field-help tooltip"</span> <span class="attribute">data-ua-id</span>=<span class="value">"alias_for_title_ua_event_binding"</span> <span class="attribute">title</span>=<span class="value">"tittle with tooltip"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h5</span>&gt;</span>Subtitle<span class="tag">&lt;/<span class="title">h5</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h6</span>&gt;</span>Subtitle text<span class="tag">&lt;/<span class="title">h6</span>&gt;</span>
+
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span> = "<span class="attribute">left</span> <span class="attribute">twoColumns</span>"&gt;</span>
+            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+                <span class="comment">&lt;!-- Label --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"text_string"</span> <span class="attribute">class</span>=<span class="value">"left inline labelwithfieldhelp"</span>&gt;</span>Text string<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"ua-field-help form-element tooltip"</span> <span class="attribute">data-ua-id</span>=<span class="value">"alias_for_ua_event_binding2"</span> <span class="attribute">title</span>=<span class="value">"input field with tooltip"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="comment">&lt;!-- Form Fields --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Input fields --&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">data-validation</span>=<span class="value">"validtext"</span> <span class="attribute">id</span>=<span class="value">"text_field"</span> <span class="attribute">name</span>=<span class="value">"text_feld"</span> <span class="attribute">placeholder</span>=<span class="value">"required"</span> <span class="attribute">required</span>=<span class="value">""</span> <span class="attribute">value</span>=<span class="value">""</span>&gt;</span>
+                    <span class="comment">&lt;!-- Error Display --&gt;</span>
+                    <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please enter a value for this field<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"inline-help help-style"</span>&gt;</span>Inline help text<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+                <span class="comment">&lt;!-- Label --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"text_area"</span> <span class="attribute">class</span>=<span class="value">"left inline required"</span>&gt;</span>Text email<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="comment">&lt;!-- Form Fields --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Input fields --&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"email"</span> <span class="attribute">data-validation</span>=<span class="value">"email"</span> <span class="attribute">id</span>=<span class="value">"text_area"</span> <span class="attribute">name</span>=<span class="value">"text_email"</span> <span class="attribute">placeholder</span>=<span class="value">""</span> <span class="attribute">required</span>=<span class="value">""</span> <span class="attribute">value</span>=<span class="value">"mvilitanga@gmail.com"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Error Display --&gt;</span>
+                    <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please enter a valid email<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+                <span class="comment">&lt;!-- Label --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"text_url"</span> <span class="attribute">class</span>=<span class="value">"left inline"</span>&gt;</span>Text url<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="comment">&lt;!-- Form Fields --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Input fields --&gt;</span>
+                    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"url"</span> <span class="attribute">data-validation</span>=<span class="value">"url"</span> <span class="attribute">id</span>=<span class="value">"text_url"</span> <span class="attribute">name</span>=<span class="value">"text_url"</span> <span class="attribute">placeholder</span>=<span class="value">"http://www.juniper.net"</span> <span class="attribute">value</span>=<span class="value">"www.gmail.com"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Error Display --&gt;</span>
+                    <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please enter a valid URL<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"inline-help"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row  show"</span>&gt;</span>
+                <span class="comment">&lt;!-- Label --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"checkbox_field"</span> <span class="attribute">class</span>=<span class="value">"left inline  required"</span>&gt;</span>
+                        Checkbox
+                    <span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="comment">&lt;!-- Form field --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Input field --&gt;</span>
+                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"optionselection"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">data-validation</span>=<span class="value">"validtext"</span> <span class="attribute">id</span>=<span class="value">"checkbox_enable"</span> <span class="attribute">name</span>=<span class="value">"enable_disable"</span> <span class="attribute">value</span>=<span class="value">"enable"</span> <span class="attribute">checked</span>=<span class="value">""</span> <span class="attribute">required</span>=<span class="value">""</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"checkbox_enable"</span>&gt;</span>Option 1<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"optionselection"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">data-validation</span>=<span class="value">"validtext"</span> <span class="attribute">id</span>=<span class="value">"checkbox_disable"</span> <span class="attribute">name</span>=<span class="value">"enable_disable"</span> <span class="attribute">value</span>=<span class="value">"disable"</span> <span class="attribute">disabled</span>=<span class="value">""</span> <span class="attribute">required</span>=<span class="value">""</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"checkbox_disable"</span> <span class="attribute">class</span>=<span class="value">"disabled"</span>&gt;</span>Option 2<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                    <span class="comment">&lt;!-- Error-UA display --&gt;</span>
+                    <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please make a selection<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"inline-help"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+                <span class="comment">&lt;!-- Label --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"radio_field"</span> <span class="attribute">class</span>=<span class="value">"left inline"</span>&gt;</span>Radio Button<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                <span class="comment">&lt;!-- Form Fields --&gt;</span>
+                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+                    <span class="comment">&lt;!-- Input fields --&gt;</span>
+                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"optionselection"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">data-validation</span>=<span class="value">"validtext"</span> <span class="attribute">id</span>=<span class="value">"radio1"</span> <span class="attribute">name</span>=<span class="value">"radio_button"</span> <span class="attribute">value</span>=<span class="value">"option1"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"radio1"</span>&gt;</span>Option 1<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"optionselection"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">data-validation</span>=<span class="value">"validtext"</span> <span class="attribute">id</span>=<span class="value">"radio2"</span> <span class="attribute">name</span>=<span class="value">"radio_button"</span> <span class="attribute">value</span>=<span class="value">"option2"</span>&gt;</span>
+                        <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"radio2"</span>&gt;</span>Option 2<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+                    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+                    <span class="comment">&lt;!-- Error Display --&gt;</span>
+                    <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please make a selection<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+                    <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"inline-help help-style"</span>&gt;</span>Radio Buttons help text<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+                <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+            <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+    <span class="comment">&lt;!-- Buttons --&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"buttons row buttons_row clear"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left "</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">class</span>=<span class="value">"slipstream-primary-button slipstream-secondary-button"</span> <span class="attribute">id</span>=<span class="value">"add_section"</span> <span class="attribute">name</span>=<span class="value">"add_section"</span> <span class="attribute">value</span>=<span class="value">"Add Section"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"submit"</span> <span class="attribute">class</span>=<span class="value">"slipstream-primary-button "</span> <span class="attribute">id</span>=<span class="value">"get_values"</span> <span class="attribute">name</span>=<span class="value">"get_values"</span> <span class="attribute">value</span>=<span class="value">"Get Values"</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">form</span>&gt;</span></span></code></pre>
+<p>Where input fields follow the structure: label and field sections. The field section includes an input with data-validation attribute and the error display area. This format should be used in order to have the form validator applied and be able to show any error during client side validation. For example, an input field that is a required element and has email pattern validation should have the following html markup:</p>
+<pre><code class="language-javascript">    &lt;div class=<span class="string">"row"</span>&gt;
+        <span class="xml"><span class="comment">&lt;!-- Label --&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementlabel left"</span>&gt;</span>
+            <span class="tag">&lt;<span class="title">label</span> <span class="attribute">for</span>=<span class="value">"text_area"</span> <span class="attribute">class</span>=<span class="value">"left inline required"</span>&gt;</span>Text email<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="comment">&lt;!-- Form Fields --&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"elementinput left"</span>&gt;</span>
+            <span class="comment">&lt;!-- Input fields --&gt;</span>
+            <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"email"</span> <span class="attribute">data-validation</span>=<span class="value">"email"</span> <span class="attribute">id</span>=<span class="value">"text_area"</span> <span class="attribute">name</span>=<span class="value">"text_email"</span> <span class="attribute">placeholder</span>=<span class="value">""</span> <span class="attribute">required</span>=<span class="value">""</span> <span class="attribute">value</span>=<span class="value">"mvilitanga@gmail.com"</span>&gt;</span>
+            <span class="comment">&lt;!-- Error Display --&gt;</span>
+            <span class="tag">&lt;<span class="title">small</span> <span class="attribute">class</span>=<span class="value">"error errorimage"</span>&gt;</span>Please enter a valid email<span class="tag">&lt;/<span class="title">small</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span></code></pre>
+<p>Details of how the html markup for form elements should be defined is described in the elements section of this document.</p>
+<p>A declarative form will also need to include the form validator and the tooltip widget as per the following example:</p>
+<pre><code class="language-javascript">    <span class="keyword">var</span> form = <span class="keyword">this</span>.$el.append(declarativeForm);
+    <span class="keyword">new</span> FormValidator().validateForm(form);
+    <span class="keyword">new</span> TooltipWidget({
+        <span class="string">"container"</span>: form
+    }).build();</code></pre>
+<p>Additionally, some form elements might require other widgets like the datePicker widget, dropDown widget, ipCidr widget, date widget, time widget, and timeZone. In this case, the corresponding widget documentation and the externally integrated widget section in the form widget documentation should be followed:
+<a href="public/assets/js/widgets/datepicker/datepickerWidget.md">Date Picker</a>,
+<a href="public/assets/js/widgets/dropDown/dropDown.md">Drop Down</a>,
+<a href="public/assets/js/widgets/ipCidr/ipCidr.md">Ip Cidr</a>,
+<a href="public/assets/js/widgets/time/timeWidget.md">Time</a>,
+<a href="public/assets/js/widgets/timeZone/timeZone.md">Time Zone</a></p>
+<p>More details of the html markup that each element should have can be found in the <a href="public/assets/js/widgets/form/formValidator.md">Validator</a> or in this document in the elements section.</p>
+<h2 id="externally-integrated-widget">Externally Integrated widget</h2>
+<p>User can append the widgets externally. In order to show the validation error message, they have to add the undermentioned with the following structure.</p>
+<p>For example</p>
+<pre><code>    &lt;!-- Input field --&gt;
+    &lt;span id=&quot;gridWidgetInForm&quot; data-integrated-widget=&quot;true&quot;&gt;
+        &lt;div&gt;integrated widget ...&lt;/div&gt;
+    &lt;/span&gt;
+        &lt;!-- Error-UA display --&gt;
+    &lt;small class=&quot;error errorimage&quot;&gt;Grid validation failed&lt;/small&gt;</code></pre>
+
+
+</div>
+ 

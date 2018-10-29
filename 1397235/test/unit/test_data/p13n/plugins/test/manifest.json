@@ -1,0 +1,15 @@
+{
+	"name": "Test plugin",
+	"description": "A test plugin",
+	"version": "1.0",
+	"min_platform_version": "0.0.1",
+	"category": "url",
+	"features": [
+	    {
+	    	"name": "referred",
+	    	"api": "topn",
+	    	"method": "topURLs"
+	    }
+	],
+	"module": "urlAnalyzer"
+}

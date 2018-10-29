@@ -1,0 +1,15 @@
+{
+	"name": "URL Analytics",
+	"description": "A plugin that produces analytics related to page URLs",
+	"version": "1.0",
+	"min_platform_version": "0.0.1",
+	"category": "url",
+	"features": [
+	    {
+	    	"name": "referred",
+	    	"api": "topn",
+	    	"method": "topURLs"
+	    }
+	],
+	"module": "urlAnalyzer"
+}

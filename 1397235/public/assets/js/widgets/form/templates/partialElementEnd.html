@@ -1,0 +1,34 @@
+        <!-- Error-UA display -->
+        {{#error}}<small class="error errorimage">
+            <svg><use href="#icon_error"></use></svg>
+            <span>{{{error}}}</span>
+        </small>{{/error}}
+        <span class="inline-help{{#help}} help-style{{/help}}">{{{help}}}</span>
+    </div>
+    {{#inlineLabels}}
+        <span class="elementinlinelabel {{class}}"{{#id}} id="{{id}}"{{/id}}>{{{value}}}</span>
+    {{/inlineLabels}}
+    {{#inlineLinks}}
+        <span class="elementlink {{class}}"><a {{#id}}id="{{id}}"{{/id}}>{{value}}</a></span>
+    {{/inlineLinks}}
+    {{#inlineIcons}}
+        <div class="inlineicons">
+        {{#icon.default.icon_url}}
+            <svg class="elementicon {{icon.default.icon_class}}" {{#id}}id="{{id}}"{{/id}}><use href="{{icon.default.icon_url}}"></use></svg>
+            {{#icon.label}}<span class="elementiconlabel">{{icon.label}}</span>{{/icon.label}}
+        {{/icon.default.icon_url}}
+        {{^icon.default.icon_url}}
+            <span class="elementicon {{class}}" {{#id}}id="{{id}}"{{/id}}></span>
+        {{/icon.default.icon_url}}
+        </div>
+    {{/inlineIcons}}
+    {{#inlineButtons}}
+        <div class="elementbuttons left">
+        <input type="button" class="slipstream-primary-button {{#isInactive}}slipstream-secondary-button{{/isInactive}} {{class}}"
+        {{#id}}id="{{id}}"{{/id}}
+        {{#name}}name="{{name}}"{{/name}}
+        {{#value}}value="{{value}}"{{/value}}
+        >
+        </div>
+    {{/inlineButtons}}
+</div>

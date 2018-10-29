@@ -1,0 +1,155 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-external-user-assistance">Slipstream External User Assistance</h1>
+<h2 id="about">About</h2>
+<p>The Slipstream framework has a User Assistance extension point that all plugin applications can use to make contributions to Slipstream User Assistance system.  The purpose of this document is to <strong>(1)</strong> explain how the User Assistance framework works and <strong>(2)</strong> explain how plugin applications can contribute their own help content to the User Assistance system for a seamless integrated end user experience.</p>
+<h4 id="for-reference-purposes">For reference purposes</h4>
+<ul>
+<li><p>Help and user assistance can be used interchangeably.  The rest of this document will (attempt to be) consistent with terminology and refer to user assistance as help.</p>
+</li>
+<li><p>Directories will be in bold type while files will have a normal type face.</p>
+</li>
+<li><p>Vocabulary:  There is specific vocabulary that is used in the context of help.  These specific terms will be defined in the <strong>Glossary</strong> section.</p>
+</li>
+</ul>
+<h2 id="contributing-to-user-assistance">Contributing To User Assistance</h2>
+<h3 id="plugins-and-the-programming-model">Plugins and the Programming Model</h3>
+<p>End user products that are built on top of Slipstream are meant to be composed of plugins (units of functionality or features).  These plugins that compose a product can be and should be written in a vacuum - meaning that one plugin has no knowledge or makes no assumption on the existence of other plugins.  Each plugin can be and should be its own independent ecosystem.  That being said it comes natural that each plugin should contain its own set of help content.</p>
+<p>Just as all plugins that want to contribute themselves to the Slipframework must have a plugin manifest file, all plugins that want to contribute help content to the Slipstream help system must be have a help directory.  Within this help directory will live all of the help content.</p>
+<h4 id="plugin-directory-structure">Plugin directory structure</h4>
+<ul>
+<li><strong>your_plugin_directory</strong>  <ul>
+<li>plugin.json     </li>
+<li><strong>nls</strong>            </li>
+<li><strong>help</strong>            </li>
+</ul>
+</li>
+</ul>
+<p>Plugins can be glued together (using the various Slipstream framework facilities) to create a seamless workflow or set of workflows.  </p>
+<p>Moreover, the help system facilitates the composition and gluing together of these disparate help content (contributed by a varying set of plugins) into a single web help system.  </p>
+<p>Specifically, when a plugin is installed - using the plugin_manager.sh script, the plugin&#39;s help content is extracted out of its own context and then merged with the Slipstream help system.  This involved parsing out the Alias keys, ToC content, etc and merging them into their respective counterparts in Slipstream.  Then the corresponding resource files in the plugin&#39;s help system are copied from the plugin&#39;s help directory and placed in slipstream&#39;s help directory.</p>
+<h4 id="slipstream-directory-framework-structure">Slipstream directory framework structure</h4>
+<ul>
+<li><strong>slipstream_root_directory</strong><ul>
+<li><strong>node_modules</strong><ul>
+<li><strong>lib</strong></li>
+<li><strong>public</strong><ul>
+<li><strong>installed_plugins</strong></li>
+<li><strong>help</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="madcap-flare">Madcap Flare</h4>
+<p>Help content will be authored using Madcap Flare.  This output will be provide by or acquired from an information experience expert in the format of WebHelp.  The output should be copied to the directory under help that describes the locale in which the content is formatted.  For example, help content that has been authored in English should be copied under <strong>en</strong>.</p>
+<h4 id="internal-directory-structure-of-help-directories">Internal directory structure of help directories</h4>
+<ul>
+<li><strong>help</strong><ul>
+<li><strong>en</strong><ul>
+<li><strong>Content</strong></li>
+<li><strong>Data</strong></li>
+<li>index_CSH.html</li>
+<li>index.html</li>
+<li>index.js</li>
+<li><strong>Skin</strong></li>
+</ul>
+</li>
+<li><strong>fr</strong></li>
+<li><strong>ja</strong></li>
+<li><strong>...</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="example">Example</h4>
+<p>The purpose of this example is to take all the concepts thus far and provide a concrete use case that includes a complete lifecycle of using the help system (from the perspective of a plugin application developer).  We will start with a very basic plugin that has no help content.  From there we will go through the process of adding and linking help content, packaging the plugin, installing the plugin on a running instance of Slipstream, using the plugin feature, localization, and finally, uninstalling a plugin.</p>
+<h6 id="adding-and-linking-help-content">Adding and Linking Help content</h6>
+<p>Step 1:  Get the WebHelp output from Madcap Flare.<br>A sample help output can be found here:</p>
+<pre><code class="language-bash">slipstream/test/resources/<span class="built_in">help</span>Sample.spi</code></pre>
+<p>Unzip the spi file using any archiving tool.  The file extension is &#39;.spi&#39;, however, the compression type is a zip.</p>
+<p>Step 2:  At this point you should have an unarched folder named &#39;helpSample&#39;.  From here, open the file:</p>
+<pre><code class="language-bash"><span class="built_in">help</span>Sample/js/conf/<span class="built_in">help</span>SampleFormConfiguration.js</code></pre>
+<p>After line 12, declare this statement:</p>
+<pre><code>&quot;ua-help&quot; : &quot;ua_sample_overview&quot;</code></pre>
+<p>After line 20 (assuming you did the previous step - otherwise after line 19), declare this statement:</p>
+<pre><code>&quot;ua-help&quot; : &quot;ua_page_enable&quot;</code></pre>
+<p>Congratulations, you have now linked Help content.  Yes it is that simple.</p>
+<p>What did you just do?  On the form widget, you declare various form input elements, as seen in the configuration file (helpSampleFormConfiguration.js).  For any input element that you declare on your form, you have the option to associate some help content with that form element.  In this case we have the form itself and a checkbox field on the form.  For the form, we have associated a help <strong>alias</strong> (See glossary for definition) with the form and form checkbox element - respectively as &#39;ua_sample_overview&#39; and &#39;ua_page_enable&#39;.  These aliases are binded with some help content.</p>
+<p>One question arises - where do the aliases come from?  The answer to this question is:  they come from help content provider.  In our case, we look in:</p>
+<pre><code>helpSample/help/en/Data/Alias.xml</code></pre>
+<p>If you open this file, you will see these statements on lines 3 and 4:</p>
+<pre><code class="language-xml">    <span class="tag">&lt;<span class="title">Map</span> <span class="attribute">Name</span>=<span class="value">"ua_page_enable"</span> <span class="attribute">Link</span>=<span class="value">"helpSystem/ua_page_enable.htm"</span> <span class="attribute">ResolvedId</span>=<span class="value">"1001"</span> /&gt;</span>
+    <span class="tag">&lt;<span class="title">Map</span> <span class="attribute">Name</span>=<span class="value">"ua_sample_overview"</span> <span class="attribute">Link</span>=<span class="value">"helpSystem/ua_sample_overview.htm"</span> <span class="attribute">ResolvedId</span>=<span class="value">"1000"</span> /&gt;</span></code></pre>
+<p>Notice the &#39;Name&#39; values are the Alias strings we entered above.  Notice, also, that each Alias is associated with an htm file which happens to be the value of the &#39;Link&#39; attribute.</p>
+<h6 id="packaging-the-plugin">Packaging the Plugin</h6>
+<p>Step 1: Archive the plugin directory using the zip format.<br>Step 2: Change the extension of the zip file from helpSample.zip to helpSample.spi</p>
+<h6 id="installing-the-plugin">Installing the Plugin</h6>
+<p>Step 0: stop the slipstream server if it is running.<br>Step 1: cd to the slipstream root directory.<br>Step 2: at the slipstream root directory: </p>
+<pre><code class="language-bash">scripts/plugin_manager.sh -i path/to/spi_filename_without_the_dot_spi_extension</code></pre>
+<p>Note that you should exclude the .spi file extension on the -i parameter.</p>
+<p>In our case it would look like:</p>
+<pre><code class="language-bash">scripts/plugin_manager.sh -i test/resources/<span class="built_in">help</span>Sample</code></pre>
+<h6 id="using-the-plugin">Using the Plugin</h6>
+<p>Step 1: Launch the Slipstream server - in the &#39;slipstream&#39; directory:</p>
+<pre><code class="language-bash">npm start</code></pre>
+<p>Step 2:  Open your browser to the Slipstream app - ie (<a href="http://localhost:3000">http://localhost:3000</a>)</p>
+<p>Step 3:  Navigate to :  Other -&gt; User Assistance External Help</p>
+<p>Step 4:  Hover and click on either of the Question mark icons.  You should see the external help system open in a separate browser window.  Notice that click on each of the Question mark icons will launch a context sensitive help page.</p>
+<h6 id="localization">Localization</h6>
+<p>Step 1:  In progress -- coming soon.</p>
+<h6 id="uninstalling-the-plugin">Uninstalling the Plugin</h6>
+<p>Step 1:  Stop the Slipstream server - in the &#39;slipstream&#39; directory press Ctrl+C</p>
+<p>Step 2:</p>
+<pre><code class="language-bash">scriopts/plugin_manager.sh -u <span class="built_in">help</span>Sample</code></pre>
+<h2 id="glossary">Glossary</h2>
+<p><strong>Alias</strong>:  A String value that behaves as a key.  This key is used to create an association with some Help content.</p>
+<p><strong>ToC</strong>:  Acronym - Table of Contents</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

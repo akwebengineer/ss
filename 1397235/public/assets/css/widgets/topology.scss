@@ -1,0 +1,392 @@
+$background-color-default: transparent;
+$border-default: #d3d3d3;
+$stroke-color-default: $border-default;
+$stroke-rect: #96a5aa;
+$stroke-node-selected: #8be8fb;
+$fill-default: #ccc;
+$fill-rect: #fff;
+$badge-text: #fff;
+$badge-fill: #69929e;
+$badge-stroke-color: #ffffff;
+$badge-selected: #305E6B;
+$link-color-default: #96a5aa;
+$label-text: #262626;
+$box-shadow: 0px 1px 2px 0px $stroke-color-default;
+$valid-drop-target: #20B2AA;
+$invalid-drop-target: #FF0000;
+$subnode-line-color-default: #3a93e3;
+$controls-icon-color: #666666;
+
+.topology-widget-container{
+
+    @mixin drag-drop-hover-transition() {
+        -webkit-transition: fill 0.2s, -webkit-transform 0.2s;
+        transition: fill 0.2s, transform 0.2s;
+    }
+
+    @mixin drop-targets() {
+        display: none;
+        &.valid-drop-target {
+            display: block;
+            fill: $valid-drop-target;
+            &.current-hover {
+                @include drag-drop-hover-transition();
+            }
+        }
+        &.invalid-drop-target {
+            display: block;
+            fill: $invalid-drop-target;
+            &.current-hover {
+                @include drag-drop-hover-transition();
+            }
+        }
+    }
+
+    position: relative;
+    overflow: hidden;
+    .topology-external-controls{
+        border: 1px solid $border-default;
+        width: 25px;
+        position: absolute;
+        box-shadow: $box-shadow;
+        .topology-controls-container{
+            width: auto;
+            margin: 0px;
+            cursor: pointer;
+            .topology-control{
+                width: 20px;
+                height: 20px;
+                margin: 5px 0px;
+                padding-left: 6px;
+                padding-top: 5px;
+                span {
+                    display: block;
+                }
+                svg {
+                    fill: $controls-icon-color;
+                }
+            }
+            .topology-zoom-in {
+                @extend .icon_topology_zoom_in, .icon_topology_zoom_in-dims;
+            }
+            .topology-zoom-out {
+                @extend .icon_topology_zoom_out, .icon_topology_zoom_out-dims;
+            }
+            .topology-reset {
+                @extend .icon_topology_reset, .icon_topology_reset-dims;
+            }
+        }
+    }
+
+    .legend-view-container{
+        position: absolute;
+        bottom: 80px;
+        border: 1px solid $border-default;
+        box-shadow: $box-shadow;
+        opacity: 1;
+        -webkit-transition: opacity 0.7s;
+        -moz-transition: opacity 0.7s;
+        transition: opacity 0.7s;
+
+        &.legend-collapsed{
+            opacity: 0;
+        }
+        &.legend-expanded{
+            opacity: 1;
+        }
+    }
+
+    .topology-legends{
+        .topology-legend-icon{
+            position: absolute;
+            bottom: 50px;
+            border: 1px solid $border-default;
+            box-shadow: $box-shadow;
+            cursor: pointer;
+            height: 26px;
+            width: 86px;
+            z-index: 10;
+        }
+        .topology_legend {
+            @extend .icon_topology_legend, .icon_topology_legend-dims;
+            fill: $controls-icon-color;
+            margin-left: 10.4px;
+            margin-top: 6.9px;
+        }
+    }
+
+    .topology-outer {
+        width: 100%;
+        height: 100%;
+        background-color: $background-color-default;
+        cursor: move;
+        .outer-group {
+            display: none;
+            &.visible {
+                display: block;
+            }
+            .grouped-node{
+                .node-badge {
+                    display: none !important;
+                }
+            }
+            .node {
+                cursor: pointer;
+                text {
+                    font-size: 12px;
+                }
+                .node-rect {
+                    fill: $fill-rect;
+                    stroke: $stroke-rect;
+                    stroke-width: 2px;
+                    display: none;
+                    &.collapsed.group-node {
+                        display: block;
+                    }
+                    &.small {
+                        width: 15px;
+                        height: 15px;
+                    }
+                    &.medium {
+                        width: 30px;
+                        height: 30px;
+                    }
+                    &.large {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+                .node-selected {
+                    display: none;
+                    fill: $fill-default;
+                    fill-opacity: 0;
+                    stroke: $stroke-node-selected;
+                    stroke-opacity: 1;
+                    &.show {
+                        display: block;
+                    }
+                }
+                .node-badge {
+                    display: none;
+                    fill: $badge-fill;
+                    fill-opacity: 1;
+                    stroke-opacity: 1;
+                    stroke: $badge-stroke-color;
+                    stroke-width: 1.5;
+                    &.show{
+                        display: block;
+                    }
+                    &.selected {
+                        fill: $badge-selected;
+                    }
+                }
+                .badge-text {
+                    fill: $badge-text;
+                }
+                .node-image {
+                    display: block;
+                    &.collapsed.group-node {
+                        /*display: none;*/ /*commented for tooltip for group node*/
+                    }
+                    &.small {
+                        width: 15px;
+                        height: 15px;
+                    }
+                    &.medium {
+                        width: 30px;
+                        height: 30px;
+                    }
+                    &.large {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+                .node-innerText {
+                    font-size: 0px !important;
+                    &.collapsed.group-node {
+                        font-size: 12px !important;
+                    }
+                }
+                .node-anchor {
+                    @include drop-targets();
+                }
+                .node-anchor-disabled {
+                    display: none;
+                }
+            }
+            .topology-outer {
+                background-color: $background-color-default;
+                width: 100%;
+                height: 100%;
+            }
+            .link {
+                fill: none;
+                stroke: $link-color-default;
+                stroke-width: 1px;
+                cursor: pointer;
+            }
+            .link-arrow {
+                fill: $link-color-default;
+                stroke: $link-color-default;
+            }
+            .link-anchor {
+                @include drop-targets();
+            }
+            .templink {
+                fill: none;
+                stroke: green;
+                stroke-width: 3px;
+            }
+            .ghostCircle.show {
+                display: block;
+            }
+            .ghostCircle, .activeDrag .ghostCircle {
+                display: none;
+            }
+            .badge-selected {
+                display: none;
+            }
+            .subNodeLine {
+                stroke-width: 1.5px;
+                stroke: $subnode-line-color-default;
+                fill: none;
+                display: none;
+            }
+            .subNodeLine.show {
+                display: block;
+            }
+            .mute {
+                opacity: 0.1;
+            }
+        }
+        &.graphEditor {
+            cursor: default;
+            position: relative;
+            left: 30px;
+
+            %nodeBase {
+                cursor: pointer;
+                z-index: 10;
+                height: 100%;
+                background-repeat: no-repeat;
+                border: 1px solid transparent;
+                &.selected {
+                    border: 2px solid $stroke-node-selected;
+                }
+            }
+
+            @mixin nodeDimensions($small, $medium, $large) {
+                &.small {
+                    width: $small;
+                    height: $small;
+                }
+
+                &.medium {
+                    width: $medium;
+                    height: $medium;
+                }
+
+                &.large {
+                    width: $large;
+                    height: $large;
+                }
+            }
+
+            .nodeContainer {
+                position: absolute;
+
+                .node {
+                    @extend %nodeBase;
+                }
+
+                @include nodeDimensions(15px, 30px, 45px);
+            }
+
+            &.edit {
+                .nodeContainer {
+                    width: 40px;
+                    height: 40px;
+                    padding: 5px;
+
+                    .node {
+                        @extend %nodeBase;
+                    }
+
+                    @include nodeDimensions(25px, 40px, 55px);
+                }
+            }
+
+            .endpoint * {
+                fill: $link-color-default;
+            }
+
+            .anchor * {
+                fill: $fill-default;
+                z-index: 10;
+            }
+
+            .nodeLabel {
+                position: relative;
+                top: 10px;
+                background-color: $fill-rect;
+                border: 1px solid $fill-default;
+                font-size: 12px;
+                text-align: center;
+                font-weight: bold;
+                color: $label-text;
+                padding: 3px;
+                border-radius: 5px;
+                display: inline-block;
+                z-index: 10;
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 250px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            //Customizing library class because for a newly dragged in-flight link, the library does not add custom classes.
+            .jtk-connector {
+                path {
+                    stroke: $link-color-default;
+                }
+            }
+
+            .link {
+                fill: none;
+                stroke: $link-color-default;
+                stroke-width: 1px;
+                cursor: pointer;
+                path {
+                    stroke: inherit;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .linkLabel {
+                min-width: 20px;
+                max-width: 25px;
+                height: 15px;
+                border-radius: 3px;
+                background-color: $link-color-default;
+                border: solid 1px $link-color-default;
+                font-family: Arial;
+                font-size: 10px;
+                font-weight: bold;
+                line-height: normal;
+                text-align: center;
+                color: $fill-rect;
+                cursor: pointer;
+            }
+
+            .arrow {
+                fill: $link-color-default;
+            }
+        }
+    }
+
+
+}

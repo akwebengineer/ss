@@ -1,0 +1,591 @@
+.tabContainer-widget {
+  @import "../../js/vendor/jquery/jquery-ui";
+  @import "../../js/vendor/jquery/tabs/vertical-tabs";
+  $tab-navigation-marker-color : #4eadb6 !default;
+  $active-text-color: #2398a4;
+  $active-state-link-color: #444;
+  $tab-action-icon-color: $tab_active_color; //add button
+  $tab-action-icon-hover-color: $tab-toggle-label-color;
+  $tab-action-icon-background: #96a5aa;
+  $tab-action-font-color: #fff;
+  $tab-error-icon-background: #ff3344;
+  clear: both;
+  .ui-widget, .ui-widget select, .ui-widget input {
+    font-family: $body-font-family;
+    font-size: 12px;
+  }
+  /*Overrides the default background property of ui-state-default, ui-widget-content,
+   *ui-corner-top and ui-corner-all for any widgets being rendered inside Tabs
+   */
+  .ui-state-default {
+    border: 0px;
+    background: none !important;
+  }
+  .ui-corner-top {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+  }
+
+  .ui-corner-all {
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+  }
+  .ui-widget-content {
+    overflow: auto;
+    border: 0px;
+    .ui-state-active {
+      border: 0;
+    }
+  }
+  .slipstream-content-title {
+    position: relative !important;
+  }
+  .removesBlueBorderChrome {
+    //removes blue line around container on Chrome
+    &:hover, &:focus {
+      outline: 0;
+    }
+  }
+  .reset-tabContainer {
+    border: none;
+    background: none;
+  }
+  .ui-tabs {
+    //.tabContainer-widget_allTabs container
+    max-height: inherit;
+    @extend .reset-tabContainer;
+    padding-top: 20px !important;
+    .ui-tabs-nav {
+      //.tabContainer-widget_tabLink container
+      @extend .reset-tabContainer;
+      padding: 0px;
+      li {
+        overflow: hidden;
+        &.tab-with-description {
+          min-height: 38px;
+        }
+        &.ui-state-default {
+          padding: 0px;
+          margin-right: 7px !important;
+          margin-top: 5px;
+          height: 30px;
+          border: none;
+          border-radius: 2px !important;
+          background-color: $tab-label-background-color !important;
+
+          &.tab-with-description {
+            height: auto !important;
+            margin-bottom: 5px;
+            a {
+              .tab-link-text {
+                margin-top: 0px;
+                @include prefixed(transform, unset);
+              }
+              /*IE11 or above specific*/
+              @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+                .tab-link-text {
+                  @include prefixed(transform, translateY(3%));
+                }
+              }
+            }
+          }
+          a {
+            padding-right: 20px;
+            padding-left: 20px;
+            font-size: 12px;
+            color: $form-label-color !important;
+            box-sizing: border-box;
+            @extend .removesBlueBorderChrome;
+            .tab-link-text {
+              @include vertical-align;
+              display: inline-block;
+              margin-top: 9px;
+            }
+          }
+          .tab_controls {
+            position: absolute;
+            right: 10px;
+            top: 9px;
+            .removeTab{
+              padding: 0px !important;
+              background-repeat: no-repeat;
+              background-origin: left;
+              cursor: pointer;
+            }
+            .icon_removeTab {
+              @extend .icon_close_12x12_white, .icon_close_12x12_white-dims;
+              fill: $tab-action-icon-color;
+              &:hover {
+                fill: $tab-action-icon-hover-color;
+              }
+            }
+          }
+          @extend .removesBlueBorderChrome;
+        }
+        &.ui-state-active {
+          height: 37px;
+          background: $body-bg !important;
+          border-right: 1px solid $border-color-secondary;
+          border-top: 1px solid $border-color-secondary;
+          border-left: 1px solid $border-color-secondary;
+          padding-bottom: 1px;
+          position: relative;
+          z-index: 3;
+          &.tab-with-description {
+            border-bottom: 5px solid $tab_active_color;
+            margin-bottom: 0px;
+          }
+          a {
+            font-weight: bold;
+            color: $tab-navigation-font-active !important;
+          }
+          &.tab-with-description {
+            padding-bottom: 2px !important;
+          }
+        }
+        .tab-description {
+          padding: 8px 0px;
+          width: 80%;
+          height: auto;
+          white-space: normal;
+          font-weight: normal;
+          font-size: 11px;
+        }
+        @extend .removesBlueBorderChrome;
+      }
+      .tabName_InputEl {
+        position: absolute;
+        z-index: 10;
+        margin: 0px;
+        height: 30px;
+        padding: 0px 10px 0px 10px;
+        border: 1px solid $tab-navigation-font-active;
+        border-radius: 2px;
+        color: $tab-toggle-label-color;
+      }
+    }
+    .tabContainer-widget_content {
+      height: 100% !important;
+      padding-top: 25px;
+      padding-left: 30px;
+      border: 1px solid $border-color-secondary!important;
+      background: $body-bg;
+    }
+    .controls {
+      display: block;
+      float: left;
+      .addTab {
+        display: inline-block;
+        margin-top: 12px;
+        padding-left: 0px !important;
+        background-repeat: no-repeat;
+        background-origin: left;
+        .icon_createTab {
+          @extend .icon_create, .icon_create-dims;
+          &:hover {
+            fill: $tab-action-icon-hover-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.tabContainer-small {
+    // Regular Tabs
+    .ui-tabs {
+      .tabContainer-widget_content {
+        background: none;
+        border: unset !important;
+        border-top: 1px solid $border-color-secondary !important;
+      }
+      .ui-tabs-nav {
+        li {
+          height: 30px;
+          &.ui-state-default {
+            border-radius: 2px 2px 0px 0px !important;
+            a {
+              font-size: 12px;
+            }
+            &.tab-with-description {
+              margin-bottom: 0px;
+              border-bottom: 1px solid $border-color-secondary;
+            }
+          }
+          &.ui-state-active {
+            &.tab-with-description {
+              border-bottom: 0px !important;
+              padding-bottom: 0px !important;
+            }
+          }
+        }
+      }
+    }
+    //Vertical Tabs
+    .ui-tabs-vertical {
+      .ui-tabs-panel {
+        border: unset !important;
+        border-left: 1px solid $border-color !important;
+      }
+      .ui-tabs-nav {
+        li {
+          min-height: 30px;
+          &.ui-state-default {
+            a {
+              margin-top: 5px !important;
+              padding-left: 17px !important;
+              padding-top: 2px;
+            }
+            &.tab-with-description {
+              margin-bottom: 8px !important;
+            }
+          }
+          &.ui-state-active {
+            width: 159px;
+            &.tab-with-description {
+              border-bottom: 1px solid $border-color !important;
+            }
+            a {
+              border-right: 0px !important;
+              margin-top: 5px !important;
+              padding-left: 15px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .badgeIcon {
+    min-width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-color: $tab-action-icon-background;
+    text-align: center;
+    line-height: 30px;
+    color: $tab-action-font-color;
+    &.hideBadge {
+      visibility: hidden;
+    }
+  }
+  .errorIcon {
+    background-color: $tab-error-icon-background;
+    &:before {
+      content: '\0021'; // \0021 represents '!' character
+      color: $tab-action-font-color;
+      font-size: 16px;
+    }
+  }
+  .tabContainer-widget_allButtons {
+    padding-top: 5px;
+  }
+
+  /*tab specific layouts*/
+  .ui-tabs-vertical {
+    border-radius: 0px !important;
+    padding-top: 0px !important;
+    overflow: hidden !important;
+    .tabContainer-widget_content {
+      border: none !important;
+      padding-top: 25px !important;
+    }
+    .ui-tabs-nav {
+      padding: 0px;
+      width: 160px;
+      background: none;
+      height: 100%;
+      overflow: auto;
+      li {
+        min-height: 30px;
+        width: 150px;
+        right: 0px;
+        background-color: $tab-label-background-color;
+        &.ui-state-default {
+          margin-top: 0px !important;
+          margin-bottom: 10px !important;
+          &.tab-with-description {
+            height: auto !important;
+            .errorIcon {
+              @include prefixed(transform, unset);
+              right: 10px;
+            }
+          }
+        }
+        &.ui-state-active {
+          background: $tab_active_color !important;
+          border-right: 1px solid $tab_active_color !important;
+          border-bottom: 1px solid $border-color !important;
+          position: relative;
+          z-index: 3;
+          width: 160px;
+          height: 30px !important;
+          a {
+            font-weight: $tab-font-style;
+            color: $tab-navigation-font-active !important;
+            padding-left: 22px !important;
+          }
+          &.tab-with-description {
+            border-bottom: 1px solid $border-color !important;
+            a {
+              border-right: 0px !important;
+            }
+          }
+        }
+        .badgeIcon {
+          position: absolute;
+          right: 0px;
+          overflow: hidden;
+        }
+      }
+      .tabName_InputEl {
+        margin-left: 5px !important;
+      }
+      .controls {
+        .addTab {
+          margin-top: unset;
+        }
+      }
+    }
+    .ui-tabs-panel {
+      width: calc(100% - 188px);
+      padding-top: 0px;
+      padding-left: 35px;
+      border: 1px solid $border-color !important;
+      border-radius: 0px;
+      margin-left: -1px;
+    }
+  }
+  &.tabContainer-toggle {
+    & > .ui-tabs {
+      & > .ui-tabs-nav {
+        li {
+          height: 30px !important;
+          border-radius: 2px !important;
+          border: none !important;
+          background-color: $tab-label-background-color !important;
+          margin-right: 8px !important;
+          margin-bottom: 5px !important;
+          a {
+            font-size: 12px !important;
+            font-family: $body-font-family;
+            color: $tab-toggle-label-color;
+            min-width: 70px;
+            height: 30px;
+            padding: 8px 35px !important;
+          }
+          &.ui-state-default {
+            a {
+              .tab-link-text {
+                margin-top: 0px;
+                top: unset;
+                @include prefixed(transform, unset);
+              }
+            }
+            &:hover {
+              background-image: $tab-toggle-label-background !important;
+              a {
+                color: $tab_active_color!important;
+              }
+            }
+          }
+          &.ui-state-active {
+            background-image: $tab-toggle-label-background !important;
+            a {
+              color: $tab_active_color!important;
+              padding-top: 0px;
+            }
+          }
+        }
+        .tab_controls {
+          .removeTab {
+            min-width: 12px !important;
+            padding: 0px !important;
+            cursor: pointer;
+          }
+        }
+      }
+      & > .tabContainer-widget_content {
+        padding-left: 0px;
+        background: $tabContainer-background-color;
+        border: 0px !important;
+        .form_section {
+          margin-left: 4px !important;
+        }
+      }
+    }
+  }
+  &.ui-tabs-float-right {
+    .ui-tabs-nav {
+      li {
+        float: right;
+      }
+      &.align_rtl {
+        direction: rtl;
+      }
+      .controls {
+        float: right;
+        .addTab {
+          margin-right: 7px;
+        }
+      }
+    }
+  }
+  &.tabContainer-navigation {
+    & > .ui-tabs {
+      padding-top: 0px !important;
+      & > .ui-tabs-nav {
+        li {
+          height: 25px !important;
+          border: 0px !important;
+          background-color: transparent !important;
+          margin-left: 50px !important;
+          margin-top: 1px;
+          a {
+            font-size: 14px !important;
+            font-family: $body-font-family;
+            color: $tab-navigation-inactive-color !important;
+            padding-right:5px !important;
+            padding-left:5px !important;
+            height: 24px;
+            padding-top: 3px;
+            line-height: 8px;
+            cursor: pointer;
+            .tab-link-text {
+              margin-top: 0px;
+            }
+          }
+          &.ui-state-active {
+            display: flex;
+            flex-direction: column; //vertical alignment
+            align-items: center; //flex-direction column will not work for IE.
+            a {
+              color: $tab-navigation-active-color !important;
+            }
+          }
+          .badgeIcon {
+            border-radius: 7px;
+            min-width: 14px;
+            height: 14px;
+            line-height: 14px;
+            font-size: 10px;
+            margin-top: 2px;
+            &.errorIcon:before {
+              font-size: 10px;
+            }
+          }
+        }
+        .navigationEnd {
+          width: 100%;
+          .navigationEndTop {
+            height: 24px;
+            display: block;
+            background-color: $body-bg;
+            border-bottom: 1px solid $border-color;
+          }
+        }
+        & .navigation-marker{
+          display: block;
+          width: 100%;
+          height: 5px;
+          margin-top: -5px;
+          position: absolute;
+          border-bottom: 4px solid $tab-navigation-marker-color;
+        }
+      }
+      & > .tabContainer-widget_content {
+        border: 0px !important;
+        background: transparent;
+      }
+    }
+    &.tabContainer-small {
+      & > .ui-tabs > .ui-tabs-nav {
+        li {
+          margin-left: 25px !important;
+        }
+        .navigationEnd .navigationEndTop {
+          background-color: transparent;
+        }
+        .navigation-marker {
+          border-bottom: 3px solid $tab-navigation-marker-color;
+        }
+      }
+    }
+    .tabContainer-widget_tabLink {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.tabContainer-widget-test {
+  $zone-error-color: #f7ca18;
+  $utm-error-color: #00b96f;
+  $title-icon-background-color: #ff3344;
+  .tab-link {
+    color: $link-active-color;
+    font-size: 12px;
+    padding-left: 20px;
+  }
+  .internal-title {
+    background-color: $body-bg;
+    border-bottom: 0px;
+    margin-bottom: 0px;
+    padding: 10px 0px 30px;
+    &.small-tabs {
+      background-color: transparent;
+    }
+  }
+
+
+  .ui-state-default {
+
+    .tab-title-area {
+      float: left;
+    }
+
+    .tab-title-icon {
+      height: 30px;
+      width: 30px;
+      background-color: $title-icon-background-color;
+      padding: 7px;
+      font-size: 14px;
+      color: $tab_active_color;
+    }
+    .tab-additional-info-container{
+      background-color: $title-icon-background-color;
+      height: 100%;
+      width: 100%;
+    }
+    .tab-additional-info {
+      display: inline-block;
+      margin: 7px;
+      font-size: 14px;
+      color: $tab_active_color;
+    }
+    .tab-additional-info-symbol{
+      font-size: 20px;
+      margin: 2px 12px;
+    }
+  }
+  .ui-state-active{
+    .tab-additional-info-container{
+      background-color: $tab_active_color;
+    }
+    .tab-additional-info {
+      color: $title-icon-background-color;
+    }
+
+  }
+  .yellow-error {
+    background-color: $zone-error-color;
+  }
+  .green-error {
+    background-color: $utm-error-color;
+  }
+  .info-icon {
+    width: 20px;
+    height: 20px;
+    padding: 0px 2px;
+    vertical-align: middle;
+  }
+
+}

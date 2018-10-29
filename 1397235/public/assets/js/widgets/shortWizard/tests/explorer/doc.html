@@ -1,0 +1,62 @@
+<div>
+    <h1 id="short-wizard-widget">Short Wizard Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>A guided workflow in Slipstream can be implemented using one of the framework&#39;s wizard widgets.  The <em>Short Wizard</em> is a good choice for a workflow that requires a small number of steps - typically six or less.</p>
+<p>The Short Wizard is composed of a set of <em>pages</em> each of which represents a step in the wizard workflow.  The wizard provides button-based navigation through the set of pages (Next, Back) as well as a <em>train</em> that indicates the available steps in the wizard and provides a way to navigate to a given page in a non-sequential manner.</p>
+<h2 id="api">API</h2>
+<h4 id="constructor">Constructor</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">ShortWizard</span><span class="params">(conf)</span> {</span>...}</code></pre>
+<p>Used to create a new short wizard instance where <em>conf</em> is of the format:</p>
+<pre><code class="language-javascript">{
+    showSummary: <span class="xml"><span class="tag">&lt;<span class="title">Boolean</span> <span class="attribute">or</span> <span class="attribute">Custom</span> <span class="attribute">View</span> <span class="attribute">to</span> <span class="attribute">determine</span> <span class="attribute">if</span> <span class="attribute">a</span> <span class="attribute">summary</span> <span class="attribute">page</span> <span class="attribute">should</span> <span class="attribute">be</span> <span class="attribute">displayed.</span> <span class="attribute">Optional.</span> <span class="attribute">Default:</span> <span class="attribute">true</span>&gt;</span>,
+    summaryTitle: <span class="tag">&lt;<span class="title">String</span> <span class="attribute">containing</span> <span class="attribute">custom</span> <span class="attribute">title</span> <span class="attribute">for</span> <span class="attribute">summary</span> <span class="attribute">page</span>&gt;</span>,
+    summaryEncode: <span class="tag">&lt;<span class="title">Boolean</span> <span class="attribute">used</span> <span class="attribute">to</span> <span class="attribute">indicate</span> <span class="attribute">the</span> <span class="attribute">summary</span> <span class="attribute">page</span> <span class="attribute">values</span> <span class="attribute">be</span> <span class="attribute">encoded.</span> <span class="attribute">Optional.</span> <span class="attribute">Default:</span> <span class="attribute">false</span>&gt;</span>,
+    relatedActivities: <span class="tag">&lt;<span class="title">Array</span> <span class="attribute">of</span> <span class="attribute">follow</span> <span class="attribute">on</span> <span class="attribute">activities</span> <span class="attribute">to</span> <span class="attribute">the</span> <span class="attribute">wizard</span>&gt;</span>,
+    customSuccessStatusFooter: <span class="tag">&lt;<span class="title">A</span> <span class="attribute">custom</span> <span class="attribute">view</span> <span class="attribute">on</span> <span class="attribute">the</span> <span class="attribute">commit</span> <span class="attribute">success</span> <span class="attribute">page</span>&gt;</span>,
+    customErrorStatusFooter: <span class="tag">&lt;<span class="title">A</span> <span class="attribute">custom</span> <span class="attribute">view</span> <span class="attribute">on</span> <span class="attribute">the</span> <span class="attribute">commit</span> <span class="attribute">error</span> <span class="attribute">page</span>&gt;</span>,
+    onClickRelatedLinks: <span class="tag">&lt;<span class="title">A</span> <span class="attribute">function</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">when</span> <span class="attribute">a</span> <span class="attribute">related</span> <span class="attribute">activity</span> <span class="attribute">is</span> <span class="attribute">selected</span>&gt;</span>,
+    container: <span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">the</span> <span class="attribute">DOM</span> <span class="attribute">element</span> <span class="attribute">where</span> <span class="attribute">the</span> <span class="attribute">dashboard</span> <span class="attribute">is</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">rendered</span>&gt;</span>,
+    onDestroy: <span class="tag">&lt;<span class="title">function</span> <span class="attribute">callback</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">when</span> <span class="attribute">the</span> <span class="attribute">wizard</span> <span class="attribute">is</span> <span class="attribute">destroyed</span>&gt;</span>
+    onDone: <span class="tag">&lt;<span class="title">function</span> <span class="attribute">callback</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">when</span> <span class="attribute">the</span> <span class="attribute">wizard</span> <span class="attribute">completes</span> <span class="attribute">normally</span>&gt;</span>,
+    onCancel: <span class="tag">&lt;<span class="title">function</span> <span class="attribute">callback</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">if</span> <span class="attribute">the</span> <span class="attribute">user</span> <span class="attribute">cancels</span> <span class="attribute">the</span> <span class="attribute">wizard</span>&gt;</span>,
+    save: <span class="tag">&lt;<span class="title">function</span> <span class="attribute">callback</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">when</span> <span class="attribute">the</span> <span class="attribute">user</span> <span class="attribute">submits</span> <span class="attribute">data.</span> <span class="attribute">Signature</span> <span class="attribute">includes</span> <span class="attribute">options</span> <span class="attribute">object</span> <span class="attribute">with</span> <span class="attribute">success</span> <span class="attribute">and</span> <span class="attribute">error</span> <span class="attribute">methods</span> <span class="attribute">to</span> <span class="attribute">be</span> <span class="attribute">called</span> <span class="attribute">by</span> <span class="attribute">the</span> <span class="attribute">user</span>&gt;</span>
+}</span></code></pre>
+<h4 id="addpage">addPage</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">addPage</span><span class="params">(page)</span></code></pre>
+<p>Add a page to the wizard.  The view property is further explained <a href="wizardPage.md">here</a>.</p>
+<p>Each page is represented by an object of the following form:</p>
+<pre><code class="language-javascript">{
+    title: <span class="xml"><span class="tag">&lt;<span class="title">A</span> <span class="attribute">string</span> <span class="attribute">representing</span> <span class="attribute">the</span> <span class="attribute">title</span> <span class="attribute">of</span> <span class="attribute">the</span> <span class="attribute">page</span>&gt;</span>,
+    view: <span class="tag">&lt;<span class="title">A</span> <span class="attribute">view</span> <span class="attribute">representing</span> <span class="attribute">the</span> <span class="attribute">page</span>&gt;</span>,
+    intro: <span class="tag">&lt;<span class="title">true</span> <span class="attribute">if</span> <span class="attribute">the</span> <span class="attribute">page</span> <span class="attribute">is</span> <span class="attribute">an</span> <span class="attribute">introductory</span> <span class="attribute">page</span>, <span class="attribute">false</span> <span class="attribute">otherwise</span>&gt;</span>
+}</span></code></pre>
+<h4 id="addpages">addPages</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">addPages</span><span class="params">(pages)</span></code></pre>
+<p>Add a set of pages to the wizard.</p>
+<p><strong>pages</strong> - An array of pages objects to be added to the wizard.</p>
+<h4 id="build">build</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">build</span><span class="params">()</span></code></pre>
+<p>Render the wizard into the container specified in the wizard&#39;s configuration object.</p>
+<h4 id="destroy">destroy</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">destroy</span><span class="params">()</span></code></pre>
+<p>Destroy the wizard elements and call the <em>onDestroy</em> method provided in the wizard&#39;s configuration object.</p>
+<h4 id="getcurrentpage">getCurrentPage</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">getCurrentPage</span><span class="params">()</span></code></pre>
+<p>Get the page index of the currently active wizard page.</p>
+<h4 id="nextpage">nextPage</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">nextPage</span><span class="params">(skipBeforePageChange)</span></code></pre>
+<p>Move to the next page of the wizard.  This function has no effect if the wizard is currently on the last page.</p>
+<p><strong>skipBeforePageChange</strong> - A boolean value to decide if the wizard should bypass the beforePageChange callback. Passing true means the wizard won&#39;t trigger the beforePageChange callback. Otherwise, the wizard will operate as usual.</p>
+<h4 id="previouspage">previousPage</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">previousPage</span><span class="params">()</span></code></pre>
+<p>Move to the previous page of the wizard.  This function has no effect if the wizard is currently on the first page.</p>
+<h4 id="gotopage">gotoPage</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">gotoPage</span><span class="params">(page)</span></code></pre>
+<p>Move the wizard to the page with the specified page index.</p>
+<h4 id="getnumpages">getNumPages</h4>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">getNumPages</span><span class="params">()</span></code></pre>
+<p>Get the number of pages configured in the wizard.</p>
+
+
+</div>
+ 

@@ -1,0 +1,70 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="notifications">Notifications</h1>
+<p>Slipstream supports the creation of non-persistent, user-level notifications that can be used to communicate the status of workflow actions or asynchronous operations.</p>
+<p>Notifications are rendered at the top of the user interface&#39;s viewport and persist for 8 seconds or until they are explicitly dismissed.</p>
+<p>A notification can be of one of the following types:</p>
+<ul>
+<li>&quot;info&quot;</li>
+<li>&quot;warning&quot;</li>
+<li>&quot;error&quot;</li>
+<li>&quot;success&quot;</li>
+</ul>
+<p>Notifications can contain either plan text or HTML.</p>
+<h2 id="creating-notifications">Creating Notifications</h2>
+<p>Notifications are created using a simple <a href="notification.html">API</a>:</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> text = <span class="string">"Notification message with a &lt;a href'=#'&gt;link&lt;/a&gt;"</span>;
+
+<span class="comment">// Create and send an 'info' notification with embedded HTML</span>
+<span class="keyword">new</span> Slipstream.SDK.Notification()
+    .setText(text)
+    .setType(<span class="string">"info"</span>)
+    .notify();</code></pre>
+<p>Note that method calls can be chained so that a notification can be built in one step.</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

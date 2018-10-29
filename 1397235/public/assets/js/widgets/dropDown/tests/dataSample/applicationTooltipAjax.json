@@ -1,0 +1,74 @@
+[
+    {
+        "id": "ftp",
+        "tooltip_text": "this is FTP tooltip"
+    },
+    {
+        "id": "tftp",
+        "tooltip_text": "this is TFTP tooltip"
+    },
+    {
+        "id": "rtsp",
+        "tooltip_text": "this is RTSP tooltip"
+    },
+    {
+        "id": "netbios",
+        "tooltip_text": "this is NETBIOS tooltip"
+    },
+    {
+        "id": "smb",
+        "tooltip_text": "this is SMB tooltip"
+    },
+    {
+        "id": "esp",
+        "tooltip_text": "this is ESP tooltip"
+    },
+    {
+        "id": "ike",
+        "tooltip_text": "this is IKE tooltip"
+    },
+    {
+        "id": "ike_nat",
+        "tooltip_text": "this is IKE_NAT tooltip"
+    },
+    {
+        "id": "tcp",
+        "tooltip_text": "this is TCP tooltip"
+    },
+    {
+        "id": "ssh",
+        "tooltip_text": "this is SSH tooltip"
+    },
+    {
+        "id": "gre",
+        "tooltip_text": "this is GRE tooltip"
+    },
+    {
+        "id": "udp",
+        "tooltip_text": "this is UDP tooltip"
+    },
+    {
+        "id": "pptp",
+        "tooltip_text": "this is PPTP tooltip"
+    },
+    {
+        "id": "junos_ssh",
+        "tooltip_text": "this is JUNOS_SSH tooltip"
+    },
+    {
+        "id": "junos_telnet",
+        "tooltip_text": "this is JUNOS_TELNET tooltip"
+    },
+    {
+        "id": "junos_smtp",
+        "tooltip_text": "this is JUNOS_SMTP tooltip"
+    },
+    {
+        "id": "junos_tacacs",
+        "tooltip_text": "this is JUNOS_TACACS tooltip"
+    },
+    {
+        "id": "junos_tacacs_ds",
+        "tooltip_text": "this is JUNOS_TACACS_DS tooltip"
+    }
+]

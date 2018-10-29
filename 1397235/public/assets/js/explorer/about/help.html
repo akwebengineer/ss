@@ -1,0 +1,77 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="adding-help-support">Adding Help Support</h1>
+<p>Slipstream provides help support for views by</p>
+<ol>
+<li>Allowing plugins to define the context to load the help files </li>
+<li>Providing an API to fetch the help url for given identifier </li>
+</ol>
+<p>The help file is packaged in a plugin&#39;s <em>help</em> directory.  The file provides an XML mapping where each unique help identifier is bound to a url .</p>
+<pre><code class="language-javascript">&lt;Map Name=<span class="string">"FIREWALL_POLICY_OVERVIEW"</span> Link=<span class="string">"firewall-policies/helpSystem/firewall-policy-overview.htm"</span>/&gt;</code></pre>
+<p>The help identifier has to be substituted into an object having the namespace and fully qualified path via the Slipstream getHelpKey API.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> obj = getHelpKey(<span class="string">'FIREWALL_POLICY_OVERVIEW'</span>)</code></pre>
+<h2 id="help-file-naming">Help file naming</h2>
+<p>Help file name should be </p>
+<p><em>Alias.xml</em></p>
+<h2 id="accessing-help-files">Accessing help files</h2>
+<p>Plugins can access their help file via the runtime <a href="activityContext.html">context</a> attribute in an  <a href="activity.html">Activity</a> object.  The runtime context contains a function called <em>getHelpKey()</em> that can be used to retrieve help identifier with namespace. This key will then be used by Slipstream to retrieve the help url, on clicking the help icon.</p>
+<h2 id="example-">Example:</h2>
+<p>This example describes the steps to add the help support from plugin:</p>
+<ol>
+<li>Name the mapping file as Alias.xml</li>
+<li>Include the mapping file in a directory named &#39;help&#39;</li>
+</ol>
+<p>Use getHelpKey API to retrieve the key with namespace</p>
+<p>For example, to open the help page for firewall policy form, identify the corresponding help identifier from given mapping file.</p>
+<p>If the identifier is &quot;FIREWALL_POLICY_OVERVIEW&quot;, it can be used in this way</p>
+<pre><code class="language-javascript"><span class="string">"title-help"</span>: {
+    <span class="string">"content"</span>: context.getMessage(<span class="string">"fw_policy_create"</span>),
+    <span class="string">"ua-help-identifier"</span>: context.getHelpKey(<span class="string">"FIREWALL_POLICY_OVERVIEW"</span>)
+}</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

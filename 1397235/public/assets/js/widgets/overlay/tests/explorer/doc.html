@@ -1,0 +1,164 @@
+<div>
+    <h1 id="overlay-widget">Overlay Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>An overlay is a mini page in a layer on top of a page. It provides a way for the user to access additional information without leaving the current page or loading a new page. It is also effective for catching the user’s attention to something vital.
+Overlays are typically modal, disabling the original page beneath the overlay. They require acknowledgement from the user, who needs to take an action or cancel the overlay until he or she can continue interacting with the original page. The Slipstream framework provides a programming construct for plugin developers to display their content on overlay widget.</p>
+<p>There are five different sizes for overlay. Each overlay has a fixed width and min to max height.</p>
+<p>xlarge | wide - width(1100px); min-height(570px) to max-height(900px) 
+large - width(780px); min-height(550px) to max-height(800px) 
+medium - width(620px); min-height(520px) to max-height(700px) 
+small - width(620px); min-height(350px) to max-height(680px) 
+xsmall - width(460px); min-height(150px) to max-height(300px) </p>
+<h5 id="usage-consideration-">Usage consideration:</h5>
+<p>Consider using an overlay when:</p>
+<ol>
+<li>You want to interrupt the current process and catch the user’s full attention to something really important.</li>
+<li>You need to display application preferences or other options that are “independent” from other pages.</li>
+<li>It is important to show additional or related content/options in context.</li>
+<li>You need to get input from the user. Overlays work well for showing forms for feedback, sign-up, contact, etc.</li>
+<li>You have content that needs to be easily accessible from any page.</li>
+</ol>
+<h2 id="api">API</h2>
+<p>The overlay object exposes undermentioned 5 functions:</p>
+<pre><code>function OverlayWidget(conf) {…}</code></pre>
+<p>Constructor, used to create a new overlay.</p>
+<pre><code>function build() {…}</code></pre>
+<p>Used to setup and render the overlay in the middle of screen using the config values.</p>
+<pre><code>function destroy() {…}</code></pre>
+<p>Used to close the overlay, free up other resources and remove the overlay from DOM.</p>
+<pre><code>function destroyAll() {…}</code></pre>
+<p>Used to close all the nested overlays, free up other resources and remove the overlays from DOM.</p>
+<pre><code>function getOverlay() {…}</code></pre>
+<p>Use to get the reference of most recent created overlay object within nested overlays.</p>
+<pre><code>function getOverlayContainer() {…}</code></pre>
+<p>Use to get the reference of the created overlay container.</p>
+<h2 id="usage">Usage</h2>
+<p><strong><em>Note</em></strong>:
+If you are using the overlay widget outside the context of the Slipstream framework, you need to add an HTML element with id=&quot;overlay_content&quot; at a location in your HTML template that spans 100% height and width. This is because the Overlay Widget searches for #overlay_content to determine the size and location of the modal. Add the following line to your HTML document under  a location that spans 100% height and width.</p>
+<pre><code class="language-html">&lt;div id=&quot;overlay_content&quot;&gt;&lt;/div&gt;</code></pre>
+<h3 id="steps-for-instantiating-a-new-overlay-widget-">Steps for instantiating a new overlay widget:</h3>
+<h5 id="1-under-js-conf-create-a-model-for-the-widget">1. Under js/conf create a model for the widget</h5>
+<p>Example: widgetConf.js</p>
+<pre><code>define([], function () {
+
+    var config = {};
+
+    config.elements = {
+        title: &quot;Dialogue Message&quot;,
+        message: &quot;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor cillum dolore eu fugiat nulla pariatur.&quot;,
+        &quot;buttons&quot;: [
+            {
+                &quot;id&quot;: &quot;callNestedOverlay&quot;,
+                &quot;name&quot;: &quot;callNestedOverlay&quot;,
+                &quot;value&quot;: &quot;callNestedOverlay&quot;
+            },
+            {
+                &quot;id&quot;: &quot;yes&quot;,
+                &quot;name&quot;: &quot;yes&quot;,
+                &quot;value&quot;: &quot;Yes&quot;
+            }
+        ]
+    };
+    return config;
+
+});</code></pre>
+<h5 id="2-under-js-views-create-a-view-for-the-widget">2. Under js/views create a view for the widget</h5>
+<p>Example: widgetView.js</p>
+<pre><code>define([
+    &#39;hogan&#39;,
+    &#39;backbone&#39;,
+    &#39;../conf/widgetConf.js&#39;,
+    &#39;text!../../templates/widgetTemplate.html&#39;,
+    &#39;widgets/overlay/overlayWidget&#39;
+], function (Hogan, Backbone, Conf, ExampleTemplate, OverlayWidget) {
+    /**
+     * Constructs a WidgetView
+     */
+    var WidgetView = Backbone.View.extend({
+
+        displayWidget: function () {
+            var template = Hogan.compile(ExampleTemplate);
+            var elementsTemplateHtml = template.render(Conf.elements);
+            $(this.el).append(elementsTemplateHtml);
+            return this;
+        }
+    });
+
+    return WidgetView;
+});</code></pre>
+<h5 id="3-in-the-templates-directory-create-a-template-for-your-widget-view">3.In the templates directory, create a template for your widget view</h5>
+<p>Example: widgetTemplate.html</p>
+<pre><code>&lt;div class=&quot;content-wrapper&quot;&gt;
+    &lt;div class=&quot;title&quot;&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h5 id="4-after-developing-the-widget-conf-view-and-template-create-the-object-to-show-overlay">4. After developing the widget conf, view and template, create the object to show overlay</h5>
+<p>Example: js/views/exampleView.js</p>
+<pre><code>require([ &#39;./WidgetView&#39;, &#39;widgets/overlay/overlayWidget&#39;], function (OverlayView, OverlayWidget) {
+
+    var overlayViewObj = new OverlayView({});
+
+    var conf = {
+        view: overlayViewObj,
+        xIconEl: true,
+        cancelButton: true,
+        okButton: true,
+        showScrollbar: true,
+        type: &#39;wide&#39;,
+        beforeSubmit: function(){
+            console.log(&quot;-- beforeSubmit is executed&quot;);
+            var valid = true;
+
+            if(contentHasInputField.is(&quot;:checked&quot;)) {
+                var numberVal = this.$el.find(&#39;#field_number&#39;).val();
+                valid = numberVal &amp;&amp; !isNaN(parseFloat(numberVal)) &amp;&amp; isFinite(numberVal);
+                if (valid) {
+                    console.log(&quot;No Error, submit method will be executed next&quot;);
+                } else {
+                    console.log(&quot;Validation failed, submit method will not be executed&quot;);
+                }
+            }
+
+            return  valid;
+        },
+        submit: function(){
+            console.log(&quot;-- submit is executed&quot;);
+        },
+        beforeCancel: function(){
+            console.log(&quot;-- beforeCancel is executed&quot;);
+        },
+        cancel: function(){
+            console.log(&quot;-- cancel is executed&quot;);
+        }
+    };
+    this.overlayWidgetObj = new OverlayWidget(conf);
+    this.overlayWidgetObj.build();
+
+});</code></pre>
+<p><strong><em>Note</em></strong>:
+The child view should always &#39;return this;&#39; in render method. If this is missing overlay will not have the reference to the view which in turn will not render the user view.</p>
+<p>Configuration attributes defined as below</p>
+<p><strong>view</strong> - required attribute; object that contains content which needs to be displayed on overlay. </p>
+<p><strong>xIconEl</strong> - optional attribute; accepted values: true / false; default value: false; used to show/hide the X icon on top-right corner of overlay, which can be used to close the current overlay.</p>
+<p><strong>cancelButton</strong> - optional attribute; accepted values: true / false; default value: false; used to show/hide the Cancel button in the bottom-right corner of overlay, which can be used to close the current overlay.</p>
+<p><strong>okButton</strong> - optional attribute; accepted values: true / false; default value: false; used to show/hide the OK button in the bottom-right corner (after Cancel button) of overlay, which can be used to close the current overlay.</p>
+<p><strong>showScrollbar</strong> - optional attribute; accepted values: true / false; default value: false; used to show/hide the vertical scroll bar in the right side of overlay.</p>
+<p><strong>type</strong> - optional attribute; accepted four sizes: wide, large, medium, small; default value: wide; used to display the overlay in center of screen with the defined size.</p>
+<p><strong>beforeSubmit</strong> - Optional callback function. This will be called when the user hits ENTER or clicking on the submitEl. It can return &#39;true&#39; or &#39;false&#39;. Submit() will not be invoked only if it returns &#39;false&#39;. For example, this can be used for any validations before submit.</p>
+<p><strong>submit</strong> - Optional callback function. This method is called when the user clicks the ok button.</p>
+<p><strong>beforeCancel</strong> - Optional callback function. This will be called when the user hits ESC, clicking on the cancel button or clicking outside the modal. It can return &#39;true&#39; or &#39;false&#39;. Cancel() method will not be invoked only if it returns &#39;false&#39;.</p>
+<p><strong>cancel</strong> - Optional callback function. This method is called when the user clicks on the cancel button.
+Note: overlay Widget has a cancel method that internally executes view&#39;s close method. Sequence of execution for methods is</p>
+<ol>
+<li>beforeCancel: Optional, overlay widget config beforeCancel callback</li>
+<li>close: Optional, View&#39;s close method</li>
+<li>cancel: Optional, overlay widget config cancel callback</li>
+<li>onClose: overlay widget internal method, executed immediately before closing the modal</li>
+</ol>
+
+
+</div>
+ 

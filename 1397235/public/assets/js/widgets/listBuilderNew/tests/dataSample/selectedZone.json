@@ -1,0 +1,67 @@
+{
+    "zone": [
+        {
+            "name": "trust-inet-selected",
+            "screen": "STD_SCREENS",
+            "host-inbound-traffic": {
+                "system-services": [
+                    {
+                        "name": "ping"
+                    }
+                ]
+            },
+            "interfaces": "ge-0/0/2.60",
+            "id": 10
+        },
+        {
+            "name": "untrust-inet-selected",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/1.0",
+            "id": 11
+        },
+        {
+            "name": "esf-inet-selected",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/2.20",
+            "id": 12
+        },
+        {
+            "name": "esf-bp-selected",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/2.30",
+            "id": 13
+        },
+        {
+            "name": "ra-inet-selected",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/2.35",
+            "id": 14
+        },
+        {
+            "name": "trust-bp-selected",
+            "screen": "STD_SCREENS",
+            "interfaces": "ge-0/0/2.65",
+            "id": 15
+        },
+        {
+            "name": "untrust-bp-selected",
+            "interfaces": "ge-0/0/3.40",
+            "id": 16
+        },
+        {
+            "name": "untrust-bp-selected",
+            "interfaces": "ge-0/0/3.80",
+            "id": 17
+        },
+        {
+            "name": "untrust-py-selected",
+            "interfaces": "ge-0/0/3.60",
+            "id": 18
+        },
+        {
+            "name": "untrust-di-selected",
+            "interfaces": "ge-0/0/3.68",
+            "id": 19
+        }
+    ]
+}

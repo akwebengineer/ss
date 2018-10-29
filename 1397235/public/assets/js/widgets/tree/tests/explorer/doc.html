@@ -1,0 +1,149 @@
+<div>
+    <h1 id="tree-widget">Tree Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>The tree widget is a reusable graphical interface that allows users to show data in a tree format. </p>
+<h2 id="api">API</h2>
+<p>The tree widget follows the widget programming interface standards, therefore it exposes: build and destroy methods and any data required by the widget is passed by its constructor.</p>
+<h3 id="configuration">Configuration</h3>
+<p>The configuration object supports the following properties:</p>
+<pre><code>{
+    container: &lt;define the container where the widget will be rendered&gt;,
+    multiselect: &lt;define if the tree allows selecting multiple nodes or not. Default: false.(optional)&gt;,
+    data: &lt;used to populate the tree with local data. Objects should have an id, text, and optional children property. The children property is an array that should contain one or more objects. Additional properties can be included, they will be ignored by the tree, but still available. The child nodes are not lazy loaded.&gt;,
+    url: &lt;used to fetch remote data. If lazy load is needed, this should be a function that takes a node as an argument.  The node selected will be passed to the function.  A node with id &quot;#&quot; is passed when initially loaded&gt;,
+    dataFilter: &lt;define callback executed when data is fetched from a URL.  Used to format the data according to tree expectations (described above in the data property)&gt;,
+    ajaxOptions: &lt;additional xhr options that may need to be set, such as the Accept header &gt;,
+    showCheckboxes: &lt;boolean to determine whether or not to show checkboxes. Default: true&gt;,
+    cascadeSelections: &lt;boolean to determine whether or not a selection should cascade and select all child nodes as well. Default: false. (optional)&gt;,
+    selectedNodes: &lt;an array of nodes to be initially selected.  The array can contain id strings, or complete node objects&gt;,
+    onSelect: &lt;define optional callback to be executed when a node is selected.  Returns an array of the selected node ids&gt;,
+    onDeselect: &lt;define optional callback to be executed when a node is deselected.  Returns an array of the selected node id&gt;,
+    onExpand: &lt;define optional callback to be executed when a node is expanded&gt;,
+    onCollapse: &lt;define optional callback to be executed when a node is collapsed&gt;,
+    onFilter: &lt;define callback for filtering when using remote data.  Callback should expect the filter string and a callback that should be called with the node ids of nodes containing matching children.&gt;,
+    onLoad: &lt;define optional callback to be executed when the tree is fully rendered&gt;
+}</code></pre>
+<p>Example using local data:</p>
+<pre><code>var container = $(&#39;.treeContainer&#39;);
+
+{
+    var tree = new TreeWidget({
+                    container: container[0],
+                    multiselect: true
+                    data: {
+                        id: 2,
+                        text: &quot;Global&quot;,
+                        children: [
+                          {
+                            id: 3,
+                            text: &quot;orpheus&quot;
+                          },
+                          {
+                            id: 4,
+                            text: &quot;csp&quot;
+                          }
+                        ]
+                    }
+                });
+}</code></pre>
+<p>Example using remote data and lazy load:</p>
+<pre><code>var container = $(&#39;.treeContainer&#39;);
+
+{
+    var tree = new TreeWidget({
+                    container: container[0],
+                    multiselect: true
+                    url: function(node) {
+                        if (node.id == &quot;#&quot;) {
+                            return &#39;/api/domains&#39;
+                        }
+
+                        return &#39;/api/domains/&#39; + node.id;
+                    },
+                    ajaxOptions: {
+                        headers: {
+                            &#39;Accept&#39;: &#39;application/vnd.net.juniper.space.domain-management.domain+json;version=1;q=0.01&#39;
+                        }
+                    }
+                });
+}</code></pre>
+<h3 id="build">Build</h3>
+<p>Adds the dom elements and events of the tree in the specified container. For example:</p>
+<pre><code>{
+    tree.build();
+}</code></pre>
+<h3 id="destroy">Destroy</h3>
+<p>Clean up the specified container from the resources created by the tree widget.</p>
+<pre><code>{
+    tree.destroy();
+}</code></pre>
+<h2 id="usage">Usage</h2>
+<p>To add a tree in a container, follow these steps:</p>
+<ol>
+<li>Instantiate the tree widget and provide the container where the tree will be rendered.</li>
+<li>Call the build method of the tree widget</li>
+</ol>
+<p>Optionally, the destroy method can be called to clean up resources created by the tree widget.</p>
+<pre><code>{
+    var container = $(&#39;.treeContainer&#39;);
+
+    var tree = new TreeWidget({
+                    container: container[0],
+                    multiselect: true
+                    data: {
+                        id: 2,
+                        text: &quot;Global&quot;,
+                        children: [
+                          {
+                            id: 3,
+                            text: &quot;orpheus&quot;
+                          },
+                          {
+                            id: 4,
+                            text: &quot;csp&quot;
+                          }
+                        ]
+                    }
+                }).build();
+}</code></pre>
+<h2 id="methods">Methods</h2>
+<h3 id="addnode">addNode</h3>
+<p>Adds a node to the tree using the passed in parent node id string or node object, the node object to be added, and an optional position parameter.  Use &quot;#&quot; as the node id if you need to add to the root node. The position can be &quot;first&quot;, &quot;last&quot;, or an index.  This is a zero-based index from the parent node.</p>
+<pre><code>   tree.addNode(parent, node, position);</code></pre>
+<h3 id="deletenode">deleteNode</h3>
+<p>Deletes a node from the tree given a provided tree node id or the node object</p>
+<pre><code>   tree.deleteNode(node);</code></pre>
+<h3 id="getnode">getNode</h3>
+<p>Gets the entire node for the specified id or object.  This will include any non-tree data that was passed in when the node was created.</p>
+<pre><code>   tree.getNode(node);</code></pre>
+<h3 id="selectnode">selectNode</h3>
+<p>Marks the node as selected using the node id or the node object</p>
+<pre><code>   tree.selectNode(node);</code></pre>
+<h3 id="deselectnode">deselectNode</h3>
+<p>Removes the selection state for a node in the tree using the node id or the node object</p>
+<pre><code>   tree.deselectNode(node);</code></pre>
+<h3 id="getselectednodes">getSelectedNodes</h3>
+<p>Gets an array of nodes that are currently selected in the tree.</p>
+<pre><code>   tree.getSelectedNodes();</code></pre>
+<h3 id="expandnode">expandNode</h3>
+<p>Expands the tree for the node identified by the passed in node id or the node object.  This will not recursively expand child nodes.</p>
+<pre><code>   tree.expandNode(node);</code></pre>
+<h3 id="expandall">expandAll</h3>
+<p>Recursively expands the tree for the node identified by the passed in node id or the node object.  If no arguments are passed, every node will be expanded.</p>
+<pre><code>   tree.expandAll(node);</code></pre>
+<h3 id="collapsenode">collapseNode</h3>
+<p>Collapses the tree for the node identified by the passed in id or the node object</p>
+<pre><code>   tree.collapseNode(node);</code></pre>
+<h3 id="collapseall">collapseAll</h3>
+<p>Recursively collapses the tree for the node identified by the passed in node id or the node object.  If no arguments are passed, every node will be collapsed.</p>
+<pre><code>   tree.collapseAll(node);</code></pre>
+<h3 id="filter">filter</h3>
+<p>Request the tree to be filtered by the provided string</p>
+<pre><code>    tree.filter(&#39;orpheus&#39;);</code></pre>
+<h3 id="removefilter">removeFilter</h3>
+<p>Remove any filter so that hidden nodes are visible again.</p>
+<pre><code>    tree.removeFilter();</code></pre>
+
+
+</div>
+ 

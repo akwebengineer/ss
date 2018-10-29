@@ -1,0 +1,161 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-sdk-rbacprovider">Slipstream.SDK.RBACProvider</h1>
+<p>Defines the interface between a Role Based Access Control (RBAC) provider and the Slipstream framework.  An RBACProvider is the interface between the Slipstream framework and an RBAC service that provides information on users and their roles/capabilities.</p>
+<p>The <em>Slipstream.SDK.RBACProvider</em> function is the constructor for RBACProvider objects.</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code class="language-javascript">    <span class="keyword">new</span> Slipstream.SDK.RBACProvider()</code></pre>
+<h2 id="description">Description</h2>
+<p>A Slipstream RBAC provider is implemented as a Javascript AMD module in <a href="http://requirejs.org/docs/api.html">requireJS</a> format.  The module must return a no-argument Javascript constructor that extends from <em>Slipstream.SDK.RBACProvider</em>.  The framework will use this constructor to instantiate the provider.</p>
+<pre><code class="language-javascript">define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">RBACProvider</span><span class="params">()</span> {</span>
+       ...
+    }
+
+    <span class="comment">// Inherit from the Slipstream RBACProvider class</span>
+    RBACProvider.prototype = Object.create(Slipstream.SDK.RBACProvider.prototype);
+
+    <span class="comment">// Return the constructor as the value of this module</span>
+    <span class="keyword">return</span> RBACProvider;
+});</code></pre>
+<h3 id="provider-lifecycle">Provider Lifecycle</h3>
+<p>An RBACProvider has a well-defined lifecycle that takes it through a series of states including <em>create</em>,  <em>start</em>, and <em>destroy</em>.</p>
+<pre><code>    ┌─────────────────────┐
+    │   Launch Provider   │
+    └─────────────────────┘
+               ↓ 
+    ┌─────────────────────┐
+    │      onCreate()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │      onStart()      │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │  Provider active    │  
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │      init()         │  
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │     onDestroy()     │
+    └─────────────────────┘
+               ↓
+    ┌─────────────────────┐
+    │ Provider Terminated │
+    └─────────────────────┘</code></pre>
+<p>Each state of an RBAC provider has a corresponding lifecycle method in an RBACProvider object: <em>onCreate()</em>, <em>onStart()</em>, <em>onDestroy()</em>.</p>
+<p>When an RBAC provider is first created its <em>onCreate()</em> method is called.  By default this method is a no-op but providers can override it to perform any operations necessary prior to the provider being started. Once the <em>onCreate()</em> method returns, the provider&#39;s onStart() method is immediately invoked.</p>
+<p>Because it is often necessary for an RBAC provider to perform some initialization after user authentication has occurred, an initialization phase is invoked once authentication is successful.  During this phase, the RBAC provider can assume that the user has been authenticated.  The provider is given the authenticated user&#39;s identity which it can then use to complete its initialization.</p>
+<p>When a provider is no longer needed (eg. its associated plugin is removed from the system) it may be destroyed. Before a provider is destroyed its <em>onDestroy()</em> method is called. This allows the provider an opportunity to perform any cleanup operations prior to it being destroyed.</p>
+<p><strong>Note</strong>: The destroy state and it&#39;s corresponding <em>onDestroy()</em> method are not currently used by Slipstream but are reserved for future use.</p>
+<h2 id="rbacprovider-instances">RBACProvider Instances</h2>
+<p>All RBACProvider instances inherit from RBACProvider.prototype.</p>
+<h3 id="properties">Properties</h3>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><h4 id="sdk-rbacprovider-prototype-init">SDK.RBACProvider.prototype.init</h4>
+<p>Initialize the provider</p>
+<p>The method in the RBACProvider prototype is a no-op and should be overridden by objects implementing an RBACProvider.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><p><strong>options</strong></p>
+<p>An options hash for the initialization process.  The options hash can contain the following keys:</p>
+<p>  <strong>username</strong> - The name of the currently authenticated user. (required)</p>
+<p>  <strong>success</strong> - A callback to be called if initialization is successful. (optional)  </p>
+</li>
+<li><p><strong>fail</strong> - A callback to be called if initialization fails. This callback takes a 
+   single argument that is an object containing the error response. (optional)</p>
+</li>
+</ul>
+</li>
+<li><h4 id="sdk-rbacprovider-prototype-verifyaccess">SDK.RBACProvider.prototype.verifyAccess</h4>
+<p>Verify that the currently authenticated user has a set of capabilities.</p>
+<h4 id="returns">Returns</h4>
+<p>  <em>true</em> if the currently authenticated user has all of the capabilities specified in the <em>capabilities</em> parameter, <em>false</em> otherwise.</p>
+<h4 id="parameters">Parameters</h4>
+<ul>
+<li><strong>capabilities</strong> - An array of capabilities to be verified.  The array contains strings that represent the names of capabilities as defined by the underlying network management platform.</li>
+</ul>
+</li>
+</ul>
+<h3 id="declaring-an-rbacprovider">Declaring an RBACProvider</h3>
+<p>A plugin must declare the RBAC provider that it exposes via its plugin.json file.  Only a single RBAC provider can exist in an instance of the Slipstream framework.  If multiple provider definitions exist, then Slipstream will use the last definition found during plugin discovery.</p>
+<p>A sample plugin.json with the relevant RBACProvider settings is shown below.</p>
+<p>plugin.json:</p>
+<pre><code class="language-json">{
+   ...
+
+   providers: [
+      {
+          &quot;uri&quot;: &quot;rbac://&quot;,
+          &quot;module&quot;: &quot;rbacProvider&quot;
+      }
+   ]
+
+   ...
+}</code></pre>
+<p>When a plugin is loaded and the configuration includes an RBAC provider, the module identified will be instantiated and the <em>onCreate()</em> and <em>onStart()</em> functions called.  Once the user is authenticated, the provider&#39;s init() function will be called.</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-javascript">  define(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">RBACProvider</span><span class="params">()</span> {</span>
+        Slipstream.SDK.RBACProvider.call(<span class="keyword">this</span>);
+            ...
+         }
+    }
+
+   RBACProvider.prototype = Object.create(Slipstream.SDK.RBACProvider.prototype);
+   RBACProvider.prototype.constructor = RBACProvider;
+
+   <span class="keyword">return</span> RBACProvider;
+});</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script>
+            var __ss_local_ns = {};
+
+            (function() {
+                __ss_local_ns.createLink = function(href, rel, type) {
+                    var link = document.createElement("link");
+
+                    if (type) {
+                        link.type = type;
+                    }
+                    link.rel = rel;
+                    link.href = href;
+                    document.getElementsByTagName("head")[0].appendChild(link);
+                }
+
+                __ss_local_ns.query_parms = function(q) {
+                    return (function(a) {
+                        if (a == "") return {};
+                        var b = {};
+                        for (var i = 0; i < a.length; ++i) {
+                           var p = a[i].split('=');
+                           if (p.length != 2) continue;
+                           b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                        }
+                        return b;
+                    })(q.split("&"));
+                }(window.location.search.substring(1));;
+
+                var theme = __ss_local_ns.query_parms["theme"] || "{{theme}}";
+                var build_hash = "{{build_hash}}";
+
+                if (build_hash) {
+                    build_hash = "?v=" + build_hash;
+                }
+
+                __ss_local_ns.createLink("/assets" + (theme != "" ? "/themes/" + theme : "") + "/css/app.css" + build_hash, "stylesheet", "text/css");
+            })();
+        </script>
+        <link rel="stylesheet" href="/assets/css/plugins/installed_plugins.css"/>
+        <script>
+            (function() {
+                if (navigator.userAgent.indexOf("Windows") == -1) {
+                    __ss_local_ns.createLink("/assets/css/osx_scrollbar.css", "stylesheet", "text/css");
+                }
+            })();
+        </script>
+    </head>
+    <body class="slipstream">
+        <div id="slipstream_ui">
+        </div>
+        <script>var require = { waitSeconds: 0 };</script>
+        <script src="/assets/js/vendor/require/require.js"></script>
+        <script>
+            (function() {
+                // Set up cache busting
+                //require.config({
+                //    urlArgs: "{{build_hash}}" ? "v={{build_hash}}" : ""
+                //});
+
+                var main = "/assets/js/main";
+                var debug_main = main + ".debug";
+                var log_level = "none";
+                var main_script = main;
+
+                if (__ss_local_ns.query_parms["debug"] == 'true') {
+                    log_level = "debug";
+                    main_script = debug_main;
+                }
+
+                if (__ss_local_ns.query_parms["log"]) { // override default and implied log level
+                    log_level = __ss_local_ns.query_parms["log"];
+                }
+
+                if (log_level == "none") {
+                    console.log = function() {}
+                }
+
+                require([main_script + ".js"]);
+            })();
+        </script>
+        {{{svg_sprite}}}
+    </body>
+</html>

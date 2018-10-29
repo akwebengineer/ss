@@ -1,0 +1,188 @@
+<div class="dropdown-widget-test">
+    <div class="slipstream-content-title">Drop Down Widget</div>
+    <ol>
+        <li>
+            <h4>Selection with small width</h4>
+            <div>
+                <select class="selection-small-width">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three" selected="selected">Third</option>
+                </select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Selection with medium width</h4>
+            <div>
+                <select class="selection-medium-width">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three">Third</option>
+                </select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Selection with large width</h4>
+            <div>
+                <select class="selection-large-width">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three" selected="selected">Third</option>
+                </select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with JSON data</h4>
+            <div>
+                <select class="basic-selection-data"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with JSON data with Set Value</h4>
+            <div>
+                <select class="basic-selection-data-setValue"></select>
+                <span class="dropdown_span">
+                    <input type="button" class='slipstream-secondary-button' id="btn-disableItem" value="Disable Item"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-enableItem" value="Enable Item"/>
+                    <input type="button" class='slipstream-secondary-button' id="btn-disableDropdown" value="Disable Dropdown"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-enableDropdown" value="Enable Dropdown"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-setValLocal" value="Set Value"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-getValLocal" value="Get Data"/>
+                </span>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with Template</h4>
+            <span class="dropdown_span top_button">
+                <input type="button" class='slipstream-secondary-button' id="btn-closeDropdown" value="Close"/>
+                <input type="button" class='slipstream-primary-button' id="btn-openDropdown" value="Open"/>
+            </span>
+            <div>
+                <select class="basic-template"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Multiple Selection with Placeholder</h4>
+            <div>
+                <select class="multiple-selection-empty"></select>
+            </div>
+            <span class="dropdown_span">
+                <input type="button" class='slipstream-secondary-button' id="resetData" value="Reset Data"/>
+                <input type="button" class='slipstream-primary-button' id="appendData" value="Append Data"/>
+            </span>
+            <br/>
+        </li>
+        <li>
+            <h4>Multiple Selection with Default Selection</h4>
+            <div>
+                <select class="multiple-selection-default"></select>
+                <span class="dropdown_span">
+                    <input type="button" class='slipstream-secondary-button' id="btn-disableItemMultiArr" value="Disable Item"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-enableItemMultiArr" value="Enable Item"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-setValLocalMultiArr" value="Set Value"/>
+                </span>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Multiple Selection with Default Selection and Create Tokens</h4>
+            <div>
+                <select class="multiple-selection-default-tokens"></select>
+                <span class="dropdown_span">
+                    <input type="button" class='slipstream-primary-button' id="btn-setValLocalMultiObj" value="Set Value"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-getValLocalMultiObj" value="Get Data"/>
+                </span>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Multiple Selection with Max height</h4>
+            <div>
+                <select class="multiple-selection-max-height"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with Infinite Scrolling</h4>
+            <div>
+                <select class="simple-selection-infinite-scroll"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Mapping Selection Data with Infinite Scrolling</h4>
+            <div>
+                <select class="simple-mapping-data-infinite-scroll"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection from remote Data - With setValue</h4>
+            <div>
+                <select class="simple-selection-infinite-scroll-setVal"></select>
+                <span class="dropdown_span">
+                    <input type="button" class='slipstream-primary-button' id="btn-setValRemote" value="Add Value"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-getValRemote" value="Get Data"/>
+                </span>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection from remote Data - With reformatURL option</h4>
+            <div>
+                <select class="remote-data-formatter-url"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection from remote Data - With POST type and data config option filtering on "unos" data values</h4>
+            <div>
+                <select class="remote-data-post-method"></select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Selection with configured width</h4>
+            <div>
+                <select class="selection-configured-width">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three" selected="selected">Third</option>
+                </select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with the width of its container (not responsive)</h4>
+            <div>
+                <select class="basic-selection-nodata">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three" selected="selected">Third</option>
+                </select>
+            </div>
+            <br/>
+        </li>
+        <li>
+            <h4>Simple Selection with small height and auto width (adjusted to the width of its content)</h4>
+            <div>
+                <select class="basic-selection-small-height">
+                    <option value="one">First</option>
+                    <option value="two" disabled="disabled">Second (disabled)</option>
+                    <option value="three" selected="selected">Third</option>
+                </select>
+                <span class="dropdown_span">
+                    <input type="button" class='slipstream-secondary-button' id="btn-disableSmallDropdown" value="Disable Dropdown"/>
+                    <input type="button" class='slipstream-primary-button' id="btn-enableSmallDropdown" value="Enable Dropdown"/>
+                </span>
+            </div>
+            <br/>
+        </li>
+    </ol>
+</div>

@@ -1,0 +1,97 @@
+.new-list-builder-widget{
+  font-size: 12px;
+  position: relative;
+  display: inline-block;
+  
+  .grid-widget {
+    .sub-header, .search-save-container{
+      display: none;
+    }
+    .slipstreamgrid_row{
+      .action-bar-widget .selecion_arrow{
+        fill: $default-slipstream-icon-color;
+      }
+    }
+  }
+  .panel1, .panel2{
+    float: left;
+    .listActions{
+      dd {
+        &.subTitle{
+          min-width: unset;
+          margin-right: 0;
+          width: 25px;
+          text-overflow: ellipsis;
+        }
+        &.actionIcon svg {
+          @extend .icon_filter_menu, .icon_filter_menu-dims;
+          fill: $action-icon-color;
+          &:hover{
+            fill: $action-icon-hover;
+          }
+        }
+      }
+    }
+    .listBuilder_no_result_container{
+      height: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+  .panel2{
+    .selecion_arrow{
+      transform: rotate(180deg);
+    }
+  }
+  .btn-group{
+    float:left;
+    width: 16px;
+    margin: 33px 15px;
+
+    div{
+      .arrow{
+        width: 16px;
+        height: 8px;
+        display: inline-block;
+        margin: 8px 0 0;
+        fill: $default-slipstream-icon-color;
+        cursor: pointer;
+      }  
+      .arrow_disable{
+        fill: $default-slipstream-icon-disabled;
+        cursor: default;
+      }
+      .unselect{
+        transform: rotate(180deg);
+        margin: 9px 0 0;
+      }
+    }
+  }
+  .select-container:hover .select{
+    fill: $default-slipstream-icon-hover;
+  }
+  .unselect-container:hover .unselect{
+    fill: $default-slipstream-icon-hover;
+  }
+}
+
+.list_builder_tooltip{
+  line-height: 14px;
+  padding: 3px 4px;
+}
+
+#test_new_list_builder{
+  .form_section{
+    margin-bottom: 30px;
+  }
+  .selected_items_buttons {
+    .elementinput {
+      width: auto;
+    }
+    .elementbuttons {
+      margin: 0 15px 0 0;
+    }
+  }
+}

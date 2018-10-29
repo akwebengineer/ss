@@ -1,0 +1,156 @@
+<div>
+    <h1 id="confirmation-dialog-widget">Confirmation Dialog Widget</h1>
+<h2 id="introduction">Introduction</h2>
+<p>A confirmation dialog widget is an overlay programmed to perform the task of providing a uniform way to plugin developers to write Yes/No kind of confirmation dialogs.
+The confirmation dialog widget uses the Slipstream overlay widget underneath and hence always renders on top of the current content on the page, disabling any clicks outside the area of the widget.</p>
+<h5 id="usage-consideration-">Usage consideration:</h5>
+<p>Consider using the confirmation dialog widget when you want to ask the user to confirm on an action s/he intends to do.</p>
+<h2 id="api">API</h2>
+<p>The confirmation object exposes the following methods and attributes:</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">ConfirmationDialogWidget</span><span class="params">(config)</span> {</span>…}</code></pre>
+<p>Constructor, used to create a new confirmation dialog widget.
+The configuration attributes are defined as below:</p>
+<p><strong>kind</strong> - (optional) string to indicate the kind of dialog box. One of the following: &#39;warning&#39; (displayed with an outline); when not specified no special outline will be shown on the dialog. Use the &#39;warning&#39; parameter to capture user attention for important confirmation questions.</p>
+<p><strong>title</strong> - (required) text to be shown on the title bar of the dialog.</p>
+<p><strong>question</strong> - (required) text to be asked in the content of the dialog. Usually a question like &quot;Are you sure you want to do this?&quot;.</p>
+<p><strong>yesButtonLabel</strong> - (optional) string label for the Yes Button.</p>
+<p><strong>noButtonLabel</strong> - (optional) string label for the No button.</p>
+<p><strong><em>Note</em></strong>: Our recommendation is to use either events or callbacks as outlined by below parameters but not mix both in a view instantiating the confirmation dialog object.</p>
+<p><strong>yesButtonCallBack</strong> - (optional) callback function when Yes Button clicked.  The yesButtonCallbackwill be called with a true/false argument - true if the user selected the &quot;do not show again&quot; checkbox, false otherwise.
+<strong><em>Note</em></strong>: The view needs to cleanup the confirmation dialog widget by calling it&#39;s destroy() method in yesButtonCallback function. This is so that the view can show other overlays such as a progress indicator on some action happening and destroy the confirmation dialog once done successfully or unsuccessfully.</p>
+<p><strong>noButtonCallback</strong> - (optional) callback function when No Button clicked.
+<strong><em>Note</em></strong>: The view needs to cleanup the confirmation dialog widget by calling it&#39;s destroy() method in noButtonCallback function. This is so that the view can show other overlays such as a progress indicator on some action happening and destroy the confirmation dialog once done successfully or unsuccessfully.</p>
+<p><strong>yesButtonTrigger</strong> - (optional) event that gets triggered on Yes button being clicked. The yesButtonTrigger  will be triggered with an additional value - true if the user selected the &quot;do not show again&quot; checkbox, false otherwise.
+<strong><em>Note</em></strong>: The view needs to cleanup the confirmation dialog widget by calling it&#39;s destroy() method on yesButtonTrigger event received. This is so that the view can show other overlays such as a progress indicator on some action happening and destroy the confirmation dialog once done successfully or unsuccessfully.</p>
+<p><strong>noButtonTrigger</strong> - (optional) event that gets triggered on No button being clicked.
+<strong><em>Note</em></strong>: The view needs to cleanup the confirmation dialog widget by calling it&#39;s destroy() method on noButtonTrigger event received. This is so that the view can show other overlays such as a progress indicator on some action happening and destroy the confirmation dialog once done successfully or unsuccessfully.</p>
+<p><strong>doNotShowAgainMessage</strong> - (optional) text to be shown for checkbox to ask user whether s/he wants the dialog to be shown again. If not passed in, no checkbox and message are shown. 
+<strong><em>Note</em></strong>: It is the widget user&#39;s responsibility to keep a track of the parameter sent back if the checkbox was selected.</p>
+<p><strong>xIcon</strong> - (optional) true/false to indicate if an X (close) icon should appear in the upper right corner of the dialog. If not passed in, no xIcon is shown.</p>
+<pre><code class="language-javascript">Object vent</code></pre>
+<p>Once a ConfirmationDialogWidget object has been created, you can listen to the yesButtonTrigger and noButtonTrigger events on the vent object exposed by the ConfirmationDialogWidget.
+e.g.</p>
+<pre><code class="language-javascript"><span class="keyword">var</span> conf = {
+                title: <span class="string">'Test Confirmation Dialog'</span>,
+                question: <span class="string">'Are you sure you want to do this?'</span>,
+                yesButtonLabel: <span class="string">'Yes'</span>,
+                noButtonLabel: <span class="string">'No'</span>,
+                yesButtonTrigger: <span class="string">'yesEventTriggered'</span>,
+                noButtonTrigger: <span class="string">'noEventTriggered'</span>
+            };
+
+<span class="keyword">var</span> <span class="keyword">new</span> confirmationDialogObj = <span class="keyword">new</span> ConfirmationDialogObject(conf);
+
+confirmationDialogObj.vent.on(<span class="string">'yesEventTriggered'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    console.log(<span class="string">'Yes button event triggered'</span>);
+});
+
+confirmationDialogObj.vent.on(<span class="string">'noEventTriggered'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    console.log(<span class="string">'No button event triggered'</span>);
+});</code></pre>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">build</span><span class="params">()</span> {</span>…}</code></pre>
+<p>Used to setup and render the confirmation dialog in the middle of screen using the config values.</p>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">destroy</span><span class="params">()</span> {</span>…}</code></pre>
+<p>Used to close the confirmation dialog, free up other resources and remove it from the DOM.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="sample-html-template-for-view-using-confirmation-dialog-widget-">Sample html template for view using confirmation dialog widget:</h3>
+<p><strong><em>Note</em></strong>: If you are using the confirmation dialog widget without Slipstream, your html template needs to have a div with id=&quot;overlay_content&quot; under a location that spans 100% of height and width of your page. This is required by the overlay widget to render itself with the proper size and at the proper location.</p>
+<p>Example testConfirmationDialog.html:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html class=&quot;no-js&quot; lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        &lt;title&gt;Test Confirmation Dialog Widget&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/css/app.css&quot; /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;overlay_content&quot; class=&quot;confirmation-widget-test&quot;&gt;&lt;/div&gt;
+        &lt;!-- Include your scripts here that will load and instatiate confirmationDialogAppView below --&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3 id="example-for-instantiating-a-new-confirmation-dialog-widget-">Example for instantiating a new confirmation dialog widget:</h3>
+<p>Example: confirmationDialogAppView.js</p>
+<pre><code class="language-javascript">define([
+    <span class="string">'backbone'</span>,
+    <span class="string">'widgets/confirmationDialog/confirmationDialogWidget'</span>
+], <span class="function"><span class="keyword">function</span><span class="params">(Backbone, ConfirmationDialogWidget)</span>{</span>
+    <span class="keyword">var</span> ConfirmationDialogAppView = Backbone.View.extend({
+
+        initialize: <span class="function"><span class="keyword">function</span> <span class="params">(config)</span> {</span>
+            <span class="keyword">var</span> self = <span class="keyword">this</span>;
+
+            <span class="comment">// use either the callback or the trigger. Here both are used only as an example</span>
+            <span class="keyword">var</span> yesButtonCallback = <span class="function"><span class="keyword">function</span><span class="params">(doNotShowAgain)</span> {</span>
+                console.log(<span class="string">'Yes button callback called with do not show checkbox'</span>, doNotShowAgain? <span class="string">'selected'</span>: <span class="string">'unselected'</span>);
+
+                <span class="comment">// you can do other things here such as open a progress view overlay</span>
+
+                <span class="comment">// remember to destroy the dialog once done</span>
+                self.confirmationDialogWidget.destroy();
+            };
+
+            <span class="keyword">var</span> noButtonCallback = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                console.log(<span class="string">'No button callback called'</span>);
+
+                <span class="comment">// you can do other things here such as open a progress view overlay</span>
+
+                <span class="comment">// remember to destroy the dialog once done</span>
+                self.confirmationDialogWidget.destroy();
+            };
+
+            <span class="keyword">var</span> conf = {
+                title: <span class="string">'Test Confirmation Dialog'</span>,
+                question: <span class="string">'Are you sure you want to respond Yes to this question?'</span>,
+                yesButtonLabel: <span class="string">'Yes'</span>,
+                noButtonLabel: <span class="string">'No'</span>,
+                yesButtonCallback: yesButtonCallback,
+                noButtonCallback: noButtonCallback,
+                yesButtonTrigger: <span class="string">'yesEventTriggered'</span>,
+                noButtonTrigger: <span class="string">'noEventTriggered'</span>,
+                <span class="comment">// kind: 'warning'</span>
+            };
+
+            <span class="keyword">this</span>.confirmationDialogWidget = <span class="keyword">new</span> ConfirmationDialogWidget(conf);
+
+            <span class="keyword">this</span>.bindEvents();
+
+            <span class="keyword">this</span>.render();
+        },
+
+        bindEvents: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+            <span class="keyword">var</span> self = <span class="keyword">this</span>;
+            <span class="comment">// use either the callback or the trigger. Here both are used only as an example</span>
+            <span class="keyword">this</span>.confirmationDialogWidget.vent.on(<span class="string">'yesEventTriggered'</span>, <span class="function"><span class="keyword">function</span><span class="params">(doNotShowAgain)</span> {</span>
+                console.log(<span class="string">'Yes button event triggered with do not show checkbox'</span>, doNotShowAgain? <span class="string">'selected'</span>: <span class="string">'unselected'</span>);
+
+                <span class="comment">// you can do other things here such as open a progress view overlay</span>
+
+                <span class="comment">// remember to destroy the dialog once done</span>
+                <span class="comment">// self.confirmationDialogWidget.destroy();</span>
+            });
+
+            <span class="keyword">this</span>.confirmationDialogWidget.vent.on(<span class="string">'noEventTriggered'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                console.log(<span class="string">'No button event triggered'</span>);
+
+                <span class="comment">// you can do other things here such as open a progress view overlay</span>
+
+                <span class="comment">// remember to destroy the dialog once done</span>
+                <span class="comment">// self.confirmationDialogWidget.destroy();</span>
+            });
+        },
+
+        render: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+
+            <span class="keyword">this</span>.confirmationDialogWidget.build();
+
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
+    });
+
+    <span class="keyword">return</span> ConfirmationDialogAppView;
+});</code></pre>
+
+
+</div>
+ 

@@ -1,0 +1,10 @@
+<span class="group-label">{{{content}}}{{#first}}{{#count}}<span class="group-count hide" data-group-collapsed>+{{count}}</span>{{/count}}{{/first}}</span>
+{{#first}}
+<span class="group-control hide" data-group-id="{{groupId}}" data-group-collapsed><svg class="group-icon collapsed"><use href="#icon_arrow_left_column"></use></svg>
+</span>
+{{/first}}
+{{#last}}
+<span class="group-control" data-group-id="{{groupId}}" data-group-expanded>
+    <svg class="group-icon expanded"><use href="#icon_arrow_left_column"></use></svg>
+</span>
+{{/last}}

@@ -1,0 +1,329 @@
+.search-widget {
+  @import "../../js/vendor/jquery/tagit/jquery.tagit.scss";
+  @import "../../js/vendor/jquery/tagit/tagit.ui-zendesk.scss";
+
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  padding-top: 2px;
+  overflow: hidden;
+  background-color: $table-filter-bg;
+  &, & a, .tokens {
+    font-size: 12px !important;
+    color: $body-font-color !important;
+  }
+
+  &.partialTokenEnabled {
+    background-color: $search-as-you-type-background-color;
+
+    .tokensWrapper {
+      &.advanceSearchWrapper {
+        border-left: none;
+        border-top: none;
+        border-bottom: 2px solid $search-as-you-type-inactive-bottom-border-color;
+        width: 100%;
+
+        &.active {
+          border-bottom: 2px solid $search-as-you-type-active-bottom-border-color;
+        }
+      }
+    }
+
+    .close_advancedSearch {
+      display: none;
+    }
+  }
+
+  .filterMenu {
+    cursor: pointer;
+    margin: 4px;
+    float: left;
+    @extend .icon_add_column, .icon_add_column-dims;
+    &:hover {
+      @extend .icon_add_column_hover, .icon_add_column_hover-dims;
+    }
+  }
+  .tokensWrapper {
+    max-height: 84px;
+    overflow-x: auto;
+    float: left;
+    width: calc(100% - 100px);
+    .tokens {
+      line-height: 16px;
+      margin-bottom: 0px;
+      padding: 0px 5px;
+    }
+    &.advanceSearchWrapper {
+      padding: 3px 0;
+      background-color: $advanceSearchWrapper-bgcolor;
+      border-left: 4px solid $table-filter-bg;
+      border-top: 2px solid $table-filter-bg;
+      width: calc(100% - 60px);
+    }
+  }
+
+  @mixin closeIconStyle() {
+    display: inline-block;
+    @extend .icon_close_search, .icon_close_search-dims;
+    &:hover {
+      fill: $action-icon-hover;
+      cursor: pointer;
+    }
+  }
+
+  .close_advancedSearch {
+    float: left;
+    background-color: $table-filter-bg;
+    margin-top: 10px;
+    .help_icon {
+      margin-left: 8px;
+      display: inline-block;
+      @extend .icon_help_search, .icon_help_search-dims;
+      &:hover {
+        @extend .icon_help_search_hover, .icon_help_search_hover-dims;
+        cursor: pointer;
+      }
+    }
+    .close_icon {
+      margin-left: 20px;
+      @include closeIconStyle();
+    }
+  }
+
+  @mixin searchIconStyle() {
+    display: inline-block;
+    @extend .icon_search_sm, .icon_search_sm-dims;
+    &:hover {
+      fill: $action-icon-hover;
+    }
+  }
+
+  &.inlineToken {
+    background-color: $search-as-you-type-background-color;
+    border: solid 3px $token-color;
+    .tokensWrapper {
+      &.advanceSearchWrapper {
+        border-left: none;
+        border-top: none;
+      }
+    }
+    .inline_advancedSearch {
+      float: left;
+      background-color: $search-as-you-type-background-color;
+      margin-top: 5px;
+      .search-icon {
+        margin-left: 30px;
+        @include searchIconStyle();
+      }
+    }
+    &.active {
+      border-bottom: 2px solid $search-as-you-type-active-bottom-border-color;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+  }
+
+  &.readOnly {
+    padding: 4px;
+    border: none;
+    margin-bottom: 0px;
+    .tokensWrapper {
+      .tokens {
+        padding-left: 0px;
+        border-left: 0px;
+      }
+    }
+    .close_readOnly {
+      float: left;
+      margin: 7px 2px 0px 0px;
+      cursor: pointer;
+      .close {
+        margin-left: 6px;
+        @include closeIconStyle();
+      }
+      .clear_all {
+        font-style: normal;
+        vertical-align: text-bottom;
+        line-height: 16px;
+        margin-left: 6px;
+        color: $menu-item-color;
+        &:hover {
+          color: $clear-all-hover-color;
+        }
+      }
+    }
+  }
+
+  ul.tagit { //overwrite tokens (tag-it) style
+    border: none;
+    padding: 1px 0px;
+    li {
+      margin: 2px 0 2px 0;
+      &.token-color {
+        border-radius: 2px !important;
+        background-color: $token-color !important;
+      }
+      &.tagit-choice {
+        padding: 3px 4px 3px 6px;
+        background-color: inherit;
+        border-radius: 0px;
+        border: 0px;
+        color: $body-font-color;
+        .tag-it-close-span {
+          margin-left: 14px;
+          .tagit-close {
+            margin-top: -4px;
+            @extend .icon_exit_filters, .icon_exit_filters-dims;
+            fill: $secondary-action-icon-color;
+            &:hover {
+              fill: $action-icon-color;
+            }
+          }
+        }
+        .tag-it-open-span {
+          margin-right: 8px;
+          a.tag-it-select {
+            background: url("/assets/images/advancedFilterIcons.png") no-repeat -300px -1px; // todo: .png needs to be replaced with styling
+            width: 10px;
+            height: 4px;
+            margin-top: 5px;
+            margin-left: 2px;
+            position: absolute;
+            cursor: pointer;
+          }
+        }
+
+        & span.autocompleteKey {
+          font-weight: bold;
+          color: $singleToken-key-color;
+          border-radius: 4px;
+          background-color: $advanceSearchWrapper-bgcolor;
+          border: solid 1px $singleToken-key-border-color;
+          text-align: center;
+          padding: 0 5px;
+        }
+      }
+
+      div.inputWrapper {
+        height: 19px;
+        position: relative;
+        padding: 4px;
+
+        input[type="text"] {
+          position: absolute;
+          top: 0;
+          z-index: 5;
+          background: transparent;
+
+          &.inlineAutocomplete {
+            z-index: 2;
+          }
+        }
+      }
+
+      input[type="text"] {
+        margin: 3px 0 0 4px !important;
+        font-size: 12px;
+        height: 16px;
+        &.keyError {
+          color: $token-error;
+        }
+        &.logicalOperator-label {
+          margin: 0 !important;
+          color: $menu-color !important;
+          font-size: 11px !important;
+          font-weight: bold;
+          width: 24px !important;
+        }
+      }
+
+      &.logicalOperator {
+        margin: 2px 2px 2px 6px !important;
+      }
+
+      &.key {
+        font-weight: bold;
+      }
+
+      &.openRoundBracketError span, &.closeRoundBracketError span {
+        color: $token-error !important;
+      }
+
+      &.tagit-new {
+        padding: 0px;
+      }
+    }
+
+    .tag-hover {
+      background-color: $token-close-hover-color !important;
+    }
+
+  }
+
+  #logicOperatorMenu li:hover {
+    background-color: $menu-item-color !important;
+  }
+
+  ul.keyHelper-width {
+    width: 300px !important;
+  }
+
+  .ui-autocomplete { //overwrites menu (autocomplete) style
+    z-index: 200;
+    border-radius: 0px !important;
+    border: 1px solid $menu-border !important;
+    height: auto;
+    position: absolute !important;
+    box-shadow: 0px 2px 4px 0 rgba($clear-all-hover-color, 0.3);
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    &.hideMenu {
+      display: none !important;
+    }
+    .keyHelper-color {
+      color: $keyHelper-color;
+    }
+    .ui-menu-item {
+      a {
+        padding-left: 10px !important;
+        line-height: 16px;
+        border-radius: 0px;
+        border: 0px;
+        display: block;
+        &.highlight {
+          background-color: $menu-item-color !important;
+          color: white !important;
+        }
+      }
+    }
+  }
+
+  /* prototype | start */
+
+  & .tag-it-close-span {
+    //border: 1px solid cyan;
+    //margin-right: 10px;
+    //width: 8px;
+    a.tagit-close {
+      //width: 4px;
+      //height: 8px;
+      //margin-top: -3px;
+      @extend .icon_exit_filters, .icon_exit_filters-dims;
+      &:hover {
+        @extend .icon_exit_filters_hover, .icon_exit_filters_hover-dims;
+      }
+    }
+  }
+  /* prototype | end */
+
+}
+
+.search-widget-test .test_buttons {
+  margin-bottom: 10px;
+  line-height: 40px;
+}
+
+/* prototype*/
+
+

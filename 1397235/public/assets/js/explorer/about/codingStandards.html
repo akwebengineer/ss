@@ -1,0 +1,147 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-coding-standards">Slipstream Coding Standards</h1>
+<p>This document outlines a set of basic coding standards and guidelines, intended to make Slipstream framework and app code cleaner and more consistent, and improve ease of maintenance. As more parties begin to work with, and contribute to Slipstream, it will be increasingly necessary to ensure a minimum standard of code quality. All code contributed to the Slipstream repositories is expected to follow these conventions.</p>
+<p>This document is based on <a href="http://javascript.crockford.com/code.html">Javascript conventions described by Douglas Crockford</a></p>
+<h3 id="formatting">Formatting</h3>
+<p>All code, including Javascript, CSS, and HTML, should follow these basic conventions, and be consistently well formatted throughout.</p>
+<h4 id="indentation">Indentation</h4>
+<p>Code shall be indented in units of <em>four</em> spaces. Tab characters should be avoided at all times, as there is no standard for the placement of tabstops.</p>
+<h5 id="tabs-in-vi">Tabs in VI</h5>
+<p>Add these values to your .vimrc file:</p>
+<pre><code>set expandtab
+set sw=4
+set tabstop=4
+set softtabstop=4</code></pre>
+<h5 id="tabs-in-sublime-text">Tabs in Sublime Text</h5>
+<p>Add these values to Sublime Text&#39;s User Settings:</p>
+<pre><code>“tab_size”: 4,
+“translate_tabs_to_spaces”: true</code></pre>
+<h5 id="tabs-in-webstorm">Tabs in WebStorm</h5>
+<p>See this link for detailed information on using code style controls in WebStorm:
+<a href="https://www.jetbrains.com/webstorm/help/code-style.html">https://www.jetbrains.com/webstorm/help/code-style.html</a></p>
+<p>At a minimum, uncheck the ‘Use tab character’ checkbox, and set the ‘Tab size’ setting to 4.</p>
+<h5 id="tabs-in-eclipse">Tabs in Eclipse</h5>
+<p>When using Eclipse, tab settings can be changed by editing the code formatter.</p>
+<ol>
+<li>Click <strong>Window</strong> &gt; <strong>Preferences</strong></li>
+<li>Expand the <strong>Java</strong> item on the left, and click on <strong>Code Style</strong></li>
+<li>Click <strong>Formatter</strong></li>
+<li>Click the <strong>Edit</strong> button</li>
+<li>Click the <strong>Indentation</strong> tab</li>
+<li>Set <strong>Tab Policy</strong> to “Spaces only”</li>
+<li>Set <strong>Tab size</strong> to 4</li>
+</ol>
+<h3 id="braces">Braces</h3>
+<p>No strict bracing style will be enforced (i.e., opening curly brace on the same line as function declaration, or on the next line), except that it should remain consistent throughout a single file. Wherever braces are placed, they should adhere to the previously mentioned indentation standard of four spaces per unit of indentation.</p>
+<h3 id="naming-conventions">Naming Conventions</h3>
+<p>File, function, variable, and class names should be named using <a href="http://en.wikipedia.org/wiki/CamelCase">“camel case”</a>, unless otherwise noted.</p>
+<p>All names should be formed from the 26 upper and lower case letters (A-Z, a-z) and the 10 digits (0-9). Avoid using punctuation, and special or international characters.</p>
+<p>Variables and functions should be declared before being used, and must begin with a lowercase character.</p>
+<p>Javascript classes (or constructor functions that must be used with the ‘new’ prefix) should start with a capital letter.</p>
+<h3 id="plugins">Plugins</h3>
+<p>Plugin folder names, which become part of the URL for accessing the plugins themselves, must be named using all lower case characters, separated by hyphen characters “-“ when necessary. In this case, camel case should not be used.</p>
+<h4 id="plugin-directory-structure">Plugin Directory Structure</h4>
+<p>The root directory for Each plugin is required to be laid out in specific format, which is documented in the <a href="plugins.html#5-package-the-plugin-for-distribution">Plugin documentation</a>, or it may not be compatible with the Slipstream framework. Beyond these requirements, all plugin Javascript code should be organized as follows:</p>
+<ul>
+<li>my-plugin/<ul>
+<li>css/ - <em>CSS file</em></li>
+<li>help/ - <em>Help files</em></li>
+<li>img/ - <em>Image resources</em></li>
+<li><strong>js/</strong> - <em>Plugin activities and utility javascript</em><ul>
+<li>conf/ - <em>Plugin configuration file</em></li>
+<li>models/ - <em>Backbone data model definitions</em></li>
+<li>views/ - <em>Backbone view definitions</em></li>
+</ul>
+</li>
+<li>nls/ - <em>Localization files</em></li>
+<li>templates/  - <em>HTML templates</em></li>
+</ul>
+</li>
+</ul>
+<p>A plugin may encompass several different features or components, where you may find it necessary to further organize the code. In these cases, create a subdirectory in the <strong>js/</strong> directory, and mirror the above mentioned Javascript structure within it. Code that can or will be shared between components of the same plugin should be placed into a <strong>common/</strong> directory. All other files such as CSS, images, and HTML templates should remain in their respective directories. If feature-specific CSS is required, it can be placed in a separate file. Further organization into more subdirectories is up to the developer&#39;s discretion. Help and localization files are shared throughout the plugin.</p>
+<ul>
+<li>my-plugin/<ul>
+<li>css/<ul>
+<li>myPlugin.css</li>
+<li>myFeature.css</li>
+</ul>
+</li>
+<li>js/<ul>
+<li>common/<ul>
+<li>conf/</li>
+<li>models/</li>
+<li>views/</li>
+</ul>
+</li>
+<li>myFeature/<ul>
+<li>conf/</li>
+<li>models/</li>
+<li>views/</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>templates/<ul>
+<li>myPluginTemplate.html</li>
+<li>myFeatureTemplate.html</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="css">CSS</h3>
+<p>All CSS files should adhere to the previously mentioned indentation standard.</p>
+<h3 id="best-practices">Best Practices</h3>
+<p>Besides the basic coding standards and naming conventions noted in this document, these items are intended to serve as recommendations, not strict requirements.</p>
+<h5 id="rest-calls">REST Calls</h5>
+<p>Use Backbone data models to make REST API calls, unless it is for some reason not feasible.</p>
+<h5 id="loop-counters">Loop counters</h5>
+<p>When using numeric iterators in loops, use double character combinations, e.g., “ii”, “jj”, or “kk” instead of “i”, “j”, or “k” respectively. The purpose of this is to make code more easily searchable. When searching (via grep, find &amp; replace, regular expressions, or just visually skimming) a file for one of these tokens, an “i” is nearly impossible to find, whereas “ii” is easy. This is a simple rule that is easy to follow, and makes coding and maintenance easier.</p>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

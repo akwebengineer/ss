@@ -1,0 +1,137 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="utility-toolbar">Utility Toolbar</h1>
+<p>The Slipstream user interface contains a utility toolbar that provides a quick way to navigate to a set of application features without requiring the framework&#39;s menu-based navigation.  </p>
+<p><strong>[Insert toolbar image here]</strong></p>
+<p>The toolbar is extensible - a plugin can add elements to the toolbar and make those toolbar elements actionable.</p>
+<p>Toolbar elements come in two flavors - Icon-based elements and elements based on a plugin-provided view.</p>
+<h2 id="icon-based-toolbar-elements">Icon-based Toolbar Elements</h2>
+<p>Each icon toolbar element has an associated default icon that is displayed in the toolbar.</p>
+<p>Up to two <a href="activity.html">activities</a> can be associated with an icon toolbar element.  The <em>toolbar activity</em> is started when the toolbar element is instantiated and can be used to update the state of the toolbar icon asynchronously.  This could be useful, for example, for a toolbar element that displays the number of asynchronous system alerts that have occurred.  The <em>onSelect</em> activity is started whenever the toolbar icon is selected.</p>
+<p>Toolbar elements can define a <a href="view.html">view</a> that is rendered and displayed in a tooltip when a user hovers over the toolbar element.</p>
+<h3 id="defining-utility-toolbar-icon-elements">Defining Utility Toolbar Icon Elements</h3>
+<p>Utility toolbar elements are defined declaratively in the <a href="manifest.html">plugin manifest</a>.</p>
+<pre><code class="language-javascript"><span class="string">"utility_toolbar"</span>: [
+   {
+     <span class="string">"icon"</span>: <span class="string">"toolbar/commit.svg"</span>,
+     <span class="string">"activity"</span>: {
+       <span class="string">"module"</span>: <span class="string">"toolbarActivity"</span>
+     },
+     <span class="string">"onselect_activity"</span>: {
+       <span class="string">"module"</span>: <span class="string">"onSelectActivity"</span>
+     },
+     <span class="string">"hover"</span>: {
+       <span class="string">"view"</span>: <span class="string">"hoverView"</span>
+     }
+   }
+]</code></pre>
+<p>This manifest defines one utility toolbar element whose default icon is found in the file <em>/img/toolbar/commit.svg</em>, where <em>/img</em> is the plugin&#39;s images directory.  Both a <em>toolbar</em> and <em>onselect</em> activity are defined.  This toolbar element also provides a view defined in Javascript module <em>hoverView</em> that is rendered and displayed onhover.  The paths to toolbar activities and view modules are defined relative to the plugin&#39;s <em>js</em> directory.</p>
+<p>If more granular control is required with respect to RBAC or authentication restrictions for an activity associated with a toolbar element, then the activity definition can be referenced instead of the activity module:</p>
+<pre><code class="language-javascript">activities: [
+  {
+      <span class="string">"auth_required"</span>: <span class="literal">false</span>, 
+      <span class="string">"capabilities"</span>: [
+          ....
+      ],
+      <span class="string">"filters"</span>: [
+          {
+              <span class="string">"id"</span>: <span class="string">"some_filter"</span>
+              ...
+          }
+      ]
+  }
+],
+
+<span class="string">"utility_toolbar"</span>: [
+   {
+     <span class="string">"icon"</span>: <span class="string">"toolbar/commit.svg"</span>,
+     <span class="string">"activity"</span>: {
+         <span class="string">"filter"</span>: <span class="string">"some_filter"</span>
+     }
+   }
+]</code></pre>
+<p>The activity will be resolved via an intent that matches the specified filter, and all of the authentication and RBAC restrictions associated with the activity will be enforced.</p>
+<h3 id="modifying-the-element-s-state">Modifying the Element&#39;s State</h3>
+<p>The activities associated with an icon utility toolbar element receive a reference to a <a href="utilityToolbarIconElement.html">IconToolbarElement</a> object, called <em>toolbarElement</em>, in their <em>context</em> object.  This object exposes methods for modifying the state of the toolbar element.</p>
+<pre><code class="language-javascript"><span class="comment">// Set the element's icon badge to '5'</span>
+<span class="keyword">this</span>.context.toolbarElement.setIconBadge(<span class="number">5</span>);
+
+<span class="comment">// Set the element's icon to the image in 'img/someIcon.svg'</span>
+<span class="keyword">this</span>.context.toolbarElement.setIcon(<span class="string">"someIcon.svg"</span>);
+
+<span class="comment">// Set the element's icon badge to the image in 'img/iconBadge.svg'</span>
+<span class="keyword">this</span>.context.toolbarElement.setIconBadge(<span class="string">"iconBadge.svg"</span>);
+
+<span class="comment">// Disable the toolbar element</span>
+<span class="keyword">this</span>.context.toolbarElement.setEnabled(<span class="literal">false</span>);</code></pre>
+<h2 id="view-based-toolbar-elements">View-based Toolbar Elements</h2>
+<p>There are use cases for rendering an element in the toolbar that is not simply an icon.  For such cases, a view-based toolbar element can be created.  </p>
+<p>View-based toolbar elements allow a plugin to define any view and register it for rendering in the toolbar.  Only very simple views are recommended here as the toolbar is allocated very limited vertical screen real estate by the framework.</p>
+<h3 id="defining-view-based-toolbar-elements">Defining View-based Toolbar Elements</h3>
+<p>View-based utility toolbar elements are defined declaratively in the <a href="manifest.html">plugin manifest</a>.  An activity is specified that will be loaded by the framework and executed in order to produce a view for rendering in the toolbar.</p>
+<pre><code class="language-javascript">...
+
+<span class="string">"utility_toolbar"</span>: [
+   {
+     <span class="string">"activity"</span>: {
+       <span class="string">"module"</span>: <span class="string">"toolbarActivity"</span>
+     }
+   }
+]
+
+...</code></pre>
+<h2 id="modifying-the-element-s-state">Modifying the Element&#39;s State</h2>
+<p>The activity associated with a view-based utility toolbar element receive a reference to a <a href="utilityToolbarViewElement.html">ViewToolbarElement</a> object, called <em>toolbarElement</em>, in their <em>context</em> object.  This object exposes a method for setting the view used to render the toolbar element.</p>
+<pre><code class="language-javascript"><span class="comment">// Set the element's view</span>
+<span class="keyword">var</span> View = Backbone.View.extend({
+    render: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>...}
+});
+
+<span class="keyword">this</span>.context.toolbarElement.setView(<span class="keyword">new</span> View());</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

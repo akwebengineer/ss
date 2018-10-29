@@ -1,0 +1,102 @@
+<div>
+    <!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slipstream Widget Library</title>
+    <link rel="stylesheet" href="/assets/js/explorer/css/materialize.css"/>
+    <link rel="stylesheet" href="/assets/js/explorer/css/testApp.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="start">
+	
+    <header>
+      <nav class="top-nav teal">
+        <div class="container">
+          <div class="nav-wrapper"><a class="page-title"><i>Introduction</i> </a>
+        </div>
+      </nav>
+      <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo teal">Slipstream</li>
+        <li class="bold"><a href="." class="waves-effect waves-teal">About</a></li>
+        <li class="bold"><a href="../getting-started/" class="waves-effect waves-teal">Getting Started</a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li class="bold"><a href =".." class="collapsible-header  waves-effect waves-teal">Widget Demo</a>
+              <div class="collapsible-body">
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <main><div class="container">
+	  <div class="row">
+	    <div class="col s12 m9 l12"> 
+	    	<section class="sec1">
+					<h1 id="slipstream-views">Slipstream Views</h1>
+<p>Views are objects that represent some portion of a workflow&#39;s user interface.  </p>
+<h2 id="description">Description</h2>
+<p>Slipstream views are convention rather than definition.   Any object that has the following attributes is considered a view by Slipstream:</p>
+<ul>
+<li><p><strong>el</strong>
+A DOM node that is the root of the DOM tree containing the nodes representing the view.</p>
+</li>
+<li><p><strong>render</strong>
+A no-argument function that will render the DOM nodes of the view to the DOM tree rooted at <em>el</em>.</p>
+</li>
+<li><p><strong>close</strong>
+A no-argument function that is called when the framework closes the view.  Alternatively this function can be named <em>remove</em>. </p>
+<p>If a function with the name <em>close</em> is defined it will be called.  Otherwise, if a function with the name <em>remove</em> is defined it will be called.</p>
+<p>A view is closed when a new view is rendered into the content pane.</p>
+</li>
+</ul>
+<pre><code class="language-javascript"><span class="function"><span class="keyword">function</span> <span class="title">MyView</span><span class="params">()</span> {</span>
+   <span class="keyword">this</span>.el = document.createElement(<span class="string">"div"</span>);
+
+   <span class="keyword">this</span>.render = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      <span class="keyword">var</span> text = document.createTextNode(<span class="string">"Hello World!"</span>);
+      <span class="keyword">this</span>.el.appendChild(text);
+   }
+
+   <span class="keyword">this</span>.close = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      <span class="comment">// optional cleanup here</span>
+   }
+}</code></pre>
+<p>Optionally, a view object can define any or all of the following functions:</p>
+<ul>
+<li><p><strong>beforeRender</strong>
+If defined, this function is called by the framework before the <em>render</em> method is called.</p>
+</li>
+<li><p><strong>afterRender</strong>
+If defined, this function is called by the framework after the <em>render</em> method is called.</p>
+</li>
+<li><p><strong>beforeClose/beforeRemove</strong>
+If defined, this function is called by the framework before the <em>close</em>/<em>remove</em> method is called.</p>
+</li>
+<li><p><strong>afterClose/afterRemove</strong>
+if defined, this function is called by the framework after the <em>close</em>/<em>remove</em> method is called.</p>
+</li>
+</ul>
+<h2 id="rendering-views">Rendering Views</h2>
+<p>A view is rendered to Slipstream&#39;s content pane by calling the <a href="">setContentView()</a> method of an <a href="activity.html">Activity</a>.</p>
+<p>activity.js:</p>
+<pre><code class="language-javascript">...
+<span class="keyword">var</span> view = <span class="keyword">new</span> MyView();
+
+<span class="comment">// Render the view to the content pane</span>
+<span class="keyword">this</span>.setContentView(view);
+...</code></pre>
+
+				</section> 
+	    </div>  
+	   </div>
+    </div>
+    </main>   
+  </body>
+</html>
+
+</div>
+ 

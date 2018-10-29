@@ -1,0 +1,11 @@
+<div class="no-content-wrapper">
+    <div class="grid-no-content-title"> {{{title}}}</div>
+    <div class="grid-no-content-description">{{{description}}}</div>
+    <div class="clear"></div>
+    {{#buttons}}
+        <input type="button" class="grid-no-content-button slipstream-primary-button {{#isInactive}}slipstream-secondary-button{{/isInactive}}"
+        id="{{#id}}{{id}}{{/id}}{{^id}}{{key}}{{/id}}"
+        value="{{value}}"
+        />
+    {{/buttons}}
+</div>
