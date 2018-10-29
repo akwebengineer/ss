@@ -1,0 +1,1682 @@
+{
+  "name": "security-management",
+  "description": "Security management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+  "providers": [
+      {
+        "uri": "topics://vnd.juniper.sm.sse",
+        "module": "../../ui-common/js/sse/smSSEListener"
+      }
+    ],
+    "activities": [
+    {
+      "module": "objects/schedulerActivity",
+      "url_path": "/schedulers",
+      "filters": [
+        {
+          "id": "schedulers.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "sdManageScheduler"}
+       ]
+    },
+    {
+      "module": "objects/schedulerActivity",
+      "filters": [
+        {
+          "id": "schedulers.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        },
+        {
+          "id": "schedulers.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "sdCreateScheduler"}
+      ]
+    },
+    {
+      "module": "objects/schedulerActivity",
+      "filters": [
+        {
+          "id": "schedulers.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "sdModifyScheduler"}
+      ]
+    },
+    {
+      "module": "objects/schedulerActivity",
+      "filters": [
+        {
+          "id": "schedulers.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "sdAssignSchedulerDomainCap"}
+      ]
+    },
+    {
+      "module": "objects/schedulerActivity",
+      "filters": [
+        {
+          "id": "schedulers.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        },
+        {
+          "id": "schedulers.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.schedulers"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "sdDeleteScheduler"}
+       ]
+    },
+    {
+          "module": "objects/schedulerActivity",
+          "filters": [
+          {
+              "id": "schedulers.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.schedulers"
+              }
+          }]
+    },
+    {
+      "module": "objects/ipsSigActivity",
+      "filters": [
+        
+        {
+          "id": "ipssigs.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        },
+        {
+          "id": "ipssigs.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        }
+       ],
+       "capabilities": [
+          {"name": "createIDPSig"}
+       ] 
+     },
+     {
+      "module": "objects/ipsSigActivity",
+      "filters": [  
+        
+        {
+          "id": "ipssigs.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyIDPSig"}
+       ] 
+      }, 
+      {
+        "module": "objects/ipsSigActivity",
+        "filters": [  
+          {
+            "id": "ipssigs.select",
+            "action": "slipstream.intent.action.ACTION_SELECT",
+            "data": {
+              "mime_type": "vnd.juniper.net.ipssigs"
+            }
+          }
+        ]
+      },
+      {
+        "module": "objects/ipsSigActivity",
+        "url_path": "/ipssigs",
+        "filters": [  
+          {
+          "id": "ipssigs.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        }    
+      ],
+      "capabilities": [
+            {"name": "manageIDPSig"}
+         ]
+    },
+    {
+        "module": "objects/ipsSigActivity",
+        "filters": [  
+          {
+          "id": "ipssigs.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        }    
+      ],
+      "capabilities": [
+            {"name": "deleteIDPSig"}
+         ]
+    },
+    {
+      "module": "objects/ipsSigActivity",
+      "filters": [
+        {
+          "id": "ipssigs.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.ipssigs"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "url_path": "/utm-policy",
+      "filters": [
+        {
+          "id": "utm-policy.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewUTM"}
+       ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "filters": [
+        {
+          "id": "utm-policy.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        },
+        {
+          "id": "utm-policy.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createUTM"}
+       ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "filters": [
+        {
+          "id": "utm-policy.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyUTM"}
+       ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "filters": [
+        {
+          "id": "utm-policy.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignUTMPolicyToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "filters": [
+        {
+          "id": "utm-policy.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        },
+        {
+          "id": "utm-policy.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteUTM"}
+       ]
+    },
+    {
+      "module": "utm/policyActivity",
+      "filters": [
+        {
+          "id": "utm-policy.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-policy"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "url_path": "/content-filtering",
+      "filters": [
+        {
+          "id": "content-filtering.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewContentFiltering"}
+       ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "filters": [
+        {
+          "id": "content-filtering.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        },
+        {
+          "id": "content-filtering.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createContentFiltering"}
+       ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "filters": [
+        {
+          "id": "content-filtering.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyContentFiltering"}
+       ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "filters": [
+
+        {
+          "id": "content-filtering.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignContentFilteringProfileToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "filters": [
+        {
+          "id": "content-filtering.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        },
+        {
+          "id": "content-filtering.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteContentFiltering"}
+       ]
+    },
+    {
+      "module": "utm/contentFilteringActivity",
+      "filters": [
+        {
+          "id": "content-filtering.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.content-filtering"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "url_path": "/web-filtering",
+      "filters": [
+        {
+          "id": "web-filtering.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewWebFiltering"}
+       ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "filters": [
+        {
+          "id": "web-filtering.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        },
+        {
+          "id": "web-filtering.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createWebFiltering"}
+       ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "filters": [
+        {
+          "id": "web-filtering.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyWebFiltering"}
+       ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "filters": [
+        {
+          "id": "web-filtering.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignWebFilteringProfileToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "filters": [
+        {
+          "id": "web-filtering.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        },
+        {
+          "id": "web-filtering.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteWebFiltering"}
+       ]
+    },
+    {
+      "module": "utm/webFilteringActivity",
+      "filters": [
+        {
+          "id": "web-filtering.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.web-filtering"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "url_path": "/utm-antispam",
+      "filters": [
+        {
+          "id": "utm-antispam.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewAntiSpam"}
+       ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "filters": [
+        {
+          "id": "utm-antispam.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        },
+        {
+          "id": "utm-antispam.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createAntiSpam"}
+       ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "filters": [
+        {
+          "id": "utm-antispam.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyAntiSpam"}
+       ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "filters": [
+        {
+          "id": "utm-antispam.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignAntiSpamProfileToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "filters": [
+        {
+          "id": "utm-antispam.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        },
+        {
+          "id": "utm-antispam.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteAntiSpam"}
+       ]
+    },
+    {
+      "module": "utm/antispamActivity",
+      "filters": [
+        {
+          "id": "utm-antispam.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antispam"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "url_path": "/utm-antivirus",
+      "filters": [
+        {
+          "id": "utm-antivirus.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewAntiVirus"}
+       ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "filters": [
+        {
+          "id": "utm-antivirus.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        },
+        {
+          "id": "utm-antivirus.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createAntiVirus"}
+       ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "filters": [
+        {
+          "id": "utm-antivirus.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyAntiVirus"}
+       ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "filters": [
+        {
+          "id": "utm-antivirus.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignAntiVirusProfileToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "filters": [
+        {
+          "id": "utm-antivirus.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/antivirusActivity",
+      "filters": [
+        {
+          "id": "utm-antivirus.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        },
+        {
+          "id": "utm-antivirus.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-antivirus"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteAntiVirus"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "url_path": "/utm-url-category",
+      "filters": [
+        {
+          "id": "utm-url-category.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewURLCategory"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "filters": [
+        {
+          "id": "utm-url-category.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        },
+        {
+          "id": "utm-url-category.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createURLCategory"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "filters": [
+        {
+          "id": "utm-url-category.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyURLCategory"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "filters": [
+        {
+          "id": "utm-url-category.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignUrlCategoryListToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "filters": [
+        {
+          "id": "utm-url-category.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        },
+        {
+          "id": "utm-url-category.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteURLCategory"}
+       ]
+    },
+    {
+      "module": "utm/urlCategoryActivity",
+      "filters": [
+        {
+          "id": "utm-url-category.select",
+          "action": "slipstream.intent.action.ACTION_SELECT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-category"
+          }
+        }
+      ]
+    },
+    {
+          "module": "utm/urlCategoryActivity",
+          "filters": [
+          {
+              "id": "utm-url-category.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.utm-url-category"
+              }
+          }]
+    },
+    {
+      "module": "utm/urlPatternsActivity",
+      "url_path": "/utm-url-patterns",
+      "filters": [
+        {
+          "id": "utm-url-patterns.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewURLPattern"}
+      ]
+    },
+    {
+      "module": "utm/urlPatternsActivity",
+      "filters": [
+        {
+          "id": "utm-url-patterns.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        },
+        {
+           "id": "utm-url-patterns.clone",
+           "action": "slipstream.intent.action.ACTION_CLONE",
+           "data": {
+             "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createURLPattern"}
+      ]
+    },
+    {
+      "module": "utm/urlPatternsActivity",
+      "filters": [
+        {
+          "id": "utm-url-patterns.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyURLPattern"}
+      ]
+    },
+    {
+      "module": "utm/urlPatternsActivity",
+      "filters": [
+        {
+          "id": "utm-url-patterns.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignUrlPatternToDomainCap"}
+      ]
+    },
+    {
+      "module": "utm/urlPatternsActivity",
+      "filters": [
+        {
+          "id": "utm-url-patterns.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        },
+        {
+          "id": "utm-url-patterns.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-url-patterns"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteURLPattern"}
+       ]
+    },
+    {
+          "module": "utm/urlPatternsActivity",
+          "filters": [
+          {
+              "id": "utm-url-patterns.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.utm-url-patterns"
+              }
+          }]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "url_path": "/utm-device",
+      "filters": [
+        {
+          "id": "utm-device.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewUTMDeviceProfile"}
+       ]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "filters": [
+        {
+          "id": "utm-device.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        },
+        {
+          "id": "utm-device.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+           "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createUTMDeviceProfile"}
+       ]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "filters": [
+        {
+          "id": "utm-device.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyUTMDeviceProfile"}
+       ]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "filters": [
+        {
+          "id": "utm-device.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignUTMDeviceProfileToDomainCap"}
+       ]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "filters": [
+        {
+          "id": "utm-device.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ]
+    },
+    {
+      "module": "utm/deviceActivity",
+      "filters": [
+        {
+          "id": "utm-device.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        },
+        {
+          "id": "utm-device.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.utm-device"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteUTMDeviceProfile"}
+       ]
+    },
+    {
+      "module": "monitorSettingsActivity",
+      "url_path": "/monitor-settings",
+      "filters": [
+        {
+          "id": "monitor-settings.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.monitor-settings"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ModifyApplicationSetting"}
+       ]
+    },
+    {
+      "module": "signatureDatabaseActivity",
+      "url_path": "/signature-database",
+      "filters": [
+        {
+          "id": "signature-database.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        }
+      ]
+    },
+    {
+      "module": "signatureDatabaseActivity",
+      "filters": [
+        {
+          "id": "signature-database.download-history",
+          "action": "sd.intent.action.ACTION_DOWNLOAD_HISTORY",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "downloadHistory"}
+      ]
+    },
+    {
+      "module": "signatureDatabaseActivity",
+      "filters": [
+        {
+          "id": "signature-database.download",
+          "action": "sd.intent.action.ACTION_DOWNLOAD",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        },
+        {
+          "id": "signature-database.download-configuration",
+          "action": "sd.intent.action.ACTION_DOWNLOAD_CONFIGURATION",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        },
+        {
+          "id": "signature-database.upload",
+          "action": "sd.intent.action.ACTION_UPLOAD",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "downloadSig"}
+      ]
+    },
+    {
+      "module": "signatureDatabaseActivity",
+      "filters": [
+        {
+          "id": "signature-database.install",
+          "action": "sd.intent.action.ACTION_INSTALL",
+          "data": {
+            "mime_type": "vnd.juniper.net.signature-database"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "installSig"}
+      ]
+    },
+    {
+      "module": "logcollector/logCollectorConfigActivity",
+      "url_path": "/logging_nodes",
+      "filters": [
+        {
+          "id": "logging_nodes.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.logging_nodes"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ReadFabric"}
+       ]
+    },
+    {
+      "module": "logcollector/logCollectorConfigActivity",
+      "filters": [
+        {
+          "id": "logging_nodes.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.logging_nodes"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "AddNode"}
+       ]
+    },
+    {
+      "module": "logcollector/logCollectorConfigActivity",
+      "filters": [
+        {
+          "id": "logging_nodes.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.logging_nodes"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "DeleteNode"}
+       ]
+    },
+    
+    {
+      "module": "vd/virtualProviderActivity",
+      "filters": [
+        {
+          "id": "virtual-providers.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.virtualproviders"
+          }
+        }
+      ]
+    },
+    {
+      "module": "vd/vmImageActivity",
+      "filters": [
+        {
+          "id": "vm-images.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vmimage"
+          }
+        }
+      ]
+    },
+    {
+      "module": "vd/virtualDeviceTemplatesActivity",
+      "filters": [
+        {
+          "id": "virtual-device-templates.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.virtualdevicetemplates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "vd/deployStatusActivity",
+      "filters": [
+        {
+          "id": "deploy-status.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.deploystatus"
+          }
+        }
+      ]
+    },
+    {
+      "module": "secIntel/secintelConnectorActivity",
+      "filters": [
+        {
+          "id": "secintel-connectors.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-connectors"
+          }
+        }
+      ]
+    },
+    {
+      "module": "secIntel/secintelPolicyActivity",
+      "filters": [
+        {
+          "id": "secintel-policies.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-policies"
+          }
+        },
+        {
+          "id": "secintel-policies.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-policies"
+          }
+        }
+      ]
+    },
+    {
+      "module": "secIntel/infoSourceActivity",
+      "filters": [
+        {
+          "id": "secintel-info-sources.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-info-sources"
+          }
+        }
+      ]
+    },
+    {
+      "module": "secIntel/dynamicAddressActivity",
+      "filters": [
+        {
+          "id": "secintel-dynamic-addresses.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-dynamic-addresses"
+          }
+        }
+      ]
+    },
+    {
+      "module": "secIntel/secintelProfileActivity",
+      "filters": [
+        {
+          "id": "secintel-profiles.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.secintel-profiles"
+          }
+        }
+      ]
+    },
+  {
+      "module": "objects/appsigActivity",
+      "url_path": "/appsigs",
+      "filters": [
+        {
+          "id": "appsigs.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        },
+        {
+          "id": "appsigs.detailedView",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        },
+        {
+          "id": "appsigs.select",
+          "action": "slipstream.intent.action.ACTION_SELECT",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        }
+        ],
+        "capabilities": [
+          {"name": "manageAppSig"}
+       ]
+        
+       },
+        {
+      "module": "objects/appsigActivity",
+      "filters": [
+         {
+          "id": "appsigs.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        },
+        {
+          "id": "appsigs.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        }
+        ],
+        "capabilities": [
+          {
+            "name": "createAppSig"
+          }
+       ]
+        
+      },
+      {
+      "module": "objects/appsigActivity",
+      "filters": [
+         {
+          "id": "appsigs.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+          }
+        }
+        ],
+        "capabilities": [
+          {"name": "modifyAppSig"}
+       ]
+      },
+
+       {
+      "module": "objects/appsigActivity",
+      "filters": [
+       {
+          "id": "appsigs.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.appsigs"
+           }
+       }
+        ],
+        "capabilities": [
+          {"name": "deleteAppSig"}
+       ]
+
+    },
+    {
+      "module": "jobs/jobExpotActivity",
+      "filters": [
+          {
+            "id": "job.export",
+            "action": "slipstream.intent.action.ACTION_EXPORT",
+            "data": {
+            "mime_type": "vnd.juniper.net.job.export"
+            }
+          }
+        ]
+    },
+    {
+      "module": "importconfig/importConfigActivity",
+      "filters": [
+          {
+            "id": "devices.import",
+            "action": "slipstream.intent.action.ACTION_IMPORT",
+            "data": {
+            "mime_type": "vnd.juniper.net.importconfig"
+            }
+          },
+          {
+            "id": "devices.import",
+            "action": "sd.intent.action.ACTION_IMPORT_DEVICECHANGE",
+            "data": {
+            "mime_type": "vnd.juniper.net.importchange"
+            }
+          },
+          {
+            "id": "policy.rollback",
+            "action": "sd.intent.action.ACTION_ROLLBACK",
+            "data": {
+            "mime_type": "vnd.juniper.net.rollback"
+            }
+          },
+          {
+              "id": "policy.importzip",
+              "action": "sd.intent.action.ACTION_IMPORT_ZIP",
+              "data": {
+                  "mime_type": "vnd.juniper.net.import_zip"
+              }
+          }
+        ],
+        "capabilities": [
+          {"name": "ImportDevice"}
+       ]
+    },
+    {
+      "module": "publish/deviceUpdateActivity",
+      "filters": [
+          {
+            "id": "devices.updateAllSdChangedDevices",
+            "action": "slipstream.intent.action.ACTION_UPDATE",
+            "data": {
+            "mime_type": "vnd.juniper.net.sd.device.update"
+            }
+          },
+          {
+            "id": "devices.update",
+            "action": "slipstream.intent.action.ACTION_UPDATE_ALL_SD_CHANGED_DEVICES",
+            "data": {
+            "mime_type": "vnd.juniper.net.sd.device.updateAllSdChangedDevices"
+            }
+          }
+        ]
+    },
+    {
+      "module": "publish/devicePreviewActivity",
+      "filters": [
+          {
+            "id": "devices.preview",
+            "action": "slipstream.intent.action.ACTION_PREVIEW",
+            "data": {
+            "mime_type": "vnd.juniper.net.sd.device.preview"
+            }
+          },
+          {
+            "id": "devices.view.change",
+            "action": "sd.intent.action.ACTION_VIEW_DEVICECHANGE",
+            "data": {
+            "mime_type": "vnd.juniper.net.viewchange"
+            }
+          }
+        ]
+    },
+
+    {
+      "module": "jobs/smJobDetailsActivity",
+      "filters": [
+          {
+            "id": "sm.job.detailedView",
+            "action": "Space.Intent.action.DETAILED_JOB_VIEW",
+            "data": {
+            "mime_type": "vnd.net.juniper.sm.job.detailedView"
+            }
+          }
+        ]
+    },
+    {
+      "module": "publish/retryUpdateActivity",
+      "filters": [
+          {
+            "id": "sm.job.retryUpdateView",
+            "action": "Space.Intent.action.RETRY_JOB",
+            "data": {
+            "mime_type": "application/vnd.juniper.sd.device-management.update-devices"
+            }
+          }
+        ]
+    },
+    {
+      "module": "publish/publishActivity",
+      "filters": [
+          {
+            "id": "service.vpn.publish",
+            "action": "slipstream.SDK.Intent.action.ACTION_PUBLISH",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.vpn.publish"
+            }
+          }
+       ],
+        "capabilities": [
+          {"name": "PublishVPN"}
+       ]
+    },
+    {
+      "module": "publish/publishActivity",
+      "filters": [
+          {
+            "id": "service.ips.publish",
+            "action": "slipstream.SDK.Intent.action.ACTION_PUBLISH",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.ips.publish"
+            }
+          } 
+        ],
+        "capabilities": [
+          {"name": "PublishIPSPolicy"}
+       ]
+    },
+    {
+      "module": "publish/publishActivity",
+      "filters": [
+          {
+            "id": "service.fw.publish",
+            "action": "slipstream.SDK.Intent.action.ACTION_PUBLISH",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.fw.publish"
+            }
+          } 
+        ],
+        "capabilities": [
+          {"name": "PublishPolicy"}
+       ]
+    },
+    {
+      "module": "publish/publishActivity",
+      "filters": [
+          {
+            "id": "service.nat.publish",
+            "action": "slipstream.SDK.Intent.action.ACTION_PUBLISH",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.nat.publish"
+            }
+          } 
+        ],
+        "capabilities": [
+          {"name": "publishNATPolicy"}
+       ]
+    },
+    {
+      "module": "publish/publishActivity",
+      "filters": [
+          {
+            "id": "service.vpn.update",
+            "action": "slipstream.SDK.Intent.action.ACTION_UPDATE",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.vpn.update"
+            }
+          },
+          {
+            "id": "service.ips.update",
+            "action": "slipstream.SDK.Intent.action.ACTION_UPDATE",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.ips.update"
+            }
+          },
+          {
+            "id": "service.fw.update",
+            "action": "slipstream.SDK.Intent.action.ACTION_UPDATE",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.fw.update"
+            }
+          },
+          {
+            "id": "service.nat.update",
+            "action": "slipstream.SDK.Intent.action.ACTION_UPDATE",
+            "data": {
+            "mime_type": "vnd.juniper.net.service.nat.update"
+            }
+          }
+        ],
+        "capabilities": [
+          {"name": "UpdateDevice"}
+       ]
+    },
+   {
+      "module": "logcollector/statistics/statisticsConfigActivity",
+      "url_path": "/statistics-and-troubleshooting",
+      "filters": [
+        {
+          "id": "statistics-and-troubleshooting.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.statistics-and-troubleshooting"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ViewLogCollectors"}
+       ]
+    },
+    {
+      "module": "logcollector/logging/loggingDeviceConfigActivity",
+      "url_path": "/logging-devices",
+      "filters": [
+        {
+          "id": "logging-devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.logging-devices"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ViewLogCollectors"}
+       ]
+    }
+  ],
+
+  "navigation_paths": [
+    {
+      "path": "nav.configure/nav.ips_policy/nav.ipssigs",
+      "filter": "ipssigs.view"
+    },
+    {
+      "path": "nav.configure/nav.firewall_policy/nav.schedulers",
+      "filter": "schedulers.view"
+    },
+    {
+      "path": "nav.configure/nav.app_firewall/nav.appsigs",
+      "filter": "appsigs.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_policies",
+      "filter": "utm-policy.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_content_filtering",
+      "filter": "content-filtering.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_web_filtering",
+      "filter": "web-filtering.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_antispam",
+      "filter": "utm-antispam.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_antivirus",
+      "filter": "utm-antivirus.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_url_category_list",
+      "filter": "utm-url-category.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_url_patterns",
+      "filter": "utm-url-patterns.view"
+    },
+    {
+      "path": "nav.configure/nav.utm/nav.utm_device",
+      "filter": "utm-device.view"
+    },
+    {
+      "path": "nav.administration/nav.monitor_settings",
+      "filter": "monitor-settings.view"
+    },
+    {
+      "path": "nav.administration/nav.signature_database",
+      "filter": "signature-database.view"
+    },
+    {
+      "path": "nav.administration/nav.log_collector_config/nav.logging_nodes",
+      "filter": "logging_nodes.view"
+    },
+    {
+      "path": "nav.administration/nav.log_collector_config/nav.statistics_and_troubleshooting",
+      "filter": "statistics-and-troubleshooting.view"
+    },
+    {
+      "path": "nav.administration/nav.log_collector_config/nav.logging_devices",
+      "filter": "logging-devices.view"
+    }   
+  ]
+}

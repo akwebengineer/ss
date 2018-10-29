@@ -1,0 +1,15 @@
+[
+    {
+    	"context": "Policies Applied Before 'Device Specific Policies'",
+    	"policyOrderPosition" : "-1"
+    },
+    {
+    	"context": "Device Specific Policies",
+    	"policyOrderPosition" : "0"
+    },
+    {
+    	"context": "Policies Applied After 'Device Specific Policies'",
+    	"policyOrderPosition" : "1"
+    }
+]    
+    	

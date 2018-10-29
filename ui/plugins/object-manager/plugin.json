@@ -1,0 +1,580 @@
+{
+  "name": "object-manager",
+  "description": "Objects Manager for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+    "activities": [
+    {
+      "module": "objects/addressActivity",
+      "url_path": "/addresses",
+      "filters": [
+        {
+          "id": "addresses.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageAddress"}
+      ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+          "id": "addresses.view.custom.container",
+          "action": "sd.intent.action.ACTION_LIST_CUSTOM_CONTAINER",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+        {"name": "manageAddress"}
+      ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+          "id": "addresses.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        },
+        {
+          "id": "addresses.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createAddress"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+          "id": "addresses.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ModifyAddress"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+            "id": "addresses.import",
+            "action": "slipstream.intent.action.ACTION_IMPORT",
+            "data": {
+              "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createAddress"},
+          {"name": "ModifyAddress"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+            "id": "addresses.replace",
+            "action": "sd.intent.action.ACTION_REPLACE",
+            "data": {
+              "mime_type": "vnd.juniper.net.addresses"
+            }
+        }
+      ],
+      "capabilities": [
+          {"name": "ReplaceAddresses"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+          "id": "addresses.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignAddressToDomainCap"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+            "id": "addresses.delete",
+            "action": "sd.intent.action.ACTION_DELETE",
+            "data": {
+              "mime_type": "vnd.juniper.net.addresses"
+            }
+        },
+        {
+            "id": "addresses.delete-unused",
+            "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+            "data": {
+              "mime_type": "vnd.juniper.net.addresses"
+            }
+        }
+      ],
+      "capabilities": [
+          {"name": "DeleteAddresses"}
+       ]
+    },
+    {
+      "module": "objects/addressActivity",
+      "filters": [
+        {
+          "id": "addresses.select",
+          "action": "slipstream.intent.action.ACTION_SELECT",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        },
+        {
+            "id": "addresses.export",
+            "action": "slipstream.intent.action.ACTION_EXPORT",
+            "data": {
+              "mime_type": "vnd.juniper.net.addresses"
+          }
+        },
+        {
+          "id": "addresses.show-duplicates",
+          "action": "sd.intent.action.ACTION_SHOW_DUPLICATES",
+          "data": {
+            "mime_type": "vnd.juniper.net.addresses"
+          }
+        }
+      ]
+    },
+    {
+          "module": "objects/addressActivity",
+          "filters": [
+          {
+              "id": "addresses.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.addresses"
+              }
+          }]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "url_path": "/services",
+      "filters": [
+        {
+          "id": "services.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageApplications"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.view.custom.container",
+          "action": "sd.intent.action.ACTION_LIST_CUSTOM_CONTAINER",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+        {"name": "manageApplications"}
+      ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        },
+        {
+          "id": "services.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createApplications"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ModifyApplication"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+            "id": "services.replace",
+            "action": "sd.intent.action.ACTION_REPLACE",
+            "data": {
+              "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ReplaceApplications"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignApplicationToDomainCap"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        },
+        {
+          "id": "services.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "DeleteApplication"}
+       ]
+    },
+    {
+      "module": "objects/serviceActivity",
+      "filters": [
+        {
+          "id": "services.select",
+          "action": "slipstream.intent.action.ACTION_SELECT",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        },
+        {
+          "id": "services.show-duplicates",
+          "action": "sd.intent.action.ACTION_SHOW_DUPLICATES",
+          "data": {
+            "mime_type": "vnd.juniper.net.services"
+          }
+        }
+      ]
+    },
+    {
+          "module": "objects/serviceActivity",
+          "filters": [
+          {
+              "id": "services.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.services"
+              }
+          }]
+    },
+    {
+      "module": "objects/variableActivity",
+      "url_path": "/variables",
+      "filters": [
+        {
+          "id": "variables.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageVariable"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+          "id": "variables.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.variables"
+          }
+        },
+        {
+          "id": "variables.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createVariable"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+          "id": "variables.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyVariable"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+            "id": "variables.import",
+            "action": "slipstream.intent.action.ACTION_IMPORT",
+            "data": {
+              "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createVariable"},
+          {"name": "modifyVariable"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+          "id": "variables.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignVariableToDomainCap"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+            "id": "variables.delete",
+            "action": "sd.intent.action.ACTION_DELETE",
+            "data": {
+              "mime_type": "vnd.juniper.net.variables"
+            }
+        },
+        {
+            "id": "variables.delete-unused",
+            "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+            "data": {
+              "mime_type": "vnd.juniper.net.variables"
+            }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteVariable"}
+       ]
+    },
+    {
+      "module": "objects/variableActivity",
+      "filters": [
+        {
+            "id": "variables.export",
+            "action": "slipstream.intent.action.ACTION_EXPORT",
+            "data": {
+              "mime_type": "vnd.juniper.net.variables"
+          }
+        }
+      ]
+    },
+    {
+          "module": "objects/variableActivity",
+          "filters": [
+          {
+              "id": "variables.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.variables"
+              }
+          }]
+    },
+    {
+      "module": "objects/zoneSetActivity",
+      "url_path": "/zone-sets",
+      "filters": [
+        {
+          "id": "zone-sets.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageZoneSet"}
+      ]
+    },
+    {
+      "module": "objects/zoneSetActivity",
+      "filters": [
+        {
+          "id": "zone-sets.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        },
+        {
+          "id": "zone-sets.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createZoneSet"}
+      ]
+    },
+    {
+      "module": "objects/zoneSetActivity",
+      "filters": [
+        {
+          "id": "zone-sets.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyZoneSet"}
+      ]
+    },
+    {
+      "module": "objects/zoneSetActivity",
+      "filters": [
+        {
+          "id": "zone-sets.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        },
+        {
+          "id": "zone-sets.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteZoneSet"}
+       ]
+    },
+    {
+      "module": "objects/zoneSetActivity",
+      "filters": [
+        {
+          "id": "zone-sets.show-duplicates",
+          "action": "sd.intent.action.ACTION_SHOW_DUPLICATES",
+          "data": {
+            "mime_type": "vnd.juniper.net.zone-sets"
+          }
+        }
+      ]
+    },
+    {
+          "module": "objects/zoneSetActivity",
+          "filters": [
+          {
+              "id": "zone-sets.show-detail-view",
+              "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+              "data": {
+                "mime_type": "vnd.juniper.net.zone-sets"
+              }
+          }]
+    }
+
+  ],
+
+  "navigation_paths": [
+    {
+      "path": "nav.configure/nav.shared_objects/nav.addresses",
+      "filter": "addresses.view"
+    },
+    {
+      "path": "nav.configure/nav.shared_objects/nav.applications",
+      "filter": "services.view"
+    },
+    {
+      "path": "nav.configure/nav.shared_objects/nav.variables",
+      "filter": "variables.view"
+    },
+    {
+      "path": "nav.configure/nav.shared_objects/nav.zone_sets",
+      "filter": "zone-sets.view"
+    }
+  ]
+}

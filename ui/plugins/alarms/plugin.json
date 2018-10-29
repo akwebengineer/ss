@@ -1,0 +1,36 @@
+{
+"name": "alarms",
+"description": "Alarms - to view system-generated alarms",
+"publisher": "Juniper Networks, Inc.",
+"version": "0.0.1",
+"release_date": "30.04.2016",
+"min_platform_version": "0.0.1",
+"activities":
+    [
+        {
+        "module": "alarmsActivity",
+        "url_path": "/generated-alarms",
+        "filters": [{
+            "id": "alarms.view",
+            "action": "slipstream.intent.action.ACTION_LIST",
+            "data": {
+                "mime_type": "vnd.juniper.net.alarms"
+            }
+        },
+        {
+            "id": "alarms.detailedView",
+            "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+            "data": {
+                "mime_type": "vnd.juniper.net.alarms"
+            }
+        }]
+        }
+    ],
+    "navigation_paths": [
+        {
+            "path": "nav.monitors/nav.alerts_alarms/nav.alarms",
+            "filter": "alarms.view"
+        }
+    ]
+}
+

@@ -1,0 +1,236 @@
+{
+  "name": "vpn-management",
+  "description": "VPN management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+  "activities": [
+    {
+      "module": "vpn/ipsecVpnsActivity",
+      "url_path": "/vpns",
+      "filters": [
+        {
+          "id": "vpns.list",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpns"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "name": "VPN.read"
+        }
+      ]
+    },
+    {
+      "module": "vpn/ipsecVpnsActivity",
+      "filters": [
+        {
+          "id": "vpns.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpns"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "name": "VPN.create"
+        }
+      ]
+    },
+    {
+      "module": "vpn/extranetDevicesActivity",
+      "url_path": "/extranet-devices",
+      "filters": [
+        {
+          "id": "extranet-devices.list",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.extranet-devices"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "name": "manageExtranetDeviceCap"
+        }
+      ]
+    },
+    {
+      "module": "vpn/extranetDevicesActivity",
+      "url_path": "/extranet-devices",
+      "filters": [
+        {
+          "id": "extranet-devices.list",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.extranet-devices"
+          },
+          "capabilities": [
+            {
+              "name": "manageExtranetDeviceCap"
+            }
+          ]
+        },
+        {
+          "id": "extranet-devices.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.extranet-devices"
+          },
+          "capabilities": [
+            {
+              "name": "createExtranetDeviceCap"
+            }
+          ]
+        },
+        {
+          "id": "extranet-devices.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.extranet-devices"
+          },
+          "capabilities": [
+            {
+              "name": "modifyExtranetDeviceCap"
+            }
+          ]
+        },
+        {
+          "id": "extranet-devices.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.extranet-devices"
+          },
+          "capabilities": [
+            {
+              "name": "deleteExtranetDeviceCap"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "vpn/vpnProfilesActivity",
+      "url_path": "/vpn-profiles",
+      "filters": [
+        {
+          "id": "vpn-profiles.list",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "name": "VPNProfile.read"
+        }
+      ]
+    },
+    {
+      "module": "vpn/vpnProfilesActivity",
+      "url_path": "/vpn-profiles",
+      "filters": [
+        {
+          "id": "vpn-profiles.list",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          },
+          "capabilities": [
+            {
+              "name": "VPNProfile.read"
+            }
+          ]
+        },
+        {
+          "id": "vpn-profiles.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          },
+          "capabilities": [
+            {
+              "name": "VPNProfile.create"
+            }
+          ]
+        },
+        {
+          "id": "vpn-profiles.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          },
+          "capabilities": [
+            {
+              "name": "VPNProfile.update"
+            }
+          ]
+        },
+        {
+          "id": "vpn-profiles.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          }
+        },
+        {
+          "id": "vpn-profiles-assign-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          }
+        },
+        {
+          "id": "vpn-profiles.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          }
+        },
+        {
+          "id": "vpn-profiles.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpn-profiles"
+          },
+          "capabilities": [
+            {
+              "name": "VPNProfile.delete"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "vpn/vpnCreateWizardActivity",
+      "filters": [
+        {
+          "id": "vpns.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.vpn.vpns.create"
+          }
+        }
+      ]
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path": "nav.configure/nav.vpn-management/nav.vpns",
+      "filter": "vpns.list"
+    },
+    {
+      "path": "nav.configure/nav.vpn-management/nav.extranet-devices",
+      "filter": "extranet-devices.list"
+    },
+    {
+      "path": "nav.configure/nav.vpn-management/nav.vpn-profiles",
+      "filter": "vpn-profiles.list"
+    }
+  ]
+}

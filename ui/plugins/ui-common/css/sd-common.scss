@@ -1,0 +1,276 @@
+// css for timePickerWidget
+
+.time-picker-widget .form_section .elementinput {
+  width: 90px;
+}
+.time-picker-widget .form_section .duration-element-input .elementlabel {
+    width: 60px;
+}
+.time-picker-widget .form_section .duration-element-input .elementlabel .left {
+    font-weight: bold;
+}
+.time-picker-widget .form_section .styleselect .left {
+    width: 97px;
+}
+.time-picker-widget .form_section .unit-element-input .elementlabel {
+    width: 40px !important;
+}
+
+.time-picker-widget .form-pattern .content {
+    padding-top:0;
+}
+
+label[for="add_timepicker_widget"] {
+    padding-top: 20px;
+}
+
+//css for block summary page
+.block_icon_button_first{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_first.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_first_hover{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_first_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_first_disable{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_first_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_next.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next_hover{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_next_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next_disable{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_next_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous{
+    height: 19px !important;
+    width: 71px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous_hover{
+    height: 19px !important;
+    width: 71px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous_disable{
+    height: 19px !important;
+    width: 71px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_last.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last_hover{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_last_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last_disable{
+    height: 19px !important;
+    width: 58px !important;
+    background: url('/installed_plugins/base-policy-management/images/block/icon_button_last_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+div#errorDivPublishWarning {
+  color: #F8AC19;
+  border: solid 2px #F8AC19;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 10px 10px 0 10px;
+  text-align: left;
+}
+
+
+.scheduler-label {
+  width: 400px;
+  height: 10px;
+  cursor: default !important;
+}
+
+.preview-legend {
+  width: 550px;
+  cursor: default !important;
+}
+
+.preview-legend-added-label {
+  display: inline-block;
+  width: 45px;
+}
+.preview-legend-deleted-label {
+  display: inline-block;
+  width: 55px;
+}
+.preview-legend-modified-label {
+  display: inline-block;
+  width: 58px;
+}
+
+.preview-legend-red {
+  background-color:red;
+  display:inline-block;
+  width:12px;
+}
+
+.preview-legend-green {
+  background-color:green;
+  display:inline-block;
+  width:12px;
+}
+
+.preview-legend-blue {
+  background-color:blue;
+  display:inline-block;
+  width:12px;
+}
+
+.preview-legend-black {
+  background-color:black;
+  display:inline-block;
+  width:12px;
+}
+
+.scheduler-label {
+  width: 400px;
+  height: 10px;
+  cursor: default !important;
+}
+$width : 14px;
+$height: 14px;
+
+.icon-dims-policy{
+  width: $width;
+  height:$height;
+  display: inline-block;
+  vertical-align: text-top;
+}
+.icon_info{
+  background-image: url("/installed_plugins/base-policy-management/images/icon_info.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_warning{
+  background-image: url("/installed_plugins/ui-common/images/icon_warn.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_error{
+  background-image: url("/installed_plugins/ui-common/images/icon_error.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_permit14X14{
+  background-image: url("/installed_plugins/ui-common/images/icon_permit14X14.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_deny14X14{
+  background-image: url("/installed_plugins/ui-common/images/icon_deny14X14.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_reject14X14{
+  background-image: url("/installed_plugins/ui-common/images/icon_reject14X14.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_permit_and_tunnel14X14{
+  background-image: url("/installed_plugins/ui-common/images/icon_permit_and_tunnel14X14.svg");
+  @extend .icon-dims-policy;
+}
+
+.icon_permit_and_tunnel14X14{
+  background-image: url("/installed_plugins/base-policy-management/images/icon_permit_and_tunnel14X14.svg");
+  @extend .icon-dims-policy;
+}
+$normalOptionColor : #444444;
+$labelGrayColor : #aaaaaa;
+
+.elementlabel-in-one-row{
+  width: 15px !important;
+  height: 30px;
+}
+
+.element-left-align{
+  margin-left: 165px !important;
+}
+
+.elementinput-multiple-in-one-row{
+  width: 100px !important;
+  margin-bottom: 10px;
+}
+
+.elementinput-in-one-row{
+  width: 140px !important;
+  margin-bottom: 10px;
+}
+
+.elementdate-row-left{
+  width: 150px !important;
+  margin-bottom: 10px;
+}
+
+.elementtime-row-right{
+  width: 100px !important;
+  margin-bottom: 10px;
+}
+
+.grid-widget .elementinput{
+  width: auto !important;
+  &>input{
+    width: 295px;
+  }
+}
+
+.elementinput-long {
+  margin-bottom: 10px;
+  width: 600px !important;
+}
+
+.elementinput-long-left {
+  margin-bottom: 10px;
+  padding-left: 20px !important;
+  width: 520px !important;
+}
+
+.element-left-label {
+  padding-top: 20px !important;
+  padding-left: 20px !important;
+}
+
+.element-left-input {
+  padding-top: 28px !important;
+  padding-left: 20px !important;
+}
+
+.element-left {
+  padding-left: 20px !important;
+  padding-bottom: 40px !important;
+  padding-top: 30px !important;
+}

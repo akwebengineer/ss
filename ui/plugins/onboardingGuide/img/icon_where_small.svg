@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="25px" height="30px" viewBox="0 0 25 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.1 (15681) - http://www.bohemiancoding.com/sketch -->
+    <title>Compass Arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="What's-New" sketch:type="MSArtboardGroup" transform="translate(-122.000000, -20.000000)" fill="#FFFFFF">
+            <path d="M134.50018,20 L122,48.8790909 L123.183193,50 L134.49982,45.2630682 L145.816807,50 L147,48.8790909 L134.50018,20 L134.50018,20 Z M145.576425,48.78125 L134.860032,44.2955682 L134.860032,32.2713636 L134.140328,32.2713636 L134.140328,44.2955682 L123.423575,48.78125 L123.271357,48.6370455 L134.49982,22.6955682 L145.728643,48.6370455 L145.576425,48.78125 L145.576425,48.78125 Z" id="Compass-Arrow" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

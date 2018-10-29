@@ -1,0 +1,30 @@
+<div class='ev-detail-view f16'>
+	<div style="padding-top: 5px">
+		<!--<span class='ev-time-range-display' style="font-family:Arial; font-size: 12px; font-weight: bold; color: #444">From 04:00pm to 04:10pm PDT</span>-->
+	</div>
+	<div class="ev-applied-filter"><!-- style="padding-bottom: 10px" --> 
+    </div>
+
+	{{#advancedSearch}}
+	<div class='ev-advanced-filter'>
+		<div class='ev-advanced-search'>
+		</div>
+		<div class='ev-filter-button'>Filter</div>
+	</div>
+	{{/advancedSearch}}
+
+	<div>
+		{{#aggregated-graph-view}}
+			<div class='ev-aggregated-graph-view'>
+				<div class='ev-aggregated-extra-space'>
+					<div class='aggList-itemview'></div>
+				</div>
+			</div>
+		{{/aggregated-graph-view}}
+
+		{{#grid}}
+			<div class='ev-detail-view-body'>
+			</div>
+		{{/grid}}
+	</div>
+</div>

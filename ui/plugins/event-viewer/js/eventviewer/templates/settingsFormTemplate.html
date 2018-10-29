@@ -1,0 +1,32 @@
+<div class="event-viewer-settings">
+	<form name="settings_form">
+
+    <div class="time-zone-selection-settings">
+        <!-- Input field -->
+        <div class="optionselection">
+            <input type="radio" data-validation="validtext" id="radio1" name="radio_button" value="option1" required="">
+            <label for="radio1">Local</label>
+        </div>
+        <div class="optionselection">
+            <input type="radio" data-validation="validtext" id="radio2" name="radio_button" value="option2" required="">
+            <label for="radio2">UTC</label>
+        </div>
+    </div>
+
+    <div class="resolve-ip-settings">
+        <!-- Input field -->
+        <div class="optionselection">
+            <input type="checkbox" data-validation="validtext" id="checkbox_enable" name="enable_disable" value="disable" checked="" required="">
+        </div>
+   </div>
+       
+     <div class="elementinput left">
+        <!-- Input field -->
+        <input type="number" data-validation="number" id="text_number" name="text_number" placeholder="50" data-minvalue="1" data-maxvalue="10000">
+        <!-- Error-UA display -->
+        <small class="error errorimage">Please enter a number between 1 and 1000</small>
+        <span class="inline-help"></span>
+    </div>
+
+	</form>
+<div>

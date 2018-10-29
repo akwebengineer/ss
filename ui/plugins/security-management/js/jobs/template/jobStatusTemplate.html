@@ -1,0 +1,12 @@
+<div class='job-status-panel'>
+    {{#jobsTO}}
+    <div class='job-status-each'>
+        <div class='job-status-icon {{jobStatusClass}}'>{{index}}</div>
+        <div class='job-name-current'>{{job-type}}</div>
+        <div><a class='sd-multi-job'>{{id}}</a></div>
+        <div class='job-status-current {{iconUrlClass}}'></div>
+    </div>
+    <div class='{{jobArrowClass}}'></div>
+    {{/jobsTO}}
+</div>
+<hr style="margin-bottom: 0 !important;">

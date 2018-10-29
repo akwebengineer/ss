@@ -1,0 +1,106 @@
+<table class='job-summary-table table-left'>
+    <tbody>
+    <tr>
+        <td class='job-label-left'>
+            <label for="displayfield-jobType">Job Type:</label>
+        </td>
+        <td>
+            <div id="displayfield-jobType" aria-invalid="false">{{job-type}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class='job-label-left'>
+            <label for="displayfield-jobId">Job ID:</label>
+        </td>
+        <td>
+            <div id="displayfield-jobId" aria-invalid="false">{{id}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class='job-label-left'>
+            <label for="displayfield-jobName">Job Name:</label>
+        </td>
+        <td>
+            <div id="displayfield-jobName" aria-invalid="false">{{name}}
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class='job-label-left'>
+            <label for="displayfield-owner">User:</label>
+        </td>
+        <td>
+            <div id="displayfield-owner" aria-invalid="false">{{owner}}
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td class='job-label-left'>
+            <label for="displayfield-blank"></label>
+        </td>
+        <td>
+            <div id="displayfield-blank" aria-invalid="false">
+            </div>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+<table class='job-summary-table'>
+    <tbody>
+
+
+    <tr>
+        <td>
+            <label for="displayfield-jobState">Job State:</label>
+        </td>
+        <td  style="padding: 0 0 0 10px">
+            <div id="displayfield-jobState" aria-invalid="false" style="display: inline-block; vertical-align: super">{{job-state}}</div>
+            <div class = 'job-summary-job-state {{jobStateIconClass}}'></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="displayfield-percentComplete">Percent Complete:</label>
+        </td>
+        <td>
+            <div id="displayfield-percentComplete" aria-invalid="false">{{percent-complete}}%
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="displayfield-scheduleStartTime">Scheduled Start Time:</label>
+        </td>
+        <td>
+            <div id="displayfield-scheduleStartTime" aria-invalid="false">
+                {{scheduled-start-time}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="displayfield-actualStartTime">Actual Start Time:</label>
+        </td>
+        <td>
+            <div id="displayfield-actualStartTime" aria-invalid="false">{{start-time}}
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="displayfield-endTime">End Time:</label>
+        </td>
+        <td>
+            <div id="displayfield-endTime" aria-invalid="false">{{end-time}}
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>

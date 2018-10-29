@@ -1,0 +1,46 @@
+<div class="app-secure-top-users-tool-tip-view">
+	<div style="color: #444; font-family: Arial; font-size:14px; border-bottom:1px solid #CCCCCC; height:45px; 
+			vertical-align:middle; font-weight: 400; padding:12px 0px 5px 10px;">
+		{{title}}
+	</div>
+
+	{{#header}}
+	<div style="line-height:15px; padding: 15px 0px 0px 10px">
+		<div style='display: inline-block; width: 150px;'>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px' id='appVis-session-count-link'># of Sessions: <a>{{sessions}}</a></label>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'># of blocks: {{blocks}}</label>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'>Category: {{category}}</label>
+		</div>
+
+		<div style='display: inline-block; width: 150px; '>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'>Bandwidth: {{total-bytes}}</label>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'>Risk Level: 
+				<img src="{{risk-source}}" alt="unknown"></label>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'>&nbsp</label>
+		</div>
+
+		<div style='display: inline-block; width: 300px; '>
+			<label style='font-family: Arial; color:#666; font-weight: 400; font-size: 11px'>Characteristics: 
+			<span style="font-size: 11px; font-weight: 400">{{characteristic}}</span></label>
+		</div>
+	</div>
+	{{/header}}
+
+	<div>
+		<label style="font-family: Arial; font-size: 14px; color: #444; padding-top:5px; padding-left: 10px; font-weight:400">Top 5 Users</label>
+	</div>	
+
+	<div class="app-secure-top-users-tool-tip-grid-view app-vis-tooltip-grid">
+	</div>
+	<!--
+	<div style="text-align: right">
+		<a class="view-all-users-link">View All Users</a>
+	</div>-->
+
+	<div style="padding:10px 0px 10px 0px; height: 45px; text-align: center">
+		<a class="view-all-users-link">View All Users</a>
+		<input type="button" value ="Block User(s)" name="blockUserButton" disabled="true" class="slipstream-primary-button disabled" id ="blockUserButton" />
+		<input type="button" value ="Block Application" name="blockApplicationButton" class="slipstream-primary-button" id ="blockApplicationButton" />
+	</div>
+
+</div>

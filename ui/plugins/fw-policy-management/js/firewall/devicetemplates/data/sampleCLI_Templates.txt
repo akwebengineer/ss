@@ -1,0 +1,1 @@
+set security policies from-zone $(from-zone-name) to-zone $(to-zone-name) policy $(fw-rule-name) then permit application-services gprs-gtp-profile gprs-pol

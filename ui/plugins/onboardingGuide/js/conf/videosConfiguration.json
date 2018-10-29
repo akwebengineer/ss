@@ -1,0 +1,50 @@
+[
+    {
+        "title": "Add Devices",
+        "video-src": "w6fOKSAf-JI",
+        "thumbnail": "Add_a_Device.png",
+        "description": "This video demonstrates the device discovery process."
+    },
+    {
+        "title": "Add Users",
+        "video-src": "GCLiz5NlXFs",
+        "thumbnail": "Add_a_User.png",
+        "description": "This video demonstrates the user management process."
+    },
+    {
+        "title": "Configure Dashboard Widgets",
+        "video-src": "SYlwLt-R3a8",
+        "thumbnail": "Configure_Dashboard_Widgets.png",
+        "description": "This video demonstrates building a customized dashboard."
+    },
+    {
+        "title": "Configure Zones",
+        "video-src": "Vuf0OTX7980",
+        "thumbnail": "Configure_Zones.png",
+        "description": "This video demonstrates the zone management process."
+    },
+    {
+        "title": "Create Rules",
+        "video-src": "fMKN8zkh7_k",
+        "thumbnail": "Create_a_rule.png",
+        "description": "This video demonstrates adding a rule to a firewall policy."
+    },
+    {
+        "title": "Import Policies",
+        "video-src": "Kes1futri7w",
+        "thumbnail": "Import_Policies.png",
+        "description": "This video demonstrates importing existing security policies from a device."
+    },
+    {
+        "title": "Publish Policies",
+        "video-src": "p7Lh_sGN30Y",
+        "thumbnail": "Publish_Policies.png",
+        "description": "This video demonstrates the policy publishing process."
+    },
+    {
+        "title": "Update Devices",
+        "video-src": "DzLdb7xmB7I",
+        "thumbnail": "Update_Devices.png",
+        "description": "This video demonstrates the device update process."
+    }
+]

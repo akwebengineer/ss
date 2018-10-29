@@ -1,0 +1,23 @@
+{
+  "name": "onboardingGuide",
+  "description": "Security Director User Onboarding Guide",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "12.21.2015",
+  "min_platform_version": "0.0.1",
+  "activities": [
+    {
+      "autostart" : true,
+      "module": "onboardingGuideActivity",
+      "filters": [
+        {
+          "id": "onboarding-guide.view",
+          "action": "slipstream.intent.action.ACTION_VIEW",
+          "data" : {
+              "mime_type": "vnd.juniper.net.onboarding-guide"
+          }
+        }
+      ]
+    }
+  ]
+}

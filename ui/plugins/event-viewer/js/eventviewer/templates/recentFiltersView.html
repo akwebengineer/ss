@@ -1,0 +1,14 @@
+<div>	
+	<div style='padding:5px; margin:10px 0px 10px 0px; font-weight:bold;'>
+		Recent Filters
+	</div>
+	<div style="width:900px; height:100px; overflow: auto;">
+		{{#recent-filters}}
+			<div style='display: inline-block; width: 175px; margin: 0.5em;'>			
+				<a class="ev-recent-filter-link" href='#' style='font-size: 11px; color: #3F79AC; text-decoration: underline;' name='{{name}}' data-filterid='{{filter-id}}'>
+					{{text}}
+				</a> 
+			</div>
+		{{/recent-filters}}	
+	</div>	
+</div>	

@@ -1,0 +1,64 @@
+{
+    "custom-address-lists":{
+        "@uri": "/api/juniper/sd/secintel-management/custom-address-lists",
+        "@total": "2",
+        "custom-address-list": [
+            {
+                "@uri": "/api/juniper/sd/secintel-management/custom-address-lists/131072",
+                "@href": "/api/juniper/sd/secintel-management/custom-address-lists/131072",
+                "created-by-user-name": "Juniper Networks Inc.",
+                "version": 2,
+                "id": 131072,
+                "description": "This global profile applies to all Security Intelligence Policies and can be used as a white list, permitting traffic and taking priority over the actions of other profiles", 
+                "domain-id": 2,
+                "name": "Global White List",
+                "info-source-list": {
+                    "info-source": [
+                        {
+                            "id": 393219,
+                            "domain-id": 2,
+                            "domain-name": "Global",
+                            "name": "cfu1"
+                        }, 
+                        {
+                            "id": 393221,
+                            "domain-id": 2,
+                            "domain-name": "Global",
+                            "name": "cfu2"
+                        }
+                    ]
+                }, 
+                "action": "PERMIT", 
+                "edit-version": 2,
+                "domain-name": "Global",
+                "last-modified-by-user-name": "super",
+                "category": "CustomAddressList",
+                "definition-type": "PREDEFINED"
+            }, 
+            {
+                "@uri": "/api/juniper/sd/secintel-management/custom-address-lists/131074",
+                "@href": "/api/juniper/sd/secintel-management/custom-address-lists/131074",
+                "created-by-user-name": "Juniper Networks Inc.",
+                "version": 2,
+                "id": 131074,
+                "description": "This global profile applies to all Security Intelligence Policies and can be used as a black list, blocking traffic and taking priority over the actions of other profiles", 
+                "domain-id": 2,
+                "name": "Global Black List",
+                "info-source-list": {
+                    "info-source": {
+                        "id": 393223,
+                        "domain-id": 2,
+                        "domain-name": "Global",
+                        "name": "cfu3"
+                    }
+                }, 
+                "action": "REJECT", 
+                "edit-version": 2, 
+                "domain-name": "Global",
+                "last-modified-by-user-name": "super",
+                "category": "CustomAddressList",
+                "definition-type": "PREDEFINED"
+            }
+        ]
+    }
+}

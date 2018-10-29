@@ -1,0 +1,131 @@
+{
+"name": "reports",
+"description": "Reports are generated based on a summary of network activity and status." ,
+"publisher": "Juniper Networks, Inc.",
+"version": "0.0.1",
+"release_date": "30.04.2016",
+"min_platform_version": "0.0.1",
+"activities":
+    [
+        {
+         "module": "reportsActivity",
+         "url_path": "/reports",
+         "filters": [
+               {
+                "id": "reports.view",
+                "action": "slipstream.intent.action.ACTION_LIST",
+                "data": {
+                  "mime_type": "vnd.juniper.net.reports"
+                }
+              }],
+              "capabilities": [
+              {"name": "viewReports"}
+           ]
+        },
+        {
+         "module": "reportsActivity",
+         "filters": [{
+                "id": "reports.select",
+                "action": "slipstream.intent.action.ACTION_SELECT",
+                "data": {
+                  "mime_type": "vnd.juniper.net.reports"
+                }
+            }]
+        },
+        {
+         "module": "reportsActivity",
+         "filters": [{
+                "id": "reports.edit",
+                "action": "slipstream.intent.action.ACTION_EDIT",
+                "data": {
+                    "mime_type": "vnd.juniper.net.reports"
+                }
+            }],
+            "capabilities": [
+              {"name": "modifyReports"}
+           ]
+        },
+        {
+         "module": "reportsActivity",
+         "filters": [{
+                "id": "reports.delete",
+                "action": "sd.intent.action.ACTION_DELETE",
+                "data": {
+                  "mime_type": "vnd.juniper.net.reports"
+                }
+            }],
+            "capabilities": [
+              {"name": "deleteReports"}
+           ]
+        },
+        {
+         "module": "reportsActivity",
+         "filters": [{
+              "id": "reports.clone",
+              "action": "slipstream.intent.action.ACTION_CLONE",
+              "data": {
+                "mime_type": "vnd.juniper.net.reports"
+              }
+            }, {
+              "id": "reports.create",
+              "action": "slipstream.intent.action.ACTION_CREATE",
+              "data": {
+                "mime_type": "vnd.juniper.net.reports"
+              }
+            }],
+          "capabilities": [
+              {"name": "createReports"}
+          ]
+        },
+        {
+         "module": "generatedReportsActivity",
+         "url_path": "/generatedreports",
+         "filters": [
+               {
+                "id": "generatedreports.view",
+                "action": "slipstream.intent.action.ACTION_LIST",
+                "data": {
+                  "mime_type": "vnd.juniper.net.generatedreports"
+                }
+              }],
+            "capabilities": [{
+              "name": "ReadAllReports"
+            }]
+        },
+        {
+         "module": "generatedReportsActivity",
+         "filters": [
+               {
+                "id": "generatedreports.select",
+                "action": "slipstream.intent.action.ACTION_SELECT",
+                "data": {
+                  "mime_type": "vnd.juniper.net.generatedreports"
+                }
+              }]
+        },
+        {
+         "module": "generatedReportsActivity",
+         "filters": [
+               {
+                "id": "generatedreports.delete",
+                "action": "sd.intent.action.ACTION_DELETE",
+                "data": {
+                  "mime_type": "vnd.juniper.net.generatedreports"
+                }
+              }],
+            "capabilities": [{
+              "name": "DeleteReport"
+            }]
+        }
+    ],
+    "navigation_paths": [
+        {
+          "path": "nav.reports/nav.generated_reports",
+          "filter": "generatedreports.view"
+        },
+        {
+          "path": "nav.reports/nav.security_reports",
+          "filter": "reports.view"
+        }
+    ]
+}

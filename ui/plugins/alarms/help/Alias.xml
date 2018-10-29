@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="ALERT_ALARM_OVERVIEW" Link="#cshid=1000" />
+    <Map Name="ALERT_ALARM_VIEWING" Link="#cshid=1002" />
+    <Map Name="ALERT_ALARM_DEFINITION_MAIN_FIELD" Link="#cshid=1003" />
+</CatapultAliasFile>

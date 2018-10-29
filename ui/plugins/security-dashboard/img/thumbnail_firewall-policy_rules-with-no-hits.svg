@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="168px" height="110px" viewBox="0 0 168 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.1 (15681) - http://www.bohemiancoding.com/sketch -->
+    <title>thumbnail_firewall-policy_rules-with-no-hits</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="thumbnail_firewall-policy_rules-with-no-hits" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-5" fill="#F5F5F5" sketch:type="MSShapeGroup" x="0" y="0" width="168" height="110"></rect>
+            <g id="Bar-Chart-Icon-Copy" transform="translate(56.000000, 54.000000)" sketch:type="MSShapeGroup">
+                <path d="M8.86847458,9.85966102 L39.7423729,9.85966102 L39.7423729,15.8522034 L8.86847458,15.8522034 L8.86847458,9.85966102 Z" id="Fill-1" fill="#F68B39"></path>
+                <path d="M8.86847458,6.41016949 L23.6949153,6.41016949 L23.6949153,0.417627119 L8.86847458,0.417627119 L8.86847458,6.41016949 Z" id="Fill-2" fill="#EC1C24"></path>
+                <path d="M8.86847458,28.7444068 L39.7423729,28.7444068 L39.7423729,34.7369492 L8.86847458,34.7369492 L8.86847458,28.7444068 Z" id="Fill-3" fill="#6398CF"></path>
+                <path d="M8.86847458,19.3023729 L54.4142373,19.3023729 L54.4142373,25.2949153 L8.86847458,25.2949153 L8.86847458,19.3023729 Z" id="Fill-4" fill="#78BB4C"></path>
+                <path d="M0,40 L56.6698305,40 L56.6698305,37.8257627 L0,37.8257627 L0,40 Z" id="Fill-5" fill="#D0D2D3"></path>
+                <path d="M0,35.0725424 L4.74576271,35.0725424 L4.74576271,33.7166102 L0,33.7166102 L0,35.0725424 Z" id="Fill-6" fill="#D0D2D3"></path>
+                <path d="M0,30.9627119 L4.74576271,30.9627119 L4.74576271,29.6061017 L0,29.6061017 L0,30.9627119 Z" id="Fill-7" fill="#D0D2D3"></path>
+                <path d="M0,26.8528814 L4.74576271,26.8528814 L4.74576271,25.4969492 L0,25.4969492 L0,26.8528814 Z" id="Fill-8" fill="#D0D2D3"></path>
+                <path d="M0,22.7430508 L4.74576271,22.7430508 L4.74576271,21.3871186 L0,21.3871186 L0,22.7430508 Z" id="Fill-9" fill="#D0D2D3"></path>
+                <path d="M0,18.6338983 L4.74576271,18.6338983 L4.74576271,17.2772881 L0,17.2772881 L0,18.6338983 Z" id="Fill-10" fill="#D0D2D3"></path>
+                <path d="M0,14.5233898 L4.74576271,14.5233898 L4.74576271,13.1674576 L0,13.1674576 L0,14.5233898 Z" id="Fill-11" fill="#D0D2D3"></path>
+                <path d="M0,10.4142373 L4.74576271,10.4142373 L4.74576271,9.05830508 L0,9.05830508 L0,10.4142373 Z" id="Fill-12" fill="#D0D2D3"></path>
+                <path d="M0,6.30440678 L4.74576271,6.30440678 L4.74576271,4.94779661 L0,4.94779661 L0,6.30440678 Z" id="Fill-13" fill="#D0D2D3"></path>
+                <path d="M0,2.19457627 L4.74576271,2.19457627 L4.74576271,0.838644068 L0,0.838644068 L0,2.19457627 Z" id="Fill-14" fill="#D0D2D3"></path>
+            </g>
+            <text id="Devices" sketch:type="MSTextLayer" font-family="Helvetica" font-size="12" font-weight="bold" fill="#666666">
+                <tspan x="9" y="21">Firewall Policy</tspan>
+            </text>
+            <text id="Most-Packet-Throughp" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="260" fill="#666666">
+                <tspan x="9" y="38">Rules with No Hits</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

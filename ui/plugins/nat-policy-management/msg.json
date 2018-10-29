@@ -1,0 +1,10 @@
+{
+    "import" : [
+        "../ui-common/messages/msgs.properties",
+        "./messages/msgs.properties",
+        "../base-policy-management/messages/policies-msgs.properties",
+        "../base-policy-management/messages/rules-msgs.properties",
+        "./messages/rules-msgs.properties",
+        "../sd-device-management/messages/msgs.properties"
+    ]
+}

@@ -1,0 +1,19 @@
+{
+  "response": {
+    "header": {
+      "key": "aggregation-attributes",
+      "value": [
+        "none"
+      ],
+      "result-count": 1,
+      "message": "Successfully data retrieved.",
+      "response-code": 200
+    },
+    "result": [
+      {
+        "key": "COUNT",
+        "value": 260
+      }
+    ]
+  }
+}

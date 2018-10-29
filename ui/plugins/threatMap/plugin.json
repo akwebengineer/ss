@@ -1,0 +1,31 @@
+{
+"name": "threatMap",
+"description": "Live Threat Map View" ,
+"publisher": "Juniper Networks, Inc.",
+"version": "0.0.1",
+"release_date": "30.04.2016",
+"min_platform_version": "0.0.1",
+"activities":
+    [
+    {
+      "module": "threatMapActivity",
+      "url_path": "/threat-map",
+      "breadcrumb": true,
+      "filters": [
+        {
+          "id": "threat-map.view",
+          "action": "VIEW",
+          "data": { 
+            "mime_type": "vnd.juniper.net.threat-map"
+          }
+        }
+      ]
+    }
+    ],
+    "navigation_paths": [
+      {
+          "path": "nav.monitors/nav.threat_map_live",
+          "filter": "threat-map.view"
+      }    
+    ]
+}

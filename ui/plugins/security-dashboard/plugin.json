@@ -1,0 +1,263 @@
+{
+    "name": "security-dashboard",
+    "description": "Security Director Dashboard Widgets",
+    "publisher": "Juniper Networks, Inc.",
+    "version": "0.0.1",
+    "release_date": "02.26.2015",
+    "min_platform_version": "0.0.1",
+    "dashboard": {
+        "widgets": [
+            {
+                "title": "Threat Map: Virus",
+                "size": "large",
+                "details": "World map showing total virus event count across countries",
+                "module": "threatMapDashletView",
+                "thumbnail": "thumbnail_threat-map_virus.svg",
+                "filterConf": "threatMapFilterConf",
+                "customInitData": {
+                    "threatType": "antivirus",
+                    "template": "antiVirusThreatMap"
+                }
+            },
+            {
+                "title": "Firewall: Top Denies",
+                "size": "double",
+                "details": "Top requests denied by the firewall based on their source IP addresses, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_firewall_top-denies.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topFirewallDeniesBySourceIP"
+                }
+            },
+            {
+                "title": "Firewall: Top Events",
+                "size": "single",
+                "details": "Top firewall events of the network traffic, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_firewall_top-events.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topFirewallEvents"
+                }
+            },
+            {
+                "title": "Firewall Policy: Rules With No Hits",
+                "size": "single",
+                "details": "Firewall policies with the most rules not hit, sorted by count.",
+                "module": "top10PolicyCountDashletView",
+                "thumbnail": "thumbnail_firewall-policy_rules-with-no-hits.svg",
+                "editView": "top10EditViewListBar",
+                "customInitData": {
+                    "template": "topPoliciesRulesNotHit"
+                }
+            },
+            {
+                "title": "IPS: Top Events",
+                "size": "single",
+                "details": "Top IPS events of the network traffic, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_ips_top-events.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topIPSEvents"
+                }
+            },
+            {
+                "title": "Devices: Most Bandwidth By Bytes",
+                "size": "single",
+                "details": "Devices with maximum throughput rate in bytes, sorted by incoming and outgoing bytes",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_devices_most-bandwidth-by-bytes.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "deviceThroughputBytes"
+                }
+            },
+            {
+                "title": "Zones: Most Bandwidth By Bytes",
+                "size": "single",
+                "details": "Zones with maximum throughput rate in bytes, sorted by incoming and outgoing bytes",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_zones_most-bandwidth-by-bytes.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "zoneThroughputBytes"
+                }
+            },
+            {
+                "title": "Applications: Most Sessions",
+                "size": "single",
+                "details": "Top applications with maximum number of sessions, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_applications_most-sessions.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topApplications"
+                }
+            },
+            {
+                "title": "IP: Top Destinations",
+                "size": "single",
+                "details": "Top destination IP addresses of the network traffic, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_ip_top-destinations.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topDestinationIPs"
+                }
+            },
+            {
+                "title": "IP: Top Sources",
+                "size": "single",
+                "details": "Top source IP addresses of the network traffic, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_ip_top-sources.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topSourceIPs"
+                }
+            },
+            {
+                "title": "Threat Map: IPS",
+                "size": "large",
+                "details": "World map showing total IPS event count across countries",
+                "module": "threatMapDashletView",
+                "thumbnail": "thumbnail_threat-map_ips.svg",
+                "filterConf": "threatMapFilterConf",
+                "customInitData": {
+                    "threatType": "ips",
+                    "template": "ipsThreatMap"
+                }
+            },
+            {
+                "title": "Devices: Most Dropped Packets",
+                "size": "single",
+                "details": "Firewall devices with maximum number of packet drops, sorted by count",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_devices_most-dropped-packets.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "topDroppedPackets"
+                }
+            },
+            {
+                "title": "Zones: Most Dropped Packets",
+                "size": "single",
+                "details": "Firewall zones with maximum number of packet drops, sorted by count",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_zones_most-dropped-packets.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "topDroppedPacketsZones"
+                }
+            },            
+            {
+                "title": "Virus: Top Blocked",
+                "size": "single",
+                "details": "Blocked Viruses with maximum number of blocks, sorted by count",
+                "module": "top10DashletView",
+                "thumbnail": "thumbnail_virus_top-blocked.svg",
+                "editView": "top10EditView",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topViruses"
+                }
+            },
+            {
+                "title": "Devices: Most Bandwidth By Packets",
+                "size": "single",
+                "details": "Devices with maximum throughput rate in packets, sorted by incoming and outgoing packets",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_devices_most-bandwidth-by-packets.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "deviceThroughputPackets"
+                }
+            },
+            {
+                "title": "Zones: Most Bandwidth By Packets",
+                "size": "single",
+                "details": "Zones with maximum throughput rate in packets, sorted by incoming and outgoing packets",
+                "module": "top10DeviceTrafficDashletView",
+                "thumbnail": "thumbnail_zones_most-bandwidth-by-packets.svg",
+                "editView": "top10EditView",
+                "filterConf": "topThroughputFilterConf",
+                "customInitData": {
+                    "template": "zoneThroughputPackets"
+                }
+            },
+            {
+                "title": "Devices: Most Alarms",
+                "size": "single",
+                "details": "Devices with maximum number of alarms, sorted by count",
+                "module": "top10AlarmsDashletView",
+                "thumbnail": "thumbnail_devices_most-alarms.svg",
+                "editView": "top10EditViewListBar",
+                "filterConf": "topAlarmsFilterConf",
+                "customInitData": {
+                    "template": "topAlarms"
+                }
+            },
+            {
+                "title": "Devices: Most Sessions",
+                "size": "single",
+                "details": "Devices with the most number of sessions, sorted by count",
+                "module": "top10SessionsTotalDashletView",
+                "thumbnail": "thumbnail_devices_most-sessions.svg",
+                "editView": "top10EditView",
+                "filterConf": "topSessionsFilterConf",
+                "customInitData": {
+                    "template": "topDeviceSessions"
+                }
+            },
+            {
+                "title": "Devices: Most CPU Usage",
+                "size": "single",
+                "details": "Devices with maximum CPU utilization, sorted by count",
+                "module": "top10DeviceDashletView",
+                "thumbnail": "thumbnail_devices_most-cpu-usage.svg",
+                "editView": "top10EditViewListBar",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topCPU"
+                }
+            },
+            {
+                "title": "Devices: Most Memory Usage",
+                "size": "single",
+                "details": "Devices with maximum memory utilization, sorted by count",
+                "module": "top10DeviceDashletView",
+                "thumbnail": "thumbnail_devices_most-memory-usage.svg",
+                "filterConf": "defaultFilterConf",
+                "editView": "top10EditViewListBar",
+                "customInitData": {
+                    "template": "topMem"
+                }
+            },
+            {
+                "title": "Devices: Most Storage",
+                "size": "single",
+                "details": "Devices with maximum storage, sorted by count",
+                "module": "top10DeviceDashletView",
+                "thumbnail": "thumbnail_devices_most-storage.svg",
+                "editView": "top10EditViewListBar",
+                "filterConf": "defaultFilterConf",
+                "customInitData": {
+                    "template": "topStorage"
+                }
+            }
+        ]
+    }
+}

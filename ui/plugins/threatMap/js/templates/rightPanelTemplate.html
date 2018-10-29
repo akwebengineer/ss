@@ -1,0 +1,99 @@
+<div id="right-panel-view">
+    <span class="close-button">×</span>
+    <!-- Country Details -->
+    <div style="height: 30px;">
+        <div class="country-details">
+            <span class="flag-icon flag-icon-{{flagCode}}"></span>
+            <span class="country-name">{{countryName}} <!--({{countryCode}})--></span>
+        </div>
+    </div>
+    <hr/>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="secondary-button" type="button" id="block-inbound">{{threatmap_tooltip_button_block_inbound}}</button>
+        <span class="add-space"></span>
+        <button class="secondary-button" type="button" id="block-outbound">{{threatmap_tooltip_button_block_outbound}}</button>
+        <span class="add-space"></span>
+        <input type="submit" class="slipstream-primary-button " id="block-traffic" name="block-traffic" value="Block all traffic" style="float:right;">
+    </div>
+
+    <div class="main-content">
+        <span class="total-events-count" id="ev-link"><b>{{totalCount}}</b>&nbsp;{{threatmap_right_panel_events}}</span>
+        <span>{{threatmap_tooltip_threat_since_time}}</span>
+
+        <!-- Inbound -->
+        <div class="inbound-count">
+            <div class="threats-count-text" id="dstTotalCount">{{dstTotalCount}}</div>
+            <div class="threats-count-text"> {{threatmap_right_panel_inbound}}</div>
+        </div>
+            <div class="right-stroke"></div>
+
+        <div class="threats-panel-section">
+            <div class="threats-blocked">
+                <span class="ips-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_ips}}</div>
+                <div id="dst-ips-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="antivirus-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_antivirus}}</div>
+                <div id="dst-antivirus-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="antispam-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_spam}}</div>
+                <div id="dst-antispam-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="device-authentication-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_auth}}</div>
+                <div id="dst-device-authentication-threats" class="individual-threat-count">0</div>
+            </div>
+        </div>
+
+        <div class="show-grid-section" id="displayInboundGrid"><span class="show-hide-text"> {{threatmap_tooltip_grid_title_inbound}}</span></div>
+        <div id="inbound-details">
+            <div class="right-panel-grid" id="inbound-grid-container"></div>
+        </div>
+
+        <!-- Outbound -->
+        <div class = "inbound-header">
+            <div class="threats-count-text" id="srcTotalCount">{{srcTotalCount}}</div>
+            <div class="threats-count-text"> {{threatmap_right_panel_outbound}}</div>
+        </div>
+
+        <div class="right-stroke" style="margin: 20px 0px 0px 0px;"></div>
+        <div class="threats-panel-section" style="margin-top: 12px;">
+            <div class="threats-blocked">
+                <span class="ips-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_ips}}</div>
+                <div id="src-ips-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="antivirus-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_antivirus}}</div>
+                <div id="src-antivirus-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="antispam-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_spam}}</div>
+                <div id="src-antispam-threats" class="individual-threat-count">0</div>
+            </div>
+
+            <div class="threats-blocked">
+                <span class="device-authentication-icon"></span>
+                <div class="threat-panel-text">{{threatmap_insight_bar_auth}}</div>
+                <div id="src-device-authentication-threats" class="individual-threat-count">0</div>
+            </div>
+        </div>
+        <div class="show-grid-section" id="displayOutboundGrid"><span class="show-hide-text">{{threatmap_tooltip_grid_title_outbound}}</span></div>
+        <div id="outbound-details">
+            <div class="right-panel-grid" id="outbound-grid-container"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,229 @@
+{
+    "name": "user-firewall-management",
+    "description": "User Firewall Management",
+    "publisher": "Juniper Networks, Inc.",
+    "version": "0.0.1",
+    "activities": [
+        {
+            "module": "userfirewall/accessprofile/accessProfileActivity",
+            "url_path": "/access-profile",
+            "filters": [
+                {
+                    "id": "accessprofile.view",
+                    "action": "slipstream.intent.action.ACTION_LIST",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.accessProfile"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "manageAccessProfile"
+                }
+            ]
+        },
+        {
+            "module": "userfirewall/accessprofile/accessProfileActivity",
+            "filters": [
+                {
+                    "id": "accessprofile.create",
+                    "action": "slipstream.intent.action.ACTION_CREATE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.accessProfile"
+                    }
+                },
+                {
+                    "id": "accessprofile.clone",
+                    "action": "slipstream.intent.action.ACTION_CLONE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.accessProfile"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "createAccessProfile"
+                }
+            ]
+        },
+        {
+            "module": "userfirewall/accessprofile/accessProfileActivity",
+            "filters": [
+                {
+                    "id": "accessprofile.modify",
+                    "action": "slipstream.intent.action.ACTION_EDIT",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.accessProfile"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "modifyAccessProfile"
+                }
+            ]
+        },
+        {
+            "module": "userfirewall/accessprofile/accessProfileActivity",
+            "filters": [
+                {
+                    "id": "accessprofile.delete",
+                    "action": "sd.intent.action.ACTION_DELETE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.accessProfile"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "deleteAccessProfile"
+                }
+            ]
+        },
+        {
+            "module": "userfirewall/activedirectory/activeDirectoryActivity",
+            "url_path": "/active-directory",
+            "filters": [
+                {
+                    "id": "activedirectory.view",
+                    "action": "slipstream.intent.action.ACTION_LIST",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "manageActiveDirectory"
+                }
+            ]
+        },
+
+        {
+            "module": "userfirewall/activedirectory/activeDirectoryActivity",
+            "filters": [
+                {
+                    "id": "activedirectory.create",
+                    "action": "slipstream.intent.action.ACTION_CREATE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                },
+                {
+                    "id": "activedirectory.clone",
+                    "action": "slipstream.intent.action.ACTION_CLONE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                }
+
+            ],
+            "capabilities": [
+                {
+                    "name": "createActiveDirectory"
+                }
+            ]
+        },
+
+        {
+            "module": "userfirewall/activedirectory/activeDirectoryActivity",
+            "filters": [
+                {
+                    "id": "activedirectory.edit",
+                    "action": "slipstream.intent.action.ACTION_EDIT",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                }
+            ],
+            "capabilities": [
+                {
+                    "name": "modifyActiveDirectory"
+                }
+            ]
+        },
+
+        {
+            "module": "userfirewall/activedirectory/activeDirectoryActivity",
+            "filters": [
+                {
+                    "id": "activedirectory.delete",
+                    "action": "sd.intent.action.ACTION_DELETE",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                }
+
+            ],
+            "capabilities": [
+                {
+                    "name": "deleteActiveDirectory"
+                }
+            ]
+        },
+
+        {
+            "module": "userfirewall/activedirectory/activeDirectoryActivity",
+            "filters": [
+                {
+                    "id": "activedirectory.deploye",
+                    "action": "sd.intent.action.ACTION_DEPLOY",
+                    "data": {
+                        "mime_type": "vnd.juniper.net.userfirewall.activedirectory"
+                    }
+                }
+
+            ],
+            "capabilities": [
+                {
+                    "name": "deployActiveDirectory"
+                }
+            ]
+        },
+        {
+              "module": "userfirewall/deploy/deployActivity",
+              "filters": [
+                  {
+                    "id": "userfirewall.activedirectory.deploy",
+                    "action": "slipstream.SDK.Intent.action.ACTION_DEPLOY",
+                    "data": {
+                    "mime_type": "vnd.juniper.net.userfirewall.activedirectory.deploy"
+                    }
+                  }
+                ],
+                "capabilities": [
+                  {"name": "deployActiveDirectory"}
+               ]
+            },
+        {
+                      "module": "userfirewall/deploy/deployActivity",
+                      "filters": [
+                          {
+                            "id": "userfirewall.accessprofile.deploy",
+                            "action": "slipstream.SDK.Intent.action.ACTION_DEPLOY",
+                            "data": {
+                            "mime_type": "vnd.juniper.net.userfirewall.accessprofile.deploy"
+                            }
+                          }
+                        ],
+                        "capabilities": [
+                          {"name": "deployActiveDirectory"}
+                       ]
+                    }
+
+
+    ],
+
+    "navigation_paths": [
+
+        {
+            "path": "nav.configure/nav.user_firewall/nav.userFirewall_activeDirectory",
+            "filter": "activedirectory.view"
+        },
+        {
+            "path": "nav.configure/nav.user_firewall/nav.userFirewall_accessProfile",
+            "filter": "accessprofile.view"
+        }
+
+    ]
+}

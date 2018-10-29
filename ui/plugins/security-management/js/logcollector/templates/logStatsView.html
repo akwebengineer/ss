@@ -1,0 +1,29 @@
+{{#ev-log-views}}
+    <div class='ev-log-main-view' style="width:100%;">
+
+        <!-- First Bar Chart View -->
+        <div class="slipstream-content-title">
+            Node Statistics
+                {{#title-help}}
+                <span class="ua-field-help {{#title-help.content}}tooltip{{/title-help.content}}" {{#title-help.content}} title="{{title-help.content}}" {{/title-help.content}} {{#title-help.ua-help-identifier}}data-ua-id="{{title-help.ua-help-identifier}}"{{/title-help.ua-help-identifier}}></span>
+                {{/title-help}}
+        </div>
+        <div class="ev-first-bar-chart-container ev-log-graph-view">
+            <div class="ev-monitors-title-view">
+                <span class="ev-monitors-title-text">
+                {{graph-title}}
+                </span>               
+            </div>
+            <div class="ev-first-bar-chart-view ev-monitors-bar-chart-view"></div>
+            <div class="ev-monitors-footer">
+                <span>
+                    <div id="lastUpdated" class="ev-monitors-updated">{{last-updated-time}}</div>
+                </span>
+            </div>
+        </div>
+
+        <div >
+            <div class="ev-second-bar-chart-view"></div>
+        </div> 
+    </div>
+{{/ev-log-views}}

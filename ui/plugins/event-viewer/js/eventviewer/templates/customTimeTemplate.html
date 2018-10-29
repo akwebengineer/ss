@@ -1,0 +1,82 @@
+<div class="event-viewer-custom-time" style="height: 200px; width: 440px;">
+	<div class = "slipstream-content-title">
+		{{title}}
+    </div>
+
+    <div class = "ev_custom_time_error" id = "event-viewer-custom-time-error">{{error_msg}}
+    </div>
+    
+	<form name="sample_form" class="form-pattern validate" novalidate="" data-err-timeout="1000"
+      	data-valid-timeout="5000" form-pattern-validator="">
+        <div class="row">
+            <!-- Label -->
+            <div class="elementlabel left">
+                <label for="datepicker_from_date" class="left inline">From</label>
+            </div>
+            <!-- Form Fields -->
+            <div class="elementinput left">
+                <!-- Input fields -->
+                <input class="event-viewer-custom-from-date" type="text" data-validation="multiple" data-widget="datepicker"
+                       data-validation_length="Incomplete MM/DD/YYYY" data-minlength="10" data-maxlength="10"
+                       data-validation_date="Must be MM/DD/YYYY" id="datepicker_from_date"
+                       data-validation_validtext="This field is required" required>
+                <!-- Error Display -->
+                <small class="error errorimage">true</small>
+            </div>
+            <!-- <div class="elementinput left">
+                <input class="event-viewer-custom-from-time" type="time" data-validation="time" id="from_time" name="from_time" placeholder="">
+                <small class="error errorimage">Please enter a valid time</small>
+                <span class="inline-help"></span>
+            </div> -->
+            <div class="elementinput left">
+                <input class="event-viewer-custom-from-time" type="text" data-validation="time" id="from_time" name="from_time">
+                <!-- Error-UA display -->
+                <small class="error errorimage">Please enter a valid time</small>
+                <span class="inline-help"></span>
+            </div>
+            <div class="elementinput left">
+                <select data-validation="validtext" class="event-viewer-custom-from-time-period" id="from_time_period" name="from_time_period">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <!-- Error-UA display -->
+                <span class="inline-help"></span>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Label -->
+            <div class="elementlabel left">
+                <label for="datepicker_to_date" class="left inline">To</label>
+            </div>
+            <!-- Form Fields -->
+            <div class="elementinput left">
+                <!-- Input fields -->
+                <input class="event-viewer-custom-to-date" type="text" data-validation="multiple" data-widget="datepicker"
+                       data-validation_length="Incomplete MM/DD/YYYY" data-minlength="10" data-maxlength="10"
+                       data-validation_date="Must be MM/DD/YYYY" id="datepicker_to_date"
+                       data-validation_validtext="This field is required" required>
+                <!-- Error Display -->
+                <small class="error errorimage">true</small>
+            </div>
+            <!-- <div class="elementinput left">
+                <input class="event-viewer-custom-to-time" type="time" data-validation="time" id="to_time" name="to_time" placeholder="">
+                <small class="error errorimage">Please enter a valid time</small>
+                <span class="inline-help"></span>
+            </div> -->
+            <div class="elementinput left">
+                <input class="event-viewer-custom-to-time" type="text" data-validation="time" id="to_time" name="to_time">
+                <!-- Error-UA display -->
+                <small class="error errorimage">Please enter a valid time</small>
+                <span class="inline-help"></span>
+            </div>
+            <div class="elementinput left">
+                <select data-validation="validtext" class="event-viewer-custom-to-time-period" id="to_time_period" name="to_time_period">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <!-- Error-UA display -->
+                <span class="inline-help"></span>
+            </div>
+        </div>
+	</form>
+</div>

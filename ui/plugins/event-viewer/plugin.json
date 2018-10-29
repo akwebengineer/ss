@@ -1,0 +1,197 @@
+{
+  "name": "event-viewer",
+  "description": "Event Viewer",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+  "activities": [{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/alleventcategories",
+      "filters": [{
+          "id": "eventlogs.alleventcategories.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.alleventcategories"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "filters": [{
+          "id": "eventlogs.alleventcategories.createfilter",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.alleventcategories.createfilter"
+          }
+        }],
+        "capabilities": [{
+          "name": "createFilter"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "filters": [{
+          "id": "eventlogs.alleventcategories.modifyfilter",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.alleventcategories.modifyfilter"
+          }
+        }],
+        "capabilities": [{
+          "name": "modifyFilter"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "filters": [{
+          "id": "eventlogs.alleventcategories.createalert",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.alleventcategories.createalert"
+          }
+        }],
+        "capabilities": [{
+          "name": "createAlert"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "filters": [{
+          "id": "eventlogs.alleventcategories.createreport",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.alleventcategories.createreport"
+          }
+        }],
+        "capabilities": [{
+          "name": "createReports"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewerfirewall",
+      "filters": [{
+          "id": "eventlogs.firewall.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.firewall"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewerwebfiltering",
+      "filters": [{
+          "id": "eventlogs.webfiltering.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.webfiltering"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewervpn",
+      "filters": [{
+          "id": "eventlogs.vpn.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.vpn"
+          }
+        }],
+      "capabilities": [{
+        "name": "ViewDeviceLogs"
+      }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewercontentfiltering",
+      "filters": [{
+          "id": "eventlogs.contentfiltering.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.contentfiltering"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewerantispam",
+      "filters": [{
+          "id": "eventlogs.antispam.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.antispam"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewerantivirus",
+      "filters": [{
+          "id": "eventlogs.antivirus.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.antivirus"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    },{
+      "module": "eventviewer/eventViewerActivity",
+      "url_path": "/eventviewerips",
+      "filters": [{
+          "id": "eventlogs.ips.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.eventlogs.ips"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+    }
+  ],
+
+  "navigation_paths": [
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_all_event_categories",
+      "filter": "eventlogs.alleventcategories.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_firewall",
+      "filter": "eventlogs.firewall.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_web_filtering",
+      "filter": "eventlogs.webfiltering.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_vpn",
+      "filter": "eventlogs.vpn.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_content_filtering",
+      "filter": "eventlogs.contentfiltering.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_anti_spam",
+      "filter": "eventlogs.antispam.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_anti_virus",
+      "filter": "eventlogs.antivirus.view"
+    },
+    {
+      "path": "nav.monitors/nav.log_and_events/nav.logs_events_ips",
+      "filter": "eventlogs.ips.view"
+    }  
+  ]
+}

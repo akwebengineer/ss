@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="SHARED_OBJECTS_ADDRESS_DOMAIN_ASSIGNING" Link="#cshid=1269" />
+    <Map Name="SHARED_OBJECTS_ADDRESS_MODIFYING" Link="#cshid=1270" />
+    <Map Name="SHARED_OBJECTS_VARIABLE_DEFINITION_MODIFYING" Link="#cshid=1271" />
+    <Map Name="SHARED_OBJECTS_ADDRESS_MAIN_FIELD" Link="#cshid=1272" />
+    <Map Name="SHARED_OBJECTS_SERVICE_MAIN_FIELD" Link="#cshid=1273" />
+    <Map Name="SHARED_OBJECTS_VARIABLE_MAIN_FIELD" Link="#cshid=1274" />
+    <Map Name="SHARED_OBJECTS_ADDRESS_GROUP_OVERVIEW" Link="#cshid=1275" />
+    <Map Name="SHARED_OBJECTS_ADDRESS_CREATING" Link="#cshid=1276" />
+    <Map Name="SHARED_OBJECTS_VARIABLE_OVERVIEW" Link="#cshid=1277" />
+    <Map Name="SHARED_OBJECTS_VARIABLE_DEFINITION_CREATING" Link="#cshid=1278" />
+    <Map Name="SHARED_OBJECTS_SERVICE_GROUP_OVERVIEW" Link="#cshid=1279" />
+    <Map Name="SHARED_OBJECTS_SERVICE_CREATING" Link="#cshid=1280" />
+    <Map Name="POLICY_OBJECT_CSV_FILE_IMPORT_EXPORTING" Link="#cshid=1334" />
+    <Map Name="POLICY_OBJECT_DELETE_REPLACING" Link="#cshid=1339" />
+    <Map Name="POLICY_OBJECT_DUPLICATE_SHOWING" Link="#cshid=1335" />
+    <Map Name="POLICY_OBJECT_DOMAIN_ASSIGNING" Link="#cshid=1337" />
+    <Map Name="POLICY_OBJECT_EDIT_CLONING" Link="#cshid=1338" />
+    <Map Name="POLICY_OBJECT_DELETE_REPLACING" Link="#cshid=1339" />
+    <Map Name="POLICY_OBJECT_DETAIL_VIEW" Link="#cshid=1340" />
+</CatapultAliasFile>

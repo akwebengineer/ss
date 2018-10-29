@@ -1,0 +1,22 @@
+@import "../../ui-common/css/sd-common.scss";
+.elementinput-long-traffic-selector-grid {
+  margin-bottom: 10px;
+  width: 500px;
+}
+.icon_error_vpn{
+  background-image: url("/installed_plugins/ui-common/images/icon_error.svg");
+  width: 14px;
+  height: 14px;
+}
+
+.icon_warn_vpn{
+  background-image: url("/installed_plugins/ui-common/images/icon_warn.svg");
+  width: 14px;
+  height: 14px;
+}
+
+.icon_info_vpn{
+  background-image: url("/installed_plugins/ui-common/images/icon_info.svg");
+  width: 14px;
+  height: 14px;
+}

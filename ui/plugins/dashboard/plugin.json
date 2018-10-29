@@ -1,0 +1,30 @@
+{
+  "name": "dashboard",
+  "description": "Security Director Dashboard Launch",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.26.2015",
+  "min_platform_version": "0.0.1",
+  "activities": [
+    {
+      "module": "dashboardLaunchActivity",
+      "url_path": "/",
+      "breadcrumb": false,
+      "filters": [
+        {
+          "id": "dashboard.launch.view",
+          "action": "VIEW",
+          "data": { 
+            "mime_type": "vnd.juniper.net.dashboard.launch"
+          }
+        }
+      ]
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path": "nav.dashboard",
+      "filter": "dashboard.launch.view"
+    }
+  ]
+}

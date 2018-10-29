@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="ALERT_ALARM_DELETING" Link="#cshid=1366" />
+    <Map Name="ALERT_ALARM_SEARCHING" Link="#cshid=1367" />
+    <Map Name="ALERT_ALARM_DEFINITION_CREATING" Link="#cshid=1368" />
+    <Map Name="ALERT_ALARM_GENERATED_VIEWING" Link="#cshid=1369" />
+    <Map Name="ALERT_ALARM_DEFINITION_SEARCHING" Link="#cshid=1370" />
+    <Map Name="ALERT_ALARM_DEFINITION_EDITING" Link="#cshid=1371" />
+    <Map Name="ALERT_ALARM_DEFINITION_DELETING" Link="#cshid=1372" />
+    <Map Name="ALERT_ALARM_DEVICE_MAIN_PAGE_FIELD" Link="#cshid=1036" />
+</CatapultAliasFile>

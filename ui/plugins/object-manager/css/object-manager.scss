@@ -1,0 +1,64 @@
+@import "../../ui-common/css/sd-common.scss";
+
+.service-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Service_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.service-group-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Service_Group_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.zone-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/singleZone.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-host-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_Host_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-range-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_range_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-dns-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_DNSHost_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-Network-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_Network_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-wildcard-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_Wildcard_16.png') no-repeat scroll 0 0 transparent;
+}
+
+.address-group-column {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/object-manager/images/Address_Group_16.png') no-repeat scroll 0 0 transparent;
+}

@@ -1,0 +1,530 @@
+{
+  "name": "fw-policy-management",
+  "description": "fw policy management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+    "activities": [
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "url_path": "/firewall-policies",
+      "filters": [
+        {
+          "id": "policies.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        }
+      ],  
+      "capabilities": [
+          {"name": "managePolicies"}
+      ]
+    },
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+         {
+          "id": "policies.device-count",
+          "action": "sd.intent.action.ACTION_COMPARE_POLICY",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+        {
+          "id": "policies.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        },     
+        {
+          "id": "policies.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        }
+      ],  
+      "capabilities": [
+          {"name": "CreatePolicy"}
+      ]
+    },  
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+        {
+          "id": "policies.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ModifyPolicy"}
+      ]
+    },
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+        {
+          "id": "policies.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "DeletePolicy"}
+      ]
+    },   
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+        {
+          "id": "policies.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+           }
+         }
+      ],
+      "capabilities": [
+          {"name": "AssignFWPolicyToDomainCap"}
+      ]
+    },
+    {
+      "module": "firewall/policies/firewallPoliciesActivity",
+      "filters": [  
+        {
+          "id": "policies.compare-policy",
+          "action": "sd.intent.action.ACTION_COMPARE_POLICY",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies"
+           }
+         }
+      ]
+    },
+    {
+      "module": "firewall/devices/firewallDeviceActivity",
+      "filters": [
+        {
+          "id": "firewall-policy.devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policies.devices"
+          }
+        }
+      ]
+    }, 
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "url_path": "/policy-profiles",
+      "filters": [
+        {
+          "id": "policy-profiles.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "managePolicyProfiles"}
+      ]
+    }, 
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "filters": [   
+        {
+          "id": "policy-profiles.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        },
+        {
+          "id": "policy-profiles.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "policyProfileCreation"}
+      ]
+    }, 
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "filters": [      
+        {
+          "id": "policy-profiles.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "ModifyPolicyProfile"}
+      ]
+    }, 
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "filters": [      
+        {
+          "id": "policy-profiles.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "DeletePolicyProfile"}
+      ]
+    },
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "filters": [          
+        {
+         "id": "policy-profiles.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignPolicyProfileToDomainCap"}
+      ]
+    },
+    {
+      "module": "firewall/profiles/policyProfilesActivity",
+      "filters": [
+      {
+        "id": "policy-profiles.show-detail-view",
+        "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+        "data": {
+          "mime_type": "vnd.juniper.net.firewall.policy-profiles"
+        }
+      }]
+    },
+    {
+      "module": "firewall/ssl-forward-proxy-profiles/sslForwardProxyProfileActivity",
+      "url_path": "/ssl-forward-proxy-profiles",
+      "filters": [
+      {
+        "id": "sslForwardProxyProfiles.view",
+        "action": "slipstream.intent.action.ACTION_LIST",
+        "data": {
+          "mime_type": "application/json"
+        }
+      },
+      {
+        "id": "sslForwardProxyProfiles.detailedView",
+        "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+        "data": {
+          "mime_type": "application/json"
+        }
+      }],
+      "capabilities": [
+        {"name": "manageSSLForwardProxyProfile"}
+      ]
+    },
+    {
+      "module": "firewall/ssl-forward-proxy-profiles/sslForwardProxyProfileActivity",
+      "filters": [
+      {            
+        "id": "sslForwardProxyProfiles.create",
+        "action": "slipstream.intent.action.ACTION_CREATE",
+        "data": {
+          "mime_type": "application/json"
+        }
+      },
+      {
+        "id": "sslForwardProxyProfiles.clone",
+        "action": "slipstream.intent.action.ACTION_CLONE",
+        "data": {
+          "mime_type": "application/json"
+        }
+      }],
+     "capabilities": [
+        {"name": "createSSLForwardProxyProfile"}
+      ]
+    },
+    {
+      "module": "firewall/ssl-forward-proxy-profiles/sslForwardProxyProfileActivity",
+      "filters": [
+        {
+          "id": "sslForwardProxyProfiles.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "application/json"
+          }
+        }],
+         "capabilities": [
+          {"name": "modifySSLForwardProxyProfile"}
+          ]
+    },
+    {
+      "module": "firewall/ssl-forward-proxy-profiles/sslForwardProxyProfileActivity",
+      "filters": [
+        {
+          "id": "sslForwardProxyProfiles.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "application/json"
+          }
+        },
+        {
+          "id": "sslForwardProxyProfiles.deleteUnused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "application/json"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteSSLForwardProxyProfile"}
+          ]
+    },
+    {
+      "module": "firewall/application-security/appSecurActivity",
+      "url_path": "/application-security",
+      "filters": [
+        {
+          "id": "appFWPolicy.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "appSecur/json"
+          }
+        }],
+        "capabilities": [
+            {"name": "manageAppFWPolicy"}
+          ]
+        },
+      {
+        "module": "firewall/application-security/appSecurActivity",
+        "filters": [
+          {
+            "id": "appFWPolicy.create",
+            "action": "slipstream.intent.action.ACTION_CREATE",
+            "data": {
+                "mime_type": "appSecur/json"
+            }
+          },
+          {
+            "id": "appFWPolicy.clone",
+            "action": "slipstream.intent.action.ACTION_CLONE",
+            "data": {
+              "mime_type": "appSecur/json"
+            }
+          }],
+         "capabilities": [
+            {"name": "createAppFWPolicy"}
+          ]
+        },
+      {
+        "module": "firewall/application-security/appSecurActivity",
+        "filters": [
+          {
+            "id": "appFWPolicy.edit",
+            "action": "slipstream.intent.action.ACTION_EDIT",
+            "data": {
+                "mime_type": "appSecur/json"
+            }
+          }],
+         "capabilities": [
+            {"name": "modifyAppFwPolicy"}
+          ]
+
+      },
+      {
+      "module": "firewall/application-security/appSecurActivity",
+      "filters": [
+          {
+            "id": "appFWPolicy.delete",
+            "action": "sd.intent.action.ACTION_DELETE",
+            "data": {
+                "mime_type": "appSecur/json"
+            }
+          },
+          {
+          "id": "appFWPolicy.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "appSecur/json"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "deleteAppFwPolicy"}
+        ]
+    },
+    {
+      "module": "firewall/application-security/rules/AppFwRulesActivity",
+      "filters": [
+        {
+          "id": "appfw-policies.rules.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+              "mime_type": "vnd.juniper.net.appfw.policies.rules"
+          }
+        },
+        {
+          "id": "appfw-policies.rules.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+              "mime_type": "vnd.juniper.net.appfw.policies.rules"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "url_path": "/device-templates",
+      "filters": [
+        {
+          "id": "device-templates.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ManageTemplates"}
+       ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "filters": [
+        {
+          "id": "device-templates.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "filters": [
+        {
+          "id": "device-templates.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "filters": [
+        {
+          "id": "device-templates.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "filters": [
+        {
+          "id": "device-templates.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devicetemplates/devicetemplateActivity",
+      "filters": [
+        {
+          "id": "device-templates.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.device-templates"
+          }
+        }
+      ]
+    },
+    {
+      "module": "firewall/devices/firewallPolicyDeviceActivity",
+      "url_path": "/firewall/devices",
+      "filters": [
+        {
+          "id": "firewall-policy-devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.firewall.devices"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "managePolicies"}
+       ]
+    },
+    {
+        "module": "firewall/block/blockModuleActivity",
+        "filters": [
+            {
+                "id": "firewall-policy-changelist.view",
+                "action": "slipstream.intent.action.ACTION_RULES_CHANGELIST",
+                "data": {
+                    "mime_type": "vnd.juniper.net.firewall.rules.changelist"
+                }
+            }
+        ],
+        "capabilities": [
+            {"name": "managePolicies"}
+        ]
+     }
+  ],
+
+  "navigation_paths": [
+   
+    {
+      "path": "nav.configure/nav.firewall_policy/nav.firewallPolicies",
+      "filter": "policies.view"
+    },
+    {
+      "path": "nav.configure/nav.sslProfiles/nav.sslForwardProxyProfiles",
+      "filter": "sslForwardProxyProfiles.view"
+    },
+    {
+      "path": "nav.configure/nav.app_firewall/nav.app_fw_policies",
+      "filter": "appFWPolicy.view"
+    },
+    {
+      "path": "nav.configure/nav.firewall_policy/nav.policy_profiles",
+      "filter": "policy-profiles.view"
+    },
+    {
+      "path": "nav.configure/nav.firewall_policy/nav.device_templates",
+      "filter": "device-templates.view"
+    },
+    {
+      "path": "nav.configure/nav.firewall_policy/nav.fwPolicies_devices",
+      "filter": "firewall-policy-devices.view"
+    }
+      
+  ]
+}

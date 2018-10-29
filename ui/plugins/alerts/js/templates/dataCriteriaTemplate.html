@@ -1,0 +1,13 @@
+{{ID}}
+<div style="width:100%">
+    <div style="width: 295px; float: left !important;">
+        <label style="width: 60px; float: left !important; padding-top: 10px;">Group By</label>
+        <div class="form-style-select-background">
+            <select id="aggregation{{id}}" name="aggregation" class="form-style-select">
+                {{#groupby-dropdown}}
+                    <option value="{{id}}">{{text}}</option>
+                {{/groupby-dropdown}}
+            </select>
+        </div>
+    </div>
+</div>

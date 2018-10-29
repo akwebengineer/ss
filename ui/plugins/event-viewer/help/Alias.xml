@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="EVENT_LOG_CONTENT_FILTERING_OVERVIEW" Link="#cshid=1285" />
+    <Map Name="EVENT_LOG_ANTISPAM_OVERVIEW" Link="#cshid=1286" />
+    <Map Name="EVENT_LOG_ANTIVIRUS_OVERVIEW" Link="#cshid=1287" />
+    <Map Name="EVENT_LOG_IPS_OVERVIEW" Link="#cshid=1288" />
+    <Map Name="EVENT_LOG_DETAILED_VIEW_USING" Link="#cshid=1289" />
+    <Map Name="EVENT_LOG_COLUMN_SELECTING" Link="#cshid=1290" />
+    <Map Name="EVENT_LOG_SETTINGS_USING" Link="#cshid=1291" />
+    <Map Name="EVENT_LOG_EXACT_MATCH_USING" Link="#cshid=1292" />
+    <Map Name="EVENT_LOG_GROUPING" Link="#cshid=1293" />
+    <Map Name="EVENT_LOG_RAW_VIEW_USING" Link="#cshid=1294" />
+    <Map Name="EVENT_LOG_THREATS_VIEWING" Link="#cshid=1295" />
+    <Map Name="EVENT_LOG_VPN__OVERVIEW" Link="#cshid=1296" />
+    <Map Name="EVENT_LOG_WEB_FILTERING_OVERVIEW" Link="#cshid=1297" />
+    <Map Name="EVENT_LOG_OVERVIEW" Link="#cshid=1375" />
+    <Map Name="EVENT_LOG_SAVED_FILTER_VIEWING" Link="#cshid=1377" />
+    <Map Name="EVENT_LOG_REPORT_CREATING" Link="#cshid=1378" />
+    <Map Name="EVENT_LOG_ALERT_CREATING" Link="#cshid=1379" />
+    <Map Name="EVENT_LOG_FILTER_CREATING" Link="#cshid=1380" />
+    <Map Name="EVENT_LOG_FIREWALL_OVERVIEW" Link="#cshid=1381" />
+</CatapultAliasFile>

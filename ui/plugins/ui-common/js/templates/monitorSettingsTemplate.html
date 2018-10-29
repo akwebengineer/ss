@@ -1,0 +1,137 @@
+<div id='monitor_settings_form'>
+
+    <div class="slipstream-content-title">
+        <div>
+            {{title}}
+
+			{{#title-help}}
+				<span class="ua-field-help {{#title-help.content}}tooltip{{/title-help.content}}" {{#title-help.content}} title="{{title-help.content}}" {{/title-help.content}} {{#title-help.ua-help-identifier}}data-ua-id="{{title-help.ua-help-identifier}}"{{/title-help.ua-help-identifier}}></span>
+			{{/title-help}}
+			
+        </div>
+    </div>
+	<div id='monitor_settings_form_enable_disable' class="form-pattern">    
+		<div class="content row">
+		    <div class="slipstream-content-wrapper">
+				<div class="row show">
+				    <!-- Label -->
+	                <span class="monitor-settings-description">{{monitorSettingsTitleDescription}}</span>
+
+				</div>		    
+			</div>
+		</div>
+
+		<div class="content row">
+		    <div class="slipstream-content-wrapper">
+				<div class="row monitor-settings-overall-enable show">
+				    <!-- Label -->
+
+			        <div class="elementlabel left">
+	                    <label for="checkbox_field" class="left inline">{{deviceMonitoringLabel}}</label>
+	                </div>
+			        <!-- Value -->
+					<div class="elementinput left">
+				        <!-- Input field -->
+				        <div class="optionselection">
+				            <input type="checkbox" data-validation="validtext" id="device_monitoring_enable" name="enable_disable">
+				            <label for="checkbox_enable">{{enableLabelShort}}</label>
+				        </div>
+				    </div>
+				</div>		    
+			</div>
+		</div>
+	</div>
+	<div id='monitor_settings_polling_settings' class="form-pattern">
+		<div class="content row">
+		    <div class="slipstream-content-wrapper">
+				<div class="row show">
+				    <!-- Label -->
+
+			        <div class="elementlabel left">
+	                    <label for="checkbox_field" class="left monitor-polling-collector-label inline">{{trafficPollingLabel}}</label>
+	                </div>
+			        <!-- Value -->
+					<div class="left">
+				        <!-- Input field -->
+				        <div class="optionselection">
+				            <input type="checkbox" data-validation="validtext" id="traffic_polling_enable" name="enable_disable">
+				            <label for="traffic_polling_enable">{{enableLabel}}</label>
+				        </div>
+				    </div>
+				    <div class="elementinput left">
+				    	<!-- Input field -->
+				        <input type="number" data-validation="number" id="traffic_polling_schedule_input" name="text_number" placeholder="2"
+				        	class="monitor-polling-schedule" data-minvalue="1" data-maxvalue="60">
+				        <label class="monitor-polling-schedule-label" for="text_number">{{minutesLabel}}</label>
+				        <!-- Error-UA display -->
+				        <small class="error errorimage">{{minutesLabelErrorMsg}}</small>
+				        <span class="inline-help"></span>
+			            
+			        </div>
+				</div>		    
+			</div>
+		</div>
+
+		<div class="content row">
+		    <div class="slipstream-content-wrapper">
+				<div class="row show">
+				    <!-- Label -->
+
+			        <div class="elementlabel left">
+	                    <label for="checkbox_field" class="left monitor-polling-collector-label inline">{{resourceAllocationPollingLabel}}</label>
+	                </div>
+			        <!-- Value -->
+					<div class="left">
+				        <!-- Input field -->
+				        <div class="optionselection">
+				            <input type="checkbox" data-validation="validtext" id="resource_allocation_polling_enable" name="enable_disable">
+				            <label for="resource_allocation_polling_enable">{{enableLabel}}</label>
+				        </div>
+				    </div>
+				    <div class="elementinput left">
+				    	<!-- Input field -->
+				        <input type="number" data-validation="number" id="resource_allocation_polling_schedule_input" name="text_number" placeholder="2"
+				        	class="monitor-polling-schedule" data-minvalue="1" data-maxvalue="60">
+				        <label class="monitor-polling-schedule-label" for="text_number">{{minutesLabel}}</label>
+				        <!-- Error-UA display -->
+				        <small class="error errorimage">{{minutesLabelErrorMsg}}</small>
+				        <span class="inline-help"></span>
+			            
+			        </div>
+				</div>		    
+			</div>
+		</div>
+
+		<div class="content row">
+		    <div class="slipstream-content-wrapper">
+				<div class="row show">
+				    <!-- Label -->
+
+			        <div class="elementlabel left">
+	                    <label for="checkbox_field" class="left monitor-polling-collector-label inline">{{sessionPollingLabel}}</label>
+	                </div>
+			        <!-- Value -->
+					<div class="left">
+				        <!-- Input field -->
+				        <div class="optionselection">
+				            <input type="checkbox" data-validation="validtext" id="session_polling_enable" name="enable_disable">
+				            <label for="session_polling_enable">{{enableLabel}}</label>
+				        </div>
+				    </div>
+				    <div class="elementinput left">
+				    	<!-- Input field -->
+				        <input type="number" data-validation="number" id="session_polling_schedule_input" name="text_number" placeholder="2"
+				        	class="monitor-polling-schedule" data-minvalue="1" data-maxvalue="60">
+				        <label class="monitor-polling-schedule-label" for="text_number">{{minutesLabel}}</label>
+				        <!-- Error-UA display -->
+				        <small class="error errorimage">{{minutesLabelErrorMsg}}</small>
+				        <span class="inline-help"></span>
+			            
+			        </div>
+				</div>		    
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id='monitor_settings_device_status_list'></div>

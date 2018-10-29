@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Plugins Unit Tests</title>
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="widgetlib/js/vendor/mocha/mocha.css">
+  </head>
+  
+  <body>
+    <h1><b><u>Plugins Unit Tests</u></b></h1>
+    <div id="mocha"></div>
+    <div id="main-content" style="display:none"></div>
+    <div id="test_widget" style="display:none"></div>
+    <script src="widgetlib/js/slipstream.js"></script>
+    <script data-main="main-gen" src="widgetlib/js/vendor/require/require.js"></script>
+
+
+    <script src="widgetlib/js/vendor/mocha/mocha.js"></script>
+
+    <script src="widgetlib/js/vendor/blanket/dist/qunit/blanket.js"
+      data-cover-flags="branchTracking"
+      data-cover-only="installed_plugins">
+    </script>
+    <!-- Blanket JS Report on browser -->
+    <script type="text/javascript" src="widgetlib/js/vendor/grunt-blanket-mocha/support/mocha-blanket.js"></script>
+    <script>
+      // global blanket (these lines are specifically used by grunt tasks)
+      if (window.PHANTOMJS) {
+        blanket.options("reporter", "widgetlib/js/vendor/grunt-blanket-mocha/support/grunt-reporter.js");
+      }
+    </script>
+    <style>
+      #blanket-main { margin: 0 25px 0 65px; font-size: 12px }
+    </style>
+  </body>
+</html>

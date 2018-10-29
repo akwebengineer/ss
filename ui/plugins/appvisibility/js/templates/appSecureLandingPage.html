@@ -1,0 +1,48 @@
+<div class='app-secure-landing-page'>
+
+	{{#header}}
+    <div class="app-secure-header app-secure-content-title">
+        {{title}}
+    	<span class="ua-field-help app-vis-title-help" data-ua-id="alias_for_ua_event_binding"></span>
+	</div>
+
+
+  	<div class = "app-secure-system-status-error">
+  		{{error_msg}}
+  	</div>
+    
+    <div style="padding:10px 0px 0px 0px">
+    	<div style="float:left">
+			<a data-linkid="0" class="app-secure-container-links app-secure-container-links-border app-secure-container-links-selected" style="">Chart View</a>
+			<a data-linkid="1" class="app-secure-container-links app-secure-container-links-de-selected">Grid View</a>
+		</div>
+	<div class="wrapper-app" style="float:right">	
+		<div style='display:inline-block' class="app-secure-devices-container">
+			<label style="padding:8px; float: left">For: </label> 
+			<label id="uSelectedDevices" style="float: left; padding-top: 8px; padding-right: 5px; font-weight: 400">{{selected-devices-display}}</label> 
+			<a class="app-secure-device-links app-secure-container-links-selected" style="font-size:12px; font-weight:400; display:inline-block; padding-top: 8px; padding-right: 5px">Edit</a>
+		</div>
+		<div style='display:inline-flex; padding: 0 0 0 10px; float:right'>
+			<label style="padding: 8px 8px 8px 0px; float: left">Time Span</label> 
+			<select class="app-secure-time-span-filter" style='width:110px;'></select>
+		</div>
+		<div style='display:inline-flex; float:right' class="app-secure-group-by-container">
+			<label style="padding:8px; float: left">Show By</label> 
+			<select class="app-secure-group-by-filter" style='width:150px'></select>
+		</div>
+	</div>	
+    </div>
+    <div style='display:inline-block; float:right; clear:both'>
+    	<label class="app-secure-time-display" style="float:left; font-weight: 400; color: #999"></label>
+		<a class="app-secure-time-display-edit" style="font-size:12px; font-weight:400; float: left; padding-left: 5px; color: #0066cc">Edit</a>
+    </div>
+
+	{{/header}}
+
+
+	{{#graph-view}}
+	<div class='app-secure-graph-grid-view'>
+		
+	</div>
+	{{/graph-view}}
+</div>

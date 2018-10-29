@@ -1,0 +1,4 @@
+{"import":[
+    "../ui-common/messages/msgs.properties",
+    "./messages/msgs.properties"
+]}

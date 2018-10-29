@@ -1,0 +1,74 @@
+{
+	"swimlane-categories":[{
+		"swimlane-category":"Firewall",
+		"swimlane-category-count":500,
+		"time-line":[{
+			"time":12121212,
+			"value":300
+		},{
+			"time":12121212,
+			"value":100
+		},{
+			"time":12121212,
+			"value":10
+		},{
+			"time":12121212,
+			"value":20
+		},{
+			"time":12121212,
+			"value":70
+		}]
+	}, {
+		"swimlane-category":"Screen",
+		"swimlane-category-count":600,
+		"time-line":[{
+			"time":12121212,
+			"value":220
+		},{
+			"time":12121212,
+			"value":210
+		},{
+			"time":12121212,
+			"value":210
+		}]
+	}, {
+		"swimlane-category":"IPS",
+		"swimlane-category-count":1000,
+		"time-line":[{
+			"time":12121212,
+			"value":900
+		},{
+			"time":12121212,
+			"value":100
+		},{
+			"time":12121212,
+			"value":500
+		}]
+	}, {
+		"swimlane-category":"VPN",
+		"swimlane-category-count":5000,
+		"time-line":[{
+			"time":12121212,
+			"value":2000
+		},{
+			"time":12121212,
+			"value":200
+		},{
+			"time":12121212,
+			"value":4000
+		}]
+	}, {
+		"swimlane-category":"UTM",
+		"swimlane-category-count":500,
+		"time-line":[{
+			"time":12121212,
+			"value":200
+		},{
+			"time":12121212,
+			"value":200
+		},{
+			"time":12121212,
+			"value":200
+		}]
+	}]
+}

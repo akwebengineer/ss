@@ -1,0 +1,96 @@
+@import "../../base-policy-management/css/rule-grid.scss";
+@import "../../base-policy-management/css/compare-policy.scss";
+@import "../../base-policy-management/css/policy-images.scss";
+@import "../../ui-common/css/sd-common.scss";
+
+// firewall
+.editorAddNewButton-align-right{
+  margin-left: 150px;
+}
+
+div.formatable-text-div {
+  width: 295px;
+  height: 50px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  overflow: auto !important;
+  white-space: pre-wrap;
+}
+
+div.lineThrough {
+  text-decoration: line-through;
+}
+
+.label-top-align label {
+  padding-top: 0px;
+}
+.listBuilderPlaceHolderHigh {
+  height: 350px;
+}
+
+.listBuilderPlaceHolder {
+  height: 320px;
+}
+
+.gridWidgetPlaceHolder {
+  height: 376px;
+}
+
+.gridWidgetLargePlaceHolder {
+  height: 576px;
+}
+
+.gridWidgetSmallPlaceHolder {
+  height: 276px;
+}
+
+.elementinput-long-ssl-fp-root-certificate-grid {
+  margin-bottom: 5px;
+  width: 659px !important;
+}
+.appfw_icon_permit {
+  height: 14px;
+  width: 14px;
+  padding-left: 18px;
+  background: url('../images/permit14X14.png') no-repeat scroll 0 0 transparent;
+}
+
+.appfw_icon_deny {
+  height: 14px;
+  width: 14px;
+  padding-left: 18px;
+  background: url('../images/deny14X14.png') no-repeat scroll 0 0 transparent;
+}
+
+.appfw_icon_reject {
+  height: 14px;
+  width: 14px;
+  padding-left: 18px;
+  background: url('../images/reject14X14.png') no-repeat scroll 0 0 transparent;
+}
+
+.appfw_rules_bottom_section .form-pattern .elementlabel {
+  width: 400px !important;
+}
+
+.appfw_rules_bottom_section .form-pattern .optionselection {
+  float: left;
+  margin-right: 10px;
+}
+
+.appfw_rules_bottom_section .form-pattern .error small.error {
+  background: none;
+}
+.ssl_fP_form_seperator {
+  margin-top: 40px;
+}
+.rulegrid-div #appfw_error_message_text {
+  color: #eb2125;
+  font-style: normal;
+  font-size: 12px;
+  padding-top: 6px;
+}
+.elementinput-long-app-fw-signature-grid {
+  margin-bottom: 5px;
+  width: 799px !important;
+}

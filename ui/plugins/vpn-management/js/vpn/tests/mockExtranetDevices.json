@@ -1,0 +1,81 @@
+{
+    "extranet-devices": {
+        "@uri": "/api/juniper/sd/vpn-management/extranet-devices",
+        "@total": "7",
+        "extranet-device": [
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65542",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65542",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "Test2",
+                "description": "ED created from",
+                "ip-address": "10.17.1.26",
+                "host-name": "test2fdbhh",
+                "id": 65542
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65555",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65555",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "tmodifyMe2",
+                "description": "from slipstream ui",
+                "ip-address": "2.2.2.20",
+                "host-name": "host2",
+                "id": 65555
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65635",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65635",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "rgegTestChinmay",
+                "description": "",
+                "ip-address": "10.10.10.10",
+                "host-name": "hguieroa",
+                "id": 65635
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65637",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65637",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "nyc-vpn",
+                "ip-address": "2.2.2.2",
+                "host-name": "",
+                "id": 65637
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65648",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65648",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "xdgsdfgf",
+                "ip-address": "",
+                "host-name": "hjghjjg",
+                "id": 65648
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/65663",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/65663",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "sasaaf",
+                "ip-address": "10.17.1.2",
+                "host-name": "",
+                "id": 65663
+            },
+            {
+                "@uri": "/api/juniper/sd/vpn-management/extranet-devices/557056",
+                "@href": "/api/juniper/sd/vpn-management/extranet-devices/557056",
+                "domain-id": 2,
+                "domain-name": "Global",
+                "name": "demodevice",
+                "ip-address": "10.159.24.56",
+                "host-name": "",
+                "id": 557056
+            }
+        ]
+    }
+}

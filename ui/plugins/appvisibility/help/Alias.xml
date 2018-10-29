@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="APP_VISIBILITY_OVERVIEW" Link="#cshid=1364" />
+    <Map Name="NETWORK_USER_OVERVIEW" Link="#cshid=1184" />
+    <Map Name="NETWORK_USER_APPLICATION_BLOCKING" Link="#cshid=1183" />
+</CatapultAliasFile>

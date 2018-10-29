@@ -1,0 +1,46 @@
+[
+  {   
+    "id": "",
+    "text": ""
+  },
+  {   
+    "id": "const",
+    "text": "Constant String"
+  },
+  {
+    "id": "$custom_string",
+    "text": "Custom String"
+  },
+  {   
+    "id": "$space_date",
+    "text": "Date (YYYYMMDD format)"
+  },
+  {  
+    "id": "$space_short_date",
+    "text": "Date Short (YYMMDD format)"
+  },
+  {   
+    "id": "$egress",
+    "text": "Egress"
+  },
+  {   
+    "id": "$ingress",
+    "text": "Ingress"
+  },
+  {    
+    "id": "$rule_type",
+    "text": "Rule Type"
+  },
+  { 
+    "id": "$space_time",
+    "text": "Time (HHmmss format)"
+  },
+  { 
+    "id": "$space_short_time",
+    "text": "Time (HHmm format)"
+  },
+  { 
+    "id": "$space_user_id",
+    "text": "User ID"
+  }
+]

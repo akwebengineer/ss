@@ -1,0 +1,29 @@
+<div class='element-left-align'>
+      {{#schedule}}
+          <div class="scheduler-day" id="scheduler-weekly-{{id}}">
+            <div class="scheduler-weekly-day-title">
+              {{title}}
+            </div>
+            <div class="scheduler-weekly-day-body">
+              {{#exclude}}
+                <div id="{{id}}-value">{{fieldLabels.exclude}}</div>
+              {{/exclude}}
+              {{#all-day}}
+                <div id="{{id}}-value">{{fieldLabels.allDay}}</div>
+              {{/all-day}}
+              {{#start-time1}}
+                <div id="{{id}}-value">
+                  {{start-time1}} {{fieldLabels.to}}<br/>
+                  {{stop-time1}}
+                </div>
+              {{/start-time1}}
+
+              {{#start-time2}}
+                <div id="{{id}}-value-second">
+                  <br/>{{start-time2}} {{fieldLabels.to}}<br/>{{stop-time2}}
+                </div>
+              {{/start-time2}}
+            </div>
+          </div>
+      {{/schedule}}
+</div>

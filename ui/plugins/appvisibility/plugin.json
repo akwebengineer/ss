@@ -1,0 +1,61 @@
+
+
+{
+  "name": "app-visibility",
+  "description": "App Visibility",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+  "activities": [{
+      "module": "baseVisibilityActivity",
+      "url_path": "/appvisibility",
+      "filters": [{
+          "id": "appvisibility.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.appvisibility"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+  },{
+      "module": "userVisibilityActivity",
+      "url_path": "/uservisibility",
+      "filters": [{
+          "id": "uservisibility.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.uservisibility"
+          }
+        }],
+        "capabilities": [{
+          "name": "ViewDeviceLogs"
+        }]
+}, 
+  {
+       "module": "sourceIpVisibilityActivity",
+        "url_path": "/srcipvisibility",
+        "filters": [{
+          "id": "srcipvisibility.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+          "mime_type": "vnd.juniper.net.sourceipvisibility"
+          }
+        }],
+        "capabilities": [{
+        "name": "ViewDeviceLogs"
+        }]
+}],
+  "navigation_paths": [{
+      "path": "nav.monitors/nav.app_visibility",
+      "filter": "appvisibility.view"
+  }, {
+      "path": "nav.monitors/nav.user_visibility",
+      "filter": "uservisibility.view"
+  } ,{
+      "path": "nav.monitors/nav.source_ip_visibility",
+      "filter": "srcipvisibility.view"
+  }]
+}

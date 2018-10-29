@@ -1,0 +1,27 @@
+@import "../../ui-common/css/sd-common.scss";
+@import "../../sd-device-management/css/sd-device-management.scss";
+
+.elementinput-ldap-server-grid {
+  margin-bottom: 10px;
+  width: 800px !important;
+}
+
+
+.elementinput-domain-controller-grid {
+  margin-bottom: 10px;
+  width: 500px !important;
+}
+
+.editorAddNewButton-align-right{
+  margin-left: 150px;
+}
+
+.delete-warning-yes-button-red {
+  border: 1px solid #f2000b !important;;
+  background: #ee0125 !important;
+  color: white;
+}
+
+.delete-confirmation-border-red {
+  border: 2px solid #eb2125 !important;
+}

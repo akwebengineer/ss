@@ -1,0 +1,45 @@
+@import "../../base-policy-management/css/rule-grid.scss";
+@import "../../base-policy-management/css/compare-policy.scss";
+@import "../../base-policy-management/css/policy-images.scss";
+@import "../../ui-common/css/sd-common.scss";
+
+// firewall
+.editorAddNewButton-align-right{
+  margin-left: 150px;
+}
+
+div.formatable-text-div {
+  width: 295px;
+  height: 50px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  overflow: auto !important;
+  white-space: pre-wrap;
+}
+
+div.lineThrough {
+  text-decoration: line-through;
+}
+
+.label-top-align label {
+  padding-top: 0px;
+}
+.listBuilderPlaceHolderHigh {
+  height: 350px;
+}
+
+.listBuilderPlaceHolder {
+  height: 320px;
+}
+
+.gridWidgetPlaceHolder {
+  height: 376px;
+}
+
+.gridWidgetLargePlaceHolder {
+  height: 576px;
+}
+
+.gridWidgetSmallPlaceHolder {
+  height: 276px;
+}

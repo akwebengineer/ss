@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CatapultAliasFile>
+    <Map Name="REPORT_OVERVIEW" Link="#cshid=1114" />
+    <Map Name="REPORT_DEFINITION_OVERVIEW" Link="#cshid=1115" />
+    <Map Name="REPORT_DEFINITION_MAIN_FIELD" Link="#cshid=1116" />
+    <Map Name="REPORT_DELETING" Link="#cshid=1121" />
+    <Map Name="REPORT_DEFINITION_CREATING" Link="#cshid=1122" />
+    <Map Name="REPORT_DEFINITION_POLICY_ANALYSIS_CREATING" Link="#cshid=1123" />
+    <Map Name="REPORT_DIFFERENT_ACTION_PERFORMING" Link="#cshid=1124" />
+    <Map Name="REPORT_DEFINITON_BANDWIDTH_REPORT_CREATING" Link="#cshid=1373" />
+    <Map Name="LOG_MGMT_LOG_REPORT_OVERVIEW" Link="#cshid=1387" />
+    <Map Name="REPORT_GENERATED_USING" Link="#cshid=1388" />
+    <Map Name="REPORT_EDITING_CLONING" Link="#cshid=1040" />
+    <Map Name="REPORT_GENERATEDMAIN_PAGE_FIELDS" Link="#cshid=1186" />
+    <Map Name="REPORTS_DUPLICATING" Link="#cshid=1047" />
+    <Map Name="REPORTS_USING" Link="#cshid=1168" />
+</CatapultAliasFile>

@@ -1,0 +1,9 @@
+{
+    "import":[
+        "./messages/msgs.properties",
+         "../base-policy-management/messages/policies-msgs.properties",
+         "../base-policy-management/messages/rules-msgs.properties",
+         "../sd-common/messages/policy-save-msgs.properties",
+         "../ui-common/messages/msgs.properties"
+    ]
+}

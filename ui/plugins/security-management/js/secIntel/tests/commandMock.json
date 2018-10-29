@@ -1,0 +1,47 @@
+{
+    "secintel-profiles": {
+        "@uri": "/api/juniper/sd/secintel-management/secintel-profiles",
+        "@total": "3",
+        "secintel-profile": [
+            {
+                "@uri": "/api/juniper/sd/secintel-management/secintel-profiles/425987",
+                "@href": "/api/juniper/sd/secintel-management/secintel-profiles/425987",
+                "domain-name": "Global",
+                "id": 425987,
+                "category": "CommandAndControl",
+                "block-threshold-type": "RECOMMENDED",
+                "block-threshold-level": 5,
+                "block-option": "DROP_CONNECTION_SILENTLY",
+                "log-option": "LOG_ALL",
+                "description": "",
+                "name": "cc1"
+            }, 
+            {
+                "@uri": "/api/juniper/sd/secintel-management/secintel-profiles/425988",
+                "@href": "/api/juniper/sd/secintel-management/secintel-profiles/425988",
+                "domain-name": "Global",
+                "id": 425988,
+                "category": "CommandAndControl",
+                "block-threshold-type": "RECOMMENDED",
+                "block-threshold-level": 5,
+                "block-option": "DROP_CONNECTION_SILENTLY",
+                "log-option": "LOG_ALL",
+                "description": "",
+                "name": "cc2"
+            }, 
+            {
+                "@uri": "/api/juniper/sd/secintel-management/secintel-profiles/425989",
+                "@href": "/api/juniper/sd/secintel-management/secintel-profiles/425989",
+                "domain-name": "Global",
+                "id": 425989,
+                "category": "CommandAndControl",
+                "block-threshold-type": "RECOMMENDED",
+                "block-threshold-level": 5,
+                "block-option": "DROP_CONNECTION_SILENTLY",
+                "log-option": "LOG_ALL",
+                "description": "",
+                "name": "cc3"
+            }
+        ]
+    }
+}

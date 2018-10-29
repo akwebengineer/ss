@@ -1,0 +1,315 @@
+/**
+ * CSS for resource usage level in Device ILP - START
+ */
+ 
+.usage-level-default {
+	height: 5px;
+	width: 10px;
+	display: inline-block;
+}
+
+.usage-level-boxgap {
+	width: 1px;
+}
+
+.usage-level-zero {
+  border-style : solid;
+  border-width : 1px;
+  border-color : #CCC;
+}
+
+.usage-level-zero-fill {
+  background-color: #FFF;
+}
+
+.usage-level-low {
+  border-style : solid;
+  border-width : 1px;
+  border-color : #236607;
+}
+
+.usage-level-low-fill {
+  background-color: #33CC00;
+}
+
+.usage-level-medium {
+  border-style : solid;
+  border-width : 1px;
+  border-color : #AA4400;
+}
+
+.usage-level-medium-fill {
+  background-color: #F39C12;
+}
+
+.usage-level-high {
+  border-style : solid;
+  border-width : 1px;
+  border-color : #970700;
+}
+
+.usage-level-high-fill {
+  background-color: #EF202A;
+}
+
+/**
+ * CSS for resource usage level in Device ILP - END
+ */
+ 
+/**
+ * CSS for custom actions in Device ILP - START
+ */
+ 
+.icon_upload_key_device_mgmt {
+	background: url('/installed_plugins/sd-device-management/images/icon_upload_key.svg');
+	width: 18px !important;
+	height : 18px !important;
+}
+
+.icon_upload_key_hover_device_mgmt {
+	background: url('/installed_plugins/sd-device-management/images/icon_upload_key_hover.svg');
+	width: 18px !important;
+	height : 18px !important;
+}
+
+.icon_upload_key_disable_device_mgmt {
+	background: url('/installed_plugins/sd-device-management/images/icon_upload_key_disable.svg');
+	width: 18px !important;
+	height : 18px !important;
+}
+ 
+ /**
+ * CSS for custom actions in Device ILP - END
+ */
+ 
+ /**
+ * CSS for Managed Status in Device ILP - START
+ */
+ 
+#device_managed_status_UNMANAGED {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_unmanaged.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_UNMANAGED:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_unmanaged_hover.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_MANAGED {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_unmanaged.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_MANAGED:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_unmanaged_hover.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_SD_CHANGED {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_SD_changed.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_SD_CHANGED:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_SD_changed_hover.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_DEVICE_CHANGED {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_device_changed.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_DEVICE_CHANGED:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_device_changed_hover.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_SD_CHANGED_DEVICE_CHANGED {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_SD_device_changed.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+#device_managed_status_SD_CHANGED_DEVICE_CHANGED:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_SD_device_changed_hover.svg');
+	width: 12px;	
+	height : 12px;
+}
+
+ /**
+ * CSS for Managed Status in Device ILP - END
+ */
+ 
+  /**
+ * CSS for Services in Device ILP - START
+ */
+ 
+#services_DCPolicy {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_FW_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_DCPolicy:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_FW_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_IPSPolicy {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_IPS_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_IPSPolicy:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_IPS_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_IPSECVPN {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_VPN_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_IPSECVPN:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_VPN_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_DCNATPOLICY {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_NAT_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+#services_DCNATPOLICY:hover {
+	background-image: url('/installed_plugins/sd-device-management/images/icon_NAT_hover.svg');
+	width: 14px;	
+	height : 14px;
+	margin-right: 10px;
+}
+
+ /**
+ * CSS for Services in Device ILP - END
+ */
+
+
+// This is the manual grid refresh CSS changes START
+.info-box {
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  font-weight: normal;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding: 0.875rem 1.5rem 0.875rem 0.875rem;
+  font-size: 0.8125rem;
+  background-color: #f4f4f4;
+  border-color: #e7e7e7;
+  color: #564e4e; }
+
+.info-box .close {
+  font-size: 1.375rem;
+  padding: 9px 6px 4px;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.6875rem;
+  right: 0.25rem;
+  color: #333333;
+  opacity: 0.3; }
+
+.info-box .close:hover, .info-box .close:focus {
+  opacity: 0.5; }
+
+.info-box.radius {
+  -webkit-border-radius: 3px;
+  border-radius: 3px; }
+
+.info-box.round {
+  -webkit-border-radius: 1000px;
+  border-radius: 1000px; }
+
+.info-box.success {
+  background-color: #43ac6a;
+  border-color: #3c9a5f;
+  color: white; }
+
+.info-box.alert {
+  background-color: #f04124;
+  border-color: #ea2f10;
+  color: white; }
+
+.info-box.secondary {
+  background-color: #eceaea;
+  border-color: #e0dddd;
+  color: #564e4e; }
+
+.info-box.warning {
+  background-color: #f08a24;
+  border-color: #ea7d10;
+  color: white; }
+
+.info-box.info {
+  background-color: #a0d3e8;
+  border-color: #8bc9e3;
+  color: #564e4e; }
+
+.grid-widget .info-box {
+  border-width: 2px;
+  border-color: #F8AC19;
+  font-size: 12px;
+  background-color: white;
+  color: #F8AC19;
+  display: none; }
+
+.grid-widget .info-box a {
+  color: #3366cc; }
+
+.grid-widget .info-box a:hover {
+  text-decoration: underline; }
+
+.grid-widget .info-box a:focus {
+  text-decoration: underline; }
+
+.grid-widget .info-box a:visited {
+  color: #806eb7; }
+
+.image-transparent {
+    background-image: url('/installed_plugins/sd-device-management/images/transparent.png');
+    background-size: 14px 15px;
+    background-repeat: no-repeat;
+}
+
+.icon_device_managed_status_in_sync {
+     background-image: url('/installed_plugins/sd-device-management/images/icon_device_managed_status_in_sync.svg');
+     background-size: 14px 15px;
+     background-repeat: no-repeat;
+}
+
+.icon_device_managed_status_sync_failed {
+    background-image: url('/installed_plugins/sd-device-management/images/icon_device_managed_status_sync_failed.svg');
+    background-size: 14px 15px;
+    background-repeat: no-repeat;
+}

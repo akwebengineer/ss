@@ -1,0 +1,8 @@
+{
+    "extranet-devices": {
+        "@uri": "/api/juniper/sd/vpn-management/extranet-devices",
+        "@total": "0",
+        "extranet-device": [
+        ]
+    }
+}

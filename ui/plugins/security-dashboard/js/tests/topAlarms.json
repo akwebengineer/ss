@@ -1,0 +1,98 @@
+{
+  "aggregated-value": {
+    "@uri": "\/api\/juniper\/ecm\/log-management\/aggregated-value",
+    "@total": "10",
+    "aggregated-result": [
+      {
+        "key": "10.205.11.50",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 572111
+          }
+        }
+      },
+      {
+        "key": "255.255.255.255",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 572109
+          }
+        }
+      },
+      {
+        "key": "55.55.55.55",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 476760
+          }
+        }
+      },
+      {
+        "key": "56.56.56.56",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 381411
+          }
+        }
+      },
+      {
+        "key": "2.1.1.1",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 381404
+          }
+        }
+      },
+      {
+        "key": "2.2.2.2",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 286057
+          }
+        }
+      },
+      {
+        "key": "172.29.226.18",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 190704
+          }
+        }
+      },
+      {
+        "key": "10.205.11.60",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 190703
+          }
+        }
+      },
+      {
+        "key": "2.3.1.1",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 190702
+          }
+        }
+      },
+      {
+        "key": "10.205.11.40",
+        "result-list": {
+          "result": {
+            "time": 0,
+            "value": 95352
+          }
+        }
+      }
+    ]
+  }
+}

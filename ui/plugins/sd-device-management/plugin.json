@@ -1,0 +1,69 @@
+{
+  "name": "sd-device-management",
+  "description": "Security management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+  "providers": [
+      {
+        "uri": "topics://vnd.juniper.sm.sse",
+        "module": "../../ui-common/js/sse/smSSEListener"
+      }
+    ],
+    "activities": [
+    {
+      "module": "securitydevices/devicesActivity",
+      "url_path": "/devices",
+      "filters": [
+          {
+            "id": "devices.view",
+            "action": "slipstream.intent.action.ACTION_LIST",
+            "data": {
+            "mime_type": "vnd.juniper.net.importconfig"
+            }
+          }
+        ]
+    },
+    {
+      "module": "security-devices/devicesActivity",
+      "url_path": "/security-devices",
+      "filters": [
+          {
+            "id": "securitydevices.view",
+            "action": "slipstream.intent.action.ACTION_LIST",
+            "data": {
+            "mime_type": "vnd.juniper.sd.device-management.devices"
+            }
+          }
+        ],
+        "capabilities": [
+          {"name": "ReadDevices"},
+          {"name": "manageDevices"}          
+       ]
+    },
+    {
+        "module": "deviceCertificates/sdDeviceCertificatesActivity",
+        "filters": [
+            {
+                "id": "devices.preview",
+                "action": "slipstream.intent.action.ACTION_REFRESH_CERTIFICATES",
+                "data": {
+                    "mime_type": "vnd.juniper.net.sd.device.refresh.certificates"
+                }
+            }
+        ]
+    }
+  ],
+
+  "navigation_paths": [
+    {
+      "path": "nav.configure/nav.configurations/nav.devices",
+      "filter": "devices.view"
+    },    
+    {
+      "path": "nav.devices_and_connections/nav.all_devices",
+      "filter": "securitydevices.view"
+    }
+  ]
+}

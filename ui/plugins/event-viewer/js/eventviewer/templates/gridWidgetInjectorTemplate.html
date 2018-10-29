@@ -1,0 +1,13 @@
+<!--needs to inject this in to grid Widget -->
+
+<dd class="ev-filter-threats">
+	{{#filter-threats}}
+		<input type="checkbox" class="ev-threat-checkbox" data-validation="validtext" id="checkbox_enable" name="enable_disable" value="enable" required="">
+    	<label for="checkbox_enable">View only threats</label>
+    {{/filter-threats}}
+ </dd>
+
+ <dd class="ev-group-by-container" style="display:inline-flex;">
+	<span style="color: #333; font: 12px; margin-right: 10px">Group by</span>
+	<select class="ev-group-by"></select>
+</dd>

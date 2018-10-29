@@ -1,0 +1,515 @@
+@import "../../ui-common/css/sd-common.scss";
+// This is the normal option color which is as the same as that in jquery
+
+
+#address-create-form a{
+	font-size: 12px;
+	margin: 5px;
+}
+
+.elementinput-long-ips-sig-grid {
+    margin-bottom: 5px;
+    width: 659px !important;
+}
+
+.elementinput-long-ips-sig-static-grid {
+    margin-bottom: 5px;
+    width: 799px !important;
+}
+
+.label-gray-color {
+    color: $labelGrayColor !important;
+}
+
+.select-with-placeholder {
+    color: $normalOptionColor !important;
+}
+
+.select-disabled-with-placeholder {
+    color: graytext !important;
+}
+
+.select-option-hidden-with-placeholder {
+    display: none;
+}
+
+.unitlabel-in-one-row{
+    width: 5px !important;
+    height: 30px;
+}
+
+.unitinput-in-one-row{
+    width: 200px !important;
+    margin-bottom: 10px;
+}
+
+.label-long{
+    width: 220px !important;
+}
+
+.unit-element-without-lable {
+    margin-left: 15px;
+}
+
+.assign-to-domain-result-label-long{
+    width: 250px !important;
+}
+
+
+.signature-database-latest-tag {
+    color: orange;
+}
+
+.signature-database-connection-status-column-up {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/security-management/images/up.png') no-repeat scroll 0 0 transparent;
+}
+
+.signature-database-connection-status-column-down {
+  height: 16px;
+  width: 16px;
+  padding-left: 20px;
+  background: url('/installed_plugins/security-management/images/down.png') no-repeat scroll 0 0 transparent;
+}
+
+.signature-database-probe-device-menu{
+    margin-right: 0px !important;
+}
+
+.signature-database-probe-device-help{
+    margin-top: 0px !important;
+}
+
+.signature-database-install-label{
+    width: 185px;
+}
+
+.progress-bar {
+    padding-top: 60px;
+}
+
+.repeat-interval {
+    width: 60px;
+    float: left;
+    margin-right: 5px;
+}
+
+.errorbreakword {
+    word-wrap: break-word;
+}
+
+// firewall
+.editorAddNewButton-align-right{
+  margin-left: 150px;
+}
+/**
+Related to import css
+*/
+#importSummaryOuterDiv .printButton {
+  width:120px;
+  color: black;
+  background: lightgray;
+  font-weight: bold;
+  border: 1px solid gray;
+}
+
+#importSummaryOuterDiv .printButton:hover {
+  border: 1px solid black;
+}
+
+.ImportSummaryTable {
+  border: 1px solid #D6DDE6;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.ImportSummaryTable td {
+  border: 1px solid #D6DDE6;
+  font: normal 11px tahoma, arial, verdana, sans-serif;
+  padding: 4px;
+}
+
+.ImportSummaryTable th {
+  border: 1px solid #C5C5C5;
+  background-color: #E7E7E7;
+  font: normal 11px tahoma, arial, verdana, sans-serif;
+  text-align: center;
+  padding: 4px;
+}
+
+.ImportSummaryTable caption {
+  font: bold 0.9em "Times New Roman", Times, serif;
+  background-color: #343434;
+  color: white;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  border: 1px solid #789AC6;
+}
+
+.ImportSummaryTable tr:hover {
+  background-color: #DFE7F2;
+  color: #000000;
+}
+
+.vpnImport tr:hover {
+  background-color: #FFF !important;
+}
+
+
+/***
+*****************************************************************************************************************************
+* Job related changes
+*****************************************************************************************************************************
+*/
+.job-status-panel {
+  width: 100%;
+  text-align: center;
+}
+
+.job-status-each {
+  display: inline-block;
+}
+
+.job-status-icon {
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  padding-top: 10px;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+
+.job-status-icon:hover {
+  background-image: url('/installed_plugins/security-management/images/publish/hover_circle.png') !important;
+}
+
+.jobStatusComplete {
+  background-image: url('/installed_plugins/security-management/images/publish/blue_circle.png');
+}
+
+.jobStatusPending {
+  background-image: url('/installed_plugins/security-management/images/publish/grey_circle.png');
+}
+
+.sd-multi-job {
+  text-decoration: underline;
+}
+
+.job-status-current {
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  margin: 2px auto;
+}
+
+.jobIconSuccess {
+  background-image: url('/installed_plugins/security-management/images/publish/icon_grid_ok.png');
+}
+
+.jobIconFailure {
+  background-image: url('/installed_plugins/security-management/images/publish/icon_grid_error.png');
+}
+
+.job-name-current {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.job-arrow {
+  background: transparent url('/installed_plugins/security-management/images/publish/arrowsProcess.png') no-repeat;
+  margin-top: 7px;
+  width: 114px;
+  height: 31px;
+  display: inline-block;
+  vertical-align: 18px;
+}
+
+.job-summary-table {
+  border: none !important;
+  display: inline-block;
+  margin-bottom: 0 !important;
+}
+
+.table-left {
+  width: 50%;
+}
+
+.job-summary-table tr {
+  background: none !important;
+}
+
+.job-summary-table tr td {
+  line-height: 0;
+}
+
+.job-summary-table tr td label {
+  cursor: default;
+  margin-bottom: 0 !important;
+}
+
+.job-summary-table tr td .job-label-left {
+  width: 100px;
+}
+
+.job-summary-table tr td .job-label-right {
+  width: 150px;
+}
+
+
+.job-grid-widget .slipstream-content-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: -3px;
+  border: none;
+  letter-spacing: normal;
+}
+
+#job-section-message-cli .section-title h5 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 7px;
+
+
+  height: 24px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: -3px;
+  border: none;
+  letter-spacing: normal;
+  margin-left: 8px;
+}
+
+.job-summary-job-state {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  display:inline-block;
+}
+
+.job-summary-note {
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+#job-section-message-cli .section_title h5 {
+  font-size: 13px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+div#importOcrMessage {
+   color: gray;
+    border-color: gray;
+}
+
+
+#app-secure-profile-form .footer h6 {
+  font-style: italic !important;
+}
+
+div.formatable-text-div {
+    width: 295px;
+    height: 50px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    overflow: auto !important;
+    white-space: pre-wrap;
+}
+
+div.lineThrough {
+  text-decoration: line-through;
+}
+.scheduler-day {
+    float: left;
+    overflow: hidden;
+    width: 85px;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 15px;
+    background-color: #05A4FF;
+}
+
+.scheduler-day.excluded {
+    background-color: #CCCCCC;
+}
+
+.scheduler-day:hover {
+    background-color: #777777;
+}
+
+.scheduler-weekly-day-title {
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin-top: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    font-color: #333333;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.scheduler-weekly-day-body {
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    min-height: 56px;
+    text-align: center;
+    font-size: 11px;
+    font-color: #666666;
+}
+
+.label-top-align label {
+  padding-top: 0px;
+}
+.default-cursor {
+    cursor: default !important;
+}
+.align-left-no-margin {
+    padding-left: 0px !important;  
+}
+
+/*Import Screen OCR css */
+.tooltip-label{font-weight:bold;padding-right:5px;line-height:15px}
+.tooltip-sub-head{text-decoration:underline;font-weight:bold;padding-right:5px}
+.tooltip-table{margin:5px;border-collapse:collapse;text-align:left}
+.tooltip-table th{font-weight:bold;padding:10px 8px;border-bottom:2px solid #6678b1}
+.tooltip-table td{border-bottom:1px solid #ccc;padding:6px 8px}
+table.conflict-tooltip{
+border-width:1px;border-spacing:5px;border-color:gray;
+border-collapse:separate;background-color:white;vertical-align:text-top
+}
+td.conflict-tooltip{padding:3px;border-right:solid 1px #999;vertical-align:text-top}
+
+/* Device Config*/
+#zones_configuration_view .slipstream-content-title {
+  position: relative !important;
+}
+.listBuilderPlaceHolderHigh {
+  height: 350px;
+}
+
+.listBuilderPlaceHolder {
+  height: 320px;
+}
+
+.gridWidgetPlaceHolder {
+  height: 376px;
+}
+
+.gridWidgetLargePlaceHolder {
+  height: 576px;
+}
+
+.gridWidgetSmallPlaceHolder {
+  height: 276px;
+}
+// This is the manual grid refresh CSS changes
+.info-box {
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  font-weight: normal;
+  margin-bottom: 1.25rem;
+  position: relative;
+  padding: 0.875rem 1.5rem 0.875rem 0.875rem;
+  font-size: 0.8125rem;
+  background-color: #f4f4f4;
+  border-color: #e7e7e7;
+  color: #564e4e; }
+
+.info-box .close {
+  font-size: 1.375rem;
+  padding: 9px 6px 4px;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -0.6875rem;
+  right: 0.25rem;
+  color: #333333;
+  opacity: 0.3; }
+
+.info-box .close:hover, .info-box .close:focus {
+  opacity: 0.5; }
+
+.info-box.radius {
+  -webkit-border-radius: 3px;
+  border-radius: 3px; }
+
+.info-box.round {
+  -webkit-border-radius: 1000px;
+  border-radius: 1000px; }
+
+.info-box.success {
+  background-color: #43ac6a;
+  border-color: #3c9a5f;
+  color: white; }
+
+.info-box.alert {
+  background-color: #f04124;
+  border-color: #ea2f10;
+  color: white; }
+
+.info-box.secondary {
+  background-color: #eceaea;
+  border-color: #e0dddd;
+  color: #564e4e; }
+
+.info-box.warning {
+  background-color: #f08a24;
+  border-color: #ea7d10;
+  color: white; }
+
+.info-box.info {
+  background-color: #a0d3e8;
+  border-color: #8bc9e3;
+  color: #564e4e; }
+
+.grid-widget .info-box {
+  border-width: 2px;
+  border-color: #F8AC19;
+  font-size: 12px;
+  background-color: white;
+  color: #F8AC19;
+  display: none; }
+
+.grid-widget .info-box a {
+  color: #3366cc; }
+
+.grid-widget .info-box a:hover {
+  text-decoration: underline; }
+
+.grid-widget .info-box a:focus {
+  text-decoration: underline; }
+
+.grid-widget .info-box a:visited {
+  color: #806eb7; }
+
+.job-summary-section {
+  height : 116px !important;
+}
+
+.job-status {
+  height : 116px !important;
+}
+
+.change-password-icon{ 
+background-image: url("/installed_plugins/security-management/images/icon_change_password.svg");}
+ 
+.log-change-password-hover-icon{
+background-image: url("/installed_plugins/security-management/images/icon_change_password_hover.svg");}
+
+.change-password-icon-disable{
+ background-image: url("/installed_plugins/security-management/images/icon_change_password_disabled.svg");}
+
+.syslog-forward-enabled-icon{
+background-image: url("/installed_plugins/security-management/images/icon_log_forwarding.svg");}
+
+.syslog-forward-hover-icon{
+background-image: url("/installed_plugins/security-management/images/icon_log_forwarding_hover.svg");}
+
+.syslog-forward-disabled-icon{
+ background-image: url("/installed_plugins/security-management/images/icon_log_forwarding_disabled.svg");}

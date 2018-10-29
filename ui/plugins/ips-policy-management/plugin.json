@@ -1,0 +1,199 @@
+{
+  "name": "ips-policy-management",
+  "description": "isp policy management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+    "activities": [
+   {
+      "module": "ips/devices/ipsDeviceActivity",
+      "filters": [
+        {
+          "id": "ips-policy.devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies.devices"
+          }
+        }
+      ]
+    },   
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "url_path": "/ips-policies",
+      "filters": [
+        {
+          "id": "ips-policies.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewIPSPolicy"}
+       ] 
+    }, 
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "filters": [
+        {
+          "id": "policies.device-count",
+          "action": "sd.intent.action.ACTION_COMPARE_POLICY",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        }
+      ]
+    },
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "filters": [   
+        {
+          "id": "ips-policies.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        },    
+        {
+          "id": "ips-policies.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createIPSPolicy"}
+       ]
+    },
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "filters": [    
+        {
+          "id": "ips-policies.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyIPSPolicy"}
+       ]
+    }, 
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "filters": [    
+        {
+          "id": "ips-policies.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteIPSPolicy"}
+       ]      
+    }, 
+    {
+      "module": "ips/policies/ipsPoliciesActivity",
+      "filters": [   
+        {
+          "id": "ips-policies.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policies"
+           }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignIPSPolicyToDomainCap"}
+       ]      
+    }, 
+    {
+      "module": "ips/policytemplates/ipsPolicyTemplatesActivity",
+      "url_path": "/policy-templates",
+      "filters": [
+        {
+          "id": "policy-templates.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policy-templates"
+          }
+        }
+      ],
+      "capabilities":[
+          {"name": "manageIPSSigSet"}
+      ]
+    },
+    {
+      "module": "ips/policytemplates/ipsPolicyTemplatesActivity",
+      "filters": [
+        {
+          "id": "policy-templates.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policy-templates"
+          }
+        },
+        {
+          "id": "policy-templates.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policy-templates"
+          }
+        },
+        {
+          "id": "policy-templates.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policy-templates"
+          }
+        },
+        {
+          "id": "policy-templates.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.policy-templates"
+          }
+        }
+     ]
+    },
+    {
+      "module": "ips/devices/ipsPolicyDeviceActivity",
+      "url_path": "/ips/devices",
+      "filters": [
+        {
+          "id": "ips-policy-devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.ips.devices"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "viewIPSPolicy"}
+       ]
+    }
+  ],
+
+  "navigation_paths": [
+   
+    {
+      "path": "nav.configure/nav.ips_policy/nav.ipsPolicies",
+      "filter": "ips-policies.view"
+    },    
+    
+    {
+      "path": "nav.configure/nav.ips_policy/nav.policy_templates",
+      "filter": "policy-templates.view"
+    },
+    {
+      "path": "nav.configure/nav.ips_policy/nav.ipsPolicies_devices",
+      "filter": "ips-policy-devices.view"
+    } 
+  ]
+}

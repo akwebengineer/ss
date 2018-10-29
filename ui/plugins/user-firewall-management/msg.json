@@ -1,0 +1,8 @@
+{
+    "import" : [
+        "../ui-common/messages/msgs.properties",
+        "../sd-device-management/messages/msgs.properties",
+        "./messages/msgs.properties",
+        "../object-manager/messages/msgs.properties"
+    ]
+}

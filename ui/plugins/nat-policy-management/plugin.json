@@ -1,0 +1,423 @@
+{
+  "name": "nat-policy-management",
+  "description": "NAT management for Juniper's Single Pane of Glass",
+  "publisher": "Juniper Networks, Inc.",
+  "version": "0.0.1",
+  "release_date": "02.19.2015",
+  "min_platform_version": "0.0.1",
+    "activities": [
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "url_path": "/nat-policies",
+      "filters": [
+        {
+          "id": "nat-policies.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageNATPolicy"}
+       ]
+    },
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [
+        {
+          "id": "policies.device-count",
+          "action": "sd.intent.action.ACTION_COMPARE_POLICY",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [          
+        {
+          "id": "nat-policies.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        },     
+        {
+          "id": "nat-policies.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createNATPolicy"}
+       ]
+    }, 
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [     
+        {
+          "id": "nat-policies.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyNATPolicy"}
+       ]
+    },
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [     
+        {
+          "id": "nat-policies.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteNATPolicy"}
+       ]
+    },
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [          
+        {
+          "id": "nat-policies.compare",
+          "action": "sd.intent.action.ACTION_COMPARE_POLICY",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/nat-policies/natPoliciesActivity",
+      "filters": [     
+        {
+          "id": "nat-policies.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "AssignNatPolicyToDomainCap"}
+       ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "url_path": "/nat-pools",
+      "filters": [
+        {
+          "id": "nat-pools.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageNATPool"}
+       ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [
+        {
+          "id": "nat-pools.view.custom.container",
+          "action": "sd.intent.action.ACTION_LIST_CUSTOM_CONTAINER",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+        {"name": "manageNATPool"}
+      ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [    
+         {
+          "id": "nat-pools.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        },
+        {
+          "id": "nat-pools.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createNATPool"}
+       ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [         
+        {
+          "id": "nat-pools.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyNATPool"}
+       ]
+    }, 
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [       
+        {
+          "id": "nat-pools.show-duplicates",
+          "action": "sd.intent.action.ACTION_SHOW_DUPLICATES",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [      
+        {
+          "id": "nat-pools.replace",
+          "action": "sd.intent.action.ACTION_REPLACE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "ReplaceNATPools"}
+       ]
+    }, 
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [      
+        {
+          "id": "nat-pools.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        },
+        {
+          "id": "nat-pools.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deleteNATPool"}
+       ]
+    }, 
+     {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [
+        {
+          "id": "nat-pools.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ],
+       "capabilities": [
+          {"name": "AssignNatPoolToDomainCap"}
+       ]
+    },
+    {
+      "module": "nat/nat-pools/natPoolsActivity",
+      "filters": [
+        {
+          "id": "nat-pools.show-detail-view",
+          "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.natpools"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "url_path": "/port-sets",
+      "filters": [
+        {
+          "id": "port-sets.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "managePortSet"}
+       ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [
+        {
+          "id": "port-sets.create",
+          "action": "slipstream.intent.action.ACTION_CREATE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        },
+        {
+          "id": "port-sets.clone",
+          "action": "slipstream.intent.action.ACTION_CLONE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "createPortSet"}
+       ]
+    },   
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [   
+        {
+          "id": "port-sets.select",
+          "action": "slipstream.intent.action.ACTION_SELECT",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [            
+        {
+          "id": "port-sets.delete",
+          "action": "sd.intent.action.ACTION_DELETE",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        },
+        {
+          "id": "port-sets.delete-unused",
+          "action": "sd.intent.action.ACTION_DELETE_UNUSED",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "deletePortSet"}
+       ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [            
+        {
+          "id": "port-sets.edit",
+          "action": "slipstream.intent.action.ACTION_EDIT",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "modifyPortSet"}
+      ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [           
+        {
+          "id": "port-sets.show-duplicates",
+          "action": "sd.intent.action.ACTION_SHOW_DUPLICATES",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        }
+      ]
+    },
+    {
+      "module": "nat/port-sets/portSetsActivity",
+      "filters": [    
+        {
+          "id": "port-sets.assign-to-domain",
+          "action": "sd.intent.action.ACTION_ASSIGN_TO_DOMAIN",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.portsets"
+          }
+        } 
+      ],
+      "capabilities": [
+          {"name": "AssignPortSetToDomainCap"}
+       ]
+    },
+    {
+      "module": "nat/devices/natDeviceActivity",
+      "filters": [
+        {
+          "id": "nat-policy.devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.policies.devices"
+          }
+        }
+      ]
+    },
+   
+    {
+      "module": "nat/devices/natPolicyDeviceActivity",
+      "url_path": "/nat/devices",
+      "filters": [
+        {
+          "id": "nat-policy-devices.view",
+          "action": "slipstream.intent.action.ACTION_LIST",
+          "data": {
+            "mime_type": "vnd.juniper.net.nat.devices"
+          }
+        }
+      ],
+      "capabilities": [
+          {"name": "manageNATPolicy"}
+       ]
+    }
+  ],
+
+  "navigation_paths": [
+    {
+      "path": "nav.configure/nav.nat_policy/nav.natPolicies",
+      "filter": "nat-policies.view"
+    },
+    {
+      "path": "nav.configure/nav.nat_policy/nav.nat_pools",
+      "filter": "nat-pools.view"
+    },
+    {
+      "path": "nav.configure/nav.nat_policy/nav.port_sets",
+      "filter": "port-sets.view"
+    },
+    {
+      "path": "nav.configure/nav.nat_policy/nav.natPolicies_devices",
+      "filter": "nat-policy-devices.view"
+    }    
+  ]
+}

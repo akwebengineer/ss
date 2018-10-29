@@ -1,0 +1,781 @@
+#threat-map {
+  background-color: #000;
+  top: 43px;      // .right-pane: {padding: 10px} + .breadcrumb-region {height: 16px} + padding-bottom: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  .title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 29px;
+    font-size: 24px;
+    font-weight: 300;
+    color: #ffffff;
+    padding:10px 0px 10px 20px;
+  }
+
+  .slipstream-content-title {
+    border-bottom-width: 0px;
+    margin-bottom: 10px;
+    font: 14px "Helvetica Neue", Helvetica, Arial;
+  }
+
+  .subtitle-row {
+    margin-bottom: 15px;
+  }
+
+  #subtitle {
+    padding-left: 20px;
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #cccccc;
+  }
+
+  .play-pause-clock {
+    float: right;
+    color: #05a4ff;
+    font-size: 10px;
+    margin-right: 10px;
+    margin-bottom: 6px;
+  }
+
+  #current-time {
+    margin-right: 10px;
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: right;
+    color: #cccccc;
+  }
+
+  .play-button {
+    width: 24px;
+    cursor: pointer;
+  }
+
+  .pause-button {
+    width: 24px;
+    cursor: pointer;
+  }
+
+  .insight-bar {
+     background-color: #333333;
+     height: 144.1px;
+     opacity: 0.85;
+     max-width: inherit;
+  }
+
+  .panel-box {
+    margin-top: 10px;
+    width: 20%;
+    padding-left: 20px;
+  }
+  
+  .first-panel {
+    margin-top: 12px;
+    width: 19%;
+    padding-left: 20px;
+  }
+
+  .stroke {
+    width: 2px;
+    height: 125px;
+    border: solid 1px #444444;
+    float: left;
+    margin-top: 10px;
+  }
+
+  .panel-title {
+    float: left;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    width: 99%;
+    height: 17px;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 14px;
+    font-weight: 700;
+    color: #cccccc;
+  }
+
+  .panel-main-title {
+    width: 90%;
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #cccccc;
+    padding-left: 12px;
+  }
+
+  .total-threat-count {
+    width: 167px;
+    height: 34px;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 28px;
+    font-weight: 500;
+    color: #96b9f8;
+    padding-left: 12px;
+    cursor: pointer;
+  }
+
+  .individual-threat-count {
+    margin-top: 4px;
+    cursor: pointer;
+    float: left;
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #96b9f8;
+  }
+  .threat-panel {
+    width: 65%;
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #cccccc;
+    float: left;
+  }
+  .threats-blocked {
+     width: 100%;
+     float: left;
+  }
+
+  .spacer2 {
+    height: 11px;
+  }
+
+  .map-widget .leaflet-popup-content-wrapper {
+    border-radius: 0px !important;
+  }
+
+  .map-widget .leaflet-container a.leaflet-popup-close-button {
+    top: 10px;
+    right: 13px;
+    font-weight: normal;
+    color: #999999;
+    font: 21px/17px Tahoma, Verdana, sans-serif;
+  }
+
+  #ips-legend-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block;
+    margin-top: 9px;
+    margin-left: 9px;
+    background-color: #f9d854;
+  }
+
+  #antivirus-legend-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block;
+    margin-top: 9px;
+    margin-left: 9px;
+    background-color: #aa4ace;
+  }
+
+  #antispam-legend-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block;
+    margin-top: 9px;
+    margin-left: 9px;
+    background-color: #ff6666;
+  }
+
+  #device-authentication-legend-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block;
+    margin-top: 9px;
+    margin-left: 9px;
+    background-color: #24a39e;
+  }
+
+  #topsource-legend-icon
+  {
+    background-image: url("/installed_plugins/threatMap/images/source.svg");
+    height:16px;
+    width:16px;
+    margin-top: 3px;
+    margin-left: 5px;
+  }
+
+  #topdestination-legend-icon
+  {
+    background-image: url("/installed_plugins/threatMap/images/destination.svg");
+    height:16px;
+    width:16px;
+    margin-top: 3px;
+    margin-left: 5px;
+  }
+
+  .ips-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block; 
+    background-color: #f9d854;
+    margin-right: 10px;
+    float: left;
+  }
+
+  .antivirus-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block; 
+    background-color: #aa4ace;
+    margin-right: 10px;
+    float: left;
+  }
+
+  .antispam-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block; 
+    background-color: #ff6666;
+    margin-right: 10px;
+    float: left;
+  }
+
+  .device-authentication-icon
+  {
+    height:10px;
+    width:10px;
+    display: inline-block; 
+    background-color: #24a39e;
+    margin-right: 10px;
+    float: left;
+  }
+
+  #top-destination-devices {
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #96b9f8;
+    margin-top:8px;
+    height: 14px;
+  }
+
+  .spacer {
+    height: 7px;
+  }
+
+  .top-countries {
+    margin-top:8px
+  }
+
+  .flag-icon {
+    width: 15px;
+    height: 10px;
+    float:left;
+    margin-top: 2px;
+    margin-right: 8px;
+  }
+
+  .country-name {
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    color: #96b9f8;
+    float:left;
+    margin-top: 1px;
+    height: 14px;
+  }
+
+  .leaflet-map {
+//    height: 780px;
+//    height: 100%;
+    height: 73%;
+  }
+
+  .right-panel-container {
+    float: right;
+    position: absolute;
+    z-index: 2;
+    right: 0px;
+    height:99%;
+  }
+
+  .insight-bar-container{
+
+  }
+
+  .map-legend-title {
+    margin-top: 0.4em;
+    margin-left: -8px;
+    font-family: arial;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: #c1c1c1;
+  }
+
+  .device {
+    cursor: pointer;
+  }
+
+  .country {
+    cursor: pointer;
+    margin-bottom: 3px;
+  }
+
+  .tabContainer-widget {
+    height:290px;
+    width:345px;
+  }
+
+  .tabContainer-widget .ui-tabs {
+    padding-top: 10px !important;
+  }
+
+  .tabContainer-widget .ui-tabs .ui-tabs-nav li {
+      border-bottom: 1px solid #cccccc !important;
+      height: 26px;
+      min-width: 120px;
+  }
+
+  .tabContainer-widget .ui-tabs .ui-tabs-nav li.ui-state-active .active-tab-border {
+      border-top: 3px solid #4eadb6 !important;
+  }
+  .tabContainer-widget .ui-tabs .ui-tabs-nav li.ui-state-default a {
+    font-size: 11px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    height: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: -3px;
+    width: 100%;
+  }
+
+  .tabContainer-widget .ui-tabs .ui-tabs-nav li.ui-state-active a {
+    color: #2298a4 !important;
+  }
+
+  .tabContainer-widget .ui-tabs .tabContainer-widget_content {
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+
+  .tabContainer-widget .ui-tabs .tabContainer-widget_content {
+    border: none !important;
+    border-top: 1px solid #cccccc !important;
+  }
+}
+
+#threat-map-legends {
+  .legend-text {
+    margin-top: 5px;
+    font-family:'Arial';
+    font-size: 11px;
+    font-weight: normal;
+    color:#eee
+  }
+}
+
+.view-details {
+     height: 15px;
+     font-family: 'Arial';
+     font-size: 11px;
+     font-weight: 400;
+     color: #3366cc !important;
+     float: right;
+     margin-right: 8px;
+     cursor: pointer;
+}
+
+.rightPanelDetails {
+    margin: 10px 0px 10px 3px;
+    cursor: pointer;
+}
+
+ .slipstream-primary-button {
+    cursor: pointer;
+    height: 21px;
+    padding: 4px 4px !important;
+    font: 11px 'ArialMT', 'Arial', "Helvetica Neue", Helvetica;
+    width: 92px;
+    margin-right: 5px !important;
+  }
+
+  .secondary-button {
+    font: 11px 'ArialMT', 'Arial', "Helvetica Neue", Helvetica;
+    color: #0099ff;
+    min-width: 70px;
+    height: 21px;
+    padding: 4px 4px !important;
+    border: 1px solid #96a5aa;
+    background-color: white;
+    width: 93px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    float: right;
+  }
+
+  .secondary-button:disabled {
+      background: #fafafc !important;
+      border-color: #e6e6e6 !important;
+      color: #c8c8cc !important;
+      cursor: default !important;
+  }
+
+  .map-widget .leaflet-popup-content {
+      margin: 13px 12px !important;
+  }
+
+#country-details {
+  #details {
+    margin-left: 5px;
+  }
+  .country-name {
+    height: 22px;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 18px;
+    font-weight: normal;
+    color: #666666;
+    margin: 1px 0px 8px 3px;
+  }
+
+  .flag-icon {
+    width: 22px;
+    height: 11px;
+    margin-top: 6px;
+    margin-right: 0px;
+  }
+
+  .line-style {
+     margin: -3px 0px 5px -13px;
+     width: 104%;
+     border: 1px solid #eeeeee;
+  }
+
+  .text {
+    height: 14px;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 10px;
+    margin-left: 4px;
+    color: #535353;
+  }
+
+  .details-threats-count {
+     height: 25px;
+     font-family: 'ArialMT', Arial, Helvetica;
+     font-size: 11px;
+     font-weight: 700;
+     color: #545454;
+  }
+
+  .details-threats-text {
+    font-weight: 400;
+  }
+
+  .viewDetails {
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 40px;
+  }
+
+  .leaflet_stroke {
+    height: 2px;
+    border: solid 1px #eeeeee;
+    margin: 0px 7px;
+  }
+
+  .buttons-section {
+    height: 32px;
+    padding: 10px 0 6px 0;
+    margin: 0 0 0 -1px;
+  }
+
+  #details #grid-container .slipstream-content-title {
+     margin-bottom: 0px !important;
+     margin-top: 17px !important;
+     padding-bottom: 0px;
+     height: 20px;
+     font-size: 13px;
+     font-weight: 500;
+     color: #444444;
+     float: left;
+  }
+}
+  #grid-container {
+     height: 228px !important;
+     position: initial !important;
+  }
+
+  .grid-widget .action-filter-container {
+     padding-top: 0px !important;
+  }
+
+  .grid-widget .ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels {
+      height: 20.6px;
+  }
+  .grid-widget .ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels th .ui-jqgrid-sortable.orderable {
+    height: 13.4px ;
+    font-family: 'ArialMT', Arial, Helvetica;
+    font-size: 11px;
+    font-weight: normal;
+    margin-top: 3px;
+    color: #666666;
+  }
+
+  .grid-widget .sub-header dd {
+    margin-right: 0px !important;
+  }
+
+  .grid-widget .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tbody tr {
+      border-top: 1px solid #eeeeee;
+      height: 0px !important;
+  }
+  .grid-widget .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tbody tr td {
+      color: #535353 !important;
+      font-size: 11px;
+  }
+  .grid-widget .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable {
+     border-bottom: 1px solid #eeeeee !important;
+  }
+  .grid-widget .cbox, .grid-widget .tree_custom_checkbox {
+      transform: scale(1, 1);
+  }
+  .grid-widget .sub-header dd .slipstream-small-primary-button {
+    font-size: 11px;
+  }
+  .grid-widget .sub-header .sub-nav {
+     margin-top: -2px;
+  }
+  .total-events-count {
+    cursor: pointer;
+    color: #3366cc;
+  }
+
+  .total-events-inactive {
+    cursor: default;
+    color: #535353;
+  }
+
+  .reload-grid-link {
+      cursor: pointer;
+      color: #3366cc;
+      font-family: 'ArialMT', Arial, Helvetica;
+      font-size: 12px;
+      font-weight: 400;
+      height: 14px;
+      margin-top: 2px;
+  }
+
+#right-panel-view {
+    background-color: #f5f5f5;
+    border: solid 1px #cccccc;
+    height: 100%;
+    width: 396px;
+
+    .close-button {
+        float: right;
+        display: inline-block;
+        padding: 5px 5px;
+        margin-top: 16px;
+        margin-right: 15px;
+        cursor: pointer;
+        color: #999999;
+        font: 21px/17px Tahoma, Verdana, sans-serif;
+    }
+
+    .country-details {
+        margin-top: 25px;
+    }
+
+    .country-name {
+        height: 21px;
+        font-family: Arial;
+        font-size: 18px;
+        color: #666666;
+        margin-top: -3px;
+    }
+
+    .flag-icon {
+        width: 22px;
+        height: 11px;
+        float:left;
+        margin-right: 4px;
+        margin-left: 19px;
+        margin-top: 0px;
+    }
+
+    .secondary-button {
+        margin-right: 3px;
+        float: left;
+    }
+
+    hr {
+       margin: 0px !important;
+    }
+
+    .action-buttons {
+        margin: 10px 10px 0px 80px;
+        float: left;
+    }
+
+    .add-space {
+        margin-right: 3px;
+    }
+    .main-content {
+        margin-left: 20px;
+        font-family: 'HelveticaNeue', Arial, Helvetica;
+        height: 14px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #666666;
+        float: left;
+    }
+
+    .inbound-count {
+        margin: 16px 0px 10px 0px;
+    }
+
+    .total-threats-count {
+        height: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #666666;
+        padding-bottom: 25px;
+        float: left;
+        padding-right: 5px;
+    }
+
+    .total-threats-text {
+        font-weight: 400;
+        height: 15px;
+        font-size: 12px;
+        color: #666666;
+        padding-bottom: 25px;
+    }
+
+    .reload-grid-link {
+        margin-top:10px;
+        margin-bottom: 20px;
+    }
+    .right-stroke {
+        width: 352px;
+        height: 2px;
+        border: solid 1px #eeeeee;
+        margin: 35px 0px 20px 0px;
+    }
+
+    .individual-threat-count {
+        color: #3366cc;
+    }
+
+    .individual-threat-count-disabled {
+        margin-top: 4px;
+        cursor: default;
+        float: left;
+        height: 14px;
+        font-family: 'ArialMT', Arial, Helvetica;
+        font-size: 12px;
+        font-weight: 400;
+        color: #535353;
+    }
+
+    .threats-count-text {
+        height: 20px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #444444;
+        padding-bottom: 25px;
+        padding-right: 5px;
+        float: left;
+    }
+
+    .show-grid-section {
+        background-image: url("/assets/images/icon_arrow_rightFW.svg");
+        background-position: left top;
+        background-repeat: no-repeat;
+        background-size: 15px 13px;
+        margin-bottom: 10px;
+    }
+    .show-grid-section:active{
+        cursor: pointer;
+    }
+
+    .hide-grid-section {
+        background-image: url("/assets/images/icon_arrow_nav_sm_down.svg");
+        background-position: left top;
+        background-repeat: no-repeat;
+        background-size: 15px 13px;
+        cursor: hand;
+    }
+
+    .hide-grid-section:active{
+        cursor: pointer;
+    }
+
+    .show-hide-text {
+        font-size: 15px;
+        font-weight: 500;
+        color: #444444;
+        height: 20px;
+        padding-left: 20px;
+        cursor: pointer;
+    }
+
+    #inbound-details {
+        display:none;
+    }
+
+    #outbound-details {
+        display:none;
+    }
+
+    .right-panel-grid {
+        width:100%;
+        display:block;
+        margin-top: -28px;
+        overflow-x: auto;
+    }
+
+    .threats-panel-section {
+        width: 100%;
+        height: 85px;
+        display: block;
+        margin-top: -7px;
+    }
+
+    .threat-panel-text {
+        height: 14px;
+        font-size: 12px;
+        color: #535353;
+        float: left;
+        width: 45%;
+        font-family: 'ArialMT', Arial, Helvetica;
+    }
+
+    .slipstream-content-title {
+        display: none !important;
+    }
+
+    .inbound-header {
+        padding-top:15px;
+    }
+
+    .grid-widget .sub-header dd .slipstream-small-primary-button {
+        width: 72px !important;
+    }
+
+    .grid-widget .sub-header .sub-nav {
+        margin-top: -8px;
+    }
+ }

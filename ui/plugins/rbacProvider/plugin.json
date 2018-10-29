@@ -1,0 +1,14 @@
+{
+    "name": "rbac",
+    "description": "Role Based Access Control Provider Plugin",
+    "publisher": "Juniper Networks, Inc.",
+    "version": "0.0.1",
+    "release_date": "02.24.2015",
+    "min_platform_version": "0.0.1",
+    "providers": [
+        {
+            "uri": "rbac://",
+            "module": "rbacProvider"
+        }
+    ]
+}

@@ -1,0 +1,187 @@
+<div style="height: 400px !important; width: 100%">
+    <form name="details_form" class="form-pattern onOverlay">
+    <div class="ev-show-event-details">
+    <div class="slipstream-content-title">
+        {{title}}
+        {{#title-help}}
+        <span class="ua-field-help {{#title-help.content}}tooltip{{/title-help.content}}" {{#title-help.content}} title="{{title-help.content}}" {{/title-help.content}} {{#title-help.ua-help-identifier}}data-ua-id="{{title-help.ua-help-identifier}}"{{/title-help.ua-help-identifier}}></span>
+        {{/title-help}}
+    </div>
+    <div class="ev-detail-view-category">
+        <div>
+            <h5><b>General</b></h5>
+        </div>
+        <div>
+            <label><b>{{logIdLabel}}:</b> {{logId}}</label>
+        </div>
+        <div>
+            <label><b>{{logSrcLabel}}:</b> {{logSrc}}</label>
+        </div>
+        <div>
+            <label><b>{{localTimeLabel}}:</b> {{localTime}}</label>
+        </div>
+        <div>
+            <label><b>{{utcTimeLabel}}:</b> {{utcTime}}</label>
+        </div>
+        <div>
+            <label><b>{{eventCategoryLabel}}:</b> {{eventCategory}}</label>
+        </div>
+        <div>
+            <label><b>{{severityLabel}}:</b> {{severity}}</label>
+        </div>
+        <div>
+            <label><b>{{reasonLabel}}:</b> {{reason}}</label>
+        </div>
+        <div>
+            <label><b>{{hostNameLabel}}:</b> {{hostName}}</label>
+        </div>
+        <div>
+            <label><b>{{sessionIDLabel}}:</b> {{sessionID}}</label>
+        </div>
+    </div>
+    <div class="ev-detail-view-category">
+        <div>
+            <h5><b>Source</b></h5>
+        </div>
+        <div>
+            <label><b>{{srcIpLabel}}:</b> {{srcIp}}</label>
+        </div>
+        <div>
+            <label><b>{{srcPortLabel}}:</b> {{srcPort}}</label>
+        </div>
+        <div>
+            <label><b>{{srcAddrLabel}}:</b> {{srcAddr}}</label>
+        </div>
+        <div>
+            <label><b>{{srcZoneLabel}}:</b> {{srcZone}}</label>
+        </div>
+        <div>
+            <label><b>{{srcCountryLabel}}:</b> {{srcCountry}}</label>
+        </div>
+        <div>
+            <label><b>{{natSrcIpLabel}}:</b> {{natSrcIp}}</label>
+        </div>
+        <div>
+            <label><b>{{natSrcPortLabel}}:</b> {{natSrcPort}}</label>
+        </div>
+        <div>
+            <label><b>{{natSrcAddrLabel}}:</b> {{natSrcAddr}}</label>
+        </div>
+        <div>
+            <label><b>{{natSrcRuleNameLabel}}:</b> {{natSrcRuleName}}</label>
+        </div>
+    </div>
+    <div class="ev-detail-view-category">
+        <div>
+            <h5><b>Destination</b></h5>
+        </div>
+        <div>
+            <label><b>{{dstIpLabel}}:</b> {{dstIp}}</label>
+        </div>
+        <div>
+            <label><b>{{dstPortLabel}}:</b> {{dstPort}}</label>
+        </div>
+        <div>
+            <label><b>{{dstAddrLabel}}:</b> {{dstAddr}}</label>
+        </div>
+        <div>
+            <label><b>{{dstZoneLabel}}:</b> {{dstZone}}</label>
+        </div>
+        <div>
+            <label><b>{{dstCountryLabel}}:</b> {{dstCountry}}</label>
+        </div>
+        <div>
+            <label><b>{{natDstIpLabel}}:</b> {{natDstIp}}</label>
+        </div>
+        <div>
+            <label><b>{{natDstPortLabel}}:</b> {{natDstPort}}</label>
+        </div>
+        <div>
+            <label><b>{{natDstAddrLabel}}:</b> {{natDstAddr}}</label>
+        </div>
+        <div>
+            <label><b>{{natDstRuleNameLabel}}:</b> {{natDstRuleName}}</label>
+        </div>
+    </div> <br />
+    <div class="ev-detail-view-category-below">
+        <div>
+            <h5><b>Log</b></h5>
+        </div>
+        <div>
+            <label><b>{{attackNameLabel}}:</b> {{attackName}}</label>
+        </div>
+        <div>
+            <label><b>{{policyNameLabel}}:</b> {{policyName}}</label>
+        </div>
+        <div>
+            <label><b>{{userNameLabel}}:</b> {{userName}}</label>
+        </div>
+        <div>
+            <label><b>{{lsysNameLabel}}:</b> {{lsysName}}</label>
+        </div>
+        <div>
+            <label><b>{{appLabel}}:</b> {{app}}</label>
+        </div>
+        <div>
+            <label><b>{{serviceLabel}}:</b> {{service}}</label>
+        </div>
+        <div>
+            <label><b>{{nestedAppLabel}}:</b> {{nestedApp}}</label>
+        </div>
+        <div>
+            <label><b>{{ruleNameLabel}}:</b> {{ruleName}}</label>
+        </div>
+    </div>
+    <div class="ev-detail-view-category-below">
+        <div>
+            <h5><b>Security</b></h5>
+        </div>
+        <div>
+            <label><b>{{utmCategoryLabel}}:</b> {{utmCategory}}</label>
+        </div>       
+        <div>
+            <label><b>{{rolesLabel}}:</b> {{roles}}</label>
+        </div>
+        <div>
+            <label><b>{{urlLabel}}:</b> {{url}}</label>
+        </div>
+        <div>
+            <label><b>{{objNameLabel}}:</b> {{objName}}</label>
+        </div>
+        <div>
+            <label><b>{{pathNameLabel}}:</b> {{pathName}}</label>
+        </div>
+        <div>
+            <label><b>{{profileNameLabel}}:</b> {{profileName}}</label>
+        </div>
+        <div>
+            <label><b>{{protocolIdLabel}}:</b> {{protocolId}}</label>    <!-- Moved from SecIntel for now -->
+        </div>
+    </div>
+  <!-- <div class="ev-detail-view-category-below">
+        <div>
+            <h5><b>Security Intelligence</b></h5>
+        </div>
+        <div>
+            <label><b>Category:</b> {{category}}</label>
+        </div>
+        <div>
+            <label><b>Sub Category:</b> {{subCategory}}</label>
+        </div>
+        <div>
+            <label><b>Action Details:</b> {{actionDetails}}</label>
+        </div>
+        <div>
+            <label><b>Feed Name:</b> {{feedName}}</label>
+        </div>
+        <div>
+            <label><b>Protocol ID:</b> {{protocolId}}</label>
+        </div>
+        <div>
+            <label><b>Session ID:</b> {{sessionId}}</label>
+        </div>
+    </div>  -->
+    </div>
+</form>
+</div>
+

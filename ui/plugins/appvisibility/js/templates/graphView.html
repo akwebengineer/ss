@@ -1,0 +1,55 @@
+{{#filter}}
+<div class='app-secure-filter'>
+	<div style='padding-top:10px; display:inline-block; float:left'>
+		<label>{{graphTitle}}</label>
+	</div>
+    {{#group-by}}
+	<div style='float:right; height:30px;  padding-left: 10px; display:inline-flex;'>
+		<label class="left inline" style='padding-right:5px'>Group By</label>
+		<select class="app-secure-view-by-filter" style='width:100px'></select>
+	</div>
+    {{/group-by}}
+    <div style='float:right; height:30px; display:inline-flex;'>
+        <label class="left inline " style="padding-right:5px">Select Graph</label>
+        <select class="app-secure-view-by-graph-options" style='width:200px'></select>
+    </div>
+
+    <!--
+    <div style='padding:10px; display:inline-block; float:right'>
+        <label class="left inline " style="padding:8px">Select Scale</label>
+        <select class="app-secure-view-by-function-options" style='width:200px'></select>
+    </div>-->
+    
+</div>
+
+{{/filter}}
+
+{{#bubble}}
+<div style="width:100%; clear:both">
+    <div class='app-secure-bubble-chart' style='text-align: center'>
+    </div>
+    {{#legend}}
+    <div class='app-secure-bubble-chart-legend'>
+    </div>
+    {{/legend}}
+</div>
+{{/bubble}}
+
+{{#otherwidgets}}
+<!--
+<div class="app-secure-top-n-graph-container">
+    <div class="app-visibility-monitor-title">
+    	<span class="app-visibility-monitor-title-text">Top Applications By Category</span>
+    </div>
+    <div class=".app-secure-top-n-graph app-secure-top-apps-by-category">
+    </div>
+</div>
+
+<div class="app-secure-top-n-graph-container">
+    <div class="app-visibility-monitor-title">
+    	<span class="app-visibility-monitor-title-text">Top Applications By Characteristic</span>
+    </div>
+    <div class=".app-secure-top-n-graph app-secure-top-users-by-app">
+    </div>
+</div>-->
+{{/otherwidgets}}

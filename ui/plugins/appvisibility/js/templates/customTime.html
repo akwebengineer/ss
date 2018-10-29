@@ -1,0 +1,43 @@
+<div class="app-secure-custom-time">
+<div class = "slipstream-content-title">
+    {{title}}
+  </div>
+  <div class = "app-secure-custom-time-error" id = "app-secure-custom-time-error">{{error_msg}}
+  </div>
+
+	<form name="sample_form" class="form-pattern validate" novalidate="" data-err-timeout="1000"
+      	data-valid-timeout="5000" form-pattern-validator="">
+        <div class="row">
+            <!-- Label -->
+            <div class="elementlabel left">
+                <label for="datepicker_from_date" class="left inline">From Date</label>
+            </div>
+            <!-- Form Fields -->
+            <div class="elementinput left">
+                <!-- Input fields -->
+                <input class="app-secure-custom-from-date" type="text" data-validation="multiple" data-widget="datepicker"
+                       data-validation_length="Incomplete MM/DD/YYYY" data-minlength="10" data-maxlength="10"
+                       data-validation_date="Must be MM/DD/YYYY" id="datepicker_from_date"
+                       data-validation_validtext="This field is required" required>
+                <!-- Error Display -->
+                <small class="error errorimage">true</small>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Label -->
+            <div class="elementlabel left">
+                <label for="datepicker_to_date" class="left inline">To Date</label>
+            </div>
+            <!-- Form Fields -->
+            <div class="elementinput left">
+                <!-- Input fields -->
+                <input class="app-secure-custom-to-date" type="text" data-validation="multiple" data-widget="datepicker"
+                       data-validation_length="Incomplete MM/DD/YYYY" data-minlength="10" data-maxlength="10"
+                       data-validation_date="Must be MM/DD/YYYY" id="datepicker_to_date"
+                       data-validation_validtext="This field is required" required>
+                <!-- Error Display -->
+                <small class="error errorimage">true</small>
+            </div>
+        </div>
+	</form>
+<div>

@@ -1,0 +1,21 @@
+{
+    "secintel-profiles": {
+        "@uri": "/api/juniper/sd/secintel-management/secintel-profiles",
+        "@total": "1",
+        "secintel-profile": {
+            "@uri": "/api/juniper/sd/secintel-management/secintel-profiles/425984",
+            "@href": "/api/juniper/sd/secintel-management/secintel-profiles/425984",
+            "domain-name": "Global",
+            "id": 425984,
+            "category": "WebAppSecure",
+            "block-threshold-type": "RECOMMENDED",
+            "block-threshold-level": 5,
+            "block-option": "CLOSE_SERVER_CLIENT_CONN",
+            "log-option": "LOG_ALL",
+            "description": "",
+            "name": "df1",
+            "redirect-message": "",
+            "redirect-message-type": "NONE"
+        }
+    }
+}

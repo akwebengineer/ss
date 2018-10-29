@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 17 17" style="enable-background:new 0 0 17 17;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;}
+	.st2{display:inline;fill:#FFFFFF;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#444444;}
+	.st5{display:inline;fill:#444444;}
+</style>
+<g id="Unassign_logging_device" class="st0">
+	<g class="st1">
+		<path d="M13.8,0H3.2H1.5v17h1.8h10.5h1.8V0H13.8z M13,13.7H4V2.3h9V13.7z"/>
+		<path d="M8.5,4.7C6.6,4.7,5,6.3,5,8.2s1.6,3.5,3.5,3.5S12,10.2,12,8.2S10.4,4.7,8.5,4.7z M5.7,8.2c0-1.5,1.3-2.8,2.8-2.8
+			c0.6,0,1.2,0.2,1.7,0.6L6.3,10C5.9,9.5,5.7,8.9,5.7,8.2z M8.5,11c-0.6,0-1.2-0.2-1.7-0.6l3.9-3.9c0.4,0.5,0.6,1.1,0.6,1.7
+			C11.3,9.8,10,11,8.5,11z"/>
+	</g>
+	<circle class="st2" cx="8.5" cy="15.2" r="1"/>
+</g>
+<g id="Assign_logging_device">
+	<polygon points="11.5,5 7.5,9 5.4,6.9 5,7.4 7.5,10 12,5.5 	"/>
+	<g>
+		<path d="M13.8,0H3.2H1.5v17h1.8h10.5h1.8V0H13.8z M13,13.7H4V2.3h9V13.7z"/>
+	</g>
+	<circle class="st3" cx="8.5" cy="15.2" r="1"/>
+</g>
+<g id="Assign_logging_device_2" class="st0">
+	<g class="st1">
+		<path d="M13.8-0.5H3.2c-1,0-1.8,0.7-1.8,1.5v15c0,0.8,0.8,1.5,1.8,1.5h10.5c1,0,1.8-0.7,1.8-1.5V1C15.5,0.2,14.7-0.5,13.8-0.5z
+			 M13,13.8H4v-12h9V13.8z"/>
+	</g>
+	<circle class="st2" cx="8.3" cy="15.3" r="0.5"/>
+	<g class="st1">
+		<polygon points="11.5,5.3 7.5,9.3 5.4,7.2 5,7.8 7.5,10.3 12,5.9 		"/>
+	</g>
+</g>
+<g id="change_password" class="st0">
+	<path class="st1" d="M13.4,5.5h-0.9V4c0-2.4-2-4.5-4.3-4.5s-4.3,2-4.3,4h1.6c0-1,1.1-2.4,2.5-2.4c1.5,0,2.5,1.4,2.5,2.9v1.5H3.7
+		c-1.1,0-2.2,0.8-2.2,1.9v8c0,1.1,1.1,2.1,2.2,2.1h9.7c1.1,0,2.1-1,2.1-2.1v-8C15.5,6.3,14.5,5.5,13.4,5.5z M4.5,11.9
+		c-0.4,0-0.7-0.3-0.7-0.7c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C5.2,11.6,4.9,11.9,4.5,11.9z M7.3,11.9
+		c-0.4,0-0.7-0.3-0.7-0.7c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C8,11.6,7.7,11.9,7.3,11.9z M10,11.9c-0.4,0-0.7-0.3-0.7-0.7
+		c0-0.4,0.3-0.7,0.7-0.7s0.7,0.3,0.7,0.7C10.8,11.6,10.4,11.9,10,11.9z M12.8,11.9c-0.4,0-0.7-0.3-0.7-0.7c0-0.4,0.3-0.7,0.7-0.7
+		c0.4,0,0.7,0.3,0.7,0.7C13.5,11.6,13.2,11.9,12.8,11.9z"/>
+</g>
+<g id="log_forwarding" class="st0">
+	<g class="st1">
+		<path class="st4" d="M16.1,17.4H-0.5v-18h16.6V17.4z M14.1,1.4H1.5v14.1h12.6"/>
+		<rect x="3.5" y="3.5" class="st4" width="9" height="1"/>
+		<rect x="3.5" y="5.5" class="st4" width="9" height="1"/>
+	</g>
+	<polygon class="st5" points="14.2,10.9 10.5,8.6 10.5,10.5 6.5,10.5 6.5,11.5 10.5,11.5 10.5,13.6 	"/>
+</g>
+<g id="Layer_6" class="st0">
+</g>
+<g id="Layer_7" class="st0">
+</g>
+<g id="Layer_8" class="st0">
+</g>
+</svg>

@@ -1,0 +1,26 @@
+<div id="country-details" style="width:352px;">
+    <div>
+    <div>
+        <span class="flag-icon flag-icon-{{flagCode}}"></span>
+        <span class="country-name">
+         {{countryName}}
+        </span>
+    </div>
+    <hr class="line-style"/>
+    <div id="details">
+        <div class="text">
+            <span class="total-events-count" id="ev-link">{{totalCount}}&nbsp; {{threatmap_tooltip_threat_events}}</span>
+            <span>{{threatmap_tooltip_threat_since_time}}</span>
+           <div class="view-details" id="layout-view">{{threatmap_tooltip_view_details}}</div>
+        </div>
+
+        <div id="tab-container"></div>
+        <div><hr class="line-style" style="margin-top: 1px;"/></div>
+        <div class="buttons-section">
+            <button class="secondary-button" type="button" id="block-inbound">{{threatmap_tooltip_button_block_inbound}}</button>
+            <button class="secondary-button" type="button" id="block-outbound">{{threatmap_tooltip_button_block_outbound}}</button>
+            <input type="submit" class="slipstream-primary-button " id="block-traffic" name="block-traffic" value="Block all traffic" style="float:right;">
+        </div>
+    </div>
+    </div>
+</div>

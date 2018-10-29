@@ -1,0 +1,390 @@
+/* SD User Onboarding Guide */
+.onboarding-guide-mask {
+    background-color: #000000;
+    background: rgba(0,0,0,0.85);
+    filter: Alpha(opacity=85);
+    display: none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1983;
+    overflow: hidden;
+}
+.onboarding-guide-header {
+    position: fixed;
+    background-color: #000000;
+    background: rgba(0, 0, 0, 0.75);
+    filter: Alpha(opacity=75);
+    top: 0px;
+    left: 0px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    width: 100%;
+    opacity: 0.95;
+    z-index: 1986;
+}
+.onboarding-guide-nav-button {
+    display: none;
+    position: relative;
+    margin-left: 45px;
+    width: 110px;
+    height: 70px;
+    text-align: center;
+    float: left !important;
+}
+.nav-button-what-img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    margin-left: -14px;
+    margin-top: 15px;
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_whats_small.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    -moz-background-size: contain;
+}
+.nav-button-what-img.selected {
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_whats_small_selected.svg");
+}
+.nav-button-where-img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    margin-left: -14px;
+    margin-top: 15px;
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_where_small.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    -moz-background-size: contain;
+}
+.nav-button-where-img.selected {
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_where_small_selected.svg");
+}
+.nav-button-how-img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    margin-left: -14px;
+    margin-top: 15px;
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_how_small.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    -moz-background-size: contain;
+}
+.nav-button-how-img.selected {
+    background-image: url("/installed_plugins/onboardingGuide/img/icon_how_small_selected.svg");
+}
+.nav-button-what-text {
+    font-size: 10px;
+    text-align: center;
+    color: #AAAAAA;
+    white-space: nowrap;
+    height: 25px;
+    margin-top: -25px;
+}
+.nav-button-what-text.selected {
+    color: #F5D76E;
+}
+.nav-button-where-text {
+    color: #AAAAAA;
+    font-size: 10px;
+    text-align: center;
+    height: 25px;
+    margin-top: -25px;
+    white-space: nowrap;
+}
+.nav-button-where-text.selected {
+    color: #73BEB2;
+}
+.nav-button-how-text {
+    color: #AAAAAA;
+    font-size: 10px;
+    text-align: center;
+    height: 25px;
+    margin-top: -25px;
+    white-space: nowrap;
+}
+.nav-button-how-text.selected {
+    color: #91C2CB;
+}
+.scroll-up-button {
+    display: none;
+    position: fixed;
+    left: 50%;
+    margin-left: -16px;
+    cursor: pointer;
+    width: 64px;
+    height: 32px;
+    background: url("/installed_plugins/onboardingGuide/img/icon_arrow_down.svg") no-repeat;
+    transform: rotate(180deg);
+}
+.onboarding-close-button {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    top: 50%;
+    margin-top: -10px;
+    margin-right: 45px;
+    background: url("/installed_plugins/onboardingGuide/img/icon_close16X16.svg") no-repeat;
+    float: right !important;
+}
+.onboarding-guide-body {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    opacity: 0.85;
+    z-index: 1983;
+}
+.onboarding-guide-footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    width: 100%;
+    z-index: 1986;
+}
+.scroll-down-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -16px;
+    margin-right: auto;
+    cursor: pointer;
+    width: 64px;
+    height: 32px;
+    background: url("/installed_plugins/onboardingGuide/img/icon_arrow_down.svg") no-repeat;
+}
+.scroll-down-button.go-to-top {
+    background: url("/installed_plugins/onboardingGuide/img/icon_double_arrow_up.svg") no-repeat;
+}
+.donot-show-again {
+    margin-right: 29px;
+    float: right;
+    position: relative;
+    right: 0px;
+}
+.donot-show-again-label {
+    color: #CCCCCC;
+    font-size: 12px;
+    font-family: 'Arial';
+}
+.onboarding-guide-slide {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.onboarding-slide-title {
+    margin-top: 15px;
+    font-size: 24px;
+    font-family: 'Helvetica Neue';
+    color: #F5D76E;
+}
+.onboarding-slide-subtitle {
+    font-family: 'Helvetica Neue';
+    font-size: 14px;
+    color: #F5D76E;
+}
+.onboarding-slide-title.where {
+    color: #73BEB2;
+}
+.onboarding-slide-subtitle.where {
+    color: #73BEB2;
+}
+.onboarding-slide-title.how {
+    color: #91C2CB;
+}
+.onboarding-slide-subtitle.how {
+    color: #91C2CB;
+}
+.onboarding-slide-content{
+    margin-top: 45px;
+    float: left;
+    width: 100%;
+}
+.slide-content-picture {
+    overflow:hidden;
+    height: 455px;
+    width: 875px;
+    margin-right: 25px;
+    float: left;
+}
+.slide-content-text {
+    font-family: Arial;
+    font-size: 14px;
+    color: #CCCCCC;
+    margin-left: 900px;
+    max-width: 396px;
+    line-height: 24px;
+}
+.cover-slide-title {
+    margin-top: 115px;
+    margin-left: 10%;
+    font-family: 'Helvetica Neue';
+    font-size: 24px;
+    color: #CCCCCC;
+}
+.cover-slide-content{
+    margin-top: 77px;
+    text-align: center;
+}
+.cover-slide-icon-large {
+    display: inline-block;
+    margin: 0 auto;
+    width: 20%;
+    margin: 0 5%;
+    text-align: center;
+}
+.cover-slide-icon {
+    cursor: pointer;
+    width: 80%;
+}
+.cover-slide-text {
+    margin-top: 30px;
+    color: #CCCCCC;
+    font-family: 'Arial';
+    font-size: 24px;
+    white-space: nowrap;
+}
+.onboarding-guide-end-slide {
+    position: fixed !important;
+    background-color: #000000;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.85;
+    z-index: 1987;
+}
+.end-slide-body {
+    float: right;
+    margin-top: 70px;
+    margin-right: 100px;
+    width: 350px;
+}
+.end-slide-instruction {
+    color: #CCCCCC;
+}
+.end-slide-help-icon {
+    background: url("/installed_plugins/onboardingGuide/img/help-icon.png") no-repeat;
+    background-size: contain;
+    -moz-background-size: contain;
+    width: 111px;
+    height: 111px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+.section-left {
+    margin-left: 45px;
+    float: left !important;
+}
+.section-right {
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+.video-list-column-left {
+    float: left;
+    width: 50%;
+}
+.video-list-column-right {
+    float: right;
+    width: 50%;
+}
+.video-list-bottom {
+    float: left;
+    width: 100%;
+}
+.video-preview {
+    margin-bottom: 15px;
+    width: 100%;
+    float: left;
+}
+.video-preview-image {
+    cursor: pointer;
+    float: left;
+    margin-right: 25px;
+    width: 145px;
+    height: 75px;
+}
+.video-description {
+    float: left;
+    width: 300px;
+}
+.video-description.bottom {
+    width: 70%;
+}
+.video-description-title {
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Arial';
+    color: #FFFFFF;
+    display: block;
+}
+.video-description-text {
+    font-size: 11px;
+    font-family: 'Arial';
+    color: #969696;
+}
+.video-play-mask {
+    background-color: #000000;
+    background: rgba(0, 0, 0, 0.85);
+    filter: Alpha(opacity=85);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1986;
+}
+.video-play-overlay {
+    background-color: #333333;
+    margin-left: -330px;
+    margin-top: -240px;
+    width: 660px;
+    height: 470px;
+    padding: 5px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    z-index: 1987;
+}
+.video-play-title {
+    position: absolute;
+    padding-left: 10px;
+    width: 85%;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+    font-size: 24px;
+    height: 40px;
+    line-height: 50px;
+    color: #CCCCCC;
+}
+.video-play-close-button {
+    background: url("/installed_plugins/onboardingGuide/img/icon_close16X16.svg") no-repeat rgba(0,0,0, 0.1);
+    position: absolute;
+    display: none;
+    top: 20px;
+    right: 25px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+/* SD User Onboarding Guide */

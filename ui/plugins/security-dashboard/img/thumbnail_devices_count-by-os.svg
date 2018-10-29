@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="168px" height="110px" viewBox="0 0 168 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.1 (15681) - http://www.bohemiancoding.com/sketch -->
+    <title>thumbnail_devices_count-by-os</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M0,0 L58.7535473,0 L58.7535473,40 L0,40"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="thumbnail_devices_count-by-os" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-5" fill="#F5F5F5" sketch:type="MSShapeGroup" x="0" y="0" width="168" height="110"></rect>
+            <g id="Donut-Chart-Icon-Copy-2" transform="translate(54.000000, 54.000000)">
+                <path d="M53.0482893,18.2916667 L58.7535473,18.2916667 L58.7535473,12.5561111 L53.0482893,12.5561111 L53.0482893,18.2916667 Z" id="Fill-1" fill="#79BB4B" sketch:type="MSShapeGroup"></path>
+                <path d="M53.0482893,25.1744444 L58.7535473,25.1744444 L58.7535473,19.4388889 L53.0482893,19.4388889 L53.0482893,25.1744444 Z" id="Fill-2" fill="#BBDEE2" sketch:type="MSShapeGroup"></path>
+                <path d="M53.0482893,32.6311111 L58.7535473,32.6311111 L58.7535473,26.8955556 L53.0482893,26.8955556 L53.0482893,32.6311111 Z" id="Fill-3" fill="#A864A6" sketch:type="MSShapeGroup"></path>
+                <g id="Group-15">
+                    <path d="M19.9684584,0 L19.9684584,6.85722222 C27.2160813,6.85722222 33.0909939,12.7416667 33.0909939,20 C33.0909939,23.6294444 31.6221276,26.915 29.2475156,29.2938889 L34.0890272,34.1422222 C37.7026152,30.5227778 39.9374141,25.5227778 39.9374141,20 C39.9374141,8.95444444 30.9971134,0 19.9684584,0" id="Fill-4" fill="#6398CF" sketch:type="MSShapeGroup"></path>
+                    <g id="Group-8">
+                        <mask id="mask-2" sketch:name="Clip 7" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-7"></g>
+                        <path d="M19.9684584,33.1428889 C16.3449232,33.1428889 13.0645656,31.6717778 10.6899537,29.2934444 L5.8484421,34.1423333 C9.46258269,37.7617778 14.4538545,40.0001111 19.9684584,40.0001111 C25.4825095,40.0001111 30.4748866,37.7617778 34.0890272,34.1423333 L29.2475156,29.2934444 C26.8729037,31.6717778 23.5919935,33.1428889 19.9684584,33.1428889" id="Fill-6" fill="#79BB4B" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                    </g>
+                    <path d="M19.9684584,0 C14.4538545,0 9.46258269,2.23888889 5.8484421,5.85777778 L10.6899537,10.7061111 C13.0645656,8.32777778 16.3449232,6.85722222 19.9684584,6.85722222 L19.9684584,0 Z" id="Fill-9" fill="#A864A6" sketch:type="MSShapeGroup"></path>
+                    <path d="M0,19.9999444 C0,25.5227222 2.23479886,30.5227222 5.84838683,34.1421667 L10.6898984,29.2938333 C8.31528647,26.9149444 6.84642015,23.6293889 6.84642015,19.9999444 C6.84642015,16.3705 8.31528647,13.0843889 10.6898984,10.7060556 L5.84838683,5.85772222 C2.23479886,9.47716667 0,14.4771667 0,19.9999444" id="Fill-11" fill="#BBDEE2" sketch:type="MSShapeGroup"></path>
+                    <path d="M58.7535473,11.4088889 L53.0482893,11.4088889 L53.0482893,5.67333333 L58.7535473,5.67333333 L58.7535473,11.4088889 Z" id="Fill-13" fill="#6398CF" sketch:type="MSShapeGroup"></path>
+                </g>
+            </g>
+            <text id="Devices" sketch:type="MSTextLayer" font-family="Helvetica" font-size="12" font-weight="bold" letter-spacing="0.0002" fill="#666666">
+                <tspan x="9" y="21">Devices</tspan>
+            </text>
+            <text id="Most-Packet-Throughp" sketch:type="MSTextLayer" font-family="Helvetica" font-size="14" font-weight="260" fill="#666666">
+                <tspan x="9" y="38">Count By OS</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

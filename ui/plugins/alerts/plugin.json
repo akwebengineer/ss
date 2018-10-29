@@ -1,0 +1,113 @@
+{
+"name": "alerts",
+"description": "Alerts are used to notify administrators about significant events within the system." ,
+"publisher": "Juniper Networks, Inc.",
+"version": "0.0.1",
+"release_date": "30.04.2016",
+"min_platform_version": "0.0.1",
+"activities":
+    [
+        {
+          "module": "alertsActivity",
+          "url_path": "/generated-alerts",
+          "filters": [{
+              "id": "generated-alerts.view",
+              "action": "slipstream.intent.action.ACTION_LIST",
+              "data": {
+                "mime_type": "vnd.juniper.net.generated-alerts"
+              }
+            }]
+        },
+        {
+          "module": "alertsActivity",
+          "filters": [{
+              "id": "generated-alerts.delete",
+              "action": "sd.intent.action.ACTION_DELETE",
+              "data": {
+                "mime_type": "vnd.juniper.net.generated-alerts"
+              }
+            }],
+            "capabilities": [
+              {"name": "deleteGeneratedAlert"}
+           ]
+        },
+        {
+          "module": "alertsActivity",
+          "filters": [{
+                  "id": "generated-alerts.show-detail-view",
+                  "action": "sd.intent.action.ACTION_SHOW_DETAIL_VIEW",
+                  "data": {
+                    "mime_type": "vnd.juniper.net.generated-alerts"
+                  }
+            }]
+        },
+        {
+          "module": "alertDefinitionActivity",
+          "url_path": "/alertdefinitions",
+          "filters": [
+            {
+              "id": "alertdefinitions.view",
+              "action": "slipstream.intent.action.ACTION_LIST",
+              "data": {
+                "mime_type": "vnd.juniper.net.alertdefinitions"
+              }
+            }]
+        },
+        {
+          "module": "alertDefinitionActivity",
+             "filters": [{
+                "id": "alertdefinitions.clone",
+                "action": "slipstream.intent.action.ACTION_CLONE",
+                "data": {
+                  "mime_type": "vnd.juniper.net.alertdefinitions"
+                }
+              },{
+              "id": "alertdefinitions.create",
+              "action": "slipstream.intent.action.ACTION_CREATE",
+              "data": {
+                "mime_type": "vnd.juniper.net.alertdefinitions"
+              }
+            }],
+            "capabilities": [
+              {"name": "createAlert"}
+           ]
+        },
+        {
+          "module": "alertDefinitionActivity",
+          "filters": [{
+              "id": "alertdefinitions.edit",
+              "action": "slipstream.intent.action.ACTION_EDIT",
+              "data": {
+                "mime_type": "vnd.juniper.net.alertdefinitions"
+              }
+            }],
+            "capabilities": [
+              {"name": "modifyAlert"}
+           ]
+        },
+        {
+          "module": "alertDefinitionActivity",
+          "filters": [{
+              "id": "alertdefinitions.delete",
+              "action": "sd.intent.action.ACTION_DELETE",
+              "data": {
+                "mime_type": "vnd.juniper.net.alertdefinitions"
+              }
+            }
+          ],
+          "capabilities": [
+              {"name": "deleteAlert"}
+           ]
+        }
+    ],
+    "navigation_paths": [
+        {
+          "path": "nav.monitors/nav.alerts_alarms/nav.alerts",
+          "filter": "generated-alerts.view"
+        },
+        {
+          "path": "nav.monitors/nav.alerts_alarms/nav.alert_definitions",
+          "filter": "alertdefinitions.view"
+        }
+    ]
+}

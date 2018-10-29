@@ -1,0 +1,491 @@
+.grid-widget .ui-jqgrid tr.jqgrow td.rule-grid-group-object {
+  overflow: visible;
+  height: 34px;
+}
+
+.grid-widget .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tbody tr td input[type="checkbox"] {
+  height: 12px !important;
+}
+
+.rulegrid-div{
+    margin-bottom: 0px;
+}
+.rulegrid_custom dl{
+    overflow:hidden;
+    margin-bottom:0px
+}
+
+.rulegrid_custom dd{
+    margin-right: 20px;
+    float: left;
+}
+
+.rulegrid_title_section{
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 10px;
+}
+
+.rulegrid_title{
+    font: 24px "Helvetica Neue", Helvetica, Arial;
+    font-weight: 200;
+    letter-spacing: 1px;
+    color: #333333;
+    line-height: 18px;
+}
+
+.rulegrid-edit-msg{
+    font: 12px arial;
+    font-weight: 100;
+    color: #05a4ff;
+    .editicon{
+        height: 16px;
+        width: 16px;
+        padding-left: 20px;
+        background: url("/installed_plugins/base-policy-management/images/icon_edit_rules.svg") no-repeat scroll 0 0 transparent;
+        -ms-background-position-x: -70px;
+    }
+    .readonlyicon{
+      height: 16px;
+      width: 16px;
+      padding-left: 20px;
+      background: url("/installed_plugins/base-policy-management/images/icon_read_only.svg") no-repeat scroll 0 0 transparent;
+      -ms-background-position-x: -120px;
+    }
+}
+
+.warning-box{
+    border-color: #ea7d10;
+    color: black;
+    background: url("/installed_plugins/base-policy-management/images/icon_warning.png") no-repeat scroll 10px transparent;
+}  
+
+.rule-grid-action {
+  margin-left: 5px;
+}
+
+.actionIcon img{
+    width: 18px;
+    height: 18px;
+}
+
+
+
+/**
+ * CSS for hit count level boxes - start
+ */
+.hit-count{
+  line-height:13px;
+}
+
+.hit-count-level-default  {
+  position: relative;
+  border: 1px solid #cccccc;
+  border-radius:0px;
+  height:8px;
+  background: #fafafa;
+}
+
+.hit-count-level-fill {
+  position: absolute;
+  border-radius:0px;
+  height:100%;
+  background: #993399;
+}
+
+//required to prevent the spinner from showing up on the top of the gird during the initial load
+&.view-min-height {
+  min-height:600px;
+}
+
+/**
+ * CSS for hit count level boxes - END
+ */
+
+/**
+ * css for rule group row hover
+ */
+.removeRowHover td:hover {
+  background-color: transparent !important;
+}
+
+.rulegrid-profile-span {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.rulegrid-msg-span {
+    font-style: italic;
+    font-size: 12px;
+}
+
+.nat-disabled{
+    color: #dddddd !important;
+}
+
+.icons-tooltip {
+  width: 38px; 
+  display: inline-block;
+}
+
+.icon_rulegrid_expandall{
+    height: 18px !important;
+    width: 18px !important;
+    margin-right: 5px !important;
+    background: url('/installed_plugins/base-policy-management/images/icon_expand_all.svg') no-repeat scroll 0 0 transparent;
+}
+
+.icon_rulegrid_expandall_hover{
+    height: 18px !important;
+    width: 18px !important;
+    margin-right: 5px !important;
+    background: url('/installed_plugins/base-policy-management/images/icon_expand_all_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.icon_rulegrid_collapseall{
+    height: 18px !important;
+    width: 18px !important;
+    margin-right: 5px !important;
+    background: url('/installed_plugins/base-policy-management/images/icon_collapse_all.svg') no-repeat scroll 0 0 transparent;
+}
+
+.icon_rulegrid_collapseall_hover{
+    height: 18px !important;
+    width: 18px !important;
+    margin-right: 5px !important;
+    background: url('/installed_plugins/base-policy-management/images/icon_collapse_all_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.rulegrid-addressToolTip{
+    max-height: 300px;
+      overflow: auto;
+      margin-top: 6px;
+}
+
+/**
+ * css for VPN tunnels 
+ */
+.icon_device_vpn_hover {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_device_vpn_hover.svg");
+  width: 14px;
+  height: 5px;
+}
+
+.icon_device_vpn {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_device_vpn.svg");
+  width: 14px;
+  height: 5px;
+}
+
+/**
+ * css for expand/collapse icons for groups
+ */
+.icon-arrow-big-expand {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_nav_big_arrow_down.svg");
+}
+
+.icon-arrow-big-collapse {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_nav_big_arrow_right.svg");
+}
+
+.icon-arrow-sm-expand {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_arrow_small_down.png");
+  width: 8px !important;  
+  height: 4px !important;
+  display: inline-block;
+}
+
+.icon-arrow-sm-collapse {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_arrow_small_right.png");
+  width: 4px !important;  
+  height: 8px !important;
+  display: inline-block;
+}
+
+/**
+ * css for addresses and zones
+ */
+.icon-address-DNS-host {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_DNS_host.svg");
+}
+
+.icon-address-dynamic {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_dynamic.svg");
+}
+
+.icon-address-group {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_group.svg");
+}
+
+.icon-address-host {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_host.svg");
+  width: 8px !important;
+}
+
+.icon-address-range {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_range.svg");
+}
+
+.icon-address-network {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_network.svg");
+}
+
+.icon-address-variable {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_variable.svg");
+}
+
+.icon-address-wildcard {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_wildcard.svg");
+}
+
+.icon-FW {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_FW.svg");
+}
+
+.icon-IPS {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_IPS.svg");
+}
+
+.icon-NAT {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_NAT.svg");
+}
+
+.icon-quick-view-hover {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_quick_view_hover.svg");
+}
+
+.icon-quick-view {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_quick_view.svg");
+}
+
+.icon-service-group {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_service_group.svg");
+}
+
+.icon-service {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_service.svg");
+}
+
+.icon-VPN {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_VPN.svg");
+}
+
+.icon-zone-set {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_zone_set.svg");
+}
+
+.icon-zone {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_zone.svg");
+}
+
+
+/**
+ * 
+ */
+.icon_address_any {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_any_address.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_ipaddress {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+.icon_address_any_ipv4 {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_IPv4.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+.icon_address_any_ipv6 {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_IPv6.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_network {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_network.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_range {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_range.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_dns {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_DNS_host.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_group {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_group.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_wildcard {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_wildcard.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_address_polymorphic {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_address_variable.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_service {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_service.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_service_group {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_service_group.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_zoneset {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_zone_set.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_zone {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_zone.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_zone_polymorphic {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_zone_variable.svg");
+  width: 14px;
+  height: 14px;
+  display: inline-table;
+}
+
+.icon_interface {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_interface.svg");
+  width: 14px;
+  height: 14px;
+  float: left;
+}
+.icon_virtual_router {
+  background-image: url("/installed_plugins/base-policy-management/images/icon_routing_instance.svg");
+  width: 14px;
+  height: 14px;
+  float: left;
+}
+
+.rulegrid-indicator-background{
+    opacity: 0.95;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 4;
+}
+
+.grid-widget .ui-jqgrid .jqgrow{
+  &.rulegrid-background {
+    background-color: #f4f7f8;
+  }
+}
+
+//css for block summary page
+.block_icon_button_first{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_first.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_first_hover{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_first_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_first_disable{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_first_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_next.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next_hover{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_next_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_next_disable{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_next_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous{
+  height: 19px !important;
+  width: 71px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous_hover{
+  height: 19px !important;
+  width: 71px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_previous_disable{
+  height: 19px !important;
+  width: 71px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_previous_disable.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_last.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last_hover{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_last_hover.svg') no-repeat scroll 0 0 transparent;
+}
+
+.block_icon_button_last_disable{
+  height: 19px !important;
+  width: 58px !important;
+  background: url('/installed_plugins/base-policy-management/images/block/icon_button_last_disable.svg') no-repeat scroll 0 0 transparent;
+}
+

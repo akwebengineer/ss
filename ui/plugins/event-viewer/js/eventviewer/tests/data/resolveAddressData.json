@@ -1,0 +1,34 @@
+{  
+   "addresses":{  
+      "address":[  
+         {  
+            "name":"VPN_AD1",
+            "hash-key":"1010101",
+            "address-type":"IPADDRESS",
+            "ip-address":"1.1.1.1",
+            "description":"First Address",
+            "definition-type":"CUSTOM",
+            "id":131163,
+            "uri":"/api/juniper/sd/address-management/addresses/131163",
+            "href":"/api/juniper/sd/address-management/addresses/131163",
+            "domain-id":2,
+            "domain-name":"Global"
+         },
+         {  
+            "name":"VPN_AD2",
+            "hash-key":"2020202",
+            "address-type":"IPADDRESS",
+            "ip-address":"2.2.2.2",
+            "description":"Second Address",
+            "definition-type":"CUSTOM",
+            "id":131164,
+            "uri":"/api/juniper/sd/address-management/addresses/131164",
+            "href":"/api/juniper/sd/address-management/addresses/131164",
+            "domain-id":2,
+            "domain-name":"Global"
+         }
+      ],
+      "uri":"/api/juniper/sd/address-management/addresses",
+      "total":2
+   }
+}

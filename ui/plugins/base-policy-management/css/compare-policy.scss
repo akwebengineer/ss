@@ -1,0 +1,130 @@
+.datatable {
+  border: 1px solid #D6DDE6;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.datatable td {
+  border: 1px solid #D6DDE6;
+  font: normal 11px tahoma, arial, verdana, sans-serif;
+  padding: 4px;
+}
+
+.datatable th {
+  border: 1px solid #C5C5C5;
+  background-color: #F7F7F7;
+  font: normal 11px tahoma, arial, verdana, sans-serif;
+  text-align: center;
+  padding: 4px;
+}
+
+.datatable caption {
+  font: bold 0.9em "Times New Roman", Times, serif;
+  background-color: #343434;
+  color: white;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  border: 1px solid #789AC6;
+}
+
+.datatable tr.altrow {
+  background-color: #DFE7F2;
+  color: #000000;
+}
+
+/*.datatable tr:hover {
+  background-color: #DFE7F2;
+  color: #000000;
+}*/
+
+.datatable tr.added {
+  background-color: #DFFFDF;
+  color: #000000;
+}
+
+/*.datatable tr.modified {
+  background-color: #DFEAF7;
+  color: #000000;
+}*/
+
+.datatable tr.deleted {
+  background-color: #FCE4EC;
+  color: #000000;
+}
+
+.hideUnchanged tr.nochange {
+  display: none;
+}
+
+.disable-rule {
+  background: url("/web/dcpolicymanager/images/rule-disable-bg.gif") repeat scroll 0 0 transparent;
+}
+
+.diffbtn {
+  background-color: #343434;
+  border-color: gray;
+  color: white;
+  font: normal 11px tahoma, arial, verdana, sans-serif;
+}
+
+.chkbox {
+  font: normal 12px tahoma, arial, verdana, sans-serif;
+}
+
+td.dcpolicycolumnmodifiedcls
+{
+  background-color: #DFEAF7;
+  cursor: pointer;
+}
+
+tr.globalzone {
+  background-color: #98AFC7
+}
+
+td.emptycolumn {
+  border-width:1px 0px 1px 0px;
+  border-color: blue;
+}
+
+td.emptycolorlesscolumn {
+  border-width:0px 0px 0px 0px;
+}
+
+td.groupcolumn {
+  border-width:1px 0px 1px 0px;
+}
+td.columndiffgridrulenamecol
+{
+  background-color: #D1D1D1;
+  cursor: pointer;
+}
+
+tr.diffgroupheader{
+  background-color: #D1D199;
+}
+
+table.legend {
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: outset;
+  border-color: gray;
+  border-collapse: separate;
+  background-color: white;
+}
+
+.boldFont{
+  font-weight:bold;
+}
+
+.policyExcludeObject {
+  text-decoration: line-through;
+}
+
+
+.compareEmptyPolicyTable .maskedHead {
+    display : none;
+}
+
+.compareEmptyPolicyTable .maskedColumn {
+    display : none;
+}

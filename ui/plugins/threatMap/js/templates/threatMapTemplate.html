@@ -1,0 +1,89 @@
+<div id="threat-map">
+    <div class="right-panel-container"></div>
+    <div class="insight-bar-container">
+        <div class="title slipstream-content-title">
+            {{threatmap_insight_bar_title }}
+            <span class="ua-field-help threatmap-title-help"></span>
+        </div>
+        <div class="subtitle-row">
+            <span id="subtitle">
+                {{threatmap_insight_bar_desc}}
+            </span>
+            <span class="play-pause-clock">
+                <span id="current-time">00/00/0000, 00:00:00 PM</span>
+                <span>
+                    <img class="play-button" src='/installed_plugins/threatMap/images/play.svg'/>
+                    <img class="pause-button" src='/installed_plugins/threatMap/images/pause.svg'/>
+                </span>
+            </span>
+        </div>
+        <div class="row insight-bar">
+            <div class="small-2 columns text-left first-panel">
+                <div id="total-threats" class="total-threat-count">0</div>
+                <div class="panel-main-title">
+                    {{threatmap_insight_bar_total_count}}
+                </div>
+            </div>
+            <div class="stroke"></div>
+
+            <div class="small-2 columns text-left panel-box">
+                <div class="panel-title">
+                    {{threatmap_insight_bar_total_threats}}
+                </div>
+
+                <div class="threats-blocked">
+                    <span class="ips-icon"></span>
+                    <div class="threat-panel">{{threatmap_insight_bar_ips}}</div>
+                    <div id="ips-threats" class="individual-threat-count">0</div>
+                </div>
+
+                <div class="threats-blocked">
+                    <span class="antivirus-icon"></span>
+                    <div class="threat-panel">{{threatmap_insight_bar_antivirus}}</div>
+                    <div id="antivirus-threats" class="individual-threat-count">0</div>
+                </div>
+
+                <div class="threats-blocked">
+                    <span class="antispam-icon"></span>
+                    <div class="threat-panel">{{threatmap_insight_bar_spam}}</div>
+                    <div id="antispam-threats" class="individual-threat-count">0</div>
+                </div>
+
+                <div class="threats-blocked">
+                    <span class="device-authentication-icon"></span>
+                    <div class="threat-panel">{{threatmap_insight_bar_auth}}</div>
+                    <div id="device-authentication-threats" class="individual-threat-count">0</div>
+                </div>
+            </div>
+            <div class="stroke"></div>
+
+            <div class="small-2 columns text-left panel-box">
+                <div class="panel-title">
+                    {{threatmap_insight_bar_top_dest_devices}}
+                </div>
+                <div id="top-destination-devices">
+                </div>
+            </div>
+            <div class="stroke"></div>
+
+            <div class="small-2 columns text-left panel-box">
+                <div class="panel-title">
+                    {{threatmap_insight_bar_top_dest_cntry}}
+                </div>
+                <div id="top-destination-countries" class="top-countries">
+                </div>
+            </div>
+            <div class="stroke"></div>
+
+            <div class="small-2 columns text-left panel-box">
+                <div class="panel-title">
+                    {{threatmap_insight_bar_top_src_cntry   }}
+                </div>
+                <div id="top-source-countries" class="top-countries">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="leaflet-map">
+    </div>
+</div>

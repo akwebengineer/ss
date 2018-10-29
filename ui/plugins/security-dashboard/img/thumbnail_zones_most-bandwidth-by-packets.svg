@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="168px" height="110px" viewBox="0 0 168 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+    <title>thumbnail_zones_most-bandwidth-by-packets</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="thumbnail_zones_most-bandwidth-by-packets" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-5" fill="#F5F5F5" sketch:type="MSShapeGroup" x="0" y="0" width="168" height="110"></rect>
+            <g id="Stacked-Bar-Chart-Icon-Copy" transform="translate(55.000000, 54.000000)" sketch:type="MSShapeGroup">
+                <path d="M0,40 L56.6698305,40 L56.6698305,37.8257627 L0,37.8257627 L0,40 Z" id="Fill-1" fill="#D0D2D3"></path>
+                <path d="M0,34.4447458 L12.4332203,34.4447458 L12.4332203,31.7322034 L0,31.7322034 L0,34.4447458 Z" id="Fill-2" fill="#814699"></path>
+                <path d="M0,31.9355932 L12.4332203,31.9355932 L12.4332203,25.4108475 L0,25.4108475 L0,31.9355932 Z" id="Fill-3" fill="#DAE9F8"></path>
+                <path d="M0,25.5871186 L12.4332203,25.5871186 L12.4332203,21.0698305 L0,21.0698305 L0,25.5871186 Z" id="Fill-4" fill="#6398CF"></path>
+                <path d="M27.1267797,34.4447458 L14.6935593,34.4447458 L14.6935593,28.4223729 L27.1267797,28.4223729 L27.1267797,34.4447458 Z" id="Fill-5" fill="#814699"></path>
+                <path d="M27.1267797,28.5979661 L14.6935593,28.5979661 L14.6935593,15.0467797 L27.1267797,15.0467797 L27.1267797,28.5979661 Z" id="Fill-6" fill="#DAE9F8"></path>
+                <path d="M27.1267797,15.2230508 L14.6935593,15.2230508 L14.6935593,3.93084746 L27.1267797,3.93084746 L27.1267797,15.2230508 Z" id="Fill-7" fill="#6398CF"></path>
+                <path d="M41.8210169,34.4447458 L29.3877966,34.4447458 L29.3877966,30.680678 L41.8210169,30.680678 L41.8210169,34.4447458 Z" id="Fill-8" fill="#814699"></path>
+                <path d="M41.8210169,30.8569492 L29.3877966,30.8569492 L29.3877966,5.76271186 L41.8210169,5.76271186 L41.8210169,30.8569492 Z" id="Fill-9" fill="#DAE9F8"></path>
+                <path d="M29.3877966,5.93830508 L41.8210169,5.93830508 L41.8210169,0.417627119 L29.3877966,0.417627119 L29.3877966,5.93830508 Z" id="Fill-10" fill="#6398CF"></path>
+                <path d="M44.0820339,32.6135593 L56.5145763,32.6135593 L56.5145763,21.8230508 L44.0820339,21.8230508 L44.0820339,32.6135593 Z" id="Fill-11" fill="#DAE9F8"></path>
+                <path d="M44.0820339,21.9986441 L56.5145763,21.9986441 L56.5145763,10.9572881 L44.0820339,10.9572881 L44.0820339,21.9986441 Z" id="Fill-12" fill="#6398CF"></path>
+                <path d="M44.2366102,34.4447458 L56.6698305,34.4447458 L56.6698305,29.6989831 L44.2366102,29.6989831 L44.2366102,34.4447458 Z" id="Fill-13" fill="#814699"></path>
+            </g>
+            <text id="Devices" sketch:type="MSTextLayer" font-family="Helvetica" font-size="12" font-weight="bold" fill="#666666">
+                <tspan x="9" y="21">Zones</tspan>
+            </text>
+            <text id="Most-Packet-Throughp" sketch:type="MSTextLayer" font-family="Helvetica" font-size="12" font-weight="260" fill="#666666">
+                <tspan x="9" y="37">Most Bandwidth by Packets</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,84 @@
+{
+    "slidesWhat": [
+        {
+            "id": "whats-new-dashboard",
+            "section": "whats",
+            "title": "dashboard_title",
+            "subTitle": "whats_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_dashboard.png",
+            "text": "dashboard_description"
+        },
+        {
+            "id": "whats-new-policy",
+            "section": "whats",
+            "title": "firewall_policy_title",
+            "subTitle": "whats_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_policy-management.png",
+            "text": "firewall_policy_description"
+        },
+        {
+            "id": "whats-new-threat",
+            "section": "whats",
+            "title": "live_threat_map_title",
+            "subTitle": "whats_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_threat-map.png",
+            "text": "live_threat_map_description"
+        },
+        {
+            "id": "whats-new-event",
+            "section": "whats",
+            "title": "event_analysis_title",
+            "subTitle": "whats_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_event-viewer.png",
+            "text": "event_analysis_description"
+        },
+        {
+            "id": "whats-new-application",
+            "section": "whats",
+            "title": "application_title",
+            "subTitle": "whats_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_app-visibility.png",
+            "text": "application_description"
+        }
+    ],
+    "slidesWhere" : [
+        {
+            "id": "where-space",
+            "section": "where",
+            "class": "where",
+            "src": "/installed_plugins/onboardingGuide/img/resource_space.png",
+            "title": "space_title",
+            "subTitle": "where_section_subtitle",
+            "text": "space_description"
+        },
+        {
+            "id": "where-access",
+            "section": "where",
+            "class": "where",
+            "title": "access_utility_title",
+            "subTitle": "where_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_access-utilities.png",
+            "text": "access_utility_description"
+        },
+        {
+            "id": "where-monitor",
+            "section": "where",
+            "class": "where",
+            "title": "monitor_title",
+            "subTitle": "where_section_subtitle",
+            "src": "/installed_plugins/onboardingGuide/img/resource_primary-nav.png",
+            "text": "monitor_description"
+        }
+    ],
+    "slidesHow" : [
+        {
+            "id": "how-workflow",
+            "section": "how",
+            "class": "how",
+            "title": "how_section_title",
+            "subTitle": "how_section_subtitle",
+            "src": "video.svg",
+            "text": "no"
+        }
+    ]
+}
